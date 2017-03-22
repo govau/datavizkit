@@ -1,2 +1,5 @@
 # datavizkit
-Fully featured data visualisation library for WoG which leverages HighCharts internally
+
+status: [WIP]
+
+A fully featured data visualisation toolset which leverages HighCharts internally
