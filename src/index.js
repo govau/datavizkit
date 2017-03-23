@@ -2,7 +2,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import Chart from './lib/chart';
+import Pie from './components/pie';
 
 /*
 
@@ -46,7 +46,7 @@ const chartOptions = {
 };
 
 render(
-  <Chart chartConfig={chartConfig} chartOptions={chartOptions} />,
+  <Pie chartConfig={chartConfig} chartOptions={chartOptions} />,
   document.getElementById('root')
 );
 
