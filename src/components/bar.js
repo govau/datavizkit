@@ -4,7 +4,7 @@ import React, {PureComponent} from 'react';
 import {withChart} from './../hocs/withHighcharts';
 
 
-class PieChart extends PureComponent {
+class BarChart extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -26,6 +26,6 @@ class PieChart extends PureComponent {
 
 }
 
-export default withChart(PieChart);
+export default withChart(BarChart);
 
 

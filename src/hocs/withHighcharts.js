@@ -5,7 +5,7 @@ import Highcharts from 'highcharts';
 import {onNextFrame} from './../utils/DOM';
 
 
-const withChart = ComposedComponent => props => {
+export const withChart = ComposedComponent => props => {
 
   let chart;
 
@@ -32,5 +32,3 @@ const withChart = ComposedComponent => props => {
                             update={updateFn}
                             destroy={destroyFn} {...props} />
 };
-
-export default withChart;
