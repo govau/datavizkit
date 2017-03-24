@@ -60,7 +60,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "docs-server": "styleguidist server",
-    "docs-build": "styleguidist build"
+    "docs-build": "styleguidist build",
+    "deploy-docs": "npm run docs-build && surge -p docs/ -d datavizkit.surge.sh"
   },
   "jest": {
     "collectCoverageFrom": [
