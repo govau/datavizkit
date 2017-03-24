@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
   title: '@gov.au/datavizkit',
-  components: './src/docs/**/[A-Z]*.js',
+  components: './src/components/**/*.js',
   styleguideDir: 'docs',
   defaultExample: true,
   serverPort: 4000,

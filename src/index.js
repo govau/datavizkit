@@ -2,8 +2,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import BarChart from './components/barChart';
-import ColumnChart from './components/columnChart';
+import ColumnWidget from './components/columnWidget';
 
 /*
 
@@ -17,33 +16,23 @@ import ColumnChart from './components/columnChart';
  */
 
 export default {
-  BarChart,
-  ColumnChart
+  ColumnWidget
 };
 
 
 const chartOptions = {
   title: {
-    text: 'Fruit Consumption'
+    text: 'Number of page views'
   },
   xAxis: {
-    categories: ['Apples', 'Bananas', 'Oranges']
-  },
-  yAxis: {
-    title: {
-      text: 'Fruit eaten'
-    }
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   },
   series: [{
-    name: 'Jane',
-    data: [1, 0, 4]
-  }, {
-    name: 'John',
-    data: [5, 7, 3]
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
   }]
 };
 
 render(
-  <ColumnChart chartOptions={chartOptions} />, document.getElementById('root')
+  <ColumnWidget options={chartOptions} />, document.getElementById('root')
 );
 
