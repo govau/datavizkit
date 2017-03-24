@@ -9,18 +9,13 @@ export const withChart = ComposedComponent => props => {
 
   let chart;
 
-  const createFn = (el, chartConfig, chartOptions) => {
-    chart = new Highcharts.Chart({
-      chart: {
-        renderTo: el,
-        ...chartConfig
-      },
-      ...chartOptions
-    });
+  const createFn = (options) => {
+    console.log(options)
+    chart = new Highcharts.Chart(options);
   };
 
-  const updateFn = (chartConfig, chartOptions) => {
-    createFn(chartConfig, chartOptions);
+  const updateFn = (options) => {
+    createFn(options);
     onNextFrame(chart.reflow);
   };
 
