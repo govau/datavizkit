@@ -41,8 +41,6 @@ logs
 # Dev
 .sass-cache/
 node_modules/
-docs/
-doc/
 .idea/
 
 # build/
