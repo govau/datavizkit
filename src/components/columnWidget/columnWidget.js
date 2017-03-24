@@ -5,7 +5,7 @@ import deepmerge from 'deepmerge';
 import {withChart} from './../../hocs/withHighcharts';
 
 
-class ColumnChart extends PureComponent {
+class ColumnWidget extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -17,9 +17,16 @@ class ColumnChart extends PureComponent {
           marginRight: 120
         },
         legend: {
-          align: 'left',
+          align: 'right',
           verticalAlign: 'bottom',
           layout: 'vertical'
+        },
+        title: {
+          align: 'left',
+          // x: 10,
+        },
+        credits: {
+          enabled: false
         }
       }
     }
@@ -42,7 +49,7 @@ class ColumnChart extends PureComponent {
 
 }
 
-ColumnChart.propTypes = {
+ColumnWidget.propTypes = {
   options: PropTypes.shape({
     // a column chart must have time-series data
     series: PropTypes.arrayOf(
@@ -53,6 +60,6 @@ ColumnChart.propTypes = {
   }).isRequired
 };
 
-export default withChart(ColumnChart);
+export default withChart(ColumnWidget);
 
 

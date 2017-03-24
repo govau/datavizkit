@@ -5,12 +5,20 @@ import Highcharts from 'highcharts';
 import {onNextFrame} from './../utils/DOM';
 
 
+
+Highcharts.setOptions({
+  chart: {
+    style: {
+      fontFamily: 'Open Sans,sans-serif'
+    }
+  }
+});
+
 export const withChart = ComposedComponent => props => {
 
   let chart;
 
   const createFn = (options) => {
-    console.log(options)
     chart = new Highcharts.Chart(options);
   };
 
