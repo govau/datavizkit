@@ -1,1 +1,1 @@
-export {default} from './../../components/columnChart';
+export {default} from './columnChart';

@@ -17,12 +17,10 @@ class ColumnChart extends PureComponent {
           marginRight: 120
         },
         legend: {
-          align: 'center',
+          align: 'left',
           verticalAlign: 'bottom',
-          layout: 'vertical',
-          x: 0,
-          y: 100
-        },
+          layout: 'vertical'
+        }
       }
     }
   }
