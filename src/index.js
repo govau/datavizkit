@@ -2,7 +2,8 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import Bar from './components/bar';
+import BarChart from './components/barChart';
+import ColumnChart from './components/columnChart';
 
 /*
 
@@ -15,14 +16,11 @@ import Bar from './components/bar';
 
  */
 
-// export default {
-//   ColumnWidget: ColumnWidget
-// };
-
-
-const chartConfig = {
-  type: 'bar'
+export default {
+  BarChart,
+  ColumnChart
 };
+
 
 const chartOptions = {
   title: {
@@ -46,7 +44,6 @@ const chartOptions = {
 };
 
 render(
-  <Bar chartConfig={chartConfig} chartOptions={chartOptions} />,
-  document.getElementById('root')
+  <ColumnChart chartOptions={chartOptions} />, document.getElementById('root')
 );
 

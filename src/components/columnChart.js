@@ -9,19 +9,24 @@ class PieChart extends PureComponent {
   constructor(props) {
     super(props);
     this.el = null;
+    this.state = {
+      chartConfig: {
+        type: 'column'
+      }
+    }
   }
 
   componentDidMount() {
-    const {chartConfig, chartOptions} = this.props;
-    this.props.create(this.el, chartConfig, chartOptions);
+    this.props.create(this.el, this.state.chartConfig, this.props.chartOptions);
   }
 
-  componentWillUpdate({chartConfig, chartOptions}) {
+  componentWillUpdate({chartOptions}, {chartConfig}) {
     this.props.update(chartConfig, chartOptions);
   }
 
   render() {
-    return <div ref={el => this.el = el}></div>
+    const {chartConfig: {type}} = this.state;
+    return <div data-charttype={type} ref={el => this.el = el}></div>
   }
 
 }
