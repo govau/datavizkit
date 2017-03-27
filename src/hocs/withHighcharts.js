@@ -20,6 +20,7 @@ export const withChart = ComposedComponent => props => {
 
   const createFn = (options) => {
     chart = new Highcharts.Chart(options);
+    return chart;
   };
 
   const updateFn = (options) => {

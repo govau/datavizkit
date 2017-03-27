@@ -14,7 +14,7 @@ class ColumnWidget extends PureComponent {
     super(props);
     this.el = null;
 
-    emitter.on('receive_onPointMouseOver', this.receiveOnPointMouseOver.bind(this));
+    emitter.on('receive_onPointUpdate', this.receiveOnPointUpdate.bind(this));
 
     const {widget} = props;
 
@@ -41,7 +41,15 @@ class ColumnWidget extends PureComponent {
           animation: false,
           point: {
             events: {
-              mouseOver: this.onPointMouseOver
+              mouseOver: this.onPointUpdate
+            }
+          },
+          // allowPointSelect: true,
+          states: {
+            hover: {
+              color: null,
+              borderWidth:5,
+              borderColor:'Blue'
             }
           }
         },
@@ -76,25 +84,24 @@ class ColumnWidget extends PureComponent {
 
 
   // this is the scope of point
-  onPointMouseOver(e) {
+  onPointUpdate(e) {
+    this.select();
     // console.log(this.category, this.y, this.series.name);
-    emitter.emit('receive_onPointMouseOver', {
+    emitter.emit('receive_onPointUpdate', {
       seriesName: this.series.name,
       label: this.category,
       value: this.y,
-      color: this.color
     });
   }
 
-  receiveOnPointMouseOver(options, cb) {
-    const {label, value, seriesName, color} = options;
-    // console.log(label, value, seriesName);
+  receiveOnPointUpdate(options, cb) {
+    const {label, value, seriesName} = options;
+    console.log(label, value, seriesName);
 
     const nextFauxLegend = this.state.fauxLegend.map(f => {
       if (f.seriesName === seriesName) {
         f.label = label;
         f.value = value;
-        f.color = color;
       }
       return f;
     });
@@ -107,7 +114,11 @@ class ColumnWidget extends PureComponent {
     }
     const _options = this.state.chartOptions;
     _options.chart.renderTo = this.el;
-    this.props.create(_options);
+    this.instance = this.props.create(_options);
+
+    // select the last column
+    const lastIdx = this.instance.series[0].data.length - 1;
+    this.instance.series[0].data[lastIdx].select();
   }
 
   // todo
@@ -122,6 +133,8 @@ class ColumnWidget extends PureComponent {
     const title = this.props.widget.title;
     const {fauxLegend} = this.state;
 
+    console.log(...fauxLegend)
+
     return (
       <article className={`chart--${chartType}`} role="article">
         <header>
@@ -130,13 +143,27 @@ class ColumnWidget extends PureComponent {
           <span>What is this?</span>
         </header>
         <section>
-          <div><time>{fauxLegend[0].label}</time></div>
+          {fauxLegend.length && <div><time>{fauxLegend[0].label}</time></div>}
           <div ref={el => this.el = el} />
-          <div>
-            {fauxLegend.map((legend, idx) => (
-              <div key={idx}><dt>{legend.color && <span>{legend.color}</span>} {legend.seriesName}</dt><dd>{legend.value}</dd></div>
-            ))}
-          </div>
+          {fauxLegend.length && <div className="legend">
+            <table>
+              <tbody>
+                {fauxLegend.map((legend, idx) => (
+                  <tr key={idx}>
+                    <th>
+                      <svg width="12" height="12">
+                        <g className="legend--icon">
+                          {legend.color && <rect x="0" y="0" width="12" height="12" fill={legend.color} visibility="visible" rx="6" ry="6"></rect>}
+                        </g>
+                      </svg>
+                      <span className="legend--data-name">{legend.seriesName}</span>
+                    </th>
+                    <td>{legend.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>}
         </section>
       </article>
     );
