@@ -61,7 +61,8 @@ class ColumnWidget extends PureComponent {
         enabled: false
       },
       tooltip: {
-        followTouchMove: true
+        enabled: false,
+        // followTouchMove: true
       }
     };
 
@@ -85,8 +86,9 @@ class ColumnWidget extends PureComponent {
 
   // this is the scope of point
   onPointUpdate(e) {
-    this.select();
     // console.log(this.category, this.y, this.series.name);
+
+    this.select();
     emitter.emit('receive_onPointUpdate', {
       seriesName: this.series.name,
       label: this.category,
@@ -95,9 +97,9 @@ class ColumnWidget extends PureComponent {
   }
 
   receiveOnPointUpdate(options, cb) {
-    const {label, value, seriesName} = options;
-    console.log(label, value, seriesName);
+    // console.log(label, value, seriesName);
 
+    const {label, value, seriesName} = options;
     const nextFauxLegend = this.state.fauxLegend.map(f => {
       if (f.seriesName === seriesName) {
         f.label = label;
