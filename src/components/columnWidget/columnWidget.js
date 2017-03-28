@@ -22,6 +22,11 @@ class ColumnWidget extends PureComponent {
       xAxis: {
         categories: widget.series.map(s => s.data)[0].map(item => item.description)
       },
+      yAxis: {
+        title: {
+          text: null
+        }
+      },
       series:  widget.series.map(s => {
         return {
           name: s.name,
