@@ -41,18 +41,16 @@ class ColumnWidget extends PureComponent {
           animation: false,
           point: {
             events: {
-              mouseOver: this.onPointUpdate
+              mouseOver: this.onPointUpdate,
+              click: this.onPointClick
             }
           },
           states: {
             hover: {
               color: 'yellow',
-              // enabled: false, // disable hover, because I will select() on hover instead
             },
             select: {
-              color: 'red',
-              borderColor: 'none',
-              borderWidth: 0
+              enabled: false
             }
           },
           allowPointSelect: true,
@@ -87,15 +85,8 @@ class ColumnWidget extends PureComponent {
     };
   }
 
-
   // this has the scope of point
   onPointUpdate(e) {
-    // console.log(this.category, this.y, this.series.name);
-
-
-    // this.select();  // important! select() on hover
-
-
     emitter.emit('receive_onPointUpdate', {
       seriesName: this.series.name,
       label: this.category,
@@ -103,12 +94,13 @@ class ColumnWidget extends PureComponent {
     });
   }
 
+  onPointClick(e) {
+    // disable point selection
+    e.preventDefault();
+  }
+
   // this has the scope of class
   receiveOnPointUpdate(options, cb) {
-    // console.log(label, value, seriesName);
-
-
-
     const {label, value, seriesName} = options;
     const nextFauxLegend = this.state.fauxLegend.map(f => {
       if (f.seriesName === seriesName) {
@@ -128,9 +120,9 @@ class ColumnWidget extends PureComponent {
     _options.chart.renderTo = this.el;
     this.instance = this.props.create(_options);
 
-    // select the last column
+    // "hover" over the last column
     const lastIdx = this.instance.series[0].data.length - 1;
-    this.instance.series[0].data[lastIdx].select();
+    this.instance.series[0].data[lastIdx].onMouseOver();
   }
 
   // todo
