@@ -41,17 +41,18 @@ class ColumnWidget extends PureComponent {
           animation: false,
           point: {
             events: {
-              mouseOver: this.onPointUpdate
+              mouseOver: this.onPointUpdate,
             }
           },
-          // allowPointSelect: true,
           states: {
             hover: {
-              color: null,
-              borderWidth:5,
-              borderColor:'Blue'
+              color: 'yellow',
+            },
+            select: { // required because can be selected programatically
+              enabled: false
             }
-          }
+          },
+          allowPointSelect: false,
         },
       },
       legend: {
@@ -83,12 +84,8 @@ class ColumnWidget extends PureComponent {
     };
   }
 
-
-  // this is the scope of point
+  // this has the scope of point
   onPointUpdate(e) {
-    // console.log(this.category, this.y, this.series.name);
-
-    this.select();
     emitter.emit('receive_onPointUpdate', {
       seriesName: this.series.name,
       label: this.category,
@@ -96,9 +93,8 @@ class ColumnWidget extends PureComponent {
     });
   }
 
+  // this has the scope of class
   receiveOnPointUpdate(options, cb) {
-    // console.log(label, value, seriesName);
-
     const {label, value, seriesName} = options;
     const nextFauxLegend = this.state.fauxLegend.map(f => {
       if (f.seriesName === seriesName) {
@@ -112,15 +108,15 @@ class ColumnWidget extends PureComponent {
 
   componentDidMount() {
     if (this.el === null) {
-      throw new Error('must provide a container element');
+      throw new Error('Must provide a container element');
     }
     const _options = this.state.chartOptions;
     _options.chart.renderTo = this.el;
     this.instance = this.props.create(_options);
 
-    // select the last column
+    // "hover" over the last column
     const lastIdx = this.instance.series[0].data.length - 1;
-    this.instance.series[0].data[lastIdx].select();
+    this.instance.series[0].data[lastIdx].onMouseOver();
   }
 
   // todo
@@ -134,8 +130,6 @@ class ColumnWidget extends PureComponent {
     const datetimeUpdate = new Date(dateUpdated).toJSON();
     const title = this.props.widget.title;
     const {fauxLegend} = this.state;
-
-    console.log(...fauxLegend)
 
     return (
       <article className={`chart--${chartType}`} role="article">
