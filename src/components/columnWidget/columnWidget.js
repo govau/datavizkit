@@ -42,18 +42,17 @@ class ColumnWidget extends PureComponent {
           point: {
             events: {
               mouseOver: this.onPointUpdate,
-              click: this.onPointClick
             }
           },
           states: {
             hover: {
               color: 'yellow',
             },
-            select: {
+            select: { // required because can be selected programatically
               enabled: false
             }
           },
-          allowPointSelect: true,
+          allowPointSelect: false,
         },
       },
       legend: {
@@ -92,11 +91,6 @@ class ColumnWidget extends PureComponent {
       label: this.category,
       value: this.y,
     });
-  }
-
-  onPointClick(e) {
-    // disable point selection
-    e.preventDefault();
   }
 
   // this has the scope of class
