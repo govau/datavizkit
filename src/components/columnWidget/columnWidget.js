@@ -1,6 +1,5 @@
 
 import React, {PureComponent, PropTypes} from 'react';
-import last from 'lodash/last';
 import Emitter from 'tiny-emitter';
 
 import {withChart} from './../../hocs/withHighcharts';
@@ -48,9 +47,9 @@ class ColumnWidget extends PureComponent {
             }
           },
           states: {
-            hover: {
-              color: 'yellow',
-            },
+            // hover: {
+            //   color: 'yellow',
+            // },
             select: { // required because can be selected programatically
               enabled: false
             }
