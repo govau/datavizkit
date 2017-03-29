@@ -1,7 +1,8 @@
 
 import React, {PureComponent, PropTypes} from 'react';
+import deepExtend from 'deep-extend';
 
-import {withChart} from './../../hocs/withHighcharts';
+import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
 
 class LineWidget extends PureComponent {
@@ -10,24 +11,19 @@ class LineWidget extends PureComponent {
     super(props);
     this.el = null;
 
-    const chartOptions = {
+    const chartOptions = deepExtend(BASE_CHART_OPTIONS, {
       chart: {
         type: 'line'
-      },
-      title: {
-        text: null
       },
       plotOptions: {
         line: {
           animation: false,
           allowPointSelect: true,
+          stickyTracking: true
         }
       },
-      yAxis: {
-        title: {
-          text: null
-        }
-      },
+
+      // instance props
       series: [{
         name: 'Installation',
         data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
@@ -43,24 +39,11 @@ class LineWidget extends PureComponent {
       }, {
         name: 'Other',
         data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-      }],
-
-      legend: {
-        // enabled: false,
-      },
-      credits: {
-        enabled: false
-      },
-      tooltip: {
-        // enabled: false,
-      }
-    };
-
-    const restOptions = {};
+      }]
+    });
 
     this.state = {
-      chartOptions,
-      ...restOptions
+      chartOptions
     };
   }
 

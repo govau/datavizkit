@@ -1,7 +1,8 @@
 
 import React, {PureComponent, PropTypes} from 'react';
+import deepExtend from 'deep-extend';
 
-import {withChart} from './../../hocs/withHighcharts';
+import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
 
 class DonutWidget extends PureComponent {
@@ -10,12 +11,9 @@ class DonutWidget extends PureComponent {
     super(props);
     this.el = null;
 
-    const chartOptions = {
+    const chartOptions = deepExtend(BASE_CHART_OPTIONS, {
       chart: {
         type: 'pie'
-      },
-      title: {
-        text: null
       },
       plotOptions: {
         pie: {
@@ -24,9 +22,12 @@ class DonutWidget extends PureComponent {
           dataLabels: {
             enabled: false
           },
-          showInLegend: true
+          showInLegend: true,
+          stickyTracking: true
         }
       },
+
+      // instance props
       series: [{
         name: 'Brands',
         colorByPoint: true,
@@ -53,7 +54,6 @@ class DonutWidget extends PureComponent {
       }],
       // plotOptions: {
       //   series: {
-      //     animation: false,
       //     states: {
       //       hover: {
       //         color: 'yellow',
@@ -62,25 +62,12 @@ class DonutWidget extends PureComponent {
       //         enabled: false
       //       }
       //     },
-      //     allowPointSelect: false,
       //   },
       // },
-      legend: {
-        // enabled: false,
-      },
-      credits: {
-        enabled: false
-      },
-      tooltip: {
-        // enabled: false,
-      }
-    };
-
-    const restOptions = {};
+    });
 
     this.state = {
-      chartOptions,
-      ...restOptions
+      chartOptions
     };
   }
 

@@ -8,14 +8,13 @@ import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
 const emitter = new Emitter();
 
-class ColumnWidget extends PureComponent {
+class StackedColumnWidget extends PureComponent {
 
   constructor(props) {
     super(props);
     this.el = null;
 
     emitter.on('receive_onPointUpdate', this.receiveOnPointUpdate.bind(this));
-
 
     const chartOptions = deepExtend(BASE_CHART_OPTIONS, {
       chart: {
@@ -28,10 +27,11 @@ class ColumnWidget extends PureComponent {
       },
       plotOptions: {
         series: {
+          stacking: 'normal',
           animation: false,
           point: {
             events: {
-              // mouseOver: this.onPointUpdate,
+              mouseOver: this.onPointUpdate,
             }
           },
           states: {
@@ -49,12 +49,18 @@ class ColumnWidget extends PureComponent {
 
       // instance props
       xAxis: {
-        categories: ["Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017"]
+        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas'],
       },
       series: [
         {
-          "name": "Desktop",
-          "data": [29.9, 71.5, 106.4, 129.2, 144, 176, 135, 148.5, 216.4, 194.1, 95.6, 54.4]
+          name: 'John',
+          data: [5, 3, 4, 7, 2]
+        }, {
+          name: 'Jane',
+          data: [2, 2, 3, 2, 1]
+        }, {
+          name: 'Joe',
+          data: [3, 4, 4, 2, 5]
         }
       ],
     });
@@ -133,9 +139,9 @@ class ColumnWidget extends PureComponent {
 
 }
 
-ColumnWidget.propTypes = {
+StackedColumnWidget.propTypes = {
 };
 
-export default withChart(ColumnWidget);
+export default withChart(StackedColumnWidget);
 
 
