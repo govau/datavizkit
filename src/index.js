@@ -2,14 +2,15 @@
 import React from 'react';
 import {render} from 'react-dom';
 
+import LineWidget from './components/lineWidget';
 import ColumnWidget from './components/columnWidget';
-import PieWidget from './components/pieWidget';
+import DonutWidget from './components/donutWidget';
 
 /*
 
   library
 
-  : export pie
+  : export donut
   : export line
   : export bar
   : export ...
@@ -17,19 +18,25 @@ import PieWidget from './components/pieWidget';
  */
 
 export default {
+  LineWidget,
   ColumnWidget,
-  PieWidget
+  DonutWidget
 };
 
 
 
+
+const lineWidget = {
+  title: 'Average session length',
+  dateUpdated: '22 Feb 2016',
+};
 
 const columnWidget = {
   title: 'Number of page views',
   dateUpdated: '22 Feb 2016',
 };
 
-const pieWidget = {
+const donutWidget = {
   title: 'Devices used',
   dateUpdated: '22 Feb 2016',
 };
@@ -37,7 +44,8 @@ const pieWidget = {
 
 render(
   <div>
-    <PieWidget widget={pieWidget} />
+    <LineWidget widget={lineWidget} />
+    <DonutWidget widget={donutWidget} />
     <ColumnWidget widget={columnWidget} />
   </div>, document.getElementById('root')
 );

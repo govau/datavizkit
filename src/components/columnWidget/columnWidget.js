@@ -59,13 +59,13 @@ class ColumnWidget extends PureComponent {
         },
       },
       legend: {
-        enabled: false,
+        // enabled: false,
       },
       credits: {
         enabled: false
       },
       tooltip: {
-        enabled: false,
+        // enabled: false,
       }
     };
 
