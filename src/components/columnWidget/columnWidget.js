@@ -1,6 +1,15 @@
+/*
+
+ todo
+
+ * can have a null data layer
+ * can have a pattern for high contrast mode
+
+
+ */
+
 
 import React, {PureComponent, PropTypes} from 'react';
-import deepExtend from 'deep-extend';
 import Emitter from 'tiny-emitter';
 
 import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
@@ -17,7 +26,8 @@ class ColumnWidget extends PureComponent {
     emitter.on('receive_onPointUpdate', this.receiveOnPointUpdate.bind(this));
 
 
-    const chartOptions = deepExtend(BASE_CHART_OPTIONS, {
+    const chartOptions = {
+      ...BASE_CHART_OPTIONS,
       chart: {
         type: 'column'
       },
@@ -31,13 +41,13 @@ class ColumnWidget extends PureComponent {
           animation: false,
           point: {
             events: {
-              // mouseOver: this.onPointUpdate,
+              mouseOver: this.onPointUpdate,
             }
           },
           states: {
-            // hover: {
-            //   color: 'yellow',
-            // },
+            hover: {
+              color: 'yellow',
+            },
             select: { // required because can be selected programatically
               enabled: false
             }
@@ -57,7 +67,7 @@ class ColumnWidget extends PureComponent {
           "data": [29.9, 71.5, 106.4, 129.2, 144, 176, 135, 148.5, 216.4, 194.1, 95.6, 54.4]
         }
       ],
-    });
+    };
 
     this.state = {
       chartOptions,

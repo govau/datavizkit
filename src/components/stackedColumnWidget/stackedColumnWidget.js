@@ -1,6 +1,16 @@
 
+/*
+
+ todo
+
+ * can be optionally 100% height
+ * can have a pattern for high contrast mode
+ * legend updates on mouseover
+
+
+ */
+
 import React, {PureComponent, PropTypes} from 'react';
-import deepExtend from 'deep-extend';
 import Emitter from 'tiny-emitter';
 
 import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
@@ -16,7 +26,8 @@ class StackedColumnWidget extends PureComponent {
 
     emitter.on('receive_onPointUpdate', this.receiveOnPointUpdate.bind(this));
 
-    const chartOptions = deepExtend(BASE_CHART_OPTIONS, {
+    const chartOptions = {
+      ...BASE_CHART_OPTIONS,
       chart: {
         type: 'column'
       },
@@ -63,7 +74,7 @@ class StackedColumnWidget extends PureComponent {
           data: [3, 4, 4, 2, 5]
         }
       ],
-    });
+    };
 
     this.state = {
       chartOptions,

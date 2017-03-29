@@ -1,6 +1,17 @@
 
+/*
+
+ todo
+
+ * can have a pattern for high contrast mode
+ * has a vertical ruler and highlights points on mouseover
+ * legend updates on mouseover
+
+
+ */
+
+
 import React, {PureComponent, PropTypes} from 'react';
-import deepExtend from 'deep-extend';
 
 import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
@@ -11,7 +22,8 @@ class LineWidget extends PureComponent {
     super(props);
     this.el = null;
 
-    const chartOptions = deepExtend(BASE_CHART_OPTIONS, {
+    const chartOptions = {
+      ...BASE_CHART_OPTIONS,
       chart: {
         type: 'line'
       },
@@ -40,7 +52,7 @@ class LineWidget extends PureComponent {
         name: 'Other',
         data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
       }]
-    });
+    };
 
     this.state = {
       chartOptions

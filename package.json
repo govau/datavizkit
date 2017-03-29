@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "deep-extend": "^0.4.1",
     "highcharts": "^5.0.9",
     "lodash": "^4.17.4",
     "react": "^15.4.2",

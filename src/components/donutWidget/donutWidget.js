@@ -1,6 +1,15 @@
 
+/*
+
+ todo
+
+ * can have a pattern for high contrast mode
+
+
+ */
+
+
 import React, {PureComponent, PropTypes} from 'react';
-import deepExtend from 'deep-extend';
 
 import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
@@ -11,7 +20,8 @@ class DonutWidget extends PureComponent {
     super(props);
     this.el = null;
 
-    const chartOptions = deepExtend(BASE_CHART_OPTIONS, {
+    const chartOptions = {
+      ...BASE_CHART_OPTIONS,
       chart: {
         type: 'pie'
       },
@@ -64,7 +74,7 @@ class DonutWidget extends PureComponent {
       //     },
       //   },
       // },
-    });
+    };
 
     this.state = {
       chartOptions
