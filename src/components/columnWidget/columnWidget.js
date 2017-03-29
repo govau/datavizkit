@@ -16,31 +16,29 @@ class ColumnWidget extends PureComponent {
 
     emitter.on('receive_onPointUpdate', this.receiveOnPointUpdate.bind(this));
 
-    const {widget} = props;
 
     const chartOptions = {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: null
+      },
       xAxis: {
-        categories: widget.series.map(s => s.data)[0].map(item => item.description)
+        categories: ["Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017"]
       },
       yAxis: {
         title: {
           text: null
         }
       },
-      series:  widget.series.map(s => {
-        return {
-          name: s.name,
-          label: s.data.map(item => item.description),
-          data: s.data.map(item => item.value)
+      series: [
+        {
+          "name": "Desktop",
+          "data": [29.9, 71.5, 106.4, 129.2, 144, 176, 135, 148.5, 216.4, 194.1, 95.6, 54.4]
         }
-      }),
-      title: {
-        text: null
-      },
-      chart: {
-        marginBottom: 100,
-        type: 'column'
-      },
+      ],
+
       plotOptions: {
         series: {
           animation: false,
@@ -68,19 +66,17 @@ class ColumnWidget extends PureComponent {
       },
       tooltip: {
         enabled: false,
-        // followTouchMove: true
       }
     };
 
     const restOptions = {
-      fauxLegend: widget.series.map(s => {
-        const item = last(s.data);
-        return {
-          seriesName: s.name,
-          label: item.description,
-          value: item.value
+      fauxLegend: [
+        {
+          seriesName: "Desktop",
+          label: "Dec 2017",
+          value: 54.4
         }
-      })
+      ]
     };
 
     this.state = {
@@ -130,11 +126,10 @@ class ColumnWidget extends PureComponent {
   // }
 
   render() {
-    const chartType = this.state.chartOptions.chart.type;
-    const dateUpdated = this.props.widget.dateUpdated;
+    const {widget: {title, dateUpdated}} = this.props;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
-    const title = this.props.widget.title;
-    const {fauxLegend} = this.state;
+
+    const chartType = this.state.chartOptions.chart.type;
 
     return (
       <article className={`chart--${chartType}`} role="article">
@@ -144,27 +139,7 @@ class ColumnWidget extends PureComponent {
           <span>What is this?</span>
         </header>
         <section>
-          {fauxLegend.length && <div><time>{fauxLegend[0].label}</time></div>}
           <div ref={el => this.el = el} />
-          {fauxLegend.length && <div className="legend">
-            <table>
-              <tbody>
-                {fauxLegend.map((legend, idx) => (
-                  <tr key={idx}>
-                    <th>
-                      <svg width="12" height="12">
-                        <g className="legend--icon">
-                          {legend.color && <rect x="0" y="0" width="12" height="12" fill={legend.color} visibility="visible" rx="6" ry="6"></rect>}
-                        </g>
-                      </svg>
-                      <span className="legend--data-name">{legend.seriesName}</span>
-                    </th>
-                    <td>{legend.value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>}
         </section>
       </article>
     );
@@ -173,7 +148,6 @@ class ColumnWidget extends PureComponent {
 }
 
 ColumnWidget.propTypes = {
-  // a column chart must have time-series data
 };
 
 export default withChart(ColumnWidget);
