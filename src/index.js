@@ -25,7 +25,6 @@ export default {
 
 
 
-
 const lineWidget = {
   title: 'Average session length',
   dateUpdated: '22 Feb 2016',
