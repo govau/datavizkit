@@ -71,7 +71,7 @@ class ColumnWidget extends PureComponent {
 
     this.state = {
       chartOptions,
-      fauxLegend: [
+      legend: [
         {
           seriesName: "Desktop",
           label: "Dec 2017",
@@ -93,14 +93,14 @@ class ColumnWidget extends PureComponent {
   // this has the scope of class
   receiveOnPointUpdate(options, cb) {
     const {label, value, seriesName} = options;
-    const nextFauxLegend = this.state.fauxLegend.map(f => {
+    const nextlegend = this.state.legend.map(f => {
       if (f.seriesName === seriesName) {
         f.label = label;
         f.value = value;
       }
       return f;
     });
-    this.setState({fauxLegend: nextFauxLegend});
+    this.setState({legend: nextlegend});
   }
 
   componentDidMount() {
@@ -123,6 +123,7 @@ class ColumnWidget extends PureComponent {
 
   render() {
     const {widget: {title, dateUpdated}} = this.props;
+    const {legend} = this.state;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
 
     const chartType = this.state.chartOptions.chart.type;
@@ -135,7 +136,27 @@ class ColumnWidget extends PureComponent {
           <span>What is this?</span>
         </header>
         <section>
+          {legend.length && <div><time>{legend[0].label}</time></div>}
           <div ref={el => this.el = el} />
+          {legend.length && <div className="legend">
+            <table>
+              <tbody>
+                {legend.map((item, idx) => (
+                  <tr key={idx}>
+                    <td>
+                      <svg width="12" height="12">
+                        <g className="legend--icon">
+                          {item.color && <rect x="0" y="0" width="12" height="12" fill={item.color} visibility="visible" rx="6" ry="6"></rect>}
+                        </g>
+                      </svg>
+                      <span className="legend--data-name">{item.seriesName}</span>
+                    </td>
+                    <td>{item.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>}
         </section>
       </article>
     );
@@ -143,9 +164,10 @@ class ColumnWidget extends PureComponent {
 
 }
 
-ColumnWidget.propTypes = {
-};
+ColumnWidget.propTypes = {};
 
-export default withChart(ColumnWidget);
+ColumnWidget = withChart(ColumnWidget);
+
+export default ColumnWidget;
 
 
