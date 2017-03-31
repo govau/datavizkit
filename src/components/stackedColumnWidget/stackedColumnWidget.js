@@ -54,7 +54,6 @@ class StackedColumnWidget extends PureComponent {
             }
           },
           allowPointSelect: false,
-          stickyTracking: true
         },
       },
 

@@ -5,6 +5,7 @@
 
  * can have a pattern for high contrast mode
  * if i have more than said number of items, combine smallest ones in to an "Other" sector
+       - a data transformation step?
 
 
  */
@@ -52,7 +53,6 @@ class DonutWidget extends PureComponent {
             enabled: false
           },
           showInLegend: true,
-          stickyTracking: true,
           states: {
             hover: {
               halo: {

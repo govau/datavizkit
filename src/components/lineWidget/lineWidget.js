@@ -38,6 +38,7 @@ class LineWidget extends PureComponent {
             const fauxLegend = this.series.map(s => {
               const latestPointInSeries = last(s.data);
               return {
+                seriesName: s.name,
                 color: latestPointInSeries.color,
                 key: s.name,
                 value: latestPointInSeries.y
@@ -66,7 +67,6 @@ class LineWidget extends PureComponent {
             }
           },
           allowPointSelect: false,
-          stickyTracking: true
         },
       },
 
@@ -133,7 +133,7 @@ class LineWidget extends PureComponent {
         <header>
           <h1>{title}</h1>
           <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
-          <span>What is this?</span>
+          {/*<span>What is this?</span>*/}
         </header>
         <section>
           <div ref={el => this.el = el} />
