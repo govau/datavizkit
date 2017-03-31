@@ -10,9 +10,12 @@
 
 
 import React, {PureComponent, PropTypes} from 'react';
+import Emitter from 'tiny-emitter';
 
 import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
+
+const emitter = new Emitter();
 
 class DonutWidget extends PureComponent {
 
@@ -20,22 +23,49 @@ class DonutWidget extends PureComponent {
     super(props);
     this.el = null;
 
+    emitter.on('set:state', this.manualSetState.bind(this, arguments));
+
+
     const chartOptions = {
       ...BASE_CHART_OPTIONS,
       chart: {
-        type: 'pie'
+        type: 'pie',
+        events: {
+          render: function(e, target, type) {
+            const decoratedData = this.series[0].data;  // pie only has 1 slice
+            const fauxLegend = decoratedData.map(d => {
+              return {
+                color: d.color,
+                key: d.name,
+                value: d.y
+              }
+            });
+            emitter.emit('set:state', {'fauxLegend': fauxLegend});
+          }
+        },
       },
       plotOptions: {
         pie: {
           animation: false,
-          allowPointSelect: true,
           dataLabels: {
             enabled: false
           },
           showInLegend: true,
-          stickyTracking: true
-        }
+          stickyTracking: true,
+          states: {
+            hover: {
+              halo: {
+                size: 0
+              }
+            },
+            select: { // required because can be selected programatically
+              enabled: false
+            }
+          }
+        },
       },
+
+
 
       // instance props
       series: [{
@@ -62,23 +92,17 @@ class DonutWidget extends PureComponent {
           y: 0.2
         }]
       }],
-      // plotOptions: {
-      //   series: {
-      //     states: {
-      //       hover: {
-      //         color: 'yellow',
-      //       },
-      //       select: { // required because can be selected programatically
-      //         enabled: false
-      //       }
-      //     },
-      //   },
-      // },
     };
 
     this.state = {
-      chartOptions
+      chartOptions,
+      fauxLegend: []
     };
+  }
+
+  manualSetState(self, stateToSet) {
+    // todo  set on next tick
+    this.setState(stateToSet);
   }
 
   componentDidMount() {
@@ -92,6 +116,7 @@ class DonutWidget extends PureComponent {
 
   render() {
     const {widget: {title, dateUpdated}} = this.props;
+    const {fauxLegend} = this.state;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
 
     const chartType = this.state.chartOptions.chart.type;
@@ -102,10 +127,29 @@ class DonutWidget extends PureComponent {
         <header>
           <h1>{title}</h1>
           <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
-          <span>What is this?</span>
+          {/*<span>What is this?</span>*/}
         </header>
         <section>
           <div ref={el => this.el = el} />
+          {fauxLegend.length && <div className="legend">
+            <table>
+              <tbody>
+              {fauxLegend.map((item, idx) => (
+                <tr key={idx}>
+                  <td>
+                    <svg width="12" height="12">
+                      <g className="legend--icon">
+                        {item.color && <rect x="0" y="0" width="12" height="12" fill={item.color} visibility="visible" rx="6" ry="6"></rect>}
+                      </g>
+                    </svg>
+                    <span className="legend--data-name">{item.key}</span>
+                  </td>
+                  <td>{item.value}</td>
+                </tr>
+              ))}
+              </tbody>
+            </table>
+          </div>}
         </section>
       </article>
     );
