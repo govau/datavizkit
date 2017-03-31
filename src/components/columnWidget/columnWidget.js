@@ -11,6 +11,7 @@
 
 import React, {PureComponent, PropTypes} from 'react';
 import Emitter from 'tiny-emitter';
+import last from 'lodash/last';
 
 import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
@@ -23,13 +24,26 @@ class ColumnWidget extends PureComponent {
     super(props);
     this.el = null;
 
-    emitter.on('receive_onPointUpdate', this.receiveOnPointUpdate.bind(this));
+    emitter.on('set:state', this.manualSetState.bind(this, arguments));
 
 
     const chartOptions = {
       ...BASE_CHART_OPTIONS,
       chart: {
-        type: 'column'
+        type: 'column',
+        events: {   // todo - abstract
+          render: function(e, target, type) {
+            const fauxLegend = this.series.map(s => {
+              const latestPointInSeries = last(s.data);
+              return {
+                color: latestPointInSeries.color,
+                key: s.name,
+                value: latestPointInSeries.y
+              }
+            });
+            emitter.emit('set:state', {'fauxLegend': fauxLegend});
+          }
+        },
       },
       yAxis: {
         title: {
@@ -48,12 +62,11 @@ class ColumnWidget extends PureComponent {
             hover: {
               color: 'yellow',
             },
-            select: { // required because can be selected programatically
+            select: { // required because it can be selected programatically
               enabled: false
             }
           },
-          allowPointSelect: false,
-          stickyTracking: true
+          allowPointSelect: false
         },
       },
 
@@ -71,36 +84,29 @@ class ColumnWidget extends PureComponent {
 
     this.state = {
       chartOptions,
-      legend: [
-        {
-          seriesName: "Desktop",
-          label: "Dec 2017",
-          value: 54.4
-        }
-      ]
+      fauxLegend: [],
     };
   }
 
   // this has the scope of point
   onPointUpdate(e) {
-    emitter.emit('receive_onPointUpdate', {
-      seriesName: this.series.name,
-      label: this.category,
-      value: this.y,
+    emitter.emit('set:state', {
+      'fauxLegend':[
+        {
+          seriesName: this.series.name,
+          color: this.color,
+          // key: s.name,
+          key: this.category,
+          value: this.y
+        }
+      ]
     });
   }
 
-  // this has the scope of class
-  receiveOnPointUpdate(options, cb) {
-    const {label, value, seriesName} = options;
-    const nextlegend = this.state.legend.map(f => {
-      if (f.seriesName === seriesName) {
-        f.label = label;
-        f.value = value;
-      }
-      return f;
-    });
-    this.setState({legend: nextlegend});
+
+  manualSetState(self, stateToSet) {
+    // todo  set on next tick
+    this.setState(stateToSet);
   }
 
   componentDidMount() {
@@ -123,7 +129,7 @@ class ColumnWidget extends PureComponent {
 
   render() {
     const {widget: {title, dateUpdated}} = this.props;
-    const {legend} = this.state;
+    const {fauxLegend} = this.state;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
 
     const chartType = this.state.chartOptions.chart.type;
@@ -136,24 +142,26 @@ class ColumnWidget extends PureComponent {
           <span>What is this?</span>
         </header>
         <section>
-          {legend.length && <div><time>{legend[0].label}</time></div>}
+          {fauxLegend.map((item, idx) => (
+            <div key={idx}><time>{item.key}</time></div>
+          ))}
           <div ref={el => this.el = el} />
-          {legend.length && <div className="legend">
+          {fauxLegend.length && <div className="legend">
             <table>
               <tbody>
-                {legend.map((item, idx) => (
-                  <tr key={idx}>
-                    <td>
-                      <svg width="12" height="12">
-                        <g className="legend--icon">
-                          {item.color && <rect x="0" y="0" width="12" height="12" fill={item.color} visibility="visible" rx="6" ry="6"></rect>}
-                        </g>
-                      </svg>
-                      <span className="legend--data-name">{item.seriesName}</span>
-                    </td>
-                    <td>{item.value}</td>
-                  </tr>
-                ))}
+              {fauxLegend.map((item, idx) => (
+                <tr key={idx}>
+                  <td>
+                    <svg width="12" height="12">
+                      <g className="legend--icon">
+                        {item.color && <rect x="0" y="0" width="12" height="12" fill={item.color} visibility="visible" rx="6" ry="6"></rect>}
+                      </g>
+                    </svg>
+                    <span className="legend--data-name">{item.seriesName}</span>
+                  </td>
+                  <td>{item.value}</td>
+                </tr>
+              ))}
               </tbody>
             </table>
           </div>}
