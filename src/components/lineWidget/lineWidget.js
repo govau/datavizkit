@@ -3,18 +3,22 @@
 
  todo
 
- * can have a pattern for high contrast mode
- * has a vertical ruler and highlights points on mouseover
  * legend updates on mouseover
+ * has a vertical ruler and highlights points on mouseover
+ * can have a pattern for high contrast mode
 
 
  */
 
 
 import React, {PureComponent, PropTypes} from 'react';
+import Emitter from 'tiny-emitter';
+import last from 'lodash/last';
 
 import {BASE_CHART_OPTIONS, withChart} from './../../hocs/withHighcharts';
 
+
+const emitter = new Emitter();
 
 class LineWidget extends PureComponent {
 
@@ -22,17 +26,48 @@ class LineWidget extends PureComponent {
     super(props);
     this.el = null;
 
+    emitter.on('set:state', this.manualSetState.bind(this, arguments));
+
+
     const chartOptions = {
       ...BASE_CHART_OPTIONS,
       chart: {
-        type: 'line'
+        type: 'line',
+        events: {   // todo - abstract
+          render: function(e, target, type) {
+            const fauxLegend = this.series.map(s => {
+              const latestPointInSeries = last(s.data);
+              return {
+                color: latestPointInSeries.color,
+                key: s.name,
+                value: latestPointInSeries.y
+              }
+            });
+            emitter.emit('set:state', {'fauxLegend': fauxLegend});
+          }
+        },
       },
       plotOptions: {
         line: {
           animation: false,
           allowPointSelect: true,
           stickyTracking: true
-        }
+        },
+        series: {
+          animation: false,
+          point: {
+            events: {
+              mouseOver: this.onPointUpdate,
+            }
+          },
+          states: {
+            select: { // required because can be selected programatically
+              enabled: false
+            }
+          },
+          allowPointSelect: false,
+          stickyTracking: true
+        },
       },
 
       // instance props
@@ -55,7 +90,8 @@ class LineWidget extends PureComponent {
     };
 
     this.state = {
-      chartOptions
+      chartOptions,
+      fauxLegend: [],
     };
   }
 
@@ -68,12 +104,29 @@ class LineWidget extends PureComponent {
     this.instance = this.props.create(_options);
   }
 
+  // this has the scope of point
+  onPointUpdate(e) {
+    // todo - need to update whole slice not only the point
+    emitter.emit('set:state', {'fauxLegend': {
+      seriesName: this.series.name,
+      color: this.color,
+      // key: s.name,
+      key: this.category,
+      value: this.y
+    }});
+  }
+
+  manualSetState(self, stateToSet) {
+    // todo  set on next tick
+    this.setState(stateToSet);
+  }
+
   render() {
     const {widget: {title, dateUpdated}} = this.props;
+    const {fauxLegend} = this.state;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
 
     const chartType = this.state.chartOptions.chart.type;
-
 
     return (
       <article className={`chart--${chartType}`} role="article">
@@ -84,6 +137,25 @@ class LineWidget extends PureComponent {
         </header>
         <section>
           <div ref={el => this.el = el} />
+          {fauxLegend.length && <div className="legend">
+            <table>
+              <tbody>
+              {fauxLegend.map((item, idx) => (
+                <tr key={idx}>
+                  <td>
+                    <svg width="12" height="12">
+                      <g className="legend--icon">
+                        {item.color && <rect x="0" y="0" width="12" height="12" fill={item.color} visibility="visible" rx="6" ry="6"></rect>}
+                      </g>
+                    </svg>
+                    <span className="legend--data-name">{item.key}</span>
+                  </td>
+                  <td>{item.value}</td>
+                </tr>
+              ))}
+              </tbody>
+            </table>
+          </div>}
         </section>
       </article>
     );

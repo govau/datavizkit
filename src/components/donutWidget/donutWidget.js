@@ -4,6 +4,7 @@
  todo
 
  * can have a pattern for high contrast mode
+ * if i have more than said number of items, combine smallest ones in to an "Other" sector
 
 
  */
@@ -30,7 +31,7 @@ class DonutWidget extends PureComponent {
       ...BASE_CHART_OPTIONS,
       chart: {
         type: 'pie',
-        events: {
+        events: {   // todo - abstract
           render: function(e, target, type) {
             const decoratedData = this.series[0].data;  // pie only has 1 slice
             const fauxLegend = decoratedData.map(d => {
@@ -64,8 +65,6 @@ class DonutWidget extends PureComponent {
           }
         },
       },
-
-
 
       // instance props
       series: [{

@@ -6,7 +6,17 @@ import {onNextFrame} from './../utils/DOM';
 
 
 Highcharts.setOptions({
-  colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+  colors: [
+    '#4892C0',  /* light blue */
+    '#75A370',  /* dark green */
+    '#F5D900',  /* yellow */
+    '#7066A5',  /* light purple */
+    '#F8BBD0',  /* pink */
+    '#47BCAC',  /* turquoise */
+    '#5345AD',  /* purple */
+    '#AFA545',  /* olive */
+    '#CB6935',  /* orange */
+  ],
   chart: {
     style: {
       fontFamily: 'Open Sans,sans-serif'
