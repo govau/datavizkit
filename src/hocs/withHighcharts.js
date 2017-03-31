@@ -5,7 +5,6 @@ import Highcharts from 'highcharts';
 import {onNextFrame} from './../utils/DOM';
 
 
-
 Highcharts.setOptions({
   colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
   chart: {
@@ -36,4 +35,25 @@ export const withChart = ComposedComponent => props => {
   return <ComposedComponent create={createFn}
                             update={updateFn}
                             destroy={destroyFn} {...props} />
+};
+
+
+export const BASE_CHART_OPTIONS = {
+  title: {
+    text: null
+  },
+  yAxis: {
+    title: {
+      text: null
+    }
+  },
+  legend: {
+    enabled: false,
+  },
+  credits: {
+    enabled: false
+  },
+  tooltip: {
+    // enabled: false,
+  }
 };
