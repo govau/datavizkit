@@ -54,6 +54,6 @@ export const BASE_CHART_OPTIONS = {
     enabled: false
   },
   tooltip: {
-    enabled: false,
+    // enabled: false,
   }
 };
