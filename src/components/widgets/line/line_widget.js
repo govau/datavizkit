@@ -12,6 +12,7 @@
  */
 
 import React, {PureComponent} from 'react';
+import last from 'lodash/last';
 import Emitter from 'tiny-emitter';
 
 import renderChart from './line_chart';

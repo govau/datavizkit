@@ -49,10 +49,6 @@ render(
     <DonutWidget widget={donutWidget} />
     <LineWidget widget={lineWidget} />
 
-
-
-
-    {/*<StackedColumnWidget widget={columnWidget} />*/}
   </div>, document.getElementById('root')
 );
 

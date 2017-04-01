@@ -1,1 +1,1 @@
-// export {default} from './line_widget';
+export {default} from './line_widget';
