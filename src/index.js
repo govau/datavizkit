@@ -1,15 +1,11 @@
 
 import React from 'react';
 import {render} from 'react-dom';
-//
-// import LineWidget from './components/lineWidget';
-// import ColumnWidget from './components/columnWidget';
-// import StackedColumnWidget from './components/stackedColumnWidget';
-// import DonutWidget from './components/donutWidget';
 
 
-import ColumnWidget from './components/widgets2/column'
-import DonutWidget from './components/widgets2/donut'
+import ColumnWidget from './components/widgets/column'
+import DonutWidget from './components/widgets/donut'
+import LineWidget from './components/widgets/line';
 
 
 /*
@@ -49,15 +45,13 @@ const donutWidget = {
 render(
   <div>
 
-    <ColumnWidget widget={lineWidget} />
+    <ColumnWidget widget={columnWidget} />
     <DonutWidget widget={donutWidget} />
+    <LineWidget widget={lineWidget} />
 
 
 
 
-    {/*<LineWidget widget={lineWidget} />*/}
-    {/*<DonutWidget widget={donutWidget} />*/}
-    {/*<ColumnWidget widget={columnWidget} />*/}
     {/*<StackedColumnWidget widget={columnWidget} />*/}
   </div>, document.getElementById('root')
 );
