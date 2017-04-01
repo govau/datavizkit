@@ -49,7 +49,7 @@ const donutWidget = {
 render(
   <div>
 
-    <ColumnWidget />
+    <ColumnWidget widget={lineWidget} />
     <DonutWidget widget={donutWidget} />
 
 
