@@ -47,7 +47,8 @@ render(
 
     <ColumnWidget widget={columnWidget} />
     <DonutWidget widget={donutWidget} />
-    <LineWidget widget={lineWidget} />
+
+    {/*<LineWidget widget={lineWidget} />*/}
 
   </div>, document.getElementById('root')
 );
