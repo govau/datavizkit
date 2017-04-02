@@ -21,7 +21,8 @@ import {makeChartOptions} from './donut_dataHelpers';
 const emitter = new Emitter();
 
 /**
- * Renders a Donut and manages its surrounding state
+ * Renders a Donut Widget with it's surrounding state.
+ *
  */
 class DonutWidget extends PureComponent {
 

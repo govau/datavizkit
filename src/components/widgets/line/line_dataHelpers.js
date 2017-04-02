@@ -1,25 +1,15 @@
 
-import React, {PropTypes} from 'react';
-import Highcharts from 'highcharts';
-import {BASE_CHART_OPTIONS} from './../../../hocs/withHighcharts';
-
-
-const createLineChart = ({
-  domNode,
+export const makeChartOptions = ({
   onRender = () => {},
-  onPointUpdate = () => {}
+  onPointUpdate = () => {},
 }) => {
-
-  const options = {
-    ...BASE_CHART_OPTIONS,
-
+  return {
     // default pie options
     chart: {
       type: 'line',
       events: {   // todo - abstract
         render: onRender
       },
-      renderTo: domNode
     },
     plotOptions: {
       line: {
@@ -63,15 +53,4 @@ const createLineChart = ({
     // }
     ]
   };
-
-  return new Highcharts.Chart(options);
-
 };
-
-
-createLineChart.propTypes = {
-  domNode: PropTypes.node.isRequired,
-  onRender: PropTypes.func
-};
-
-export default createLineChart;

@@ -22,6 +22,10 @@ import {makeChartOptions} from './column_dataHelpers';
 
 const emitter = new Emitter();
 
+/**
+ * Renders a Column Widget with it's surrounding state.
+ *
+ */
 class ColumnWidget extends PureComponent {
 
   constructor(props) {

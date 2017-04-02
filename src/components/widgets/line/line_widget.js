@@ -15,19 +15,20 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import Emitter from 'tiny-emitter';
 
-import renderChart from './line_chart';
+import Chart from './../../chart';
+import {makeChartOptions} from './line_dataHelpers';
 
 
 const emitter = new Emitter();
 
 /**
- * Renders a Donut and manages its surrounding state
+ * Renders a Line Widget with it's surrounding state.
+ *
  */
 class LineWidget extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.chartEl = null;
     this.chartInstance = null;
 
     emitter.on('set:state', this.manualSetState.bind(this, arguments));
@@ -37,33 +38,29 @@ class LineWidget extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    this.chartInstance = renderChart({
-      domNode: this.chartEl,
-      onRender: function(e, target, type) {
-        const fauxLegend = this.series.map(s => {
-          const latestPointInSeries = last(s.data);
-          return {
-            seriesName: s.name,
-            color: latestPointInSeries.color,
-            key: s.name,
-            value: latestPointInSeries.y
-          }
-        });
-        emitter.emit('set:state', {'fauxLegend': fauxLegend});
-      },
-      onPointUpdate: function(e) {
-        // todo - need to update whole slice not only the point
-        emitter.emit('set:state', {'fauxLegend': {
-          seriesName: this.series.name,
-          color: this.color,
-          // key: s.name,
-          key: this.category,
-          value: this.y
-        }});
+  onRenderChart() {
+    // scoped to chart
+    const fauxLegend = this.series.map(s => {
+      const latestPointInSeries = last(s.data);
+      return {
+        seriesName: s.name,
+        color: latestPointInSeries.color,
+        key: s.name,
+        value: latestPointInSeries.y
       }
     });
-    // todo - "hover" over the last slice
+    emitter.emit('set:state', {'fauxLegend': fauxLegend});
+  }
+
+  onPointUpdate() {
+    // todo - need to update whole slice not only the point
+    emitter.emit('set:state', {'fauxLegend': {
+      seriesName: this.series.name,
+      color: this.color,
+      // key: s.name,
+      key: this.category,
+      value: this.y
+    }});
   }
 
   manualSetState(self, stateToSet) {
@@ -76,17 +73,21 @@ class LineWidget extends PureComponent {
     const {fauxLegend} = this.state;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
 
-    const chartType = 'column';
+    // todo - improve this for update
+    const chartOptions = makeChartOptions({
+      onRender: this.onRenderChart,
+      onPointUpdate: this.onPointUpdate
+    });
 
     return (
-      <article className={`chart--${chartType}`} role="article">
+      <article className={`chart--line`} role="article">
         <header>
           <h1>{title}</h1>
           <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
           {/*<span>What is this?</span>*/}
         </header>
         <section>
-          <div ref={el => this.chartEl = el} />
+          <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           {fauxLegend.length && <div className="legend">
             <table>
               <tbody>
