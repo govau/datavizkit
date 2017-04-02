@@ -7,6 +7,7 @@
  * can have a pattern for high contrast mode
  * guard against sectors that are too small. if i have more than said number of items, combine smallest ones in to an "Other" sector - enforce by a data transformation step
  * can display units
+ * styled like dashboards
 
  */
 
@@ -62,7 +63,7 @@ class DonutWidget extends PureComponent {
 
     // todo - improve this for update
     const chartOptions = makeChartOptions({
-      onRender: this.onRenderChart
+      onRender: this.onRenderChart,
     });
 
     return (
@@ -73,6 +74,7 @@ class DonutWidget extends PureComponent {
           {/*<span>What is this?</span>*/}
         </header>
         <section>
+          {fauxLegend.length && <p>{fauxLegend[0].category}</p>}
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           {fauxLegend.length && <div className="legend">
             <table>

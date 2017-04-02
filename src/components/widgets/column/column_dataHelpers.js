@@ -1,14 +1,30 @@
 
-export const makeChartOptions = ({
-  onRender = () => {},
-  onPointUpdate = () => {}
-}) => {
+// todo - not import Highcharts again
+import Highcharts from 'highcharts';
+
+
+export const makeChartOptions = ({}) => {
+
+  const categories = Highcharts.getOptions().lang.shortMonths;
+
   return {
-    // default pie options
+    // default column options
     chart: {
       type: 'column',
       events: {
-        render: onRender
+        load: function() {
+          var seriesData = this.series[0].data;//this is series data
+          seriesData.forEach((d, idx) => {
+            if (d.y === null) { //find null value in series
+              // adds plot band
+              this.xAxis[0].addPlotBand({
+                from: idx -.5,  // point back
+                to: idx + .5,   // point after
+                color: '#c5d8f7', // this color represents the null value region
+              });
+            }
+          });
+        }
       },
     },
     yAxis: {
@@ -17,11 +33,15 @@ export const makeChartOptions = ({
       }
     },
     plotOptions: {
+      column: {},
       series: {
         animation: false,
         point: {
           events: {
-            mouseOver: onPointUpdate,
+            mouseOver: function() {
+              document.getElementById('tooltip').innerHTML = 'TOOLTIP: <br/>' +
+                this.category + ' ' + this.color + ' ' + this.y + ' ' + this.series.name;
+            }
           }
         },
         states: {
@@ -38,13 +58,28 @@ export const makeChartOptions = ({
 
     // instance props
     xAxis: {
-      categories: ["Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017"]
+      labels: {
+        formatter: function () {
+          return categories[this.value] + ' 2017';
+        },
+      },
+    },
+    yAxis: {
+      title: null,
+      // labels: {
+      //   formatter: function() {
+      //     return this.value + ' (units)';
+      //   }
+      // }
     },
     series: [
       {
-        "name": "Desktop",
-        "data": [29.9, 71.5, 106.4, 129.2, 144, 176, 135, 148.5, 216.4, 194.1, 95.6, 54.4]
-      }
+        name: "Desktop",
+        data: [29.9, 71.5, 106.4, null, null, 176, 135, 148.5, 216.4, null, 95.6, 54.4]
+      },
     ],
+    tooltip: {
+      enabled: false,
+    },
   };
 };

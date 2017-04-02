@@ -5,6 +5,5 @@ module.exports = {
     "__DEV__": true
   },
   "rules": {
-    "eqeqeq": 0
   }
 };

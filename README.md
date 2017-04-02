@@ -11,4 +11,4 @@ For more information please contact the [Performance Dashboards Team](mailto:per
 
 ## Contributions 
 
-Fork and review model for contributions please.
+Fork and review for contributions please.
