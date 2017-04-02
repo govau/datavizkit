@@ -5,9 +5,10 @@
 
  * can have a null data layer
  * can have a pattern for high contrast mode
- * can include units
- * can support column groups
-
+ * can include units yAxis: {
+ format: '${value}'
+ },
+ * can support column groups - like line chart
 
  */
 
@@ -30,7 +31,6 @@ class ColumnWidget extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.chartInstance = null;
 
     emitter.on('set:state', this.manualSetState.bind(this, arguments));
 
@@ -49,33 +49,38 @@ class ColumnWidget extends PureComponent {
     const fauxLegend = this.series.map(s => {
       const latestPointInSeries = last(s.data);
       return {
+        category: latestPointInSeries.category,
         color: latestPointInSeries.color,
         key: s.name,
-        value: latestPointInSeries.y
+        value: latestPointInSeries.y,
       }
     });
     emitter.emit('set:state', {'fauxLegend': fauxLegend});
   }
 
-  onRenderedChartOnce() {
+  onRenderChartCallback() {
+    // scoped to instance
+
     // "hover" over the last column
-    const lastIdx = this.chartInstance.series[0].data.length - 1;
-    this.chartInstance.series[0].data[lastIdx].onMouseOver();
+    const lastIdx = this.series[0].data.length - 1;
+    this.series[0].data[lastIdx].onMouseOver();
+
+    console.log(this)
   }
 
-  onPointUpdate() {
+  onPointMouseOver() {
     // scoped to point
-    emitter.emit('set:state', {
-      'fauxLegend':[
-        {
-          seriesName: this.series.name,
-          color: this.color,
-          // key: s.name,
-          key: this.category,
-          value: this.y
-        }
-      ]
+    const index = this.index;
+    const fauxLegend = this.series.chart.series.map(s => {
+      const pointInContext = s.data[index];
+      return {
+        category: pointInContext.category,
+        color: pointInContext.color,
+        key: s.name,
+        value: pointInContext.y
+      }
     });
+    emitter.emit('set:state', {'fauxLegend': fauxLegend});
   }
 
   render() {
@@ -86,7 +91,7 @@ class ColumnWidget extends PureComponent {
     // todo - improve this for update
     const chartOptions = makeChartOptions({
       onRender: this.onRenderChart,
-      callback: this.onRenderedChartOnce,
+      onPointMouseOver: this.onPointMouseOver
     });
 
     return (
@@ -97,7 +102,9 @@ class ColumnWidget extends PureComponent {
           {/*<span>What is this?</span>*/}
         </header>
         <section>
-          <Chart ref={el => this.chartInstance = el} options={chartOptions} />
+          {fauxLegend.length && <p>{fauxLegend[0].category}</p>}
+          <Chart options={chartOptions}
+                 callback={this.onRenderChartCallback} />
           {fauxLegend.length && <div className="legend">
             <table>
               <tbody>

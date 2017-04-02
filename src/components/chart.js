@@ -7,10 +7,7 @@ import {onNextFrame} from './../utils/DOM';
 
 const BASE_CHART_OPTIONS = {
   title: {
-    style: {
-      visibility: 'hidden',
-      height: 0,
-    }
+    text: null,
   },
   yAxis: {
     title: {
@@ -61,19 +58,17 @@ const ChartFactory = (_Highcharts) => {
       this.chart = null;
       this.el = null;
       this.Highcharts = _Highcharts;
-      this.firstRendered = false;
     }
 
     componentDidMount() {
       const chartOptions = {...BASE_CHART_OPTIONS, ...this.props.options};
       chartOptions.chart.renderTo = this.el;
-      this.chart = onNextFrame(() => this.renderChart(
-        chartOptions,
-        this.firstRendered && this.props.callback
-      ));
-      if (!this.firstRendered) {
-        this.firstRendered = true;
-      }
+      onNextFrame(() => {
+        this.chart = this.renderChart(
+          chartOptions,
+          this.props.callback
+        );
+      });
     }
 
     renderChart(options, callback) {
@@ -97,7 +92,7 @@ const ChartFactory = (_Highcharts) => {
   }
 
   Chart.defaultProps = {
-    callback: () => {}
+    callback: () => {},
   };
 
   return Chart;

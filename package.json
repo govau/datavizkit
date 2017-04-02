@@ -66,7 +66,7 @@
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",
     "docs-build": "styleguidist build",
-    "deploy-docs": "npm run docs-build && surge -p docs/ -d datavizkit.surge.sh"
+    "docs-deploy": "npm run docs-build && surge -p docs/ -d datavizkit.surge.sh"
   },
   "jest": {
     "collectCoverageFrom": [

@@ -62,7 +62,7 @@ class DonutWidget extends PureComponent {
 
     // todo - improve this for update
     const chartOptions = makeChartOptions({
-      onRender: this.onRenderChart
+      onRender: this.onRenderChart,
     });
 
     return (
@@ -73,6 +73,7 @@ class DonutWidget extends PureComponent {
           {/*<span>What is this?</span>*/}
         </header>
         <section>
+          {fauxLegend.length && <p>{fauxLegend[0].category}</p>}
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           {fauxLegend.length && <div className="legend">
             <table>
