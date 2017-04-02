@@ -4,7 +4,8 @@
  todo
 
  * can have a pattern for high contrast mode
- * can have a pattern for null data laer
+ * can have a pattern for null data laer - http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill
+ * include units - use legend.labelFormatter etc
  * can include units yAxis: {
  format: '${value}'
  },
