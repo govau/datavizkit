@@ -27,7 +27,7 @@ class DonutWidget extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.chartEl = null;
+    this.chartInstance = null;
 
     emitter.on('set:state', this.manualSetState.bind(this, arguments));
 
@@ -42,6 +42,7 @@ class DonutWidget extends PureComponent {
   }
 
   onRenderChart() {
+    // scoped to chart
     const decoratedData = this.series[0].data;  // pie only has 1 slice
     const fauxLegend = decoratedData.map(d => {
       return {

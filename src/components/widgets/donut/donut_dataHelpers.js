@@ -1,5 +1,7 @@
 
-export const makeChartOptions = ({onRender = () => {}}) => {
+export const makeChartOptions = ({
+  onRender = () => {},
+}) => {
   return {
     // default pie options
     chart: {
@@ -21,7 +23,7 @@ export const makeChartOptions = ({onRender = () => {}}) => {
               size: 0
             }
           },
-          select: { // required because can be selected programatically
+          select: { // required because can be selected programmatically
             enabled: false
           }
         }

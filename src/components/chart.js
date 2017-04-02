@@ -58,12 +58,19 @@ const ChartFactory = (_Highcharts) => {
       this.chart = null;
       this.el = null;
       this.Highcharts = _Highcharts;
+      this.firstRendered = false;
     }
 
     componentDidMount() {
       const chartOptions = {...BASE_CHART_OPTIONS, ...this.props.options};
       chartOptions.chart.renderTo = this.el;
-      this.chart = onNextFrame(() => this.renderChart(chartOptions, this.props.callback));
+      this.chart = onNextFrame(() => this.renderChart(
+        chartOptions,
+        this.firstRendered && this.props.callback
+      ));
+      if (!this.firstRendered) {
+        this.firstRendered = true;
+      }
     }
 
     renderChart(options, callback) {

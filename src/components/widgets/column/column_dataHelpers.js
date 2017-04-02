@@ -1,25 +1,15 @@
 
-import React, {PropTypes} from 'react';
-import Highcharts from 'highcharts';
-import {BASE_CHART_OPTIONS} from './../../../hocs/withHighcharts';
-
-
-const createColumnChart = ({
-  domNode,
+export const makeChartOptions = ({
   onRender = () => {},
   onPointUpdate = () => {}
 }) => {
-
-  const options = {
-    ...BASE_CHART_OPTIONS,
-
+  return {
     // default pie options
     chart: {
       type: 'column',
       events: {
         render: onRender
       },
-      renderTo: domNode
     },
     yAxis: {
       title: {
@@ -57,16 +47,4 @@ const createColumnChart = ({
       }
     ],
   };
-
-  return new Highcharts.Chart(options);
-
 };
-
-
-createColumnChart.propTypes = {
-  domNode: PropTypes.node.isRequired,
-  onRender: PropTypes.func,
-  onPointUpdate: PropTypes.func,
-};
-
-export default createColumnChart;

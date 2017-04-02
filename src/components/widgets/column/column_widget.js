@@ -15,7 +15,9 @@
 import React, {PureComponent} from 'react';
 import Emitter from 'tiny-emitter';
 import last from 'lodash/last';
-import renderChart from './column_chart';
+
+import Chart from './../../chart';
+import {makeChartOptions} from './column_dataHelpers';
 
 
 const emitter = new Emitter();
@@ -24,7 +26,6 @@ class ColumnWidget extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.chartEl = null;
     this.chartInstance = null;
 
     emitter.on('set:state', this.manualSetState.bind(this, arguments));
@@ -34,44 +35,43 @@ class ColumnWidget extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    this.chartInstance = renderChart({
-      domNode: this.chartEl,
-      onRender: function(e, target, type) {
-        // scoped to chart
-        const fauxLegend = this.series.map(s => {
-          const latestPointInSeries = last(s.data);
-          return {
-            color: latestPointInSeries.color,
-            key: s.name,
-            value: latestPointInSeries.y
-          }
-        });
-        emitter.emit('set:state', {'fauxLegend': fauxLegend});
-      },
-      onPointUpdate: function(e) {
-        // scoped to point
-        emitter.emit('set:state', {
-          'fauxLegend':[
-            {
-              seriesName: this.series.name,
-              color: this.color,
-              // key: s.name,
-              key: this.category,
-              value: this.y
-            }
-          ]
-        });
+  manualSetState(self, stateToSet) {
+    // todo  set on next tick
+    this.setState(stateToSet);
+  }
+
+  onRenderChart() {
+    // scoped to chart
+    const fauxLegend = this.series.map(s => {
+      const latestPointInSeries = last(s.data);
+      return {
+        color: latestPointInSeries.color,
+        key: s.name,
+        value: latestPointInSeries.y
       }
     });
+    emitter.emit('set:state', {'fauxLegend': fauxLegend});
+  }
+
+  onRenderedChartOnce() {
     // "hover" over the last column
     const lastIdx = this.chartInstance.series[0].data.length - 1;
     this.chartInstance.series[0].data[lastIdx].onMouseOver();
   }
 
-  manualSetState(self, stateToSet) {
-    // todo  set on next tick
-    this.setState(stateToSet);
+  onPointUpdate() {
+    // scoped to point
+    emitter.emit('set:state', {
+      'fauxLegend':[
+        {
+          seriesName: this.series.name,
+          color: this.color,
+          // key: s.name,
+          key: this.category,
+          value: this.y
+        }
+      ]
+    });
   }
 
   render() {
@@ -79,17 +79,21 @@ class ColumnWidget extends PureComponent {
     const {fauxLegend} = this.state;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
 
-    const chartType = 'column';
+    // todo - improve this for update
+    const chartOptions = makeChartOptions({
+      onRender: this.onRenderChart,
+      callback: this.onRenderedChartOnce,
+    });
 
     return (
-      <article className={`chart--${chartType}`} role="article">
+      <article className={`chart--column`} role="article">
         <header>
           <h1>{title}</h1>
           <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
           {/*<span>What is this?</span>*/}
         </header>
         <section>
-          <div ref={el => this.chartEl = el} />
+          <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           {fauxLegend.length && <div className="legend">
             <table>
               <tbody>
