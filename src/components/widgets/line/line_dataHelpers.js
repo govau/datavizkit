@@ -1,7 +1,7 @@
 
 export const makeChartOptions = ({
   onRender = () => {},
-  onPointUpdate = () => {},
+  onPointMouseOver = () => {},
 }) => {
   return {
     // default pie options
@@ -10,6 +10,9 @@ export const makeChartOptions = ({
       events: {   // todo - abstract
         render: onRender
       },
+    },
+    xAxis: {
+      crosshair: true
     },
     plotOptions: {
       line: {
@@ -21,7 +24,7 @@ export const makeChartOptions = ({
         animation: false,
         point: {
           events: {
-            mouseOver: onPointUpdate,
+            mouseOver: onPointMouseOver,
           }
         },
         states: {
@@ -33,15 +36,22 @@ export const makeChartOptions = ({
       },
     },
 
+    tooltip: {
+      enabled: true,
+      shared: true,
+      crosshairs: true,
+    },
+
     // instance props
     series: [{
       name: 'Installation',
       data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
     },
-      // {
-      // name: 'Manufacturing',
-      // data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-    // }, {
+      {
+      name: 'Manufacturing',
+      data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+    },
+    // {
     //   name: 'Sales & Distribution',
     //   data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
     // }, {
