@@ -10,7 +10,7 @@
  },
  http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-pointplacement-numeric/
  * styled like dashboards
- 
+
  * can support column groups - like line chart
 
  */

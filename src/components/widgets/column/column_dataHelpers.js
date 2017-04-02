@@ -45,7 +45,7 @@ export const makeChartOptions = ({
     // instance props
     xAxis: {
       // categories: ["Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017"]
-      categories: Highcharts.getOptions().lang.shortMonths + ' 2017'
+      categories: Highcharts.getOptions().lang.shortMonths
     },
     series: [
       {
