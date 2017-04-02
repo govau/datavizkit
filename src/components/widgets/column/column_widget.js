@@ -65,7 +65,16 @@ class ColumnWidget extends PureComponent {
     const lastIdx = this.series[0].data.length - 1;
     this.series[0].data[lastIdx].onMouseOver();
 
-    console.log(this)
+    console.log(this);
+
+    this.renderer.rect(100, 100, 100, 100, 5)
+      .attr({
+        'stroke-width': 2,
+        stroke: 'red',
+        fill: 'yellow',
+        zIndex: 3
+      })
+      .add();
   }
 
   onPointMouseOver() {

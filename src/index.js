@@ -45,9 +45,9 @@ const donutWidget = {
 render(
   <div>
 
-    {/*<ColumnWidget widget={columnWidget} />*/}
+    <ColumnWidget widget={columnWidget} />
     {/*<DonutWidget widget={donutWidget} />*/}
-    <LineWidget widget={lineWidget} />
+    {/*<LineWidget widget={lineWidget} />*/}
 
   </div>, document.getElementById('root')
 );
