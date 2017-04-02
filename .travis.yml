@@ -12,5 +12,5 @@ install:
 before_script:
   - yarn build
 script:
-  - yarn test
+  - yarn test:ci
   - pkill node
