@@ -1,22 +1,30 @@
 
+// todo - not import Highcharts again
 import Highcharts from 'highcharts';
 
 
-const categories = Highcharts.getOptions().lang.shortMonths;
+export const makeChartOptions = ({}) => {
 
+  const categories = Highcharts.getOptions().lang.shortMonths;
 
-export const makeChartOptions = ({
-  onRender = () => {},
-  onLoad = () => {},
-  onPointMouseOver = () => {}
-}) => {
   return {
     // default column options
     chart: {
       type: 'column',
       events: {
-        render: onRender,
-        load: onLoad
+        load: function() {
+          var seriesData = this.series[0].data;//this is series data
+          seriesData.forEach((d, idx) => {
+            if (d.y === null) { //find null value in series
+              // adds plot band
+              this.xAxis[0].addPlotBand({
+                from: idx -.5,  // point back
+                to: idx + .5,   // point after
+                color: '#c5d8f7', // this color represents the null value region
+              });
+            }
+          });
+        }
       },
     },
     yAxis: {
@@ -30,7 +38,10 @@ export const makeChartOptions = ({
         animation: false,
         point: {
           events: {
-            mouseOver: onPointMouseOver,
+            mouseOver: function() {
+              document.getElementById('tooltip').innerHTML = 'TOOLTIP: <br/>' +
+                this.category + ' ' + this.color + ' ' + this.y + ' ' + this.series.name;
+            }
           }
         },
         states: {
@@ -52,7 +63,6 @@ export const makeChartOptions = ({
           return categories[this.value] + ' 2017';
         },
       },
-      // categories: ["Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017"]
     },
     yAxis: {
       title: null,
@@ -68,5 +78,8 @@ export const makeChartOptions = ({
         data: [29.9, 71.5, 106.4, null, null, 176, 135, 148.5, 216.4, null, 95.6, 54.4]
       },
     ],
+    tooltip: {
+      enabled: false,
+    },
   };
 };
