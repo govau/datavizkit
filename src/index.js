@@ -2,10 +2,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import LineWidget from './components/lineWidget';
-import ColumnWidget from './components/columnWidget';
-import StackedColumnWidget from './components/stackedColumnWidget';
-import DonutWidget from './components/donutWidget';
+
+import ColumnWidget from './components/widgets/column'
+import DonutWidget from './components/widgets/donut'
+import LineWidget from './components/widgets/line';
 
 
 /*
@@ -18,13 +18,13 @@ import DonutWidget from './components/donutWidget';
   : export ...
 
  */
-
-export default {
-  LineWidget,
-  ColumnWidget,
-  StackedColumnWidget,
-  DonutWidget
-};
+//
+// export default {
+//   LineWidget,
+//   ColumnWidget,
+//   StackedColumnWidget,
+//   DonutWidget
+// };
 
 const lineWidget = {
   title: 'Average session length',
@@ -44,10 +44,11 @@ const donutWidget = {
 
 render(
   <div>
-    <LineWidget widget={lineWidget} />
-    <DonutWidget widget={donutWidget} />
+
     <ColumnWidget widget={columnWidget} />
-    <StackedColumnWidget widget={columnWidget} />
+    <DonutWidget widget={donutWidget} />
+    <LineWidget widget={lineWidget} />
+
   </div>, document.getElementById('root')
 );
 

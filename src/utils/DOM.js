@@ -8,6 +8,9 @@ let w = typeof window !== 'undefined' ? window : global;
  */
 export const onNextFrame = (callback) => {
   setTimeout(function () {
-    w.requestAnimationFrame && w.requestAnimationFrame(callback)
+    if (w.requestAnimationFrame) {
+      return w.requestAnimationFrame(callback);
+    }
+    return callback();
   }, 0)
 };

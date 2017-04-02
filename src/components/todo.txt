@@ -1,0 +1,3 @@
+* improve mounting. render first, then mount the data in lazily
+
+* try catch support for rendering widget if chart rendering fails

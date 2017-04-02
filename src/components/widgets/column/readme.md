@@ -1,7 +1,7 @@
 Basic Column Widget:
 
     <ColumnWidget widget={{
-      title: 'Number of page views',
+      title: 'Devices used',
       dateUpdated: '22 Feb 2016',
     }} />
 
