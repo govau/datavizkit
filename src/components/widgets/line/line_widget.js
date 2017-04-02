@@ -4,8 +4,6 @@
 
  todo
 
- * legend updates on mouseover
- * has a vertical ruler and highlights points on mouseover
  * can have a pattern for high contrast mode
 
 
@@ -43,7 +41,7 @@ class LineWidget extends PureComponent {
     const fauxLegend = this.series.map(s => {
       const latestPointInSeries = last(s.data);
       return {
-        seriesName: s.name,
+        category: latestPointInSeries.category,
         color: latestPointInSeries.color,
         key: s.name,
         value: latestPointInSeries.y
@@ -52,15 +50,19 @@ class LineWidget extends PureComponent {
     emitter.emit('set:state', {'fauxLegend': fauxLegend});
   }
 
-  onPointUpdate() {
-    // todo - need to update whole slice not only the point
-    emitter.emit('set:state', {'fauxLegend': {
-      seriesName: this.series.name,
-      color: this.color,
-      // key: s.name,
-      key: this.category,
-      value: this.y
-    }});
+  onPointMouseOver() {
+    // scoped to point
+    const index = this.index;
+    const fauxLegend = this.series.chart.series.map(s => {
+      const pointInContext = s.data[index];
+      return {
+        category: pointInContext.category,
+        color: pointInContext.color,
+        key: s.name,
+        value: pointInContext.y
+      }
+    });
+    emitter.emit('set:state', {'fauxLegend': fauxLegend});
   }
 
   manualSetState(self, stateToSet) {
@@ -76,7 +78,7 @@ class LineWidget extends PureComponent {
     // todo - improve this for update
     const chartOptions = makeChartOptions({
       onRender: this.onRenderChart,
-      onPointUpdate: this.onPointUpdate
+      onPointMouseOver: this.onPointMouseOver,
     });
 
     return (
@@ -87,6 +89,7 @@ class LineWidget extends PureComponent {
           {/*<span>What is this?</span>*/}
         </header>
         <section>
+          {fauxLegend.length && <p>{fauxLegend[0].category}</p>}
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           {fauxLegend.length && <div className="legend">
             <table>

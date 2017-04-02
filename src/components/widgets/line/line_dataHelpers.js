@@ -1,7 +1,7 @@
 
 export const makeChartOptions = ({
   onRender = () => {},
-  onPointUpdate = () => {},
+  onPointMouseOver = () => {},
 }) => {
   return {
     // default pie options
@@ -24,7 +24,7 @@ export const makeChartOptions = ({
         animation: false,
         point: {
           events: {
-            mouseOver: onPointUpdate,
+            mouseOver: onPointMouseOver,
           }
         },
         states: {
