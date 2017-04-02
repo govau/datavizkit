@@ -2,6 +2,7 @@
   "name": "datavizkit",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "highcharts": "^5.0.9",
     "lodash": "^4.17.4",

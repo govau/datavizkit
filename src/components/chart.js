@@ -7,7 +7,10 @@ import {onNextFrame} from './../utils/DOM';
 
 const BASE_CHART_OPTIONS = {
   title: {
-    text: null
+    style: {
+      visibility: 'hidden',
+      height: 0,
+    }
   },
   yAxis: {
     title: {

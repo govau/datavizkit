@@ -11,6 +11,9 @@ export const makeChartOptions = ({
         render: onRender
       },
     },
+    xAxis: {
+      crosshair: true
+    },
     plotOptions: {
       line: {
         animation: false,
@@ -31,6 +34,11 @@ export const makeChartOptions = ({
         },
         allowPointSelect: false,
       },
+      // tooltip: {
+      //   enabled: true,
+      //   shared: true,
+      //   crosshairs: true,
+      // }
     },
 
     // instance props
