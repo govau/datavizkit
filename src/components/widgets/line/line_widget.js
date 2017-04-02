@@ -5,7 +5,7 @@
  todo
 
  * can have a pattern for high contrast mode
-
+ * styled like dashboards
 
  */
 

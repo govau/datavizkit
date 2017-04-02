@@ -7,6 +7,7 @@
  * can have a pattern for high contrast mode
  * guard against sectors that are too small. if i have more than said number of items, combine smallest ones in to an "Other" sector - enforce by a data transformation step
  * can display units
+ * styled like dashboards
 
  */
 

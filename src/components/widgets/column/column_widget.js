@@ -9,6 +9,7 @@
  format: '${value}'
  },
  * can support column groups - like line chart
+ * styled like dashboards
 
  */
 
