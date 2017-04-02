@@ -2,6 +2,8 @@
 // todo - not import Highcharts again
 import Highcharts from 'highcharts';
 
+import {findRelativeByAncestor} from './../../../utils/DOMAccessors';
+
 
 export const makeChartOptions = ({}) => {
 
@@ -39,8 +41,12 @@ export const makeChartOptions = ({}) => {
         point: {
           events: {
             mouseOver: function() {
-              document.getElementById('tooltip').innerHTML = 'TOOLTIP: <br/>' +
-                this.category + ' ' + this.color + ' ' + this.y + ' ' + this.series.name;
+              const container = this.series.chart.container;
+              const customLegendNode = findRelativeByAncestor(container, 'dvk-chart', 'customLegend');
+              if (customLegendNode) {
+                customLegendNode.innerHTML = 'TOOLTIP: <br/>' +
+                  this.category + ' ' + this.color + ' ' + this.y + ' ' + this.series.name;
+              }
             }
           }
         },
@@ -76,7 +82,7 @@ export const makeChartOptions = ({}) => {
       {
         name: "Desktop",
         data: [29.9, 71.5, 106.4, null, null, 176, 135, 148.5, 216.4, null, 95.6, 54.4]
-      },
+      }
     ],
     tooltip: {
       enabled: false,

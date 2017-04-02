@@ -3,11 +3,11 @@
 
 todo:
 
-* handle chart updates: http://stackoverflow.com/questions/42848218/using-chart-update-on-a-chart-using-renderto/42850049#42850049
+* handle chart updates after render: http://stackoverflow.com/questions/42848218/using-chart-update-on-a-chart-using-renderto/42850049#42850049
 
  */
 
-import React, {PureComponent} from 'react';
+import React, {PureComponent, PropTypes} from 'react';
 import Highcharts from 'highcharts';
 
 import {onNextFrame} from './../utils/DOM';
@@ -95,12 +95,21 @@ const ChartFactory = (_Highcharts) => {
     }
 
     render() {
-      return <div ref={el => this.el = el} />
+      return (
+        <div className="dvk-chart">
+          <div ref={el => this.el = el} />
+          {this.props.children}
+        </div>
+      );
     }
   }
 
   Chart.defaultProps = {
     callback: () => {},
+  };
+
+  Chart.propTypes = {
+    children: PropTypes.element,
   };
 
   return Chart;
