@@ -3,11 +3,12 @@
 
  todo
 
- * can have a null data layer
+ * can have a null data layer - http://www.highcharts.com/demo/combo
  * can have a pattern for high contrast mode
  * can include units yAxis: {
  format: '${value}'
  },
+ http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-pointplacement-numeric/
  * can support column groups - like line chart
  * styled like dashboards
 
@@ -59,6 +60,22 @@ class ColumnWidget extends PureComponent {
     emitter.emit('set:state', {'fauxLegend': fauxLegend});
   }
 
+  onLoadChart() {
+    // render the null data layer
+    // todo - move outside
+    var seriesData = this.series[0].data;//this is series data
+    seriesData.forEach((d, idx) => {
+      if (d.y === null) { //find null value in series
+        //adds plot band
+        this.xAxis[0].addPlotBand({
+          from: idx -.5,  // point back
+          to: idx + .5,   // point after
+          color: '#c5d8f7', // this color represents the null value region
+        });
+      }
+    });
+  }
+
   onRenderChartCallback() {
     // scoped to instance
 
@@ -68,14 +85,14 @@ class ColumnWidget extends PureComponent {
 
     console.log(this);
 
-    this.renderer.rect(100, 100, 100, 100, 5)
-      .attr({
-        'stroke-width': 2,
-        stroke: 'red',
-        fill: 'yellow',
-        zIndex: 3
-      })
-      .add();
+    // this.renderer.rect(100, 100, 100, 100, 5)
+    //   .attr({
+    //     'stroke-width': 2,
+    //     stroke: 'red',
+    //     fill: 'yellow',
+    //     zIndex: 3
+    //   })
+    //   .add();
   }
 
   onPointMouseOver() {
@@ -101,6 +118,7 @@ class ColumnWidget extends PureComponent {
     // todo - improve this for update
     const chartOptions = makeChartOptions({
       onRender: this.onRenderChart,
+      onLoad: this.onLoadChart,
       onPointMouseOver: this.onPointMouseOver
     });
 
