@@ -7,7 +7,7 @@ todo:
 
  */
 
-import React, {PureComponent} from 'react';
+import React, {PureComponent, PropTypes} from 'react';
 import Highcharts from 'highcharts';
 
 import {onNextFrame} from './../utils/DOM';
@@ -98,15 +98,18 @@ const ChartFactory = (_Highcharts) => {
       return (
         <div className="dvk-chart">
           <div ref={el => this.el = el} />
-          {this.props.hasCustomLegend && <div ref={'cat'} className="tooltip"></div>}
+          {this.props.children}
         </div>
       );
     }
   }
 
   Chart.defaultProps = {
-    hasCustomLegend: false,
     callback: () => {},
+  };
+
+  Chart.propTypes = {
+    children: PropTypes.element,
   };
 
   return Chart;

@@ -42,7 +42,7 @@ export const makeChartOptions = ({}) => {
           events: {
             mouseOver: function() {
               const container = this.series.chart.container;
-              const customLegendNode = findRelativeByAncestor(container, 'dvk-chart', 'tooltip');
+              const customLegendNode = findRelativeByAncestor(container, 'dvk-chart', 'customLegend');
               if (customLegendNode) {
                 customLegendNode.innerHTML = 'TOOLTIP: <br/>' +
                   this.category + ' ' + this.color + ' ' + this.y + ' ' + this.series.name;

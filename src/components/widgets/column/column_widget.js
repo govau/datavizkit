@@ -61,8 +61,9 @@ class ColumnWidget extends PureComponent {
         <section>
           <Chart ref={el => this.chartInstance = el}
                  options={chartOptions}
-                 callback={this.chartCallback}
-                 hasCustomLegend={true} />
+                 callback={this.chartCallback}>
+            <div className="customLegend" />
+          </Chart>
         </section>
       </article>
     )
