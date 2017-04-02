@@ -1,4 +1,12 @@
 
+/*
+
+todo:
+
+* handle chart updates: http://stackoverflow.com/questions/42848218/using-chart-update-on-a-chart-using-renderto/42850049#42850049
+
+ */
+
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 

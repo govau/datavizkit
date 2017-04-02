@@ -1,18 +1,32 @@
 
+import Highcharts from 'highcharts';
+
+
 export const makeChartOptions = ({
   onRender = () => {},
   onPointMouseOver = () => {},
 }) => {
   return {
-    // default pie options
+    // default options
     chart: {
       type: 'line',
-      events: {   // todo - abstract
+      events: {
         render: onRender
       },
     },
     xAxis: {
-      crosshair: true
+      crosshair: true,
+      // type: 'datetime', // todo - format x labels to datetime
+      // Format 24 hour time to AM/PM
+      // dateTimeLabelFormats: {
+      //   hour: '%I:%M %P',
+      //   minute: '%I %M'
+      // },
+      // labels: {
+      //   formatter: function() {
+      //     return Highcharts.dateFormat('%I:%M %P', this.value);
+      //   }
+      // }
     },
     plotOptions: {
       line: {

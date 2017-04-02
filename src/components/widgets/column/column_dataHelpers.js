@@ -2,6 +2,9 @@
 import Highcharts from 'highcharts';
 
 
+const categories = Highcharts.getOptions().lang.shortMonths;
+
+
 export const makeChartOptions = ({
   onRender = () => {},
   onLoad = () => {},
@@ -44,8 +47,20 @@ export const makeChartOptions = ({
 
     // instance props
     xAxis: {
+      labels: {
+        formatter: function () {
+          return categories[this.value] + ' 2017';
+        },
+      },
       // categories: ["Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017"]
-      categories: Highcharts.getOptions().lang.shortMonths
+    },
+    yAxis: {
+      title: null,
+      // labels: {
+      //   formatter: function() {
+      //     return this.value + ' (units)';
+      //   }
+      // }
     },
     series: [
       {

@@ -5,6 +5,7 @@
 
  * can have a pattern for high contrast mode
  * can have a pattern for null data laer - http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill
+ *
  * include units - use legend.labelFormatter etc
  * can include units yAxis: {
  format: '${value}'
@@ -13,6 +14,9 @@
  * styled like dashboards
 
  * can support column groups - like line chart
+ *
+ *
+ * refactor so tooltip is actually the legend http://jsfiddle.net/6eenxom2/6/ http://stackoverflow.com/questions/28425608/how-to-make-highcharts-tooltip-show-outside-of-the-pie-graph
 
  */
 
@@ -98,7 +102,7 @@ class ColumnWidget extends PureComponent {
         value: pointInContext.y
       }
     });
-    emitter.emit('set:state', {'fauxLegend': fauxLegend});
+    emitter.emit('set:state', {'fauxLegend': fauxLegend});  // external tooltip
   }
 
   render() {
