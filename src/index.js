@@ -6,7 +6,6 @@ import {render} from 'react-dom';
 import ColumnWidget from './components/widgets/column'
 import DonutWidget from './components/widgets/donut'
 import LineWidget from './components/widgets/line';
-import ColumnNullDataLayerWidget from './components/widgets/columnNullDataLayer';
 
 
 /*
@@ -42,16 +41,10 @@ const donutWidget = {
   dateUpdated: '22 Feb 2016',
 };
 
-const columnNullsWidget = {
-  title: 'Nullifieds',
-  dateUpdated: '22 Feb 2016',
-};
-
 
 render(
   <div>
     <ColumnWidget widget={columnWidget} />
-    {/*<ColumnNullDataLayerWidget widget={columnNullsWidget} />*/}
     {/*<DonutWidget widget={donutWidget} />*/}
     {/*<LineWidget widget={lineWidget} />*/}
 
