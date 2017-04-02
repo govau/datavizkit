@@ -3,14 +3,15 @@
 
  todo
 
- * can have a null data layer - http://www.highcharts.com/demo/combo
  * can have a pattern for high contrast mode
+ * can have a pattern for null data laer
  * can include units yAxis: {
  format: '${value}'
  },
  http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-pointplacement-numeric/
- * can support column groups - like line chart
  * styled like dashboards
+ 
+ * can support column groups - like line chart
 
  */
 
@@ -66,7 +67,7 @@ class ColumnWidget extends PureComponent {
     var seriesData = this.series[0].data;//this is series data
     seriesData.forEach((d, idx) => {
       if (d.y === null) { //find null value in series
-        //adds plot band
+        // adds plot band
         this.xAxis[0].addPlotBand({
           from: idx -.5,  // point back
           to: idx + .5,   // point after
