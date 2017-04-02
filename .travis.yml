@@ -9,8 +9,6 @@ cache:
   yarn: true
 install:
   - yarn install
-before_script:
-  - yarn build
 script:
+  - yarn build
   - yarn test:ci
-  - pkill node
