@@ -1,24 +1,12 @@
 
-import React, {PropTypes} from 'react';
-import Highcharts from 'highcharts';
-import {BASE_CHART_OPTIONS} from './../../../hocs/withHighcharts';
-
-
-/**
- * Create a vanilla Highchart Donut
- */
-const createDonutChart = ({domNode, onRender = () => {}}) => {
-
-  const options = {
-    ...BASE_CHART_OPTIONS,
-
+export const makeChartOptions = ({onRender = () => {}}) => {
+  return {
     // default pie options
     chart: {
       type: 'pie',
-      events: {   // todo - abstract
+      events: {
         render: onRender
       },
-      renderTo: domNode
     },
     plotOptions: {
       pie: {
@@ -66,14 +54,4 @@ const createDonutChart = ({domNode, onRender = () => {}}) => {
       }]
     }],
   };
-
-  return new Highcharts.Chart(options);
-
 };
-
-createDonutChart.propTypes = {
-  domNode: PropTypes.node.isRequired,
-  onRender: PropTypes.func
-};
-
-export default createDonutChart;

@@ -14,7 +14,8 @@
 import React, {PureComponent} from 'react';
 import Emitter from 'tiny-emitter';
 
-import renderChart from './donut_chart';
+import Chart from './../../chart';
+import {makeChartOptions} from './donut_dataHelpers';
 
 
 const emitter = new Emitter();
@@ -35,29 +36,21 @@ class DonutWidget extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    if (this.chartEl === null) {
-      throw new Error('Must provide a chart element');
-    }
-    renderChart({
-      domNode: this.chartEl,
-      onRender: function(e, target, type) {
-        const decoratedData = this.series[0].data;  // pie only has 1 slice
-        const fauxLegend = decoratedData.map(d => {
-          return {
-            color: d.color,
-            key: d.name,
-            value: d.y
-          }
-        });
-        emitter.emit('set:state', {'fauxLegend': fauxLegend});
-      }
-    });
-  }
-
   manualSetState(self, stateToSet) {
     // todo  set on next tick
     this.setState(stateToSet);
+  }
+
+  onRenderChart() {
+    const decoratedData = this.series[0].data;  // pie only has 1 slice
+    const fauxLegend = decoratedData.map(d => {
+      return {
+        color: d.color,
+        key: d.name,
+        value: d.y
+      }
+    });
+    emitter.emit('set:state', {'fauxLegend': fauxLegend});
   }
 
   render() {
@@ -65,17 +58,20 @@ class DonutWidget extends PureComponent {
     const {fauxLegend} = this.state;
     const datetimeUpdate = new Date(dateUpdated).toJSON();
 
-    const chartType = 'pie';
+    // todo - improve this for update
+    const chartOptions = makeChartOptions({
+      onRender: this.onRenderChart
+    });
 
     return (
-      <article className={`chart--${chartType}`} role="article">
+      <article className={`chart--pie`} role="article">
         <header>
           <h1>{title}</h1>
           <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
           {/*<span>What is this?</span>*/}
         </header>
         <section>
-          <div ref={el => this.chartEl = el} />
+          <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           {fauxLegend.length && <div className="legend">
             <table>
               <tbody>
