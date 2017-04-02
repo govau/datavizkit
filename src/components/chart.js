@@ -3,7 +3,7 @@
 
 todo:
 
-* handle chart updates: http://stackoverflow.com/questions/42848218/using-chart-update-on-a-chart-using-renderto/42850049#42850049
+* handle chart updates after render: http://stackoverflow.com/questions/42848218/using-chart-update-on-a-chart-using-renderto/42850049#42850049
 
  */
 
@@ -95,11 +95,17 @@ const ChartFactory = (_Highcharts) => {
     }
 
     render() {
-      return <div ref={el => this.el = el} />
+      return (
+        <div className="dvk-chart">
+          <div ref={el => this.el = el} />
+          {this.props.hasCustomLegend && <div ref={'cat'} className="tooltip"></div>}
+        </div>
+      );
     }
   }
 
   Chart.defaultProps = {
+    hasCustomLegend: false,
     callback: () => {},
   };
 

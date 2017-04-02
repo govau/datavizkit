@@ -14,8 +14,6 @@
  * styled like dashboards
 
  * can support column groups - like line chart
- *
- * can update chart after first render
 
  */
 
@@ -35,7 +33,7 @@ class ColumnWidget extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.chartInstance = null
+    this.chartInstance = null;
   }
 
   chartCallback() {
@@ -61,9 +59,10 @@ class ColumnWidget extends PureComponent {
           <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
         </header>
         <section>
-          <Chart ref={el => this.chartInstance = el} options={chartOptions}
-                 callback={this.chartCallback} />
-          <div id="tooltip"></div>
+          <Chart ref={el => this.chartInstance = el}
+                 options={chartOptions}
+                 callback={this.chartCallback}
+                 hasCustomLegend={true} />
         </section>
       </article>
     )
