@@ -1,4 +1,6 @@
 
+import Highcharts from 'highcharts';
+
 export const makeChartOptions = ({
   emitSetState = () => {},
   widget,
@@ -12,7 +14,7 @@ export const makeChartOptions = ({
           const customLegendData = this.series[0].data.map(d => {
             return {
               key: d.name,
-              y: d.y,
+              y: Highcharts.numberFormat(d.percentage, 2) + '%',
               seriesName: this.series[0].name,
               color: d.color
             }
@@ -58,22 +60,22 @@ export const makeChartOptions = ({
       innerSize: '50%',
       data: [{
         name: 'Microsoft Internet Explorer',
-        y: 56.33
+        y: 123
       }, {
         name: 'Chrome',
-        y: 24.03,
+        y: 23
       }, {
         name: 'Firefox',
-        y: 10.38
+        y: 105
       }, {
         name: 'Safari',
-        y: 4.77
+        y: 45
       }, {
         name: 'Opera',
-        y: 0.91
+        y: 10
       }, {
         name: 'Proprietary or Undetectable',
-        y: 0.2
+        y: 87
       }]
     }],
   };
