@@ -33,7 +33,12 @@ class ColumnWidget extends PureComponent {
 
   constructor(props) {
     super(props);
+    this.proxiedSetState = this.proxiedSetState.bind(this);
+
     this.chartInstance = null;
+    this.state = {
+      customLegend: []
+    };
   }
 
   chartCallback() {
@@ -46,23 +51,31 @@ class ColumnWidget extends PureComponent {
     }
   }
 
-  render() {
-    const {widget: {title, dateUpdated}} = this.props;
-    const datetimeUpdate = new Date(dateUpdated).toJSON();
+  proxiedSetState(state) {
+    this.setState(state);
+  }
 
-    const chartOptions = makeChartOptions({});
+  render() {
+    const {customLegend} = this.state;
+
+    const chartOptions = makeChartOptions({
+      emitSetState: this.proxiedSetState,
+      widget: this.props.widget
+    });
 
     return (
       <article className={`chart--column`} role="article">
-        <header>
-          <h1>{title}</h1>
-          <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
-        </header>
         <section>
           <Chart ref={el => this.chartInstance = el}
                  options={chartOptions}
                  callback={this.chartCallback}>
-            <div className="customLegend" />
+            <div>
+              {customLegend && customLegend.length && <div>
+                {customLegend.map((d, idx) => {
+                  return <div key={idx}>{d.color} {d.key} {d.y}</div>
+                })}
+              </div>}
+            </div>
           </Chart>
         </section>
       </article>

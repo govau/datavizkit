@@ -1,11 +1,13 @@
 
 // todo - not import Highcharts again
 import Highcharts from 'highcharts';
+import last from 'lodash/last';
 
-import {findRelativeByAncestor} from './../../../utils/DOMAccessors';
 
-
-export const makeChartOptions = ({}) => {
+export const makeChartOptions = ({
+  emitSetState = () => {},
+  widget,
+}) => {
 
   const categories = Highcharts.getOptions().lang.shortMonths;
 
@@ -26,13 +28,28 @@ export const makeChartOptions = ({}) => {
               });
             }
           });
-        }
+
+          let customLegendData = this.series.map(s => {
+            const lastData = last(s.data);
+            return {
+              key: lastData.category,
+              y: lastData.y,
+              seriesName: s.name,
+              color: lastData.color,
+            }
+          });
+          emitSetState({'customLegend': customLegendData});
+        },
       },
     },
-    yAxis: {
-      title: {
-        text: null
-      }
+    title: {
+      text: widget.title,
+      align: 'left',
+    },
+    subtitle: {
+      useHTML: true,
+      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      align: 'left',
     },
     plotOptions: {
       column: {},
@@ -41,12 +58,17 @@ export const makeChartOptions = ({}) => {
         point: {
           events: {
             mouseOver: function() {
-              const container = this.series.chart.container;
-              const customLegendNode = findRelativeByAncestor(container, 'dvk-chart', 'customLegend');
-              if (customLegendNode) {
-                customLegendNode.innerHTML = 'TOOLTIP: <br/>' +
-                  this.category + ' ' + this.color + ' ' + this.y + ' ' + this.series.name;
-              }
+              const sliceIdx = this.index;
+              const customLegendData = this.series.chart.series.map(s => {
+                const sliceData = s.data[sliceIdx];
+                return {
+                  key: sliceData.category,
+                  y: sliceData.y,
+                  seriesName: s.name,
+                  color: sliceData.color
+                }
+              });
+              emitSetState({'customLegend': customLegendData});
             }
           }
         },
@@ -71,7 +93,9 @@ export const makeChartOptions = ({}) => {
       },
     },
     yAxis: {
-      title: null,
+      title: {
+        text: null
+      },
       // labels: {
       //   formatter: function() {
       //     return this.value + ' (units)';

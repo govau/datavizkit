@@ -1,18 +1,39 @@
 
-import Highcharts from 'highcharts';
+// import Highcharts from 'highcharts';
+import last from 'lodash/last';
 
 
 export const makeChartOptions = ({
-  onRender = () => {},
-  onPointMouseOver = () => {},
+  emitSetState = () => {},
+  widget,
 }) => {
   return {
     // default options
     chart: {
       type: 'line',
       events: {
-        render: onRender
+        load: function() {
+          let customLegendData = this.series.map(s => {
+            const lastData = last(s.data);
+            return {
+              key: lastData.category,
+              y: lastData.y,
+              seriesName: s.name,
+              color: lastData.color
+            }
+          });
+          emitSetState({'customLegend': customLegendData});
+        }
       },
+    },
+    title: {
+      text: widget.title,
+      align: 'left',
+    },
+    subtitle: {
+      useHTML: true,
+      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      align: 'left',
     },
     xAxis: {
       crosshair: true,
@@ -38,7 +59,19 @@ export const makeChartOptions = ({
         animation: false,
         point: {
           events: {
-            mouseOver: onPointMouseOver,
+            mouseOver: function() {
+              const sliceIdx = this.index;
+              const customLegendData = this.series.chart.series.map(s => {
+                const sliceData = s.data[sliceIdx];
+                return {
+                  key: sliceData.category,
+                  y: sliceData.y,
+                  seriesName: s.name,
+                  color: sliceData.color
+                }
+              });
+              emitSetState({'customLegend': customLegendData});
+            },
           }
         },
         states: {

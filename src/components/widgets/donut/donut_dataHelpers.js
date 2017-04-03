@@ -1,14 +1,36 @@
 
 export const makeChartOptions = ({
-  onRender = () => {},
+  emitSetState = () => {},
+  widget,
 }) => {
   return {
     // default pie options
     chart: {
       type: 'pie',
       events: {
-        render: onRender
+        load: function() {
+          const customLegendData = this.series.map(s => {
+            return s.data && s.data.map(d => {
+              return {
+                key: d.name,
+                y: d.y,
+                seriesName: s.name,
+                color: d.color
+              }
+            });
+          });
+          emitSetState({'customLegend': customLegendData});
+        },
       },
+    },
+    title: {
+      text: widget.title,
+      align: 'left',
+    },
+    subtitle: {
+      useHTML: true,
+      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      align: 'left',
     },
     plotOptions: {
       pie: {
@@ -28,6 +50,7 @@ export const makeChartOptions = ({
           }
         }
       },
+      series: {}
     },
 
     // instance props
