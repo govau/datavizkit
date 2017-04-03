@@ -31,10 +31,10 @@ export const makeChartOptions = ({
           let customLegendData = this.series.map(s => {
             const lastData = last(s.data);
             return {
-              key: lastData.name,
+              key: lastData.category,
               y: lastData.y,
               seriesName: s.name,
-              color: lastData.color
+              color: lastData.color,
             }
           });
           emitSetState({'customLegend': customLegendData});
@@ -54,27 +54,15 @@ export const makeChartOptions = ({
           events: {
             mouseOver: function() {
               const sliceIdx = this.index;
-              let customLegendData;
-
-              if (this.series.length) {
-                customLegendData = this.series.map(s => {
-                  const sliceData = s.data[sliceIdx];
-                  return {
-                    key: sliceData.category,
-                    y: sliceData.y,
-                    seriesName: s.name,
-                    color: sliceData.color
-                  }
-                });
-              } else {
-                const sliceData = this.series.data[sliceIdx];
-                customLegendData = [{
+              const customLegendData = this.series.chart.series.map(s => {
+                const sliceData = s.data[sliceIdx];
+                return {
                   key: sliceData.category,
                   y: sliceData.y,
-                  seriesName: this.series.name,
+                  seriesName: s.name,
                   color: sliceData.color
-                }];
-              }
+                }
+              });
               emitSetState({'customLegend': customLegendData});
             }
           }
