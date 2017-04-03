@@ -1,4 +1,5 @@
 var path = require('path');
+var config = require('./package').config;
 
 module.exports = {
   title: '@gov.au/datavizkit',
@@ -9,7 +10,7 @@ module.exports = {
       components: './src/components/widgets/**/*.js',
     },
   ],
-  styleguideDir: 'docs/.out',
+  styleguideDir: config.styleguideDir,
   defaultExample: true,
   serverPort: 4000,
   webpackConfig: require('./config/webpack.config.styleguide.js')
