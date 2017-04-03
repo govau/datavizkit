@@ -10,7 +10,6 @@
  */
 
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 
 import Chart from './../../chart';
 import {makeChartOptions} from './line_dataHelpers';
@@ -37,20 +36,15 @@ class LineWidget extends PureComponent {
   }
 
   render() {
-    const {widget: {title, dateUpdated}} = this.props;
     const {customLegend} = this.state;
-    const datetimeUpdate = new Date(dateUpdated).toJSON();
 
     const chartOptions = makeChartOptions({
-      emitSetState: this.proxiedSetState
+      emitSetState: this.proxiedSetState,
+      widget: this.props.widget,
     });
 
     return (
       <article className={`chart--line`} role="article">
-        <header>
-          <h1>{title}</h1>
-          <span>Last updated <time dateTime={datetimeUpdate}>{dateUpdated}</time></span>
-        </header>
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           <div>

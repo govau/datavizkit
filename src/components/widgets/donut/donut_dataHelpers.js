@@ -1,6 +1,7 @@
 
 export const makeChartOptions = ({
-  emitSetState = () => {}
+  emitSetState = () => {},
+  widget,
 }) => {
   return {
     // default pie options
@@ -21,6 +22,15 @@ export const makeChartOptions = ({
           emitSetState({'customLegend': customLegendData});
         },
       },
+    },
+    title: {
+      text: widget.title,
+      align: 'left',
+    },
+    subtitle: {
+      useHTML: true,
+      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      align: 'left',
     },
     plotOptions: {
       pie: {

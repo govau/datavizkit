@@ -1,10 +1,11 @@
 
-import Highcharts from 'highcharts';
+// import Highcharts from 'highcharts';
 import last from 'lodash/last';
 
 
 export const makeChartOptions = ({
   emitSetState = () => {},
+  widget,
 }) => {
   return {
     // default options
@@ -14,7 +15,6 @@ export const makeChartOptions = ({
         load: function() {
           let customLegendData = this.series.map(s => {
             const lastData = last(s.data);
-            console.log(lastData)
             return {
               key: lastData.category,
               y: lastData.y,
@@ -25,6 +25,15 @@ export const makeChartOptions = ({
           emitSetState({'customLegend': customLegendData});
         }
       },
+    },
+    title: {
+      text: widget.title,
+      align: 'left',
+    },
+    subtitle: {
+      useHTML: true,
+      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      align: 'left',
     },
     xAxis: {
       crosshair: true,
