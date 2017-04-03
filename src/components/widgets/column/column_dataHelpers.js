@@ -1,11 +1,12 @@
 
 // todo - not import Highcharts again
 import Highcharts from 'highcharts';
+import last from 'lodash/last';
 
-import {findRelativeByAncestor} from './../../../utils/DOMAccessors';
 
-
-export const makeChartOptions = ({}) => {
+export const makeChartOptions = ({
+  emitSetState = () => {}
+}) => {
 
   const categories = Highcharts.getOptions().lang.shortMonths;
 
@@ -26,7 +27,18 @@ export const makeChartOptions = ({}) => {
               });
             }
           });
-        }
+
+          let customLegendData = this.series.map(s => {
+            const lastData = last(s.data);
+            return {
+              key: lastData.name,
+              y: lastData.y,
+              seriesName: s.name,
+              color: lastData.color
+            }
+          });
+          emitSetState({'customLegend': customLegendData});
+        },
       },
     },
     yAxis: {
@@ -41,12 +53,29 @@ export const makeChartOptions = ({}) => {
         point: {
           events: {
             mouseOver: function() {
-              const container = this.series.chart.container;
-              const customLegendNode = findRelativeByAncestor(container, 'dvk-chart', 'customLegend');
-              if (customLegendNode) {
-                customLegendNode.innerHTML = 'TOOLTIP: <br/>' +
-                  this.category + ' ' + this.color + ' ' + this.y + ' ' + this.series.name;
+              const sliceIdx = this.index;
+              let customLegendData;
+
+              if (this.series.length) {
+                customLegendData = this.series.map(s => {
+                  const sliceData = s.data[sliceIdx];
+                  return {
+                    key: sliceData.category,
+                    y: sliceData.y,
+                    seriesName: s.name,
+                    color: sliceData.color
+                  }
+                });
+              } else {
+                const sliceData = this.series.data[sliceIdx];
+                customLegendData = [{
+                  key: sliceData.category,
+                  y: sliceData.y,
+                  seriesName: this.series.name,
+                  color: sliceData.color
+                }];
               }
+              emitSetState({'customLegend': customLegendData});
             }
           }
         },

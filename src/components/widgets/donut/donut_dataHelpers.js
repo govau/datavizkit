@@ -1,13 +1,25 @@
 
 export const makeChartOptions = ({
-  onRender = () => {},
+  emitSetState = () => {}
 }) => {
   return {
     // default pie options
     chart: {
       type: 'pie',
       events: {
-        render: onRender
+        load: function() {
+          const customLegendData = this.series.map(s => {
+            return s.data && s.data.map(d => {
+              return {
+                key: d.name,
+                y: d.y,
+                seriesName: s.name,
+                color: d.color
+              }
+            });
+          });
+          emitSetState({'customLegend': customLegendData});
+        },
       },
     },
     plotOptions: {
@@ -28,6 +40,7 @@ export const makeChartOptions = ({
           }
         }
       },
+      series: {}
     },
 
     // instance props
