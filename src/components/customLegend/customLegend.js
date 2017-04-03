@@ -25,6 +25,10 @@ const StyledLegend = styled(Legend)`
   .row {
     display: table;
     width: 100%;
+    margin-bottom: 4px;
+  }
+  .row:last-of-type {
+    margin-bottom: 0;
   }
   .key,
   .value {
@@ -34,10 +38,14 @@ const StyledLegend = styled(Legend)`
   .key {
     svg {
       margin-right: 1em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
   .value {
     text-align: right;
+    font-weight: 600;
   }
 `;
 
