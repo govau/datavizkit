@@ -67,7 +67,7 @@
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",
     "docs-build": "styleguidist build",
-    "docs-deploy": "npm run docs-build && surge -p docs/ -d datavizkit.surge.sh"
+    "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDir -d https://datavizkit.surge.sh"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -100,5 +100,8 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "config": {
+    "styleguideDir": "docs/.out"
   }
 }
