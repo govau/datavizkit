@@ -74,7 +74,6 @@ class ColumnWidget extends PureComponent {
             <div>
               {customLegend && customLegend.length && <Legend data={customLegend} />}
             </div>
-
           </Chart>
         </section>
       </article>

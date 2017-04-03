@@ -17,6 +17,8 @@ import React, {PureComponent} from 'react';
 import Chart from './../../chart';
 import {makeChartOptions} from './donut_dataHelpers';
 
+import Legend from './../../customLegend';
+
 
 /**
  * Renders a Donut Widget with it's surrounding state.
@@ -51,13 +53,7 @@ class DonutWidget extends PureComponent {
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions}>
             <div>
-              {customLegend && customLegend.length && <div>
-                {customLegend.map(series => {
-                  return series.map((d, dIdx) => {
-                    return <div key={dIdx}>{d.color} {d.key} {d.y}</div>
-                  });
-                })}
-              </div>}
+              {customLegend && customLegend.length && <Legend data={customLegend} />}
             </div>
           </Chart>
         </section>
