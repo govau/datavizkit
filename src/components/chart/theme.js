@@ -1,5 +1,6 @@
 
 const Theme = {
+  /*eslint-disable */
   colors: [
     '#4892C0',  /* light blue */
     '#75A370',  /* dark green */
@@ -35,6 +36,7 @@ const Theme = {
       color: '#6c7783',
     }
   }
+  /*eslint-enable */
 };
 
 export default Theme;
