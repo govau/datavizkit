@@ -41,11 +41,6 @@ export const makeChartOptions = ({
         },
       },
     },
-    yAxis: {
-      title: {
-        text: null
-      }
-    },
     plotOptions: {
       column: {},
       series: {
@@ -88,7 +83,9 @@ export const makeChartOptions = ({
       },
     },
     yAxis: {
-      title: null,
+      title: {
+        text: null
+      },
       // labels: {
       //   formatter: function() {
       //     return this.value + ' (units)';
