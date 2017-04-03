@@ -14,6 +14,8 @@ import React, {PureComponent} from 'react';
 import Chart from './../../chart';
 import {makeChartOptions} from './line_dataHelpers';
 
+import Legend from './../../customLegend';
+
 
 /**
  * Renders a Line Widget with it's surrounding state.
@@ -48,11 +50,7 @@ class LineWidget extends PureComponent {
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           <div>
-            {customLegend && customLegend.length && <div>
-              {customLegend.map((d, idx) => {
-                return <div key={idx}>{d.color} {d.key} {d.y}</div>
-              })}
-            </div>}
+            {customLegend && customLegend.length && <Legend data={customLegend} />}
           </div>
         </section>
       </article>

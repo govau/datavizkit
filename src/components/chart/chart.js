@@ -10,7 +10,9 @@ todo:
 import React, {PureComponent, PropTypes} from 'react';
 import Highcharts from 'highcharts';
 
-import {onNextFrame} from './../utils/DOM';
+import {onNextFrame} from './../../utils/DOM';
+import Theme from './theme';
+
 
 
 const BASE_CHART_OPTIONS = {
@@ -42,22 +44,7 @@ const BASE_CHART_OPTIONS = {
 const ChartFactory = (_Highcharts) => {
 
   _Highcharts.setOptions({
-    colors: [
-      '#4892C0',  /* light blue */
-      '#75A370',  /* dark green */
-      '#F5D900',  /* yellow */
-      '#7066A5',  /* light purple */
-      '#F8BBD0',  /* pink */
-      '#47BCAC',  /* turquoise */
-      '#5345AD',  /* purple */
-      '#AFA545',  /* olive */
-      '#CB6935',  /* orange */
-    ],
-    chart: {
-      style: {
-        fontFamily: 'Open Sans,sans-serif'
-      }
-    }
+    ...Theme
   });
 
   class Chart extends PureComponent {

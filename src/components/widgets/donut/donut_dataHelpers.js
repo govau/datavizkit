@@ -9,15 +9,13 @@ export const makeChartOptions = ({
       type: 'pie',
       events: {
         load: function() {
-          const customLegendData = this.series.map(s => {
-            return s.data && s.data.map(d => {
-              return {
-                key: d.name,
-                y: d.y,
-                seriesName: s.name,
-                color: d.color
-              }
-            });
+          const customLegendData = this.series[0].data.map(d => {
+            return {
+              key: d.name,
+              y: d.y,
+              seriesName: this.series[0].name,
+              color: d.color
+            }
           });
           emitSetState({'customLegend': customLegendData});
         },
