@@ -24,6 +24,8 @@ import last from 'lodash/last';
 import Chart from './../../chart';
 import {makeChartOptions} from './column_dataHelpers';
 
+import Legend from './../../customLegend';
+
 
 /**
  * Renders a Column Widget with it's surrounding state.
@@ -70,12 +72,9 @@ class ColumnWidget extends PureComponent {
                  options={chartOptions}
                  callback={this.chartCallback}>
             <div>
-              {customLegend && customLegend.length && <div>
-                {customLegend.map((d, idx) => {
-                  return <div key={idx}>{d.color} {d.key} {d.y}</div>
-                })}
-              </div>}
+              {customLegend && customLegend.length && <Legend data={customLegend} />}
             </div>
+
           </Chart>
         </section>
       </article>
