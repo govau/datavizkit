@@ -8,6 +8,10 @@
  * guard against sectors that are too small. if i have more than said number of items, combine smallest ones in to an "Other" sector - enforce by a data transformation step
  * can display units
  * styled like dashboards
+ *
+ * Guard againt * A pie can only only have a single series of data
+ *
+ * Provide values to chart, chart will convert to percentages
 
  */
 
@@ -22,6 +26,10 @@ import Legend from './../../customLegend';
 
 /**
  * Renders a Donut Widget with it's surrounding state.
+ *
+ * Technically multiple series of data can be plotted on polar
+ * charts, but this widget should only accept a single series of
+ * data.
  *
  */
 class DonutWidget extends PureComponent {

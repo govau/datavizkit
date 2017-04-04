@@ -59,15 +59,12 @@ const ChartFactory = (_Highcharts) => {
       const chartOptions = {...BASE_CHART_OPTIONS, ...this.props.options};
       chartOptions.chart.renderTo = this.el;
       onNextFrame(() => {
-        this.chart = this.renderChart(
-          chartOptions,
-          this.props.callback
-        );
+        this.chart = this.renderChart(chartOptions);
       });
     }
 
-    renderChart(options, callback) {
-      return new Highcharts.chart(options, callback);
+    renderChart(options, cb) {
+      return new Highcharts.chart(options, cb);
     }
 
     getChart() {
