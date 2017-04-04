@@ -5,9 +5,9 @@ Status: [WIP]
 
 [![Build Status](https://travis-ci.org/govau/datavizkit.svg?branch=master)](https://travis-ci.org/govau/datavizkit)
 
-[![PRs Welcome][prs-badge]][prs] WIP [Contributing](/CONTRIBUTING.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [Contributing](/CONTRIBUTING.md)
 
-[![Roadmap][roadmap-badge]][roadmap] WIP [Roadmap](/ROADMAP.md)
+[![Roadmap][roadmap-badge]][roadmap] [Roadmap](/ROADMAP.md)
 
 [![Examples][examples-badge]][examples] [Styleguide](https://datavizkit.surge.sh)
 
