@@ -24,7 +24,7 @@ export const makeChartOptions = ({
               this.xAxis[0].addPlotBand({
                 from: idx -.5,  // point back
                 to: idx + .5,   // point after
-                color: '#c5d8f7', // this color represents the null value region
+                color: 'url(#diagonal-stripe-1)', // this color represents the null value region
               });
             }
           });
