@@ -3,7 +3,7 @@
 Status: [WIP]
 
 
-[![Build Status](https://travis-ci.org/govau/datavizkit.svg?branch=master)](https://travis-ci.org/govau/datavizkit)
+[![Build Status](https://travis-ci.org/govau/datavizkit.svg?branch=master&style=flat-square)](https://travis-ci.org/govau/datavizkit)
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) 
 
