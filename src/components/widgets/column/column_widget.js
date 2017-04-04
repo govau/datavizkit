@@ -43,16 +43,6 @@ class ColumnWidget extends PureComponent {
     };
   }
 
-  chartCallback() {
-    // scoped to instance
-
-    // "hover" over the last column
-    const lastCol = last(this.series[0].data);
-    if (lastCol) {
-      lastCol.onMouseOver && lastCol.onMouseOver();
-    }
-  }
-
   proxiedSetState(state) {
     this.setState(state);
   }

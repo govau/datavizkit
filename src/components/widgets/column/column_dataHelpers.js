@@ -16,7 +16,7 @@ export const makeChartOptions = ({
     chart: {
       type: 'column',
       events: {
-        load: function() {
+        load: function() {  // equivalent to constructor callback
           var seriesData = this.series[0].data;//this is series data
           seriesData.forEach((d, idx) => {
             if (d.y === null) { //find null value in series
@@ -39,6 +39,12 @@ export const makeChartOptions = ({
             }
           });
           emitSetState({'customLegend': customLegendData});
+
+          // "hover" over the last column
+          const lastCol = last(this.series[0].data);
+          if (lastCol) {
+            lastCol.onMouseOver && lastCol.onMouseOver();
+          }
         },
       },
     },
