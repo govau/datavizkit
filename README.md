@@ -5,11 +5,11 @@ Status: [WIP]
 
 [![Build Status](https://travis-ci.org/govau/datavizkit.svg?branch=master)](https://travis-ci.org/govau/datavizkit)
 
-[![PRs Welcome][prs-badge]][/CONTIBUTING.md] WIP
+[![PRs Welcome][prs-badge]][prs] WIP [Contributing](/CONTRIBUTING.md)
 
-[![Roadmap][roadmap-badge]][/ROADMAP.md] WIP
+[![Roadmap][roadmap-badge]][roadmap] WIP [Roadmap](/ROADMAP.md)
 
-[![Examples][examples-badge]][https://datavizkit.surge.sh] WIP
+[![Examples][examples-badge]][examples] [Styleguide](https://datavizkit.surge.sh)
 
 
 A fully featured data visualisation toolset which leverages [Highcharts](http://www.highcharts.com/) and [React](https://facebook.github.io/react/) internally.
