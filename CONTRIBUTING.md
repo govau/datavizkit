@@ -14,4 +14,4 @@ Some basic house-keeping for contributions please:
 2. `$ yarn install` to install dependencies
 3. `$ yarn start` to boot up the dev environment
 4. Create a branch for your PR
-5. Create a Pull Requests to upstream/master
+5. Create a Pull Request to upstream/master when you're ready to merge 
