@@ -4825,6 +4825,10 @@ react-group@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-group/-/react-group-1.0.3.tgz#553f50e3588324c4bbb161a3e6832677a33c7a5b"
 
+react-lightweight-tooltip@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-lightweight-tooltip/-/react-lightweight-tooltip-0.0.4.tgz#60b2929d9a3828803960dc255343a594c2e4f0e3"
+
 react-styleguidist@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-5.0.2.tgz#bf70b22094c86024da4a4b000a555e7652a269e1"

@@ -8,6 +8,7 @@
     "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-lightweight-tooltip": "^0.0.4",
     "styled-components": "^1.4.4",
     "tiny-emitter": "^1.1.0"
   },

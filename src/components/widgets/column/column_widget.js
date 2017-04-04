@@ -19,9 +19,8 @@
 
 
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 
-import Chart from './../../chart';
+import Chart, {Tooltip} from './../../chart';
 import {makeChartOptions} from './column_dataHelpers';
 
 import Legend from './../../customLegend';
@@ -49,15 +48,18 @@ class ColumnWidget extends PureComponent {
 
   render() {
     const {customLegend} = this.state;
+    const {hasTooltip} = this.props;
 
     const chartOptions = makeChartOptions({
       emitSetState: this.proxiedSetState,
-      widget: this.props.widget
+      widget: this.props.widget,
+      tooltip: <Tooltip content="Yes, the default one">What is this?</Tooltip>
     });
 
     return (
       <article className={`chart--column`} role="article">
         <section>
+          {hasTooltip && <Tooltip position="bottom" content="Describes the purpose of the chart" />}
           <Chart ref={el => this.chartInstance = el}
                  options={chartOptions}
                  callback={this.chartCallback}>
@@ -70,6 +72,10 @@ class ColumnWidget extends PureComponent {
     )
   }
 }
+
+ColumnWidget.defaultProps = {
+  hasTooltip: false,
+};
 
 export default ColumnWidget;
 
