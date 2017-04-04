@@ -9,9 +9,7 @@ Status: [WIP]
 
 
 [![docs](https://img.shields.io/badge/docs-CONTIBUTING-blue.svg)](/CONTRIBUTING.md)
-
 [![docs](https://img.shields.io/badge/docs-ROADMAP-blue.svg)](/ROADMAP.md) 
-
 [![docs](https://img.shields.io/badge/docs-EXAMPLES-blue.svg)](https://datavizkit.surge.sh)
 
 
