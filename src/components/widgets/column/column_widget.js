@@ -53,13 +53,13 @@ class ColumnWidget extends PureComponent {
     const chartOptions = makeChartOptions({
       emitSetState: this.proxiedSetState,
       widget: this.props.widget,
-      tooltip: <Tooltip content="Yes, the default one">What is this?</Tooltip>
     });
 
     return (
       <article className={`chart--column`} role="article">
         <section>
           {hasTooltip && <Tooltip position="bottom" content="Describes the purpose of the chart" />}
+          <Tooltip position="bottom" content="Describes the purpose of the chart" />
           <Chart ref={el => this.chartInstance = el}
                  options={chartOptions}
                  callback={this.chartCallback}>

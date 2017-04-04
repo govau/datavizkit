@@ -1,4 +1,6 @@
 
+// todo - choose a more flexible tooltip solution
+
 import React, {PureComponent, PropTypes} from 'react';
 import {Tooltip} from 'react-lightweight-tooltip';
 
