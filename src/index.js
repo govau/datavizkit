@@ -41,9 +41,15 @@ const donutWidget = {
   dateUpdated: '22 Feb 2016',
 };
 
-const stackedColumnWidget = {
-  title: 'Page views by state',
+const stackedColumnWidgetNormal = {
+  title: 'Page views by state (normal stacking)',
   dateUpdated: '22 Feb 2016'
+}
+
+const stackedColumnWidgetPercentage = {
+  title: 'Page views by state (percentage stacking)',
+  dateUpdated: '22 Feb 2016',
+  percentageStacking: true
 }
 
 render(
@@ -73,7 +79,11 @@ render(
 
     <br />
 
-    <StackedColumnWidget widget={stackedColumnWidget} />
+    <StackedColumnWidget widget={stackedColumnWidgetNormal} />
+
+    <br />
+
+    <StackedColumnWidget widget={stackedColumnWidgetPercentage} />
 
   </div>, document.getElementById('root')
 );

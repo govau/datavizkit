@@ -60,7 +60,7 @@ export const makeChartOptions = ({
     },
     plotOptions: {
       column: {
-        stacking: 'percent'
+        stacking: widget.percentageStacking ? 'percent' : 'normal'
       },
       series: {
         animation: false,
