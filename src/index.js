@@ -6,6 +6,7 @@ import {render} from 'react-dom';
 import ColumnWidget from './components/widgets/column'
 import DonutWidget from './components/widgets/donut'
 import LineWidget from './components/widgets/line';
+import StackedColumnWidget from './components/widgets/stackedColumn'
 
 
 /*
@@ -40,6 +41,10 @@ const donutWidget = {
   dateUpdated: '22 Feb 2016',
 };
 
+const stackedColumnWidget = {
+  title: 'Page views by state',
+  dateUpdated: '22 Feb 2016'
+}
 
 render(
   <div>
@@ -65,6 +70,10 @@ render(
     <br/>
 
     <DonutWidget widget={donutWidget} />
+
+    <br />
+
+    <StackedColumnWidget widget={stackedColumnWidget} />
 
   </div>, document.getElementById('root')
 );
