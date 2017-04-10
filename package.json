@@ -85,7 +85,6 @@
     "docs-build": "styleguidist build",
     "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDir -d https://datavizkit.surge.sh",
     "commit": "git-cz",
-    "commitmsg": "validate-commit-msg",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "config": {
