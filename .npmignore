@@ -1,10 +1,7 @@
 build/
 .github/
-docs/
 public/
 scripts/
 config/
-coverage/
 yarn-error.log
-.idea
-_trash/
+.npmignore
