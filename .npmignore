@@ -1,0 +1,5 @@
+build/
+.github/
+coverage/
+.travis.yml
+yarn-error.log
