@@ -49,7 +49,7 @@ const stackedColumnWidgetNormal = {
 const stackedColumnWidgetPercentage = {
   title: 'Page views by state (percentage stacking)',
   dateUpdated: '22 Feb 2016',
-  percentageStacking: true
+  stacking: 'percent'
 }
 
 render(
