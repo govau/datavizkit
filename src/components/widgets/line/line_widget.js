@@ -18,7 +18,7 @@ import Legend from './../../customLegend';
 
 
 /**
- * Renders a Line Widget with it's surrounding state.
+ * Renders a Line Widget with its surrounding state.
  *
  */
 class LineWidget extends PureComponent {

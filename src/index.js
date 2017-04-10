@@ -6,7 +6,8 @@ import {render} from 'react-dom';
 import ColumnWidget from './components/widgets/column'
 import DonutWidget from './components/widgets/donut'
 import LineWidget from './components/widgets/line';
-import StackedColumnWidget from './components/widgets/stackedColumn'
+import StackedColumnWidget from './components/widgets/stackedColumn'=======
+import SparklineWidget from './components/widgets/sparkline'
 
 
 /*
@@ -52,6 +53,12 @@ const stackedColumnWidgetPercentage = {
   stacking: 'percent'
 }
 
+const splineWidget = {
+  title: 'Approved suppliers',
+  dateUpdated: '16 Mar 2017',
+  latestValue: 222.0
+}
+
 render(
   <div>
 
@@ -68,22 +75,21 @@ render(
 
 
     <LineWidget widget={lineWidget} />
-
     <br/>
 
     <ColumnWidget widget={columnWidget} />
-
     <br/>
 
     <DonutWidget widget={donutWidget} />
-
     <br />
 
     <StackedColumnWidget widget={stackedColumnWidgetNormal} />
-
     <br />
 
     <StackedColumnWidget widget={stackedColumnWidgetPercentage} />
+    <br/>
+
+    <SparklineWidget widget={splineWidget} />
 
   </div>, document.getElementById('root')
 );

@@ -6,7 +6,7 @@ import Legend from './../../customLegend';
 /**
  * Renders a Line Widget with its surrounding state.
  */
-class LineWidget extends PureComponent {
+class SparklineWidget extends PureComponent {
   constructor(props) {
     super(props);
     this.proxiedSetState = this.proxiedSetState.bind(this);
@@ -42,5 +42,5 @@ class LineWidget extends PureComponent {
 
 }
 
-export default LineWidget;
+export default SparklineWidget;
 
