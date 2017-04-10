@@ -40,12 +40,6 @@ export const makeChartOptions = ({
             }
           });
           emitSetState({'customLegend': customLegendData});
-
-          // "hover" over the last column
-          const lastCol = last(this.series[0].data);
-          if (lastCol) {
-            lastCol.onMouseOver && lastCol.onMouseOver();
-          }
         },
       },
     },
@@ -71,6 +65,7 @@ export const makeChartOptions = ({
               const chartSeries = this.series.chart.series
               const customLegendData = chartSeries.map((s, i) => {
                 const sliceData = s.data[sliceIdx];
+                sliceData.setState('hover');
                 return {
                   key: s.name,
                   y: sliceData.y,
@@ -79,6 +74,12 @@ export const makeChartOptions = ({
                 }
               });
               emitSetState({'customLegend': customLegendData});
+            },
+            mouseOut: function() {
+              const sliceIdx = this.index
+              this.series.chart.series.forEach((s, i) => {
+                s.data[sliceIdx].setState('');
+              });
             }
           }
         },
