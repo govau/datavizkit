@@ -1,8 +1,19 @@
 {
-  "name": "datavizkit",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@gov.au/datavizkit",
+  "version": "0.0.0-development",
+  "description": "A fully featured data visualisation toolset built on top of Highcharts and React.",
+  "keywords": [
+    "highcharts",
+    "dataviz"
+  ],
   "license": "MIT",
+  "author": "Digital Transformation Agency",
+  "repository": "https://github.com/govau/datavizkit",
+  "main": "src/index.js",
+  "bugs": {
+    "url": "https://github.com/govau/datavizkit/issues"
+  },
+  "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
     "highcharts": "^5.0.9",
     "lodash": "^4.17.4",
@@ -27,9 +38,11 @@
     "babel-runtime": "^6.20.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
+    "commitizen": "^2.9.6",
     "connect-history-api-fallback": "1.3.0",
     "cross-spawn": "4.0.2",
     "css-loader": "0.26.1",
+    "cz-conventional-changelog": "^2.0.0",
     "detect-port": "1.1.0",
     "dotenv": "2.0.0",
     "eslint": "3.16.1",
@@ -52,8 +65,10 @@
     "promise": "7.1.1",
     "react-dev-utils": "^0.5.2",
     "react-styleguidist": "^5.0.2",
+    "semantic-release": "^6.3.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
+    "validate-commit-msg": "^2.12.1",
     "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2",
     "webpack-manifest-plugin": "1.1.0",
@@ -67,7 +82,13 @@
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",
     "docs-build": "styleguidist build",
-    "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDir -d https://datavizkit.surge.sh"
+    "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDir -d https://datavizkit.surge.sh",
+    "commit": "git-cz",
+    "commitmsg": "validate-commit-msg",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "config": {
+    "styleguideDir": "docs/.out"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -100,8 +121,5 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "config": {
-    "styleguideDir": "docs/.out"
   }
 }
