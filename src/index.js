@@ -18,13 +18,12 @@ import LineWidget from './components/widgets/line';
   : export ...
 
  */
-//
-// export default {
-//   LineWidget,
-//   ColumnWidget,
-//   StackedColumnWidget,
-//   DonutWidget
-// };
+
+export default {
+  LineWidget,
+  ColumnWidget,
+  DonutWidget
+};
 
 const lineWidget = {
   title: 'Average session length',

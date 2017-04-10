@@ -1,0 +1,9 @@
+build/
+.github/
+public/
+scripts/
+config/
+yarn-error.log
+.npmignore
+.idea/
+.editorconfig
