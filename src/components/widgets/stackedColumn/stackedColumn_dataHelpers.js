@@ -69,10 +69,10 @@ export const makeChartOptions = ({
             mouseOver: function() {
               const sliceIdx = this.index;
               const chartSeries = this.series.chart.series
-              const customLegendData = this.series.chart.series.map((s, i) => {
+              const customLegendData = chartSeries.map((s, i) => {
                 const sliceData = s.data[sliceIdx];
                 return {
-                  key: chartSeries[i].name,
+                  key: s.name,
                   y: sliceData.y,
                   seriesName: s.category,
                   color: sliceData.color
