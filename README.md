@@ -1,5 +1,7 @@
 # datavizkit 
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/govau/datavizkit.svg)](https://greenkeeper.io/)
+
 Status: [WIP]
 
 
