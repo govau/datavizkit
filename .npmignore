@@ -1,5 +1,10 @@
 build/
 .github/
+docs/
+public/
+scripts/
+config/
 coverage/
-.travis.yml
 yarn-error.log
+.idea
+_trash/
