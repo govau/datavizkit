@@ -5,11 +5,12 @@ class TrendLegend extends PureComponent {
     const trend = this.getTrend();
     const volume = this.getVolume();
     const date = this.getPreviousDate();
+    const iconClass = `metric-trend fa fa-arrow-${trend}`
 
     return (
       <div className='trend-legend'>
-        <span class='metric-trend fa fa-arrow-${trend}'></span>
-        <span class='summary-text'>{trend} {volume} since {date}</span>
+        <span className={iconClass}></span>
+        <span className='summary-text'>{trend} {volume} since {date}</span>
       </div>
     )
   }

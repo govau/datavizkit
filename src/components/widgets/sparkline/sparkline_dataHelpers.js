@@ -16,20 +16,15 @@ export const makeChartOptions = ({
           var latestValue = last(this.series[0].data).y
           var label = this.renderer.text(latestValue)
             .attr({
-                zIndex: 6
+                zIndex: 6,
+                x: '50%',
+                y: '25%'
             })
             .css({
                 fontSize: '1000%',
+                textAnchor: 'middle'
             })
             .add();
-
-          var left = (this.chartWidth - label.getBBox().width) / 2;
-          var top = (this.chartHeight - label.getBBox().height) / 2;
-
-          label.attr({
-              x: left,
-              y: top - 30
-          });
 
           if (this.series[0].data.length >= 2) {
             emitSetState({'customLegend': this.series[0].data});
