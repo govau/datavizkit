@@ -13,7 +13,8 @@ export const makeChartOptions = ({
       type: 'spline',
       events: {
         load: function() {
-          var label = this.renderer.text('22.0')
+          var latestValue = last(this.series[0].data).y
+          var label = this.renderer.text(latestValue)
             .attr({
                 zIndex: 6
             })
@@ -27,8 +28,12 @@ export const makeChartOptions = ({
 
           label.attr({
               x: left,
-              y: top - 40
+              y: top - 30
           });
+
+          if (this.series[0].data.length >= 2) {
+            emitSetState({'customLegend': this.series[0].data});
+          }
         }
       },
     },

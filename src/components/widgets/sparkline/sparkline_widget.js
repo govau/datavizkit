@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import Chart from './../../chart';
 import {makeChartOptions} from './sparkline_dataHelpers';
-import Legend from './../../customLegend';
+import TrendLegend from './../../trendLegend';
 
 /**
  * Renders a Line Widget with its surrounding state.
@@ -28,12 +28,14 @@ class SparklineWidget extends PureComponent {
       widget: this.props.widget,
     });
 
+    const previousDate = this.props.widget.previousDate;
+
     return (
       <article className={`chart--line`} role="article">
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           <div>
-            {customLegend && customLegend.length && <Legend data={customLegend} />}
+            {customLegend && customLegend.length && <TrendLegend data={customLegend} previousDate={previousDate} />}
           </div>
         </section>
       </article>

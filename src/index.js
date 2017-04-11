@@ -56,7 +56,7 @@ const stackedColumnWidgetPercentage = {
 const splineWidget = {
   title: 'Approved suppliers',
   dateUpdated: '16 Mar 2017',
-  latestValue: 222.0
+  previousDate: 'Jan 2017'
 }
 
 render(
