@@ -6,6 +6,7 @@ import {render} from 'react-dom';
 import ColumnWidget from './components/widgets/column'
 import DonutWidget from './components/widgets/donut'
 import LineWidget from './components/widgets/line';
+import StackedColumnWidget from './components/widgets/stackedColumn'
 
 
 /*
@@ -40,6 +41,16 @@ const donutWidget = {
   dateUpdated: '22 Feb 2016',
 };
 
+const stackedColumnWidgetNormal = {
+  title: 'Page views by state (normal stacking)',
+  dateUpdated: '22 Feb 2016'
+}
+
+const stackedColumnWidgetPercentage = {
+  title: 'Page views by state (percentage stacking)',
+  dateUpdated: '22 Feb 2016',
+  stacking: 'percent'
+}
 
 render(
   <div>
@@ -65,6 +76,14 @@ render(
     <br/>
 
     <DonutWidget widget={donutWidget} />
+
+    <br />
+
+    <StackedColumnWidget widget={stackedColumnWidgetNormal} />
+
+    <br />
+
+    <StackedColumnWidget widget={stackedColumnWidgetPercentage} />
 
   </div>, document.getElementById('root')
 );
