@@ -1,4 +1,10 @@
 import React, {PureComponent} from 'react';
+import styled from 'styled-components';
+
+const TrendLegendDiv = styled.div`
+  width: 100%;
+  text-align:center;
+`
 
 class TrendLegend extends PureComponent {
   render() {
@@ -8,10 +14,10 @@ class TrendLegend extends PureComponent {
     const iconClass = `metric-trend fa fa-arrow-${trend}`
 
     return (
-      <div className='trend-legend'>
+      <TrendLegendDiv>
         <span className={iconClass}></span>
         <span className='summary-text'>{trend} {volume} since {date}</span>
-      </div>
+      </TrendLegendDiv>
     )
   }
 
@@ -56,14 +62,3 @@ class TrendLegend extends PureComponent {
 }
 
 export default TrendLegend;
-
-
-/*const TrendLegend = (props) => {
-  const {data, className} = props;
-  return (
-    <div className={className}>
-      <span class='metric-trend fa fa-arrow-${data.trend}'></span>
-      <span class='summary-text'>${data.trend} ${data.volume} since ${data.previousDate}</span>
-    </div>
-  )
-};*/

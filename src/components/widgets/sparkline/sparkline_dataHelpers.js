@@ -11,6 +11,7 @@ export const makeChartOptions = ({
     // default options
     chart: {
       type: 'spline',
+      margin: [150, 0, 0, 0],
       events: {
         load: function() {
           var latestValue = last(this.series[0].data).y
@@ -18,10 +19,10 @@ export const makeChartOptions = ({
             .attr({
                 zIndex: 6,
                 x: '50%',
-                y: '25%'
+                y: '35%'
             })
             .css({
-                fontSize: '1000%',
+                fontSize: '700%',
                 textAnchor: 'middle'
             })
             .add();
