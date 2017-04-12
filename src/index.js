@@ -6,26 +6,8 @@ import {render} from 'react-dom';
 import ColumnWidget from './components/widgets/column'
 import DonutWidget from './components/widgets/donut'
 import LineWidget from './components/widgets/line';
-import StackedColumnWidget from './components/widgets/stackedColumn'=======
+import StackedColumnWidget from './components/widgets/stackedColumn'
 import SparklineWidget from './components/widgets/sparkline'
-
-
-/*
-
-  library
-
-  : export donut
-  : export line
-  : export bar
-  : export ...
-
- */
-
-export default {
-  LineWidget,
-  ColumnWidget,
-  DonutWidget
-};
 
 const lineWidget = {
   title: 'Average session length',
