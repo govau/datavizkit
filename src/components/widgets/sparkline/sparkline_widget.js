@@ -12,7 +12,7 @@ class SparklineWidget extends PureComponent {
     this.proxiedSetState = this.proxiedSetState.bind(this);
     this.chartInstance = null;
     this.state = {
-      customLegend: []
+      trendLegend: []
     };
   }
 
@@ -21,7 +21,7 @@ class SparklineWidget extends PureComponent {
   }
 
   render() {
-    const {customLegend} = this.state;
+    const {trendLegend} = this.state;
 
     const chartOptions = makeChartOptions({
       emitSetState: this.proxiedSetState,
@@ -31,11 +31,11 @@ class SparklineWidget extends PureComponent {
     const previousDate = this.props.widget.previousDate;
 
     return (
-      <article className={`chart--line`} role="article">
+      <article className={`chart--sparkline`} role="article">
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           <div>
-            {customLegend && customLegend.length && <TrendLegend data={customLegend} previousDate={previousDate} />}
+            {trendLegend && trendLegend.length && <TrendLegend data={trendLegend} previousDate={previousDate} />}
           </div>
         </section>
       </article>

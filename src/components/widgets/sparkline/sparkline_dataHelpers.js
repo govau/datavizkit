@@ -28,7 +28,7 @@ export const makeChartOptions = ({
             .add();
 
           if (this.series[0].data.length >= 2) {
-            emitSetState({'customLegend': this.series[0].data});
+            emitSetState({'trendLegend': this.series[0].data});
           }
         }
       },
