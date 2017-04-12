@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 import Chart from './../../chart';
 import {makeChartOptions} from './stackedColumn_dataHelpers';
 import Legend from './../../customLegend';

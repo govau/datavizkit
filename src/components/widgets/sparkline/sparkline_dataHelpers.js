@@ -15,7 +15,7 @@ export const makeChartOptions = ({
       events: {
         load: function() {
           var latestValue = last(this.series[0].data).y
-          var label = this.renderer.text(latestValue)
+          this.renderer.text(latestValue)
             .attr({
                 zIndex: 6,
                 x: '50%',

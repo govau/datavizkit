@@ -19,7 +19,6 @@
 
 
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 
 import Chart from './../../chart';
 import {makeChartOptions} from './column_dataHelpers';
