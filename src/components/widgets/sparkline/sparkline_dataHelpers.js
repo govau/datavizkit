@@ -59,12 +59,6 @@ export const makeChartOptions = ({
         marker: { 
           enabled: false
         },
-        point: {
-          events: {
-            mouseOver: function() {
-            },
-          }
-        },
         states: {
           select: { // required because can be selected programatically
             enabled: false
