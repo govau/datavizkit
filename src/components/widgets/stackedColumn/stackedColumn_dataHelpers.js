@@ -13,7 +13,7 @@ export const makeChartOptions = ({
   minimumValue = 0,
   stackingType,
 }) => {
-  
+
   const config = merge({
     // default column options
     chart: {
