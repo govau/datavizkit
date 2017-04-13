@@ -57,7 +57,7 @@ class ColumnWidget extends PureComponent {
     });
 
     return (
-      <article className={`chart--column`} role="article">
+      <article className="chart--column" role="article">
         <section>
           <Chart ref={el => this.chartInstance = el}
                  options={chartOptions}>
