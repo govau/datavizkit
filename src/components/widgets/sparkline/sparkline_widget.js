@@ -33,14 +33,12 @@ class SparklineWidget extends PureComponent {
       ...restProps
     });
 
-    const previousDate = this.props.widget.previousDate;
-
     return (
       <article className="chart--sparkline" role="article">
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           <div>
-            {trendLegend && trendLegend.length && <TrendLegend data={trendLegend} previousDate={previousDate} />}
+            {trendLegend && trendLegend.length && <TrendLegend data={trendLegend} />}
           </div>
         </section>
       </article>
