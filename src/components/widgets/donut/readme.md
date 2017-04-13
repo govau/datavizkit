@@ -4,12 +4,13 @@ Renders slice data to each of its sectors.
 
     <DonutWidget chartConfig={{
                "series":[{
-                name: "Jan",
-                data: [
-                  {"name":"Mobile","y":183},
-                  {"name":"Tablet","y":30},
-                  {"name":"Desktop","y":200}
-                ]
+                  name: "Jan",
+                  data: [
+                    {"name":"Mobile","y":183},
+                    {"name":"Tablet","y":30},
+                    {"name":"Desktop","y":200}
+                  ]
+                }]
              }}
              title="Devices used"
              units="percentage"

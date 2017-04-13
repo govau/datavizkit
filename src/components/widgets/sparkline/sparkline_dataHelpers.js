@@ -90,4 +90,3 @@ export const makeChartOptions = ({
   return config;
 
 };
-
