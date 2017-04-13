@@ -10,7 +10,7 @@ export const makeChartOptions = ({
   units,
   type,
   dateLastUpdated,
-  minimumValue = 0
+  minimumValue = 0,
 }) => {
 
   const config = merge({
@@ -20,7 +20,7 @@ export const makeChartOptions = ({
       events: {
         load: function() {  // equivalent to constructor callback
 
-          var seriesData = this.series[0].data;//this is series data
+          var seriesData = this.series[0].data;//this is series data  // todo - this will be different for differnt dimensions of data
           seriesData.forEach((d, idx) => {
             if (d.y === null) { //find null value in series
               // adds plot band
@@ -35,9 +35,8 @@ export const makeChartOptions = ({
           let customLegendData = this.series.map(s => {
             const lastData = last(s.data);
             return {
-              key: lastData.category,
+              key: s.name,
               y: lastData.y,
-              seriesName: s.name,
               color: lastData.color,
             }
           });
@@ -68,13 +67,12 @@ export const makeChartOptions = ({
           events: {
             mouseOver: function() {
               const sliceIdx = this.index;
-              // todo - identify all data permutations
+              // todo - verify this works for all data permutations
               const customLegendData = this.series.chart.series.map(s => {
                 const sliceData = s.data[sliceIdx];
                 return {
-                  key: sliceData.category,
+                  key: s.name,
                   y: sliceData.y,
-                  seriesName: s.name,
                   color: sliceData.color
                 }
               });
@@ -93,10 +91,13 @@ export const makeChartOptions = ({
         allowPointSelect: false
       },
     },
+    tooltip: {
+      enabled: false,
+    },
 
     // instance props
     xAxis: {
-      categories: [],   // is replaced by localConfig
+      categories: [],   // replaced by chartConfig
 
       // labels: {
       //   formatter: function () {
@@ -108,12 +109,9 @@ export const makeChartOptions = ({
       title: {
         text: null
       },
-      min: minimumValue
+      min: minimumValue,
     },
-    series: [],   // is replaced by localConfig
-    tooltip: {
-      enabled: false,
-    }
+    series: [],   // replaced by chartConfig
   }, chartConfig);
 
   return config;

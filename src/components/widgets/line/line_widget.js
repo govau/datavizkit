@@ -39,14 +39,16 @@ class LineWidget extends PureComponent {
 
   render() {
     const {customLegend} = this.state;
+    const {chartConfig, ...restProps} = this.props;
 
     const chartOptions = makeChartOptions({
       emitSetState: this.proxiedSetState,
-      widget: this.props.widget,
+      chartConfig,
+      ...restProps
     });
 
     return (
-      <article className={`chart--line`} role="article">
+      <article className="chart--line" role="article">
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           <div>

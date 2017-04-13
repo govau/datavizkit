@@ -48,21 +48,16 @@ class ColumnWidget extends PureComponent {
 
   render() {
     const {customLegend} = this.state;
-    const {title, units, type, dateLastUpdated, minimumValue,
-      chartConfig} = this.props;
+    const {chartConfig, ...restProps} = this.props;
 
     const chartOptions = makeChartOptions({
       emitSetState: this.proxiedSetState,
       chartConfig,
-      title,
-      units,
-      type,
-      dateLastUpdated,
-      minimumValue
+      ...restProps
     });
 
     return (
-      <article className={`chart--column`} role="article">
+      <article className="chart--column" role="article">
         <section>
           <Chart ref={el => this.chartInstance = el}
                  options={chartOptions}>

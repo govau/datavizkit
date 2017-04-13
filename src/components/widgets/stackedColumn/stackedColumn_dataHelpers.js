@@ -1,22 +1,26 @@
 
-// todo - not import Highcharts again
-import Highcharts from 'highcharts';
 import last from 'lodash/last';
+import merge from 'lodash/merge';
 
 
 export const makeChartOptions = ({
   emitSetState = () => {},
-  widget,
+  chartConfig = {},
+  title,
+  units,
+  type,
+  dateLastUpdated,
+  minimumValue = 0,
+  stackingType,
 }) => {
 
-  const categories = Highcharts.getOptions().lang.shortMonths;
-
-  return {
+  const config = merge({
     // default column options
     chart: {
       type: 'column',
       events: {
         load: function() {  // equivalent to constructor callback
+
           var seriesData = this.series[0].data;//this is series data
           seriesData.forEach((d, idx) => {
             if (d.y === null) { //find null value in series
@@ -35,26 +39,31 @@ export const makeChartOptions = ({
               // key: lastData.category,
               key: s.name,
               y: lastData.y,
-              seriesName: s.name,
               color: lastData.color,
             }
           });
           emitSetState({'customLegend': customLegendData});
+
+          // "hover" over the last column
+          const lastCol = last(this.series[0].data);
+          if (lastCol) {
+            lastCol.onMouseOver && lastCol.onMouseOver();
+          }
         },
       },
     },
     title: {
-      text: widget.title,
+      text: title,
       align: 'left',
     },
     subtitle: {
       useHTML: true,
-      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
       align: 'left',
     },
     plotOptions: {
       column: {
-        stacking: widget.stacking || 'normal'
+        stacking: stackingType
       },
       series: {
         animation: false,
@@ -62,21 +71,22 @@ export const makeChartOptions = ({
           events: {
             mouseOver: function() {
               const sliceIdx = this.index;
-              const chartSeries = this.series.chart.series
+              const chartSeries = this.series.chart.series;
               const customLegendData = chartSeries.map((s, i) => {
                 const sliceData = s.data[sliceIdx];
                 sliceData.setState('hover');
                 return {
                   key: s.name,
                   y: sliceData.y,
-                  seriesName: s.category,
                   color: sliceData.color
                 }
               });
               emitSetState({'customLegend': customLegendData});
             },
+
             mouseOut: function() {
-              const sliceIdx = this.index
+              // todo - something weird going on here
+              const sliceIdx = this.index;
               this.series.chart.series.forEach((s, i) => {
                 s.data[sliceIdx].setState('');
               });
@@ -97,11 +107,12 @@ export const makeChartOptions = ({
 
     // instance props
     xAxis: {
-      labels: {
-        formatter: function () {
-          return categories[this.value] + ' 2017';
-        },
-      },
+      categories: [],   // replaced by chartConfig
+      // labels: {
+      //   formatter: function () {
+      //     return categories[this.value] + ' 2017';
+      //   },
+      // },
     },
     yAxis: {
       title: {
@@ -113,26 +124,16 @@ export const makeChartOptions = ({
       //   }
       // }
     },
-    series: [
-      {
-        name: "NSW",
-        data: [29.9, 71.5, 106.4, null, null, 176, 135, 148.5, 216.4, null, 95.6, 54.4]
-      },
-      {
-        name: "VIC",
-        data: [12.9, 65.5, 98.4, null, null, 45, 75, 34.2, 141, null, 89, 12]
-      },
-      {
-        name: "TAS",
-        data: [5, 5, 4, null, null, 154, 12, 89, 92, null, 145, 132]
-      },
-      {
-        name: "WA",
-        data: [29.9, 71.5, 106.4, null, null, 176, 135, 148.5, 216.4, null, 95.6, 54.4]
-      },
-    ],
+    series: [],   // replaced by chartConfig
     tooltip: {
       enabled: false,
     },
-  };
+  }, chartConfig);
+
+  if (stackingType === 'normal') {
+    config.yAxis.min = minimumValue;
+  }
+
+  return config;
+
 };

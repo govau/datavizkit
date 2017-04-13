@@ -1,21 +1,28 @@
 
 import Highcharts from 'highcharts';
+import merge from 'lodash/merge';
+
 
 export const makeChartOptions = ({
   emitSetState = () => {},
-  widget,
+  chartConfig = {},
+  title,
+  units,
+  type,
+  dateLastUpdated
 }) => {
-  return {
+
+  const config = merge({
     // default pie options
     chart: {
       type: 'pie',
       events: {
+
         load: function() {
           const customLegendData = this.series[0].data.map(d => {
             return {
               key: d.name,
               y: Highcharts.numberFormat(d.percentage, 2) + '%',
-              seriesName: this.series[0].name,
               color: d.color
             }
           });
@@ -24,12 +31,12 @@ export const makeChartOptions = ({
       },
     },
     title: {
-      text: widget.title,
+      text: title,
       align: 'left',
     },
     subtitle: {
       useHTML: true,
-      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
       align: 'left',
     },
     plotOptions: {
@@ -54,29 +61,19 @@ export const makeChartOptions = ({
     },
 
     // instance props
-    series: [{
-      name: 'Brands',
+    series: [],   // replaced by chartConfig
+  }, chartConfig);
+
+  chartConfig.series = chartConfig.series.map(s => {
+    return {...s,
       colorByPoint: true,
       innerSize: '50%',
-      data: [{
-        name: 'Microsoft Internet Explorer',
-        y: 123
-      }, {
-        name: 'Chrome',
-        y: 23
-      }, {
-        name: 'Firefox',
-        y: 105
-      }, {
-        name: 'Safari',
-        y: 45
-      }, {
-        name: 'Opera',
-        y: 10
-      }, {
-        name: 'Proprietary or Undetectable',
-        y: 87
-      }]
-    }],
-  };
+    }
+  });
+
+  return config;
+
 };
+
+
+

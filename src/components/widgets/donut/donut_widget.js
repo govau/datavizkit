@@ -26,11 +26,6 @@ import Legend from './../../customLegend';
 
 /**
  * Renders a Donut Widget with it's surrounding state.
- *
- * Technically multiple series of data can be plotted on polar
- * charts, but this widget should only accept a single series of
- * data.
- *
  */
 class DonutWidget extends PureComponent {
 
@@ -50,10 +45,12 @@ class DonutWidget extends PureComponent {
 
   render() {
     const {customLegend} = this.state;
+    const {chartConfig, ...restProps} = this.props;
 
     const chartOptions = makeChartOptions({
       emitSetState: this.proxiedSetState,
-      widget: this.props.widget,
+      chartConfig,
+      ...restProps
     });
 
     return (

@@ -3,29 +3,6 @@ import React from 'react';
 import {render} from 'react-dom';
 
 
-import ColumnWidget from './components/widgets/column'
-import DonutWidget from './components/widgets/donut'
-import LineWidget from './components/widgets/line';
-import StackedColumnWidget from './components/widgets/stackedColumn'
-import SparklineWidget from './components/widgets/sparkline'
-
-
-const lineWidget = {
-  title: 'Average session length',
-  dateUpdated: '22 Feb 2016',
-};
-
-const donutWidget = {
-  title: 'Devices used',
-  dateUpdated: '22 Feb 2016',
-};
-
-const splineWidget = {
-  title: 'Approved suppliers',
-  dateUpdated: '16 Mar 2017',
-  previousDate: 'Jan 2017'
-};
-
 render(
   <div>
 
@@ -40,38 +17,7 @@ render(
       </svg>
     </div>
 
-
-    <LineWidget widget={lineWidget} />
-    <br/>
-
-    <ColumnWidget title='Number of page views'
-                  units='number'
-                  type='column'
-                  dateLastUpdated='22 Feb 2016'
-                  minimumValue="20000"
-                  chartConfig={{"xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},"series":[{"name":"Time to clear","data":[84807,48317,51420,62400,48060,37560,39300]}]}}
-                  singleCategory={false} singleSection={true} />
-
-    <br/>
-
-    <DonutWidget widget={donutWidget} />
-    <br />
-
-    <StackedColumnWidget widget={{
-      title: 'Page views by state (normal stacking)',
-      dateUpdated: '22 Feb 2016'
-    }} />
-    <br />
-
-    <StackedColumnWidget widget={{
-      title: 'Page views by state (percentage stacking)',
-      dateUpdated: '22 Feb 2016',
-      stacking: 'percent'
-    }} />
-    <br/>
-
-    <SparklineWidget widget={splineWidget} />
-    <br/>
+    {/* empty */}
 
   </div>, document.getElementById('root')
 );

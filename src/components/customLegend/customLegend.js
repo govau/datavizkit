@@ -3,8 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const Legend = (props) => {
-  const {data, className} = props;
+const Legend = ({data, className}) => {
   return (
     <div className={className}>
       {data.map((d, idx) => {
