@@ -1,22 +1,24 @@
 
-// todo - not import Highcharts again
-import Highcharts from 'highcharts';
 import last from 'lodash/last';
+import merge from 'lodash/merge';
 
 
 export const makeChartOptions = ({
   emitSetState = () => {},
-  widget,
+  chartConfig = {},
+  title,
+  units,
+  type,
+  dateLastUpdated,
 }) => {
 
-  const categories = Highcharts.getOptions().lang.shortMonths;
-
-  return {
+  const config = merge({
     // default column options
     chart: {
       type: 'column',
       events: {
         load: function() {  // equivalent to constructor callback
+
           var seriesData = this.series[0].data;//this is series data
           seriesData.forEach((d, idx) => {
             if (d.y === null) { //find null value in series
@@ -49,12 +51,12 @@ export const makeChartOptions = ({
       },
     },
     title: {
-      text: widget.title,
+      text: title,
       align: 'left',
     },
     subtitle: {
       useHTML: true,
-      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
       align: 'left',
     },
     plotOptions: {
@@ -65,6 +67,7 @@ export const makeChartOptions = ({
           events: {
             mouseOver: function() {
               const sliceIdx = this.index;
+              // todo - identify all data permutations
               const customLegendData = this.series.chart.series.map(s => {
                 const sliceData = s.data[sliceIdx];
                 return {
@@ -92,30 +95,25 @@ export const makeChartOptions = ({
 
     // instance props
     xAxis: {
-      labels: {
-        formatter: function () {
-          return categories[this.value] + ' 2017';
-        },
-      },
+      categories: [],   // is replaced by localConfig
+
+      // labels: {
+      //   formatter: function () {
+      //     return periodData.xAxisLabels[this.value] + ' 2017';
+      //   },
+      // },
     },
     yAxis: {
       title: {
         text: null
       },
-      // labels: {
-      //   formatter: function() {
-      //     return this.value + ' (units)';
-      //   }
-      // }
     },
-    series: [
-      {
-        name: "Desktop",
-        data: [29.9, 71.5, 106.4, null, null, 176, 135, 148.5, 216.4, null, 95.6, 54.4]
-      }
-    ],
+    series: [],   // is replaced by localConfig
     tooltip: {
       enabled: false,
-    },
-  };
+    }
+  }, chartConfig);
+
+  return config;
+
 };
