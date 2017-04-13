@@ -20,7 +20,7 @@ export const makeChartOptions = ({
       events: {
         load: function() {  // equivalent to constructor callback
 
-          var seriesData = this.series[0].data;//this is series data
+          var seriesData = this.series[0].data;//this is series data  // todo - this will be different for differnt dimensions of data
           seriesData.forEach((d, idx) => {
             if (d.y === null) { //find null value in series
               // adds plot band
@@ -96,7 +96,7 @@ export const makeChartOptions = ({
 
     // instance props
     xAxis: {
-      categories: [],   // is replaced by localConfig
+      categories: [],   // replaced by chartConfig
 
       // labels: {
       //   formatter: function () {
@@ -110,7 +110,7 @@ export const makeChartOptions = ({
       },
       min: minimumValue
     },
-    series: [],   // is replaced by localConfig
+    series: [],   // replaced by chartConfig
     tooltip: {
       enabled: false,
     }

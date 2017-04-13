@@ -54,7 +54,20 @@ render(
 
     <br/>
 
-    <DonutWidget widget={donutWidget} />
+    <DonutWidget title="Devices used" units="percentage" type="donut" dateLastUpdated="2017-02-01T01:02:02.240Z" chartConfig={{
+      "xAxis": {"categories": [null, null, null, null, null, null, null, null, null]},
+      "series": [
+        {"name": "Mobile", "data": [null, null, null]},
+        {"name": "Mobile", "data": [null, null, null]},
+        {"name": "Mobile", "data": [36, 5, 138]},
+        {"name": "Mobile", "data": [124, 33, 1096]},
+        {"name": "Mobile", "data": [127, 31, 1100]},
+        {"name": "Mobile", "data": [213, 62, 1128]},
+        {"name": "Mobile", "data": [240, 57, 1031]},
+        {"name": "Mobile", "data": [234, 54, 1052]},
+        {"name": "Mobile", "data": [183, 30, 1009]}
+      ]
+    }}/>
     <br />
 
     <StackedColumnWidget widget={{
