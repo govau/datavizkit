@@ -27,7 +27,7 @@ import Legend from './../../customLegend';
 
 
 /**
- * Renders a Column Widget with it's surrounding state.
+ * Renders a Column Widget with its surrounding state.
  *
  */
 class ColumnWidget extends PureComponent {

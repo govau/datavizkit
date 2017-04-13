@@ -1,4 +1,6 @@
+
 import React, {PureComponent} from 'react';
+
 import Chart from './../../chart';
 import {makeChartOptions} from './stackedColumn_dataHelpers';
 import Legend from './../../customLegend';
@@ -33,8 +35,7 @@ class StackedColumnWidget extends PureComponent {
       <article className={`chart--column`} role="article">
         <section>
           <Chart ref={el => this.chartInstance = el}
-                 options={chartOptions}
-                 callback={this.chartCallback}>
+                 options={chartOptions}>
             <div>
               {customLegend && customLegend.length && <Legend data={customLegend} />}
             </div>
@@ -46,4 +47,3 @@ class StackedColumnWidget extends PureComponent {
 }
 
 export default StackedColumnWidget;
-

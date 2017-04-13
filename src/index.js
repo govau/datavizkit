@@ -20,17 +20,6 @@ const donutWidget = {
   dateUpdated: '22 Feb 2016',
 };
 
-const stackedColumnWidgetNormal = {
-  title: 'Page views by state (normal stacking)',
-  dateUpdated: '22 Feb 2016'
-};
-
-const stackedColumnWidgetPercentage = {
-  title: 'Page views by state (percentage stacking)',
-  dateUpdated: '22 Feb 2016',
-  stacking: 'percent'
-};
-
 const splineWidget = {
   title: 'Approved suppliers',
   dateUpdated: '16 Mar 2017',
@@ -68,10 +57,17 @@ render(
     <DonutWidget widget={donutWidget} />
     <br />
 
-    <StackedColumnWidget widget={stackedColumnWidgetNormal} />
+    <StackedColumnWidget widget={{
+      title: 'Page views by state (normal stacking)',
+      dateUpdated: '22 Feb 2016'
+    }} />
     <br />
 
-    <StackedColumnWidget widget={stackedColumnWidgetPercentage} />
+    <StackedColumnWidget widget={{
+      title: 'Page views by state (percentage stacking)',
+      dateUpdated: '22 Feb 2016',
+      stacking: 'percent'
+    }} />
     <br/>
 
     <SparklineWidget widget={splineWidget} />
