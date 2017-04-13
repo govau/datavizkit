@@ -1,7 +1,9 @@
 Basic Column Widget:
 
-    <ColumnWidget widget={{
-      title: 'Devices used',
-      dateUpdated: '22 Feb 2016',
-    }} />
+    <ColumnWidget title='Number of page views'
+                  units='number'
+                  type='column'
+                  dateLastUpdated='22 Feb 2016'
+        chartConfig={{}} 
+        chartProps={{}} />
 

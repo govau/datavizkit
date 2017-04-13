@@ -9,13 +9,9 @@ import LineWidget from './components/widgets/line';
 import StackedColumnWidget from './components/widgets/stackedColumn'
 import SparklineWidget from './components/widgets/sparkline'
 
+
 const lineWidget = {
   title: 'Average session length',
-  dateUpdated: '22 Feb 2016',
-};
-
-const columnWidget = {
-  title: 'Number of page views',
   dateUpdated: '22 Feb 2016',
 };
 
@@ -27,19 +23,19 @@ const donutWidget = {
 const stackedColumnWidgetNormal = {
   title: 'Page views by state (normal stacking)',
   dateUpdated: '22 Feb 2016'
-}
+};
 
 const stackedColumnWidgetPercentage = {
   title: 'Page views by state (percentage stacking)',
   dateUpdated: '22 Feb 2016',
   stacking: 'percent'
-}
+};
 
 const splineWidget = {
   title: 'Approved suppliers',
   dateUpdated: '16 Mar 2017',
   previousDate: 'Jan 2017'
-}
+};
 
 render(
   <div>
@@ -59,7 +55,15 @@ render(
     <LineWidget widget={lineWidget} />
     <br/>
 
-    <ColumnWidget widget={columnWidget} />
+    <ColumnWidget widget={{
+                    type: 'column',
+                    title: 'Number of page views',
+                    units: 'number',
+                    dateUpdated: '22 Feb 2016',
+                  }}
+                  chartConfig={{}}
+                  chartProps={{}} />
+
     <br/>
 
     <DonutWidget widget={donutWidget} />
@@ -72,6 +76,7 @@ render(
     <br/>
 
     <SparklineWidget widget={splineWidget} />
+    <br/>
 
   </div>, document.getElementById('root')
 );

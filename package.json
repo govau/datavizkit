@@ -13,11 +13,13 @@
     "url": "git+https://github.com/govau/datavizkit.git"
   },
   "main": "src/index.js",
+  "module": "lib/index.js",
   "bugs": {
     "url": "https://github.com/govau/datavizkit/issues"
   },
   "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
+    "deep-merge": "^1.0.0",
     "highcharts": "^5.0.9",
     "lodash": "^4.17.4",
     "react": "^15.4.2",
