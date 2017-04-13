@@ -20,6 +20,7 @@ export const makeChartOptions = ({
       type: 'column',
       events: {
         load: function() {  // equivalent to constructor callback
+
           var seriesData = this.series[0].data;//this is series data
           seriesData.forEach((d, idx) => {
             if (d.y === null) { //find null value in series
@@ -38,11 +39,16 @@ export const makeChartOptions = ({
               // key: lastData.category,
               key: s.name,
               y: lastData.y,
-              seriesName: s.name,
               color: lastData.color,
             }
           });
           emitSetState({'customLegend': customLegendData});
+
+          // "hover" over the last column
+          const lastCol = last(this.series[0].data);
+          if (lastCol) {
+            lastCol.onMouseOver && lastCol.onMouseOver();
+          }
         },
       },
     },
@@ -72,12 +78,12 @@ export const makeChartOptions = ({
                 return {
                   key: s.name,
                   y: sliceData.y,
-                  seriesName: s.category,
                   color: sliceData.color
                 }
               });
               emitSetState({'customLegend': customLegendData});
             },
+
             mouseOut: function() {
               // todo - something weird going on here
               const sliceIdx = this.index;

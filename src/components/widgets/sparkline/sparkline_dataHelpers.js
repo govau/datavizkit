@@ -46,7 +46,7 @@ export const makeChartOptions = ({
     },
     subtitle: {
       useHTML: true,
-      text: `<span>Last updated <time dateTime="${v}">${dateLastUpdated}</time></span>`,
+      text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
       align: 'left',
     },
     yAxis: {

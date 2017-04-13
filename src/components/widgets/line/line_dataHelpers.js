@@ -20,7 +20,7 @@ export const makeChartOptions = ({
       events: {
         load: function() {
 
-          var seriesData = this.series[0].data;//this is series data  // todo - this will be different for differnt dimensions of data
+          var seriesData = this.series[0].data;//this is series data  // todo - this will be different for different dimensions of data
           seriesData.forEach((d, idx) => {
             if (d.y === null) { //find null value in series
               // adds plot band
@@ -35,9 +35,8 @@ export const makeChartOptions = ({
           let customLegendData = this.series.map(s => {
             const lastData = last(s.data);
             return {
-              key: lastData.category,
+              key: s.name,
               y: lastData.y,
-              seriesName: s.name,
               color: lastData.color,
             }
           });
@@ -75,9 +74,8 @@ export const makeChartOptions = ({
               const customLegendData = this.series.chart.series.map(s => {
                 const sliceData = s.data[sliceIdx];
                 return {
-                  key: sliceData.category,
+                  key: s.name,
                   y: sliceData.y,
-                  seriesName: s.name,
                   color: sliceData.color
                 }
               });
@@ -95,7 +93,7 @@ export const makeChartOptions = ({
     },
 
     tooltip: {
-      enabled: false,
+      enabled: true, //false,
       shared: true,
       crosshairs: true,
     },
