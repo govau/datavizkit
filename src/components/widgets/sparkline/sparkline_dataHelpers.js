@@ -1,20 +1,27 @@
 
-// import Highcharts from 'highcharts';
 import last from 'lodash/last';
+import merge from 'lodash/merge';
 
 
 export const makeChartOptions = ({
   emitSetState = () => {},
-  widget,
+  chartConfig = {},
+  title,
+  units,
+  type,
+  dateLastUpdated,
+  minimumValue = 0,
 }) => {
-  return {
+
+  const config = merge({
     // default options
     chart: {
       type: 'spline',
       margin: [150, 0, 0, 0],
       events: {
         load: function() {
-          var latestValue = last(this.series[0].data).y
+
+          var latestValue = last(this.series[0].data).y;
           this.renderer.text(latestValue)
             .attr({
                 zIndex: 6,
@@ -34,12 +41,12 @@ export const makeChartOptions = ({
       },
     },
     title: {
-      text: widget.title,
+      text: title,
       align: 'left',
     },
     subtitle: {
       useHTML: true,
-      text: `<span>Last updated <time dateTime="${widget.dateUpdated}">${widget.dateUpdated}</time></span>`,
+      text: `<span>Last updated <time dateTime="${v}">${dateLastUpdated}</time></span>`,
       align: 'left',
     },
     yAxis: {
@@ -56,7 +63,7 @@ export const makeChartOptions = ({
       },
       series: {
         animation: false,
-        marker: { 
+        marker: {
           enabled: false
         },
         states: {
@@ -73,10 +80,14 @@ export const makeChartOptions = ({
     },
 
     // instance props
-    series: [{
-      name: 'Approved suppliers',
-      data: [254.0, 254.0, 254.0, 251.0, 244.0, 244.0, 222.0]
-    }]
-  };
+    series: [],   // replaced by chartConfig
+    // series: [{
+    //   name: 'Approved suppliers',
+    //   data: [254.0, 254.0, 254.0, 251.0, 244.0, 244.0, 222.0]
+    // }]
+  }, chartConfig);
+
+  return config;
+
 };
 
