@@ -10,6 +10,7 @@ export const makeChartOptions = ({
   units,
   type,
   dateLastUpdated,
+  minimumValue = 0
 }) => {
 
   const config = merge({
@@ -107,6 +108,7 @@ export const makeChartOptions = ({
       title: {
         text: null
       },
+      min: minimumValue
     },
     series: [],   // is replaced by localConfig
     tooltip: {

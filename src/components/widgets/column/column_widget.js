@@ -48,7 +48,7 @@ class ColumnWidget extends PureComponent {
 
   render() {
     const {customLegend} = this.state;
-    const {title, units, type, dateLastUpdated,
+    const {title, units, type, dateLastUpdated, minimumValue,
       chartConfig} = this.props;
 
     const chartOptions = makeChartOptions({
@@ -58,6 +58,7 @@ class ColumnWidget extends PureComponent {
       units,
       type,
       dateLastUpdated,
+      minimumValue
     });
 
     return (
