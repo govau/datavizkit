@@ -1,12 +1,26 @@
-Basic Stacked Column Widget: 
+### Basic Stacked Column Widget: 
 
-    <StackedColumnWidget widget={{
-      title: 'Page views by state (normal stacking)',
-      dateUpdated: '22 Feb 2016'
-    }} />
+    <StackedColumnWidget 
+      chartConfig={{
+        "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
+        "series":[
+          {"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},
+          {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
+          {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
+          {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
+        ]
+      }}
+      title="Types of service"
+      units="number"
+      type="stackedColumn"
+      dateLastUpdated="2017-02-01T01:02:02.240Z"
+      _singleCategory={false}
+      _singleSection={false}
+      stackingType="normal"
+    />
   
       
-Basic Stacked Column Widget (percentage):
+### Basic Stacked Column Widget (percentage):
 
     <StackedColumnWidget 
       _singleCategory="false"
