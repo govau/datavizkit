@@ -10,7 +10,7 @@ export const makeChartOptions = ({
   units,
   type,
   dateLastUpdated,
-  minimumValue = 0
+  minimumValue = 0,
 }) => {
 
   const config = merge({
@@ -93,6 +93,9 @@ export const makeChartOptions = ({
         allowPointSelect: false
       },
     },
+    tooltip: {
+      enabled: false,
+    },
 
     // instance props
     xAxis: {
@@ -108,12 +111,9 @@ export const makeChartOptions = ({
       title: {
         text: null
       },
-      min: minimumValue
+      min: minimumValue,
     },
     series: [],   // replaced by chartConfig
-    tooltip: {
-      enabled: false,
-    }
   }, chartConfig);
 
   return config;

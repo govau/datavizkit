@@ -48,7 +48,7 @@ class LineWidget extends PureComponent {
     });
 
     return (
-      <article className={`chart--line`} role="article">
+      <article className="chart--line" role="article">
         <section>
           <Chart ref={el => this.chartInstance = el} options={chartOptions} />
           <div>
