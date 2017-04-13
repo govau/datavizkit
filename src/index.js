@@ -7,24 +7,7 @@ import ColumnWidget from './components/widgets/column'
 import DonutWidget from './components/widgets/donut'
 import LineWidget from './components/widgets/line';
 import StackedColumnWidget from './components/widgets/stackedColumn'
-
-
-/*
-
-  library
-
-  : export donut
-  : export line
-  : export bar
-  : export ...
-
- */
-
-export default {
-  LineWidget,
-  ColumnWidget,
-  DonutWidget
-};
+import SparklineWidget from './components/widgets/sparkline'
 
 const lineWidget = {
   title: 'Average session length',
@@ -52,6 +35,12 @@ const stackedColumnWidgetPercentage = {
   stacking: 'percent'
 }
 
+const splineWidget = {
+  title: 'Approved suppliers',
+  dateUpdated: '16 Mar 2017',
+  previousDate: 'Jan 2017'
+}
+
 render(
   <div>
 
@@ -68,22 +57,21 @@ render(
 
 
     <LineWidget widget={lineWidget} />
-
     <br/>
 
     <ColumnWidget widget={columnWidget} />
-
     <br/>
 
     <DonutWidget widget={donutWidget} />
-
     <br />
 
     <StackedColumnWidget widget={stackedColumnWidgetNormal} />
-
     <br />
 
     <StackedColumnWidget widget={stackedColumnWidgetPercentage} />
+    <br/>
+
+    <SparklineWidget widget={splineWidget} />
 
   </div>, document.getElementById('root')
 );
