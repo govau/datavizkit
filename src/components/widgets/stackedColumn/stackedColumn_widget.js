@@ -35,7 +35,7 @@ class StackedColumnWidget extends PureComponent {
     });
 
     return (
-      <article className="chart--stacked-column" role="article">
+      <article className="chart--stackedColumn" role="article">
         <section>
           <Chart ref={el => this.chartInstance = el}
                  options={chartOptions}>
