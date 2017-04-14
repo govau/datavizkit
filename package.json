@@ -12,8 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/govau/datavizkit.git"
   },
-  "main": "src/index.js",
-  "module": "lib/index.js",
+  "main": "index.js",
+  "module": "lib/Datavizkit.js",
   "bugs": {
     "url": "https://github.com/govau/datavizkit/issues"
   },
@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",
-    "babel-core": "6.22.1",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
     "babel-eslint": "7.1.1",
     "babel-jest": "18.0.0",
     "babel-loader": "6.2.10",
@@ -78,9 +79,11 @@
     "whatwg-fetch": "2.0.2"
   },
   "scripts": {
+    "clean:lib": "rm -rf lib",
     "postmerge": "yarn install",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "build:lib": "yarn clean:lib && babel src/ -d lib --source-maps",
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",

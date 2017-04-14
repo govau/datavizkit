@@ -12,3 +12,4 @@ scripts/
 config/
 yarn-error.log
 .*.test.js
+src/
