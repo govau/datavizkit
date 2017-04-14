@@ -1,1 +1,1 @@
-module.exports = require('./lib/src/Datavizkit');
+module.exports = require('./lib/Datavizkit');
