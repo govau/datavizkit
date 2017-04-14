@@ -13,3 +13,4 @@ config/
 yarn-error.log
 .*.test.js
 src/
+fixtures/
