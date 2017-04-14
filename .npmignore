@@ -1,5 +1,5 @@
-.*rc
-.*.yml
+*.yml
+*.md
 .npmignore
 .idea/
 .editorconfig
@@ -12,3 +12,14 @@ scripts/
 config/
 yarn-error.log
 .*.test.js
+src/
+fixtures/
+_trash/
+.github/
+build/
+coverage/
+docs/
+styleguide.config.js
+yarn.lock
+.eslintrc.js
+

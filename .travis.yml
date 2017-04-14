@@ -14,8 +14,8 @@ node_js:
 before_script:
   - npm prune
 script:
-  - yarn run build
   - yarn run test:ci
+  - yarn run build:lib
 after_success:
   - npm run semantic-release
 branches:
