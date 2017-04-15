@@ -14,10 +14,10 @@ const withColumnChart = (ComposedComponent) => {
       }
     }
     componentDidMount() {
-      this.props.renderInDOM(this.getBaseConfig(), this.getInstanceConfig());
+      this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
     }
     componentWillUnmount() {
-      this.chartEl.destroy();
+      this.props.destroyChart(this.chart);
     }
     getBaseConfig() {
       return {

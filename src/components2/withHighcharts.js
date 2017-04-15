@@ -3,6 +3,8 @@ import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 
+import {onNextFrame} from './../utils/DOM';
+
 
 const BASE_HIGHCHARTS_CONFIG = {
   title: {
@@ -29,17 +31,23 @@ const withHighcharts = (ComposedComponent) => {
   return class extends PureComponent {
     constructor(props) {
       super(props);
-      this.renderInDOM = this.renderInDOM.bind(this);
+      this.renderChart = this.renderChart.bind(this);
+      this.destroyChart = this.destroyChart.bind(this);
     }
-    renderInDOM(chartOptions, instanceOptions) {
+    renderChart(chartOptions, instanceOptions) {
       const options = merge(BASE_HIGHCHARTS_CONFIG, chartOptions, instanceOptions);
       if (!options.chart && !options.chart.renderTo) {
         throw new Error('Must provide chart.renderTo on options.');
       }
-      new Highcharts.chart(options);
+      onNextFrame(() => {
+        new Highcharts.chart(options);
+      });
+    }
+    destroyChart(el) {
+      return el.destroy();
     }
     render() {
-      return <ComposedComponent {...this.props} renderInDOM={this.renderInDOM} />
+      return <ComposedComponent {...this.props} renderChart={this.renderChart} destroyChart={this.destroyChart} />
     }
   }
 };
