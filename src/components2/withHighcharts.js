@@ -34,7 +34,6 @@ const THEME = {
   subtitle: {
     style: {
       fontSize: '14px',
-      fontSize: '.875rem',
       lineHeight: 1.5,
       fontWeight: 300,
       marginBottom: 0,

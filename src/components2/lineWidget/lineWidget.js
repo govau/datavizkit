@@ -3,14 +3,14 @@ import React from 'react';
 import {compose} from 'recompose';
 
 import withHighcharts from './../withHighcharts';
-import withColumnChart from './../withColumnChart';
+import withLineChart from './../withLineChart';
 
 
 // render a uniquely marked up and styled custom ColumnWidget
 // might also have a ColumnWidgetLarge or ColumnWidgetMonochrome
-const ColumnWidget = (props) => {
+const LineWidget = (props) => {
   return (
-    <article className="chart--column card" role="article">
+    <article className="chart--line card" role="article">
       <header>
         <div>Column Widget</div>
       </header>
@@ -21,8 +21,8 @@ const ColumnWidget = (props) => {
 
 const enhance = compose(
   withHighcharts,
-  withColumnChart
-)(ColumnWidget);
+  withLineChart
+)(LineWidget);
 
 export default enhance;
 

@@ -7,8 +7,8 @@ import Legend from './customLegend.js';
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
-// render a column chart and manage column chart stuff
-const withColumnChart = (ComposedComponent) => {
+// render a line chart and manage line chart stuff
+const withLineChart = (ComposedComponent) => {
   return class extends PureComponent {
     constructor(props) {
       super(props);
@@ -33,11 +33,11 @@ const withColumnChart = (ComposedComponent) => {
 
       return {
         chart: {
-          type: 'column',
+          type: 'line',
           events: {
             load: function() {  // equivalent to constructor callback
 
-              var seriesData = this.series[0].data;//this is series data  // todo - this will be different for differnt dimensions of data
+              var seriesData = this.series[0].data;//this is series data  // todo - this will be different for different dimensions of data
               seriesData.forEach((d, idx) => {
                 if (d.y === null) { //find null value in series
                   // adds plot band
@@ -59,7 +59,7 @@ const withColumnChart = (ComposedComponent) => {
               });
               boundSetState({'customLegend': customLegendData});
 
-              // "hover" over the last column
+              // "hover" over the last line
               const lastCol = last(this.series[0].data);
               if (lastCol) {
                 lastCol.onMouseOver && lastCol.onMouseOver();
@@ -75,14 +75,13 @@ const withColumnChart = (ComposedComponent) => {
           text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
         },
         plotOptions: {
-          column: {},
-          series: {
+          line: {},
+          series: { // todo
             animation: false,
             point: {
               events: {
                 mouseOver: function() {
                   const sliceIdx = this.index;
-                  // todo - verify this works for all data permutations
                   const customLegendData = this.series.chart.series.map(s => {
                     const sliceData = s.data[sliceIdx];
                     return {
@@ -96,18 +95,31 @@ const withColumnChart = (ComposedComponent) => {
               }
             },
             states: {
-              hover: {
-                // color: 'yellow',
-              },
-              select: { // required because it can be selected programatically
+              select: { // required because can be selected programatically
                 enabled: false
               }
             },
-            allowPointSelect: false
+            allowPointSelect: false,
           },
         },
         tooltip: {
-          enabled: false,
+          enabled: true, //false,
+          shared: true,
+          crosshairs: true,
+        },
+        xAxis: {
+          crosshair: true,
+          // type: 'datetime', // todo - format x labels to datetime
+          // Format 24 hour time to AM/PM
+          // dateTimeLabelFormats: {
+          //   hour: '%I:%M %P',
+          //   minute: '%I %M'
+          // },
+          // labels: {
+          //   formatter: function() {
+          //     return Highcharts.dateFormat('%I:%M %P', this.value);
+          //   }
+          // }
         },
         yAxis: {
           title: {
@@ -144,4 +156,4 @@ const withColumnChart = (ComposedComponent) => {
   }
 };
 
-export default withColumnChart;
+export default withLineChart;

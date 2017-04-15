@@ -3,16 +3,16 @@ import React from 'react';
 import {compose} from 'recompose';
 
 import withHighcharts from './../withHighcharts';
-import withColumnChart from './../withColumnChart';
+import withDonutChart from './../withDonutChart';
 
 
 // render a uniquely marked up and styled custom ColumnWidget
 // might also have a ColumnWidgetLarge or ColumnWidgetMonochrome
-const ColumnWidget = (props) => {
+const DonutWidget = (props) => {
   return (
-    <article className="chart--column card" role="article">
+    <article className="chart--donut card" role="article">
       <header>
-        <div>Column Widget</div>
+        <div>Donut Widget</div>
       </header>
       <section>{props.children}</section>
     </article>
@@ -21,8 +21,8 @@ const ColumnWidget = (props) => {
 
 const enhance = compose(
   withHighcharts,
-  withColumnChart
-)(ColumnWidget);
+  withDonutChart
+)(DonutWidget);
 
 export default enhance;
 

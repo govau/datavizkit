@@ -7,8 +7,8 @@ import Legend from './customLegend.js';
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
-// render a column chart and manage column chart stuff
-const withColumnChart = (ComposedComponent) => {
+// render a stackedColumn chart and manage stackedColumn chart stuff
+const withStackedColumnChart = (ComposedComponent) => {
   return class extends PureComponent {
     constructor(props) {
       super(props);
@@ -27,6 +27,7 @@ const withColumnChart = (ComposedComponent) => {
       const {
         title,
         dateLastUpdated,
+        stackingType,
       } = this.props;
 
       const boundSetState = this.setState.bind(this);
@@ -37,7 +38,7 @@ const withColumnChart = (ComposedComponent) => {
           events: {
             load: function() {  // equivalent to constructor callback
 
-              var seriesData = this.series[0].data;//this is series data  // todo - this will be different for differnt dimensions of data
+              var seriesData = this.series[0].data;//this is series data
               seriesData.forEach((d, idx) => {
                 if (d.y === null) { //find null value in series
                   // adds plot band
@@ -52,6 +53,7 @@ const withColumnChart = (ComposedComponent) => {
               let customLegendData = this.series.map(s => {
                 const lastData = last(s.data);
                 return {
+                  // key: lastData.category,
                   key: s.name,
                   y: lastData.y,
                   color: lastData.color,
@@ -59,7 +61,7 @@ const withColumnChart = (ComposedComponent) => {
               });
               boundSetState({'customLegend': customLegendData});
 
-              // "hover" over the last column
+              // "hover" over the last stackedColumn
               const lastCol = last(this.series[0].data);
               if (lastCol) {
                 lastCol.onMouseOver && lastCol.onMouseOver();
@@ -75,16 +77,19 @@ const withColumnChart = (ComposedComponent) => {
           text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
         },
         plotOptions: {
-          column: {},
+          column: {
+            stacking: stackingType
+          },
           series: {
             animation: false,
             point: {
               events: {
                 mouseOver: function() {
                   const sliceIdx = this.index;
-                  // todo - verify this works for all data permutations
-                  const customLegendData = this.series.chart.series.map(s => {
+                  const chartSeries = this.series.chart.series;
+                  const customLegendData = chartSeries.map((s, i) => {
                     const sliceData = s.data[sliceIdx];
+                    sliceData.setState('hover');
                     return {
                       key: s.name,
                       y: sliceData.y,
@@ -92,7 +97,14 @@ const withColumnChart = (ComposedComponent) => {
                     }
                   });
                   boundSetState({'customLegend': customLegendData});
-                }
+                },
+                mouseOut: function() {
+                  // todo - something weird going on here
+                  const sliceIdx = this.index;
+                  this.series.chart.series.forEach((s, i) => {
+                    s.data[sliceIdx].setState('');
+                  });
+                },
               }
             },
             states: {
@@ -119,18 +131,22 @@ const withColumnChart = (ComposedComponent) => {
     getInstanceConfig() {
       const {
         chartConfig,
-        minimumValue
+        minimumValue,
+        stackingType
       } = this.props;
-      return {
+
+      const conf = {
         chart: {
           renderTo: this.chartEl
         },
-        yAxis: {
-          min: minimumValue || 0,
-        },
+        yAxis: {},
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+      if (stackingType === 'normal' && minimumValue) {
+        conf.yAxis.min = minimumValue;
+      }
+      return conf;
     }
     render() {
       const {customLegend} = this.state;
@@ -144,4 +160,4 @@ const withColumnChart = (ComposedComponent) => {
   }
 };
 
-export default withColumnChart;
+export default withStackedColumnChart;
