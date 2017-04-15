@@ -2,7 +2,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import ColumnWidget from './components/newwidgets/columnWidget'
+import ColumnWidget from './components/columnWidget'
 
 
 render(
