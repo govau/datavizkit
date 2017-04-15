@@ -23,7 +23,7 @@ render(
                   type='column'
                   dateLastUpdated='22 Feb 2016'
                   minimumValue="20000"
-                  chartConfig={{"xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},"series":[{"name":"Time to clear","data":[84807,48317,51420,62400,48060,37560,39300]}]}}
+                  chartConfig={{"xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},"series":[{"name":"Time to clear","data":[84807,48317,51420,62400,null,37560,39300]}]}}
                   _singleCategory={false}
                   _singleSection={true} />
 

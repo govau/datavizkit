@@ -10,10 +10,12 @@ import withColumnChart from './../withColumnChart';
 // might also have a ColumnWidgetLarge or ColumnWidgetMonochrome
 const ColumnWidget = (props) => {
   return (
-    <div className="card">
-      <div>Column Widget</div>
-      <div>{props.children}</div>
-    </div>
+    <article className="chart--column card" role="article">
+      <header>
+        <div>Column Widget</div>
+      </header>
+      <section>{props.children}</section>
+    </article>
   )
 };
 

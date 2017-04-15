@@ -3,12 +3,14 @@ import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 
-import {onNextFrame} from './../utils/DOM';
-
 
 const BASE_HIGHCHARTS_CONFIG = {
   title: {
     text: null,
+    align: 'left',
+  },
+  subtitle: {
+    align: 'left',
   },
   yAxis: {
     title: {
@@ -39,9 +41,7 @@ const withHighcharts = (ComposedComponent) => {
       if (!options.chart && !options.chart.renderTo) {
         throw new Error('Must provide chart.renderTo on options.');
       }
-      onNextFrame(() => {
-        new Highcharts.chart(options);
-      });
+      new Highcharts.chart(options);
     }
     destroyChart(el) {
       return el.destroy();
