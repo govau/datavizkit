@@ -2,7 +2,7 @@
 // TODO remove the implicit fontawesome dependency
 
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 

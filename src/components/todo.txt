@@ -4,11 +4,28 @@
 
 
 
-stacking column
+/*
 
-// 100% height:
-plotOptions: {
-   column: {
-       stacking: 'percent'
-   }
-}
+ todo
+
+ * can have a pattern for high contrast mode
+ * can have a pattern for null data layer - http://www.highcharts.com/plugin-registry/single/9/Pattern-Fill
+ *
+ * include units - use legend.labelFormatter etc
+ * can include units yAxis: {
+ format: '${value}'
+ },
+ http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-pointplacement-numeric/
+ * styled like dashboards
+
+ * can support column groups - like line chart
+
+ */
+
+/*
+
+todo:
+
+* handle chart updates after render: http://stackoverflow.com/questions/42848218/using-chart-update-on-a-chart-using-renderto/42850049#42850049
+
+ */
