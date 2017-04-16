@@ -74,8 +74,10 @@ Highcharts.setOptions({
 
 // abstract methods from the Highcharts api
 const withHighcharts = (ComposedComponent) => {
+  console.log('outside withHighcharts')
   return class extends PureComponent {
     constructor(props) {
+      console.log('inside withHighcharts')
       super(props);
       this.renderChart = this.renderChart.bind(this);
       this.destroyChart = this.destroyChart.bind(this);

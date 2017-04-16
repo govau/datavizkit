@@ -1,7 +1,5 @@
 
 import React, {PureComponent} from 'react';
-import {compose} from 'recompose';
-import last from 'lodash/last';
 
 import Legend from './customLegend.js';
 // todo - export "Highcharts" related config ops to withHighcharts or as utils

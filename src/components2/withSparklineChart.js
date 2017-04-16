@@ -1,6 +1,5 @@
 
 import React, {PureComponent} from 'react';
-import {compose} from 'recompose';
 import last from 'lodash/last';
 
 import TrendLegend from './trendLegend.js';
