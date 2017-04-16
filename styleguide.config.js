@@ -7,7 +7,7 @@ module.exports = {
   sections: [
     {
       name: 'Widgets',
-      components: './src/components/widgets/**/*.js',
+      components: './src/components/**/*.js',
     },
   ],
   styleguideDir: config.styleguideDir,
