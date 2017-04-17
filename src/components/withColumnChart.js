@@ -7,6 +7,7 @@ import Legend from './customLegend.js';
 
 
 // render a column chart and manage column chart stuff
+// and manages *all state*
 const withColumnChart = (ComposedComponent) => {
   return class extends PureComponent {
     constructor(props) {
