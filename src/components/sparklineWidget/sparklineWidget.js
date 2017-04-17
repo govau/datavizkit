@@ -10,7 +10,7 @@ import withSparklineChart from './../withSparklineChart';
 // might also have a SparklineWidgetLarge or SparklineWidgetMonochrome
 const SparklineWidget = (props) => {
   return (
-    <article className="chart--sparkline card" role="article">
+    <article className="chart--sparkline" role="article">
       <header>
         <div>Sparkline Widget</div>
       </header>

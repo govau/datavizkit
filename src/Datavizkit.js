@@ -6,11 +6,11 @@ Exports the library
 
  */
 
-import ColumnWidget from './components/widgets/column';
-import LineWidget from './components/widgets/line';
-import SparklineWidget from './components/widgets/sparkline';
-import DonutWidget from './components/widgets/donut';
-import StackedColumnWidget from './components/widgets/stackedColumn';
+import ColumnWidget from './components/columnWidget';
+import LineWidget from './components/lineWidget';
+import SparklineWidget from './components/sparklineWidget';
+import DonutWidget from './components/donutWidget';
+import StackedColumnWidget from './components/stackedColumnWidget';
 
 export {
   ColumnWidget,
