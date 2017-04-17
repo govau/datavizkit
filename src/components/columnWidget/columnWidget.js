@@ -10,7 +10,7 @@ import withColumnChart from './../withColumnChart';
 // might also have a ColumnWidgetLarge or ColumnWidgetMonochrome
 const ColumnWidget = (props) => {
   return (
-    <article className="chart--column card" role="article">
+    <article className="chart--column" role="article">
       <header>
         <div>Column Widget</div>
       </header>

@@ -10,7 +10,7 @@ import withStackedColumnChart from './../withStackedColumnChart';
 // might also have a StackedColumnWidgetLarge or StackedColumnWidgetMonochrome
 const StackedColumnWidget = (props) => {
   return (
-    <article className="chart--stackedColumn card" role="article">
+    <article className="chart--stackedColumn" role="article">
       <header>
         <div>StackedColumn Widget</div>
       </header>
