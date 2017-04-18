@@ -11,9 +11,6 @@ import withStackedColumnChart from './../withStackedColumnChart';
 const StackedColumnWidget = (props) => {
   return (
     <article className="chart--stackedColumn" role="article">
-      <header>
-        <div>StackedColumn Widget</div>
-      </header>
       <section>{props.children}</section>
     </article>
   )

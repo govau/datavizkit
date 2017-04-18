@@ -2,11 +2,11 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import ColumnWidget from './components/columnWidget';
-import LineWidget from './components/lineWidget';
-import StackedColumnWidget from './components/stackedColumnWidget';
-import DonutWidget from './components/donutWidget';
-import SparklineWidget from './components/sparklineWidget';
+import ColumnWidget from './components/columnWidget/columnWidget.js';
+import LineWidget from './components/lineWidget/lineWidget.js';
+import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
+import DonutWidget from './components/donutWidget/donutWidget.js';
+import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
 
 
 render(

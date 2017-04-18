@@ -11,9 +11,6 @@ import withSparklineChart from './../withSparklineChart';
 const SparklineWidget = (props) => {
   return (
     <article className="chart--sparkline" role="article">
-      <header>
-        <div>Sparkline Widget</div>
-      </header>
       <section>{props.children}</section>
     </article>
   )

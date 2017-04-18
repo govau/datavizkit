@@ -11,9 +11,6 @@ import withColumnChart from './../withColumnChart';
 const ColumnWidget = (props) => {
   return (
     <article className="chart--column" role="article">
-      <header>
-        <div>Column Widget</div>
-      </header>
       <section>{props.children}</section>
     </article>
   )

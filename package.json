@@ -1,6 +1,6 @@
 {
   "name": "@gov.au/datavizkit",
-  "version": "0.0.11-development",
+  "version": "0.0.12-development",
   "description": "A fully featured data visualisation toolset built on top of Highcharts and React.",
   "keywords": [
     "highcharts",
@@ -13,7 +13,6 @@
     "url": "git+https://github.com/govau/datavizkit.git"
   },
   "main": "index.js",
-  "module": "lib/Datavizkit.js",
   "bugs": {
     "url": "https://github.com/govau/datavizkit/issues"
   },
@@ -24,7 +23,7 @@
   "dependencies": {
     "highcharts": "^5.0.9",
     "lodash": "^4.17.4",
-    "react": "^15.4.2",
+    "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "recompose": "^0.23.1",
     "styled-components": "^1.4.4"
