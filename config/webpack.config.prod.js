@@ -181,6 +181,9 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
+      'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
+      },
       __DEV__: process.env.NODE_ENV || false,
     }),
     // Makes some environment variables available in index.html.
