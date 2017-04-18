@@ -11,9 +11,6 @@ import withDonutChart from './../withDonutChart';
 const DonutWidget = (props) => {
   return (
     <article className="chart--donut" role="article">
-      <header>
-        <div>Donut Widget</div>
-      </header>
       <section>{props.children}</section>
     </article>
   )

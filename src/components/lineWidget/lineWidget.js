@@ -11,9 +11,6 @@ import withLineChart from './../withLineChart';
 const LineWidget = (props) => {
   return (
     <article className="chart--line" role="article">
-      <header>
-        <div>Column Widget</div>
-      </header>
       <section>{props.children}</section>
     </article>
   )
