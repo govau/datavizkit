@@ -21,16 +21,19 @@
   },
   "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
-    "highcharts": "^5.0.9",
+    "highcharts": "^5.0.9"
+  },
+  "peerDependencies": {
     "lodash": "^4.17.4",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "recompose": "^0.23.1",
     "styled-components": "^1.4.4"
   },
-  "peerDependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
-  },
   "devDependencies": {
+    "recompose": "^0.23.1",
+    "styled-components": "^1.4.4",
+    "lodash": "^4.17.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "autoprefixer": "6.7.2",
