@@ -180,7 +180,7 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       },
-      __DEV__: process.env.NODE_ENV || true
+      __DEV__: process.env.NODE_ENV === 'development' || true
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
