@@ -63,8 +63,9 @@ const withDonutChart = (ComposedComponent) => {
             showInLegend: true,
             states: {
               hover: {
+                brightness: -.2,
                 halo: {
-                  size: 0
+                  size: 0,
                 }
               },
               select: { // required because can be selected programmatically

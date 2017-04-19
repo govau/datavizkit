@@ -19,7 +19,8 @@ const THEME = {
   ],
   chart: {
     style: {
-      fontFamily: 'Open Sans,sans-serif'
+      fontFamily: 'Open Sans,sans-serif',
+      marginBottom: '8px'
     }
   },
   title: {

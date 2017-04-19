@@ -83,7 +83,10 @@ const withSparklineChart = (ComposedComponent) => {
             states: {
               select: { // required because can be selected programatically
                 enabled: false
-              }
+              },
+              hover: {
+                brightness: -.2,
+              },
             },
             allowPointSelect: false,
           },
