@@ -2,6 +2,8 @@
 import React, {PureComponent} from 'react';
 
 import Legend from './customLegend.js';
+import {applyHighContrast} from './../utils/highContrastMode';
+
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
@@ -87,23 +89,29 @@ const withDonutChart = (ComposedComponent) => {
     getInstanceConfig() {
       const {
         chartConfig,
+        isHighContrastMode,
       } = this.props;
 
-      const conf = {
+      const config = {
         chart: {
           renderTo: this.chartEl
         },
         series: chartConfig.series,
       };
 
-      conf.series = conf.series.map(s => {
+      config.series = config.series.map(s => {
         return {
           ...s,
           colorByPoint: true,
           innerSize: '50%',
         }
       });
-      return conf;
+
+      if (isHighContrastMode) {
+        config.series[0].data = config.series[0].data.map(applyHighContrast);
+      }
+
+      return config;
     }
     render() {
       const {customLegend} = this.state;
