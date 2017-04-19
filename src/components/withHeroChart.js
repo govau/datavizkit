@@ -30,36 +30,36 @@ const withHeroChart = (ComposedComponent) => {
         chart: {
           type: 'line',
           events: {
-            load: function() {  // equivalent to constructor callback
+            // load: function() {  // equivalent to constructor callback
 
-              var seriesData = this.series[0].data;//this is series data  // todo - this will be different for different dimensions of data
-              seriesData.forEach((d, idx) => {
-                if (d.y === null) { //find null value in series
-                  // adds plot band
-                  this.xAxis[0].addPlotBand({
-                    from: idx -.5,  // point back
-                    to: idx + .5,   // point after
-                    color: 'url(#diagonal-stripe-1)', // this color represents the null value region
-                  });
-                }
-              });
+            //   var seriesData = this.series[0].data;//this is series data  // todo - this will be different for different dimensions of data
+            //   seriesData.forEach((d, idx) => {
+            //     if (d.y === null) { //find null value in series
+            //       // adds plot band
+            //       this.xAxis[0].addPlotBand({
+            //         from: idx -.5,  // point back
+            //         to: idx + .5,   // point after
+            //         color: 'url(#diagonal-stripe-1)', // this color represents the null value region
+            //       });
+            //     }
+            //   });
 
-              let customLegendData = this.series.map(s => {
-                const lastData = last(s.data);
-                return {
-                  key: s.name,
-                  y: lastData.y,
-                  color: lastData.color,
-                }
-              });
-              boundSetState({'customLegend': customLegendData});
+            //   let customLegendData = this.series.map(s => {
+            //     const lastData = last(s.data);
+            //     return {
+            //       key: s.name,
+            //       y: lastData.y,
+            //       color: lastData.color,
+            //     }
+            //   });
+            //   boundSetState({'customLegend': customLegendData});
 
-              // "hover" over the last line
-              const lastCol = last(this.series[0].data);
-              if (lastCol) {
-                lastCol.onMouseOver && lastCol.onMouseOver();
-              }
-            },
+            //   // "hover" over the last line
+            //   const lastCol = last(this.series[0].data);
+            //   if (lastCol) {
+            //     lastCol.onMouseOver && lastCol.onMouseOver();
+            //   }
+            // },
           },
         },
         title: {
@@ -118,11 +118,6 @@ const withHeroChart = (ComposedComponent) => {
           //     return Highcharts.dateFormat('%I:%M %P', this.value);
           //   }
           // }
-        },
-        yAxis: {
-          title: {
-            text: null
-          },
         }
       };
     }
@@ -135,10 +130,8 @@ const withHeroChart = (ComposedComponent) => {
         chart: {
           renderTo: this.chartEl
         },
-        yAxis: {
-          min: minimumValue || 0,
-        },
         xAxis: chartConfig.xAxis,
+        yAxis: chartConfig.yAxis,
         series: chartConfig.series,
       };
     }

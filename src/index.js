@@ -101,25 +101,24 @@ render(
    <HeroWidget title='Performance Dashboard'
                    dateLastUpdated='23 Mar 2017'
                    chartConfig={{
-                     'xAxis': {
+                     'xAxis': [{
                        'categories':['Aug','Sep','Oct','Nov','Dec','Jan','Feb']
-                     },
+                     }],
                      'yAxis':[{
                         'title': {
                           'text': 'Percentage'
                         }
                       },{
                         'title': {
-                          'text': 'AUSD',
-                          'opposite': true
-                        }
+                          'text': 'AUSD'
+                        },
+                        'opposite': true
                       }
                      ],
                      'series':[
                        {
                          'name':'User satisfaction',
                          'units': 'percentage',
-                         'yAxis': 0,
                          'data': [null, null, 45, 22, 18, 12, 38]
                        },
                        {
@@ -131,13 +130,11 @@ render(
                        {
                          'name':'Digital take-up',
                          'units': 'percentage',
-                         'yAxis': 0,
                          'data': [0, 0, 10, 12, 22, 27, 38]
                        },
                        {
                          'name':'Completion rate',
                          'units': 'percentage',
-                         'yAxis': 0,
                          'data': [38, 39, 40, 41, null, 47, 45]
                        }
                      ]
