@@ -97,7 +97,7 @@ const withColumnChart = (ComposedComponent) => {
             },
             states: {
               hover: {
-                // color: 'yellow',
+                brightness: -.2,
               },
               select: { // required because it can be selected programatically
                 enabled: false

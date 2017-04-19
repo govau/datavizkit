@@ -94,6 +94,9 @@ const withLineChart = (ComposedComponent) => {
               }
             },
             states: {
+              hover: {
+                brightness: -.2,
+              },
               select: { // required because can be selected programatically
                 enabled: false
               }
