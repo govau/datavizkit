@@ -4,14 +4,20 @@ import {compose} from 'recompose';
 
 import withHighcharts from './../withHighcharts';
 import withSparklineChart from './../withSparklineChart';
+import Tooltip from './../tooltip';
 
 
 // render a uniquely marked up and styled custom SparklineWidget
 // might also have a SparklineWidgetLarge or SparklineWidgetMonochrome
-const SparklineWidget = (props) => {
+const SparklineWidget = ({infoText, children}) => {
   return (
     <article className="chart--sparkline" role="article">
-      <section>{props.children}</section>
+      <header>
+        {infoText && <Tooltip text={infoText}>
+          What is this?
+        </Tooltip>}
+      </header>
+      <section>{children}</section>
     </article>
   )
 };
