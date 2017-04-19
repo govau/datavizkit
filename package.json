@@ -22,22 +22,18 @@
   "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
     "highcharts": "^5.0.9",
+    "highcharts-pattern-fill": "^3.0.0",
     "lodash": "^4.17.4",
     "pui-react-overlay-trigger": "^8.0.5",
     "pui-react-tooltip": "^8.0.5",
     "recompose": "^0.23.1",
-    "styled-components": "^1.4.4"
+    "styled-components": "^1.4.5"
   },
   "peerDependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
-    "recompose": "^0.23.1",
-    "styled-components": "^1.4.4",
-    "lodash": "^4.17.4",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
     "autoprefixer": "6.7.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -76,13 +72,18 @@
     "husky": "^0.13.3",
     "jest": "18.1.0",
     "json-loader": "0.5.4",
+    "lodash": "^4.17.4",
     "object-assign": "4.1.1",
     "postcss-loader": "1.2.2",
     "promise": "7.1.1",
+    "react": "^15.5.4",
     "react-dev-utils": "^0.5.2",
+    "react-dom": "^15.5.4",
     "react-styleguidist": "^5.0.2",
+    "recompose": "^0.23.1",
     "semantic-release": "^6.3.2",
     "style-loader": "0.13.1",
+    "styled-components": "^1.4.4",
     "url-loader": "0.5.7",
     "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2",

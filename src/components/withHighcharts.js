@@ -1,8 +1,12 @@
 
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
+import ProvidePatternFill from 'highcharts-pattern-fill';
 import merge from 'lodash/merge';
 
+
+// provide patterns for high constrast mode
+ProvidePatternFill(Highcharts);
 
 const THEME = {
   /*eslint-disable */
@@ -67,7 +71,6 @@ const BASE_HIGHCHARTS_CONFIG = {
     // enabled: false,
   }
 };
-
 
 Highcharts.setOptions({
   ...THEME
