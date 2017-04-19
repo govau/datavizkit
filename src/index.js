@@ -7,6 +7,7 @@ import LineWidget from './components/lineWidget/lineWidget.js';
 import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
 import DonutWidget from './components/donutWidget/donutWidget.js';
 import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
+import HeroWidget from './components/heroWidget/heroWidget.js';
 
 
 render(
@@ -97,32 +98,46 @@ render(
                   _singleCategory={false}
                   _singleSection={true} />
 
-   <HeadlineWidget title='Performance Dashboard'
+   <HeroWidget title='Performance Dashboard'
                    dateLastUpdated='23 Mar 2017'
-                   showHero={true}
                    chartConfig={{
                      'xAxis': {
                        'categories':['Aug','Sep','Oct','Nov','Dec','Jan','Feb']
                      },
+                     'yAxis':[{
+                        'title': {
+                          'text': 'Percentage'
+                        }
+                      },{
+                        'title': {
+                          'text': 'AUSD',
+                          'opposite': true
+                        }
+                      }
+                     ],
                      'series':[
                        {
                          'name':'User satisfaction',
                          'units': 'percentage',
+                         'yAxis': 0,
                          'data': [null, null, 45, 22, 18, 12, 38]
                        },
                        {
                          'name':'Cost per transaction',
                          'units': 'number',
+                         'yAxis': 1,
                          'data': [null, 578, 442, 80, 27, 25, 24]
                        },
                        {
                          'name':'Digital take-up',
                          'units': 'percentage',
+                         'yAxis': 0,
                          'data': [0, 0, 10, 12, 22, 27, 38]
                        },
                        {
                          'name':'Completion rate',
                          'units': 'percentage',
+                         'yAxis': 0,
                          'data': [38, 39, 40, 41, null, 47, 45]
                        }
                      ]
