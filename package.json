@@ -1,6 +1,6 @@
 {
   "name": "@gov.au/datavizkit",
-  "version": "0.0.16-development",
+  "version": "0.0.17-development",
   "description": "A fully featured data visualisation toolset built on top of Highcharts and React.",
   "keywords": [
     "highcharts",
@@ -92,7 +92,9 @@
     "postmerge": "yarn install",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "build:lib": "yarn clean:lib && babel src/ -d lib --ignore=index.js --source-maps",
+    "prebuild:lib": "yarn clean:lib",
+    "build:lib": "babel src/ -d lib --ignore=index.js --source-maps",
+    "start:lib": "yarn run build:lib -- --watch",
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",
