@@ -3,6 +3,9 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 
 import Legend from './customLegend.js';
+import {applyHighContrast} from './../utils/highContrastMode';
+
+
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
@@ -44,7 +47,7 @@ const withColumnChart = (ComposedComponent) => {
                   this.xAxis[0].addPlotBand({
                     from: idx -.5,  // point back
                     to: idx + .5,   // point after
-                    color: 'url(#diagonal-stripe-1)', // this color represents the null value region
+                    color: 'url(#highcharts-default-pattern-1)', // this color represents the null value region
                   });
                 }
               });
@@ -119,9 +122,11 @@ const withColumnChart = (ComposedComponent) => {
     getInstanceConfig() {
       const {
         chartConfig,
-        minimumValue
+        minimumValue,
+        isHighContrastMode,
       } = this.props;
-      return {
+
+      let config = {
         chart: {
           renderTo: this.chartEl
         },
@@ -131,6 +136,12 @@ const withColumnChart = (ComposedComponent) => {
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+
+      if (isHighContrastMode) {
+        config.series = config.series.map(applyHighContrast);
+      }
+
+      return config;
     }
     render() {
       const {customLegend} = this.state;
