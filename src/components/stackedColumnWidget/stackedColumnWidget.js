@@ -4,14 +4,20 @@ import {compose} from 'recompose';
 
 import withHighcharts from './../withHighcharts';
 import withStackedColumnChart from './../withStackedColumnChart';
+import Tooltip from './../tooltip';
 
 
 // render a uniquely marked up and styled custom StackedColumnWidget
 // might also have a StackedColumnWidgetLarge or StackedColumnWidgetMonochrome
-const StackedColumnWidget = (props) => {
+const StackedColumnWidget = ({infoText, children}) => {
   return (
     <article className="chart--stackedColumn" role="article">
-      <section>{props.children}</section>
+      <header>
+        {infoText && <Tooltip text={infoText}>
+          What is this?
+        </Tooltip>}
+      </header>
+      <section>{children}</section>
     </article>
   )
 };

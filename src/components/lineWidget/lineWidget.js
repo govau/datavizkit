@@ -4,14 +4,20 @@ import {compose} from 'recompose';
 
 import withHighcharts from './../withHighcharts';
 import withLineChart from './../withLineChart';
+import Tooltip from './../tooltip';
 
 
 // render a uniquely marked up and styled custom ColumnWidget
 // might also have a ColumnWidgetLarge or ColumnWidgetMonochrome
-const LineWidget = (props) => {
+const LineWidget = ({infoText, children}) => {
   return (
     <article className="chart--line" role="article">
-      <section>{props.children}</section>
+      <header>
+        {infoText && <Tooltip text={infoText}>
+          What is this?
+        </Tooltip>}
+      </header>
+      <section>{children}</section>
     </article>
   )
 };
