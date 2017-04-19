@@ -3,6 +3,8 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 
 import Legend from './customLegend.js';
+import {applyHighContrastDash} from './../utils/highContrastMode';
+
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
@@ -133,9 +135,11 @@ const withLineChart = (ComposedComponent) => {
     getInstanceConfig() {
       const {
         chartConfig,
-        minimumValue
+        minimumValue,
+        isHighContrastMode,
       } = this.props;
-      return {
+
+      const config = {
         chart: {
           renderTo: this.chartEl
         },
@@ -145,6 +149,11 @@ const withLineChart = (ComposedComponent) => {
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+
+      if (isHighContrastMode) {
+        config.series = config.series.map(applyHighContrastDash);
+      }
+      return config;
     }
     render() {
       const {customLegend} = this.state;

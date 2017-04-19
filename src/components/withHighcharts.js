@@ -1,12 +1,12 @@
 
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
-import ProvidePatternFill from 'highcharts-pattern-fill';
 import merge from 'lodash/merge';
 
+// todo - switch back to module
+// import ProvidePatternFill from 'highcharts-pattern-fill';
+import ProvidePatternFill from './../vendor/pattern-fill-v2';
 
-// provide patterns for high constrast mode
-ProvidePatternFill(Highcharts);
 
 const THEME = {
   /*eslint-disable */
@@ -78,12 +78,21 @@ Highcharts.setOptions({
 
 // abstract methods from the Highcharts api
 const withHighcharts = (ComposedComponent) => {
+
   return class extends PureComponent {
+
     constructor(props) {
       super(props);
+
+      // provide unique unique to chart
+      // will render defs for each chart
+      // if (isHighContrastMode) {
+      ProvidePatternFill(Highcharts);
+
       this.renderChart = this.renderChart.bind(this);
       this.destroyChart = this.destroyChart.bind(this);
     }
+
     renderChart(chartOptions, instanceOptions) {
       const options = merge({}, BASE_HIGHCHARTS_CONFIG, chartOptions, instanceOptions);
       if (!options.chart && !options.chart.renderTo) {
@@ -91,11 +100,16 @@ const withHighcharts = (ComposedComponent) => {
       }
       new Highcharts.chart(options);
     }
+
     destroyChart(el) {
       return el.destroy();
     }
+
     render() {
-      return <ComposedComponent {...this.props} renderChart={this.renderChart} destroyChart={this.destroyChart} />
+      return <ComposedComponent {...this.props}
+                                renderChart={this.renderChart}
+                                destroyChart={this.destroyChart}
+                                _Highcharts={Highcharts} />
     }
   }
 };
