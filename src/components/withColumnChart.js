@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 
 import Legend from './customLegend.js';
-import {applyHighContrast} from './../utils/highContrastMode';
+import {applyHighContrastFill} from './../utils/highContrastMode';
 
 
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
@@ -15,6 +15,7 @@ const withColumnChart = (ComposedComponent) => {
   return class extends PureComponent {
     constructor(props) {
       super(props);
+      console.log(props._Highcharts.getOptions().colors)
       this.chartEl = null;
       this.state = {
         customLegend: null,
@@ -138,7 +139,7 @@ const withColumnChart = (ComposedComponent) => {
       };
 
       if (isHighContrastMode) {
-        config.series = config.series.map(applyHighContrast);
+        config.series = config.series.map(applyHighContrastFill);
       }
 
       return config;

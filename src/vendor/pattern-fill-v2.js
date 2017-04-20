@@ -36,8 +36,13 @@
     } else {
         factory(Highcharts);
     }
-}(function (Highcharts) {
+}(function (Highcharts, options) {
 
+  const {
+    fillTypes,
+    fillNamespace
+  } = options;
+debugger
     'use strict';
 
     var idCounter = 0,
@@ -48,6 +53,7 @@
      * Exposed method to add a pattern to the renderer.
      */
     Highcharts.SVGRenderer.prototype.addPattern = function (id, options) {
+
         var pattern,
             path,
             w = options.width || 10,
@@ -82,6 +88,7 @@
 
         // Use an SVG path for the pattern
         if (options.path) {
+
             path = options.path;
 
             // The background
@@ -89,10 +96,14 @@
                 rect(path.fill);
             }
 
+            // console.log(path.stroke || options.color || '#343434');
+
+          // debugger
             // The pattern
             this.createElement('path').attr({
                 'd': path.d || path,
                 'stroke': path.stroke || options.color || '#343434',
+                // 'stroke': options.color || '#343434',
                 'stroke-width': path.strokeWidth || 2
             }).add(pattern);
             pattern.color = options.color;
@@ -120,76 +131,42 @@
 
     if (Highcharts.VMLElement) {
 
-        Highcharts.VMLRenderer.prototype.addPattern = function (id, options) {
+      throw new Error('This fork does not support VML.')
 
-            var patterns;
-            if (!id) {
-                id = 'highcharts-pattern-' + idCounter;
-                idCounter += 1;
-            }
-            patterns = this.patterns || {};
-            patterns[id] = options;
-            this.patterns = patterns;
-        };
-
-        Highcharts.wrap(Highcharts.VMLRenderer.prototype.Element.prototype, 'fillSetter', function (proceed, color, prop, elem) {
-            if (typeof color === 'string' && color.substring(0, 5) === 'url(#') {
-                var id = color.substring(5, color.length - 1),
-                    pattern = this.renderer.patterns[id],
-                    markup;
-
-                if (pattern.image) {
-                    // Remove Previous fills
-                    if (elem.getElementsByTagName('fill').length) {
-                        elem.removeChild(elem.getElementsByTagName('fill')[0]);
-                    }
-
-                    markup = this.renderer.prepVML(['<', prop, ' type="tile" src="', pattern.image, '" />']);
-                    elem.appendChild(document.createElement(markup));
-
-                    // Work around display bug on updating attached nodes
-                    if (elem.parentNode.nodeType === 1) {
-                        elem.outerHTML = elem.outerHTML;
-                    }
-
-                } else if (pattern.color) {
-                    proceed.call(this, pattern.color, prop, elem);
-                } else {
-                    proceed.call(this, '#A0A0A0', prop, elem);
-                }
-            } else {
-                proceed.call(this, color, prop, elem);
-            }
-        });
     }
 
     /**
      * Add the predefined patterns
      */
     function addPredefinedPatterns(renderer) {
+
         var colors = Highcharts.getOptions().colors;
 
-        each([
-            'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
-            'M 0 10 L 10 0 M -1 1 L 1 -1 M 9 11 L 11 9',
-            'M 3 0 L 3 10 M 8 0 L 8 10',
-            'M 0 3 L 10 3 M 0 8 L 10 8',
-            'M 0 3 L 5 3 L 5 0 M 5 10 L 5 7 L 10 7',
-            'M 3 3 L 8 3 L 8 8 L 3 8 Z',
-            'M 5 5 m -4 0 a 4 4 0 1 1 8 0 a 4 4 0 1 1 -8 0',
-            'M 10 3 L 5 3 L 5 0 M 5 10 L 5 7 L 0 7',
-            'M 2 5 L 5 2 L 8 5 L 5 8 Z',
-            'M 0 0 L 5 10 L 10 0'
-        ], function (pattern, i) {
-            renderer.addPattern('highcharts-default-pattern-' + i, {
-                path: pattern,
-                color: colors[i]
+      const namespace = fillNamespace || 'highcharts-default-pattern';
+
+      const _patterns = [
+        'M 0 0 L 10 10 M 9 -1 L 11 1 M -1 9 L 1 11',
+        'M 0 10 L 10 0 M -1 1 L 1 -1 M 9 11 L 11 9',
+        'M 3 0 L 3 10 M 8 0 L 8 10',
+        'M 0 3 L 10 3 M 0 8 L 10 8',
+        'M 0 3 L 5 3 L 5 0 M 5 10 L 5 7 L 10 7',
+        'M 3 3 L 8 3 L 8 8 L 3 8 Z',
+        'M 5 5 m -4 0 a 4 4 0 1 1 8 0 a 4 4 0 1 1 -8 0',
+        'M 10 3 L 5 3 L 5 0 M 5 10 L 5 7 L 0 7',
+        'M 2 5 L 5 2 L 8 5 L 5 8 Z',
+        'M 0 0 L 5 10 L 10 0'
+      ];
+        each(fillTypes, function (id, i) {
+            renderer.addPattern(`${namespace}-` + i, {
+                path: _patterns[id],
+                color: colors[i],
             });
         });
     }
 
     // Add patterns to the defs element
     wrap(Highcharts.Chart.prototype, 'getContainer', function (proceed) {
+
         proceed.apply(this);
 
         var chart = this,

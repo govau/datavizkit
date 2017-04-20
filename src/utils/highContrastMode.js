@@ -1,23 +1,45 @@
 
-// patterns available: http://jsfiddle.net/highcharts/gqg618eb/
-
+// fill patterns available: http://jsfiddle.net/highcharts/gqg618eb/
 
 // fill
-export const applyHighContrast = (item, idx) => {
-  let patternId;
-  if (idx <= 8) {
-    patternId = idx;
+const FILL_TYPES = [
+  // 'url(#highcharts-default-pattern-0)',  // reserved for null data layer
+  // 'url(#highcharts-default-pattern-1)',  // not appropriate
+  // 'url(#highcharts-default-pattern-4)',
+  // 'url(#highcharts-default-pattern-5)',
+  // 'url(#highcharts-default-pattern-2)',
+  // 'url(#highcharts-default-pattern-6)',
+  // 'url(#highcharts-default-pattern-7)',
+  // 'url(#highcharts-default-pattern-3)',
+  // 'url(#highcharts-default-pattern-8)',
+
+  'url(#highcharts-high-contrast-pattern-0)',
+  'url(#highcharts-high-contrast-pattern-1)',
+  'url(#highcharts-high-contrast-pattern-2)',
+  'url(#highcharts-high-contrast-pattern-3)',
+  'url(#highcharts-high-contrast-pattern-4)',
+  'url(#highcharts-high-contrast-pattern-5)',
+  'url(#highcharts-high-contrast-pattern-6)',
+  'url(#highcharts-high-contrast-pattern-7)',
+  'url(#highcharts-high-contrast-pattern-8)',
+];
+export const applyHighContrastFill = (item, idx) => {
+  let patternIdx;
+  if (idx <= FILL_TYPES.length) {
+    patternIdx = idx;
   } else {
-    patternId = idx % 8;
+    patternIdx = idx % FILL_TYPES.length;
   }
-  item.color = `url(#highcharts-default-pattern-${patternId})`;
+  item.color = FILL_TYPES[patternIdx];
   return item;
 };
 
 
+// dash style patterns available: http://api.highcharts.com/highcharts/series%3Cline%3E.dashStyle
+
 // dash
 const DASH_TYPES = [
-  // 'Solid',
+  // 'Solid',   // reserved
   'ShortDash',
   'ShortDot',
   'ShortDashDot',
