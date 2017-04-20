@@ -76,12 +76,6 @@ Highcharts.setOptions({
   ...THEME
 });
 
-// ProvidePatternFill(Highcharts, {fillTypes:[0,1,2,3,4,5,6,7,8]});
-
-ProvidePatternFill(Highcharts, {
-  fillTypes: [4,5,2,6,7,3,8],
-  fillNamespace: 'highcharts-high-contrast-pattern'
-});
 
 // abstract methods from the Highcharts api
 const withHighcharts = (ComposedComponent) => {
@@ -90,7 +84,6 @@ const withHighcharts = (ComposedComponent) => {
 
     constructor(props) {
       super(props);
-
       this.definePatterns = this.definePatterns.bind(this);
       this.renderChart = this.renderChart.bind(this);
       this.destroyChart = this.destroyChart.bind(this);
@@ -98,7 +91,6 @@ const withHighcharts = (ComposedComponent) => {
 
     // provide unique unique to chart
     // will render defs for each chart
-    // todo if (isHighContrastMode) {
     definePatterns(options) {
       ProvidePatternFill(Highcharts, options);
     }

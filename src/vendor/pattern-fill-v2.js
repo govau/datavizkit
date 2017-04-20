@@ -39,10 +39,11 @@
 }(function (Highcharts, options) {
 
   const {
-    fillTypes,
-    fillNamespace
+    fillTypeIdxs,
+    fillNamespace,
+    fillColors,
   } = options;
-debugger
+
     'use strict';
 
     var idCounter = 0,
@@ -140,7 +141,7 @@ debugger
      */
     function addPredefinedPatterns(renderer) {
 
-        var colors = Highcharts.getOptions().colors;
+      var colors = fillColors && fillColors.length ? fillColors : Highcharts.getOptions().colors;
 
       const namespace = fillNamespace || 'highcharts-default-pattern';
 
@@ -156,7 +157,11 @@ debugger
         'M 2 5 L 5 2 L 8 5 L 5 8 Z',
         'M 0 0 L 5 10 L 10 0'
       ];
-        each(fillTypes, function (id, i) {
+        each(fillTypeIdxs, function (id, i) {
+
+          // console.log(i, id, `${namespace}-` + i, colors[i], _patterns[id])
+
+
             renderer.addPattern(`${namespace}-` + i, {
                 path: _patterns[id],
                 color: colors[i],

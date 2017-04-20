@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 
 import Legend from './customLegend.js';
-import {applyHighContrastDash} from './../utils/highContrastMode';
+import {makeHighContrastDash} from './../utils/highContrastMode';
 
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
@@ -14,6 +14,7 @@ const withLineChart = (ComposedComponent) => {
     constructor(props) {
       super(props);
       this.chartEl = null;
+      this.highContrast = makeHighContrastDash();
       this.state = {
         customLegend: null,
       }
@@ -45,7 +46,7 @@ const withLineChart = (ComposedComponent) => {
                   this.xAxis[0].addPlotBand({
                     from: idx -.5,  // point back
                     to: idx + .5,   // point after
-                    color: 'url(#diagonal-stripe-1)', // this color represents the null value region
+                    color: 'url(#null-data-layer)', // this color represents the null value region
                   });
                 }
               });
@@ -133,6 +134,7 @@ const withLineChart = (ComposedComponent) => {
       };
     }
     getInstanceConfig() {
+
       const {
         chartConfig,
         minimumValue,
@@ -151,7 +153,7 @@ const withLineChart = (ComposedComponent) => {
       };
 
       if (isHighContrastMode) {
-        config.series = config.series.map(applyHighContrastDash);
+        config.series = config.series.map(this.highContrast.mapProps);
       }
       return config;
     }

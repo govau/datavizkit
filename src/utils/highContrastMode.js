@@ -1,63 +1,77 @@
 
 // fill patterns available: http://jsfiddle.net/highcharts/gqg618eb/
 
-// fill
-const FILL_TYPES = [
-  // 'url(#highcharts-default-pattern-0)',  // reserved for null data layer
-  // 'url(#highcharts-default-pattern-1)',  // not appropriate
-  // 'url(#highcharts-default-pattern-4)',
-  // 'url(#highcharts-default-pattern-5)',
-  // 'url(#highcharts-default-pattern-2)',
-  // 'url(#highcharts-default-pattern-6)',
-  // 'url(#highcharts-default-pattern-7)',
-  // 'url(#highcharts-default-pattern-3)',
-  // 'url(#highcharts-default-pattern-8)',
+export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
 
-  'url(#highcharts-high-contrast-pattern-0)',
-  'url(#highcharts-high-contrast-pattern-1)',
-  'url(#highcharts-high-contrast-pattern-2)',
-  'url(#highcharts-high-contrast-pattern-3)',
-  'url(#highcharts-high-contrast-pattern-4)',
-  'url(#highcharts-high-contrast-pattern-5)',
-  'url(#highcharts-high-contrast-pattern-6)',
-  'url(#highcharts-high-contrast-pattern-7)',
-  'url(#highcharts-high-contrast-pattern-8)',
-];
-export const applyHighContrastFill = (item, idx) => {
-  let patternIdx;
-  if (idx <= FILL_TYPES.length) {
-    patternIdx = idx;
-  } else {
-    patternIdx = idx % FILL_TYPES.length;
+  const getFillTypes = (typeIdxs) => {
+    let _types = [
+      'url(#high-contrast-pattern-0)',
+      'url(#high-contrast-pattern-1)',
+      'url(#high-contrast-pattern-2)',
+      'url(#high-contrast-pattern-3)',
+      'url(#high-contrast-pattern-4)',
+      'url(#high-contrast-pattern-5)',
+      'url(#high-contrast-pattern-6)',
+      'url(#high-contrast-pattern-7)',
+      'url(#high-contrast-pattern-8)',
+      'url(#high-contrast-pattern-9)',
+    ];
+    return typeIdxs.map((typeIdx, idx) => {
+      return _types[idx];
+    })
+  };
+
+  const fillTypes = getFillTypes(fillTypeIdxs);
+  const fillNamespace = 'high-contrast-pattern';
+
+  return {
+    getOptions: () => {
+      return {
+        fillTypeIdxs: fillTypeIdxs,
+        fillNamespace,
+      }
+    },
+    mapProps: (item, idx) => {
+      let patternIdx;
+      if (idx <= fillTypes.length) {
+        patternIdx = idx;
+      } else {
+        patternIdx = idx % fillTypes.length;
+      }
+      item.color = fillTypes[patternIdx];
+      return item;
+    }
   }
-  item.color = FILL_TYPES[patternIdx];
-  return item;
+
 };
 
 
 // dash style patterns available: http://api.highcharts.com/highcharts/series%3Cline%3E.dashStyle
 
-// dash
-const DASH_TYPES = [
-  // 'Solid',   // reserved
-  'ShortDash',
-  'ShortDot',
-  'ShortDashDot',
-  'ShortDashDotDot',
-  'Dot',
-  'Dash',
-  'LongDash',
-  'DashDot',
-  'LongDashDot',
-  'LongDashDotDot',
-];
-export const applyHighContrastDash = (item, idx) => {
-  let dashIdx;
-  if (idx <= DASH_TYPES.length) {
-    dashIdx = idx;
-  } else {
-    dashIdx = idx % DASH_TYPES.length;
+export const makeHighContrastDash = () => {
+  const dashTypes = [
+    // 'Solid',   // reserved
+    'ShortDash',
+    'ShortDot',
+    'ShortDashDot',
+    'ShortDashDotDot',
+    'Dot',
+    'Dash',
+    'LongDash',
+    'DashDot',
+    'LongDashDot',
+    'LongDashDotDot',
+  ];
+  return {
+    mapProps: (item, idx) => {
+      let dashIdx;
+      if (idx <= dashTypes.length) {
+        dashIdx = idx;
+      } else {
+        dashIdx = idx % dashTypes.length;
+      }
+      item.dashStyle = dashTypes[dashIdx];
+      return item;
+    }
   }
-  item.dashStyle = DASH_TYPES[dashIdx];
-  return item;
 };

@@ -2,22 +2,26 @@
 import React, {PureComponent} from 'react';
 
 import Legend from './customLegend.js';
-import {applyHighContrast} from './../utils/highContrastMode';
+import {makeHighContrastFill} from './../utils/highContrastMode';
 
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
 // render a donut chart and manage donut chart stuff
 const withDonutChart = (ComposedComponent) => {
+
   return class extends PureComponent {
+
     constructor(props) {
       super(props);
       this.chartEl = null;
+      this.highContrast = makeHighContrastFill();
       this.state = {
         customLegend: null,
       }
     }
     componentDidMount() {
+      this.props.definePatterns(this.highContrast.getOptions());
       this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
     }
     componentWillUnmount() {
@@ -87,6 +91,7 @@ const withDonutChart = (ComposedComponent) => {
       };
     }
     getInstanceConfig() {
+
       const {
         chartConfig,
         isHighContrastMode,
@@ -99,7 +104,7 @@ const withDonutChart = (ComposedComponent) => {
         series: chartConfig.series,
       };
 
-      config.series = config.series.map(s => {
+      config.series = config.series.map((s, idx) => {
         return {
           ...s,
           colorByPoint: true,
@@ -108,8 +113,9 @@ const withDonutChart = (ComposedComponent) => {
       });
 
       if (isHighContrastMode) {
-        config.series[0].data = config.series[0].data.map(applyHighContrast);
+        config.series[0].data = config.series[0].data.map(this.highContrast.mapProps);
       }
+
 
       return config;
     }
