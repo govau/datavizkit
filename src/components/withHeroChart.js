@@ -56,10 +56,10 @@ const withHeroChart = (ComposedComponent) => {
               boundSetState({'customLegend': customLegendData});
 
               // "hover" over the last line
-              const lastCol = last(this.series[0].data);
-              if (lastCol) {
-                lastCol.onMouseOver && lastCol.onMouseOver();
-              }
+              // const lastCol = last(this.series[0].data);
+              // if (lastCol) {
+              //   lastCol.onMouseOver && lastCol.onMouseOver();
+              // }
             },
           },
         },
@@ -113,6 +113,15 @@ const withHeroChart = (ComposedComponent) => {
           enabled: true, //false,
           shared: true,
           crosshairs: true,
+          positioner: function(labelWidth, labelHeight, point) {
+            console.log("hooray");
+            return { x: point.plotX, y: this.chart.plotTop + this.chart.plotHeight - labelHeight };
+          },
+          formatter: function() {
+            return this.points.map(p => {
+              return '<br />' + p.series.name + ': ' + p.y;
+            });
+          }
         },
         xAxis: {
           crosshair: true,
@@ -145,9 +154,10 @@ const withHeroChart = (ComposedComponent) => {
             formatter: function() {
               return chartConfig.xAxis.categories[this.value];
             }
-          }
+          },
+          xCategories: chartConfig.xAxis.categories
         }),
-        series: chartConfig.series,
+        series: chartConfig.series
       };
     }
     render() {
