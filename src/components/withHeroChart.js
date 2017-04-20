@@ -113,15 +113,42 @@ const withHeroChart = (ComposedComponent) => {
           enabled: true, //false,
           shared: true,
           crosshairs: true,
+          borderRadius: 8,
           positioner: function(labelWidth, labelHeight, point) {
             console.log("hooray");
             return { x: point.plotX, y: this.chart.plotTop + this.chart.plotHeight - labelHeight };
           },
-          formatter: function() {
-            return this.points.map(p => {
-              return '<br />' + p.series.name + ': ' + p.y;
-            });
-          }
+          pointFormatter: function() {
+            const symbolChars = {
+              'circle': 9679,
+              'diamond': 9670,
+              'triangle': 9652,
+              'square': 9632,
+              'triangle-down': 9660 };
+
+            const valueFormats = {
+              'percentage': function(val) { return `${val}%`; },
+              'number': function(val) { return `$${val}`; }
+            };
+            
+            var color = this.series.color;
+            var symbol = symbolChars[this.series.symbol];
+            var valueFormatter, value;
+            
+            if (valueFormatter = valueFormats[this.series.options.units]) {
+              value = valueFormatter(this.y)
+            }
+            else { 
+              value = this.y;
+            }
+
+            var labelHtml = `<span style="color:${color}; font-size: 1.5em; text-decoration: line-through;">&nbsp;&#${symbol};&nbsp;</span>`;
+            var valueHtml = `<span style="float:right;">${value}</span>`
+
+            return `<div style="width:100px;">${labelHtml}${valueHtml}</span>`;
+          },
+          headerFormat: '',
+          useHTML: true
         },
         xAxis: {
           crosshair: true,
