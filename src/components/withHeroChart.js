@@ -1,6 +1,7 @@
 
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
+import omit from 'lodash/omit';
 import Legend from './customLegend.js';
 
 const withHeroChart = (ComposedComponent) => {
@@ -28,7 +29,7 @@ const withHeroChart = (ComposedComponent) => {
 
       return {
         chart: {
-          type: 'line',
+          type: 'spline',
           events: {
             load: function() {  // equivalent to constructor callback
 
@@ -73,6 +74,14 @@ const withHeroChart = (ComposedComponent) => {
           line: {},
           series: { // todo
             animation: false,
+            marker: { 
+              enabled: false,
+              states: { 
+                hover: {
+                  enabled: true
+                }
+              }
+            },
             point: {
               events: {
                 mouseOver: function() {
@@ -131,7 +140,13 @@ const withHeroChart = (ComposedComponent) => {
           renderTo: this.chartEl
         },
         yAxis: chartConfig.yAxis,
-        xAxis: chartConfig.xAxis,
+        xAxis: Object.assign({}, omit(chartConfig.xAxis, 'categories'), {
+          labels: {
+            formatter: function() {
+              return chartConfig.xAxis.categories[this.value];
+            }
+          }
+        }),
         series: chartConfig.series,
       };
     }

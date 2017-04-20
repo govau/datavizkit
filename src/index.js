@@ -101,9 +101,9 @@ render(
    <HeroWidget title='Performance Dashboard'
                    dateLastUpdated='23 Mar 2017'
                    chartConfig={{
-                     'xAxis': [{
+                     'xAxis': {
                        'categories':['Aug','Sep','Oct','Nov','Dec','Jan','Feb']
-                     }],
+                     },
                      'yAxis':[{
                         'title': {
                           'text': 'Percentage'
