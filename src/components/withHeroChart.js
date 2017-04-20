@@ -3,6 +3,7 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import omit from 'lodash/omit';
 import Legend from './customLegend.js';
+import Highcharts from 'highcharts';
 
 const withHeroChart = (ComposedComponent) => {
   return class extends PureComponent {
@@ -30,41 +31,18 @@ const withHeroChart = (ComposedComponent) => {
       return {
         chart: {
           type: 'spline',
-          events: {
-            load: function() {  // equivalent to constructor callback
-
-              // var seriesData = this.series[0].data;//this is series data  // todo - this will be different for different dimensions of data
-              // seriesData.forEach((d, idx) => {
-              //   if (d.y === null) { //find null value in series
-              //     // adds plot band
-              //     this.xAxis[0].addPlotBand({
-              //       from: idx -.5,  // point back
-              //       to: idx + .5,   // point after
-              //       color: 'url(#diagonal-stripe-1)', // this color represents the null value region
-              //     });
-              //   }
-              // });
-
-              let customLegendData = this.series.map(s => {
-                const lastData = last(s.data);
-                return {
-                  key: s.name,
-                  y: lastData.y,
-                  color: lastData.color,
-                }
-              });
-              boundSetState({'customLegend': customLegendData});
-
-              // "hover" over the last line
-              // const lastCol = last(this.series[0].data);
-              // if (lastCol) {
-              //   lastCol.onMouseOver && lastCol.onMouseOver();
-              // }
-            },
-          },
         },
         title: {
           text: title,
+        },
+        legend: {
+          enabled: true,
+          align: 'right',
+          verticalAlign: 'top',
+          layout: 'vertical',
+          x: 0,
+          y: 100,
+          itemMarginBottom: 15
         },
         subtitle: {
           useHTML: true,
@@ -75,26 +53,10 @@ const withHeroChart = (ComposedComponent) => {
           series: { // todo
             animation: false,
             marker: { 
-              enabled: false,
+              enabled: true, // Can't figure out a way to hide markers on lines yet show on legend :(
               states: { 
                 hover: {
                   enabled: true
-                }
-              }
-            },
-            point: {
-              events: {
-                mouseOver: function() {
-                  const sliceIdx = this.index;
-                  const customLegendData = this.series.chart.series.map(s => {
-                    const sliceData = s.data[sliceIdx];
-                    return {
-                      key: s.name,
-                      y: sliceData.y,
-                      color: sliceData.color
-                    }
-                  });
-                  boundSetState({'customLegend': customLegendData});
                 }
               }
             },
@@ -115,7 +77,6 @@ const withHeroChart = (ComposedComponent) => {
           crosshairs: true,
           borderRadius: 8,
           positioner: function(labelWidth, labelHeight, point) {
-            console.log("hooray");
             return { x: point.plotX, y: this.chart.plotTop + this.chart.plotHeight - labelHeight };
           },
           pointFormatter: function() {
@@ -171,6 +132,7 @@ const withHeroChart = (ComposedComponent) => {
         chartConfig,
         minimumValue
       } = this.props;
+
       return {
         chart: {
           renderTo: this.chartEl
@@ -181,8 +143,7 @@ const withHeroChart = (ComposedComponent) => {
             formatter: function() {
               return chartConfig.xAxis.categories[this.value];
             }
-          },
-          xCategories: chartConfig.xAxis.categories
+          }
         }),
         series: chartConfig.series
       };
@@ -192,7 +153,6 @@ const withHeroChart = (ComposedComponent) => {
       return (
         <ComposedComponent {...this.props}>
           <div ref={el => this.chartEl = el} />
-          {customLegend && customLegend.length && <Legend data={customLegend} />}
         </ComposedComponent>
       )
     }
