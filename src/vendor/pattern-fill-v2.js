@@ -158,10 +158,6 @@
         'M 0 0 L 5 10 L 10 0'
       ];
         each(fillTypeIdxs, function (id, i) {
-
-          // console.log(i, id, `${namespace}-` + i, colors[i], _patterns[id])
-
-
             renderer.addPattern(`${namespace}-` + i, {
                 path: _patterns[id],
                 color: colors[i],

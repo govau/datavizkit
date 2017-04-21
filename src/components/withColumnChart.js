@@ -8,11 +8,12 @@ import {makeHighContrastFill} from './../utils/highContrastMode';
 
 // todo - export "Highcharts" related config ops to withHighcharts or as utils
 
-
 // render a column chart and manage column chart stuff
 // and manages *all state*
 const withColumnChart = (ComposedComponent) => {
+
   return class extends PureComponent {
+
     constructor(props) {
       super(props);
       this.chartEl = null;
@@ -21,13 +22,20 @@ const withColumnChart = (ComposedComponent) => {
         customLegend: null,
       }
     }
+
     componentDidMount() {
       this.props.definePatterns(this.highContrast.getOptions());
       this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
     }
-    componentWillUnmount() {
-      this.props.destroyChart(this.chart);
+
+    componentWillUpdate() {
+      this.props.updateChart(this.getBaseConfig(), this.getInstanceConfig());
     }
+
+    componentWillUnmount() {
+      this.props.destroyChart();
+    }
+
     getBaseConfig() {
       const {
         title,
@@ -121,12 +129,13 @@ const withColumnChart = (ComposedComponent) => {
         }
       };
     }
+
     getInstanceConfig() {
 
       const {
         chartConfig,
         minimumValue,
-        isHighContrastMode,
+        displayHighContrast,
       } = this.props;
 
       let config = {
@@ -140,12 +149,13 @@ const withColumnChart = (ComposedComponent) => {
         series: chartConfig.series,
       };
 
-      if (isHighContrastMode) {
+      if (displayHighContrast) {
         config.series = config.series.map(this.highContrast.mapProps);
       }
 
       return config;
     }
+
     render() {
       const {customLegend} = this.state;
       return (

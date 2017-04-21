@@ -22,7 +22,6 @@
   "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
     "highcharts": "^5.0.9",
-    "highcharts-pattern-fill": "^3.0.0",
     "lodash": "^4.17.4",
     "pui-react-overlay-trigger": "^8.0.5",
     "pui-react-tooltip": "^8.0.5",

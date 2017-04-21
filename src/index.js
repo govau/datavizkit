@@ -48,7 +48,8 @@ render(
       </svg>
     </div>
 
-    {/*<SparklineWidget chartConfig={{"xAxis":{*/}
+
+            {/*<SparklineWidget chartConfig={{"xAxis":{*/}
         {/*"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]*/}
       {/*},*/}
       {/*"series":[*/}
@@ -77,7 +78,7 @@ render(
        _singleCategory={true}
        _singleSection={false}
        minimumValue="30"
-       isHighContrastMode={true} />
+       displayHighContrast={true} />
 
     {/*<StackedColumnWidget*/}
       {/*chartConfig={{*/}
@@ -113,7 +114,7 @@ render(
                 }}
                 singleCategory={false}
                 singleSection={true}
-                isHighContrastMode={true} />
+                displayHighContrast={true} />
 
     <ColumnWidget title='Number of page views'
                   units='number'
@@ -124,7 +125,7 @@ render(
                   chartConfig={{"xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},"series":[{"name":"Time to clear","data":[84807,48317,51420,62400,null,37560,39300]}]}}
                   _singleCategory={false}
                   _singleSection={true}
-                  isHighContrastMode={true} />
+                  displayHighContrast={true} />
 
 
   </div>, document.getElementById('root')
