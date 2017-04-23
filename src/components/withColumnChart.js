@@ -152,7 +152,6 @@ const withColumnChart = (ComposedComponent) => {
       if (displayHighContrast) {
         config.series = config.series.map(this.highContrast.mapProps);
       }
-
       return config;
     }
 

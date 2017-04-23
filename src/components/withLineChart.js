@@ -1,3 +1,16 @@
+/*
+
+ todo
+
+ chart update does not work as expected
+ packet to update is too big
+ improve the codes
+
+
+ */
+
+
+
 
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
@@ -133,12 +146,13 @@ const withLineChart = (ComposedComponent) => {
         }
       };
     }
+
     getInstanceConfig() {
 
       const {
         chartConfig,
         minimumValue,
-        isHighContrastMode,
+        displayHighContrast,
       } = this.props;
 
       const config = {
@@ -152,7 +166,7 @@ const withLineChart = (ComposedComponent) => {
         series: chartConfig.series,
       };
 
-      if (isHighContrastMode) {
+      if (displayHighContrast) {
         config.series = config.series.map(this.highContrast.mapProps);
       }
       return config;

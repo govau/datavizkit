@@ -94,7 +94,7 @@ const withDonutChart = (ComposedComponent) => {
 
       const {
         chartConfig,
-        isHighContrastMode,
+        displayHighContrast,
       } = this.props;
 
       const config = {
@@ -112,7 +112,7 @@ const withDonutChart = (ComposedComponent) => {
         }
       });
 
-      if (isHighContrastMode) {
+      if (displayHighContrast) {
         config.series[0].data = config.series[0].data.map(this.highContrast.mapProps);
       }
 
