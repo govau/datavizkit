@@ -1,10 +1,10 @@
 
+// https://gist.github.com/mulhoon/63b5d5a98ef0ab8c2b89#file-Highcharts%20Cheat%20Sheet
+
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 
-// todo - switch back to module
-// import ProvidePatternFill from 'highcharts-pattern-fill';
 import ProvidePatternFill from './../vendor/pattern-fill-v2';
 
 
@@ -87,6 +87,7 @@ const withHighcharts = (ComposedComponent) => {
       this.definePatterns = this.definePatterns.bind(this);
       this.renderChart = this.renderChart.bind(this);
       this.destroyChart = this.destroyChart.bind(this);
+      this.redrawChart = this.redrawChart.bind(this);
     }
 
     // provide unique unique to chart
@@ -95,16 +96,24 @@ const withHighcharts = (ComposedComponent) => {
       ProvidePatternFill(Highcharts, options);
     }
 
-    renderChart(chartOptions, instanceOptions) {
-      const options = merge({}, BASE_HIGHCHARTS_CONFIG, chartOptions, instanceOptions);
-      if (!options.chart && !options.chart.renderTo) {
-        throw new Error('Must provide chart.renderTo on options.');
+    renderChart(instanceConfig) {
+      const config = merge({}, BASE_HIGHCHARTS_CONFIG, instanceConfig);
+      if (!config.chart && !config.chart.renderTo) {
+        throw new Error('Must provide chart.renderTo on config.');
       }
-      new Highcharts.chart(options);
+      this.instance = new Highcharts.chart(config);
     }
 
-    destroyChart(el) {
-      return el.destroy();
+    destroyChart() {
+      return this.instance.destroy();
+    }
+
+    updateChart(options) {
+      return this.instance.update(options);
+    }
+
+    redrawChart() {
+      return this.instance.redraw();
     }
 
     render() {
@@ -112,6 +121,9 @@ const withHighcharts = (ComposedComponent) => {
                                 renderChart={this.renderChart}
                                 destroyChart={this.destroyChart}
                                 definePatterns={this.definePatterns}
+                                redrawChart={this.redrawChart}
+                                updateChart={this.updateChart}
+                                _instance={this.instance}
                                 _Highcharts={Highcharts} />
     }
   }
