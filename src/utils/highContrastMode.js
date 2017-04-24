@@ -38,7 +38,13 @@ export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
       } else {
         patternIdx = idx % fillTypes.length;
       }
-      item.color = fillTypes[patternIdx];
+
+      if (!item.color) {
+        item.color = fillTypes[patternIdx];
+      } else {
+        // delete item.color;
+        item.color = void 0;
+      }
       return item;
     }
   }

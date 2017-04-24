@@ -66,6 +66,8 @@ const withColumnChart = (ComposedComponent) => {
       } = this.state;
       let partition = null;
 
+      console.log(this.props.displayHighContrast, nextProps.displayHighContrast)
+
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
         partition.series = chartConfig.series.map(seriesIterateeHighcontrast)
       }
