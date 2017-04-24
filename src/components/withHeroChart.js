@@ -2,7 +2,6 @@
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import omit from 'lodash/omit';
-import Legend from './customLegend.js';
 import Highcharts from 'highcharts';
 
 const withHeroChart = (ComposedComponent) => {
@@ -10,9 +9,7 @@ const withHeroChart = (ComposedComponent) => {
     constructor(props) {
       super(props);
       this.chartEl = null;
-      this.state = {
-        customLegend: null,
-      }
+      this.state = {};
     }
     componentDidMount() {
       this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
@@ -53,7 +50,7 @@ const withHeroChart = (ComposedComponent) => {
           series: { // todo
             animation: false,
             marker: { 
-              enabled: true, // Can't figure out a way to hide markers on lines yet show on legend :(
+              enabled: false, // Can't figure out a way to hide markers on lines yet show on legend :(
               states: { 
                 hover: {
                   enabled: true
