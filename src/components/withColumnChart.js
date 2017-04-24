@@ -1,12 +1,11 @@
 
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
+import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {makeHighContrastFill} from './../utils/highContrastMode';
 
-
-// todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 // render a column chart and manage column chart stuff
 // and manages *all state*
@@ -17,34 +16,98 @@ const withColumnChart = (ComposedComponent) => {
     constructor(props) {
       super(props);
       this.chartEl = null;
-      this.highContrast = makeHighContrastFill();
+
       this.state = {
+        chartConfig: null,
+        seriesIterateeHighcontrast: this.createHighContrast(),
         customLegend: null,
-      }
+      };
     }
 
+    createHighContrast() {
+      const highcontrast = makeHighContrastFill();
+      this.props.definePatterns(highcontrast.getOptions());
+      return highcontrast.seriesIteratee;
+    }
+
+    // create the chart
+    // we now have access to chart node because component has been rendered
     componentDidMount() {
-      this.props.definePatterns(this.highContrast.getOptions());
-      this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
+      console.log('componentDidMount')
+      const chartConfig = this.createConfig();
+      this.setState({chartConfig});
+      this.props.renderChart(chartConfig);
     }
 
-    componentWillUpdate() {
-      this.props.updateChart(this.getBaseConfig(), this.getInstanceConfig());
+    // update
+    // props of component changed, need to *transform* the data
+    // once I update state, it will trigger a rerender
+    componentWillReceiveProps(nextProps) {
+      console.log('componentWillReceiveProps')
+      const {chartConfig} = this.state;
+      this.setState({chartConfig})
+    }
+
+    // only rerender if state has changed, ignore props changes
+    // ignore change to customLegend
+    // shouldComponentUpdate() {
+    // }
+
+    // update highcharts
+    // todo
+    // state has changed and we need to emit change to highcharts and trigger a reflow
+    componentWillUpdate(nextProps, nextState) {
+      console.log('componentWillUpdate');
+    // componentDidUpdate() { or this
+      this.props.updateChart({});
     }
 
     componentWillUnmount() {
+      console.log('componentWillUnmount')
       this.props.destroyChart();
     }
 
-    getBaseConfig() {
+
+
+
+
+
+
+    // componentWillUpdate(nextProps, nextState) {
+    //
+    //   const {chartConfig} = this.state;
+    //
+    //
+    //   debugger;
+    //
+    //
+    //   let partitionUpdated = {};
+    //
+    //   if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+    //     // get the updated and decorated partition
+    //
+    //     // this.decorateConfig()
+    //   }
+    //
+    //   this.props.updateChart(partitionUpdated);
+    //
+    //
+    //
+    //
+    // }
+
+
+
+    createConfig() {
       const {
         title,
         dateLastUpdated,
+        chartConfig,
+        minimumValue,
       } = this.props;
-
       const boundSetState = this.setState.bind(this);
 
-      return {
+      const baseConfig = {
         chart: {
           type: 'column',
           events: {
@@ -128,17 +191,7 @@ const withColumnChart = (ComposedComponent) => {
           },
         }
       };
-    }
-
-    getInstanceConfig() {
-
-      const {
-        chartConfig,
-        minimumValue,
-        displayHighContrast,
-      } = this.props;
-
-      let config = {
+      const instanceConfig = {
         chart: {
           renderTo: this.chartEl
         },
@@ -148,9 +201,16 @@ const withColumnChart = (ComposedComponent) => {
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+      const config = merge({}, baseConfig, instanceConfig);
+      return this.decorateConfig(config);
+    }
+
+    decorateConfig(config) {
+      const {seriesIterateeHighcontrast} = this.state;
+      const {displayHighContrast} = this.props;
 
       if (displayHighContrast) {
-        config.series = config.series.map(this.highContrast.mapProps);
+        config.series = config.series.map(seriesIterateeHighcontrast);
       }
       return config;
     }

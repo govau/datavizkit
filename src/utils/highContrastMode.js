@@ -31,7 +31,7 @@ export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
         fillNamespace,
       }
     },
-    mapProps: (item, idx) => {
+    seriesIteratee: (item, idx) => {
       let patternIdx;
       if (idx <= fillTypes.length) {
         patternIdx = idx;
@@ -63,7 +63,7 @@ export const makeHighContrastDash = () => {
     'LongDashDotDot',
   ];
   return {
-    mapProps: (item, idx) => {
+    seriesIteratee: (item, idx) => {
       let dashIdx;
       if (idx <= dashTypes.length) {
         dashIdx = idx;

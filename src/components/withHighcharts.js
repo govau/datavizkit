@@ -105,11 +105,11 @@ const withHighcharts = (ComposedComponent) => {
     }
 
     destroyChart() {
-      return this.instance.destroy();
+      return this.instance && this.instance.destroy();
     }
 
     updateChart(options) {
-      return this.instance.update(options);
+      return this.instance && this.instance.update(options);
     }
 
     redrawChart() {
@@ -123,8 +123,7 @@ const withHighcharts = (ComposedComponent) => {
                                 definePatterns={this.definePatterns}
                                 redrawChart={this.redrawChart}
                                 updateChart={this.updateChart}
-                                _instance={this.instance}
-                                _Highcharts={Highcharts} />
+                                _instance={this.instance} />
     }
   }
 };
