@@ -1,5 +1,6 @@
 
 import React, {PureComponent} from 'react';
+import omit from 'lodash/omit';
 import last from 'lodash/last';
 
 import Legend from './customLegend.js';
@@ -41,8 +42,8 @@ const withLineChart = (ComposedComponent) => {
                 if (d.y === null) { //find null value in series
                   // adds plot band
                   this.xAxis[0].addPlotBand({
-                    from: idx -.5,  // point back
-                    to: idx + .5,   // point after
+                    from: idx -0.95,  // point back
+                    to: idx +0.95,   // point after
                     color: 'url(#diagonal-stripe-1)', // this color represents the null value region
                   });
                 }
@@ -108,6 +109,16 @@ const withLineChart = (ComposedComponent) => {
           enabled: true, //false,
           shared: true,
           crosshairs: true,
+          formatter: function () {
+            var cat = this.points[0].series.xAxis.options.xCategories[this.x];
+            var s = `<b>${cat}</b><br />`;
+
+            s += this.points.map(function(point) {
+              return `${point.series.name}: ${point.y}`;
+            }).join('<br />');
+
+            return s;
+          }
         },
         xAxis: {
           crosshair: true,
@@ -142,7 +153,15 @@ const withLineChart = (ComposedComponent) => {
         yAxis: {
           min: minimumValue || 0,
         },
-        xAxis: chartConfig.xAxis,
+        // xAxis: chartConfig.xAxis,
+        xAxis: Object.assign({}, omit(chartConfig.xAxis, 'categories'), {
+          labels: {
+            formatter: function() {
+              return chartConfig.xAxis.categories[this.value];
+            }
+          },
+          xCategories: chartConfig.xAxis.categories
+        }),
         series: chartConfig.series,
       };
     }
