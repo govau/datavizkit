@@ -1,6 +1,5 @@
 
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 import omit from 'lodash/omit';
 import Highcharts from 'highcharts';
 
@@ -146,7 +145,6 @@ const withHeroChart = (ComposedComponent) => {
       };
     }
     render() {
-      const {customLegend} = this.state;
       return (
         <ComposedComponent {...this.props}>
           <div ref={el => this.chartEl = el} />
