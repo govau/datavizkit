@@ -60,14 +60,11 @@ const withColumnChart = (ComposedComponent) => {
     // componentDidUpdate() { or this
       console.log('componentWillUpdate');
 
-      const {
-        chartConfig,
-        seriesIterateeHighcontrast,
-      } = this.state;
+      const {chartConfig} = this.state;
       let partition = {};
 
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        partition.series = chartConfig.series.map(seriesIterateeHighcontrast)
+        partition.series = this._transformPartitionedForHighContrast(true, chartConfig).series;
       }
 
       if (Object.keys(partition).length) {
@@ -80,42 +77,13 @@ const withColumnChart = (ComposedComponent) => {
       this.props.destroyChart();
     }
 
-
-
-
-
-
-    // componentWillUpdate(nextProps, nextState) {
-    //
-    //   const {chartConfig} = this.state;
-    //
-    //
-    //   debugger;
-    //
-    //
-    //   let partitionUpdated = {};
-    //
-    //   if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-    //     // get the updated and decorated partition
-    //
-    //     // this.decorateConfig()
-    //   }
-    //
-    //   this.props.updateChart(partitionUpdated);
-    //
-    //
-    //
-    //
-    // }
-
-
-
     createConfig() {
       const {
         title,
         dateLastUpdated,
         chartConfig,
         minimumValue,
+        displayHighContrast,
       } = this.props;
       const boundSetState = this.setState.bind(this);
 
@@ -214,17 +182,25 @@ const withColumnChart = (ComposedComponent) => {
         series: chartConfig.series,
       };
       const config = merge({}, baseConfig, instanceConfig);
-      return this.decorateConfig(config);
+
+      return this._transformForHighContrast(displayHighContrast, config);
     }
 
-    decorateConfig(config) {
-      const {seriesIterateeHighcontrast} = this.state;
-      const {displayHighContrast} = this.props;
-
-      if (displayHighContrast) {
+    _transformForHighContrast(should, config) {
+      if (should) {
+        const {seriesIterateeHighcontrast} = this.state;
         config.series = config.series.map(seriesIterateeHighcontrast);
       }
       return config;
+    }
+
+    _transformPartitionedForHighContrast(should, config) {
+      if (should) {
+        const {seriesIterateeHighcontrast} = this.state;
+        const series = config.series.map(seriesIterateeHighcontrast);
+        return {series};
+      }
+      return {};
     }
 
     render() {
