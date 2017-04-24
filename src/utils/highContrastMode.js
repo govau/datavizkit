@@ -39,10 +39,11 @@ export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
         patternIdx = idx % fillTypes.length;
       }
 
+      // toggle color on and off
+      // todo - keep record of "lastColor" and flick to that rather than undefined
       if (!item.color) {
         item.color = fillTypes[patternIdx];
       } else {
-        // delete item.color;
         item.color = void 0;
       }
       return item;
@@ -76,6 +77,10 @@ export const makeHighContrastDash = () => {
       } else {
         dashIdx = idx % dashTypes.length;
       }
+
+
+      // todo - toggle with solid
+
       item.dashStyle = dashTypes[dashIdx];
       return item;
     }

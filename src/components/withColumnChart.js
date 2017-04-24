@@ -64,15 +64,13 @@ const withColumnChart = (ComposedComponent) => {
         chartConfig,
         seriesIterateeHighcontrast,
       } = this.state;
-      let partition = null;
-
-      console.log(this.props.displayHighContrast, nextProps.displayHighContrast)
+      let partition = {};
 
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
         partition.series = chartConfig.series.map(seriesIterateeHighcontrast)
       }
 
-      if (partition) {
+      if (Object.keys(partition).length) {
         this.props.updateChart(partition);
       }
     }
@@ -81,7 +79,6 @@ const withColumnChart = (ComposedComponent) => {
       console.log('componentWillUnmount')
       this.props.destroyChart();
     }
-
 
 
 
