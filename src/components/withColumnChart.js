@@ -57,9 +57,22 @@ const withColumnChart = (ComposedComponent) => {
     // todo
     // state has changed and we need to emit change to highcharts and trigger a reflow
     componentWillUpdate(nextProps, nextState) {
-      console.log('componentWillUpdate');
     // componentDidUpdate() { or this
-      this.props.updateChart({});
+      console.log('componentWillUpdate');
+
+      const {
+        chartConfig,
+        seriesIterateeHighcontrast,
+      } = this.state;
+      let partition = null;
+
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+        partition.series = chartConfig.series.map(seriesIterateeHighcontrast)
+      }
+
+      if (partition) {
+        this.props.updateChart(partition);
+      }
     }
 
     componentWillUnmount() {
