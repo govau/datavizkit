@@ -7,6 +7,7 @@ import {makeHighContrastFill} from './../utils/highContrastMode';
 import Legend from './customLegend.js';
 
 
+
 // todo - extract
 
 const transformXAxisForNullDataLayer = (xAxis, series) => {
@@ -56,28 +57,28 @@ const generateCustomLegend = (series, index) => {
 // and manages *all state*
 const withColumnChart = (ComposedComponent) => {
 
-  // we don't want highcharts props to belong to state, because we don't
-  // want changes to them to impact React's Lifecycle
-  let _chartEl = null;
-  let _chartConfig = null;
-
-
   return class extends PureComponent {
 
     constructor(props) {
       super(props);
-      this.seriesIterateeHighcontrast = this._createHighContrastIteratee();
+
+      this._chartEl = null;
+      this._chartConfig = null;
+
+      const highcontrast = this._createHighContrastIteratees();
+      this.highcontrastSeriesIteratee = highcontrast.seriesIteratee;
+
       this.state = {
         customLegend: null,
       };
+
     }
 
     // create the chart
     // do this here because we need the destined chart node before we can render chart
     componentDidMount() {
-      console.log('componentDidMount')
-      _chartConfig = this.createConfig();
-      this.props.renderChart(_chartConfig);
+      this._chartConfig = this.createConfig();
+      this.props.renderChart(this._chartConfig);
     }
 
     // shouldComponentUpdate() {
@@ -87,26 +88,28 @@ const withColumnChart = (ComposedComponent) => {
     // update
     // state has changed. purely mitigate updates to our highcharts node and trigger redraw
     // *can not* call setState here
-    componentWillUpdate(nextProps, nextState) {
-      console.log('componentWillUpdate');
-
+    componentWillUpdate(nextProps) {
       let partition = {};
 
+      console.log('componentWillUpdate')
+
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        partition.series = this._transformPartitionedForHighContrast(true, _chartConfig).series;
+        partition = {...this._transformPartitionedForHighContrast(true, this._chartConfig)};
       }
 
       if (Object.keys(partition).length) {
-        this.props.updateChart(partition);
-
         // keep _chartConfig in sync
-        merge(_chartConfig, partition);
+        merge(this._chartConfig, partition);
+
+        this.props.updateChart(partition);
       }
     }
 
     componentWillUnmount() {
       console.log('componentWillUnmount')
       this.props.destroyChart();
+      this._chartEl = null;
+      this._chartConfig = null;
     }
 
     createConfig() {
@@ -160,9 +163,11 @@ const withColumnChart = (ComposedComponent) => {
             animation: false,
             point: {
               events: {
+
                 mouseOver: function() {
-                  broadcastSetState({'customLegend': generateCustomLegend(this.series, this.index)});
+                  broadcastSetState({'customLegend': generateCustomLegend(this.series.chart.series, this.index)});
                 }
+
               }
             },
             states: {
@@ -188,7 +193,7 @@ const withColumnChart = (ComposedComponent) => {
 
       const instanceConfig = {
         chart: {
-          renderTo: _chartEl,
+          renderTo: this._chartEl,
         },
         yAxis: {
           min: minimumValue || 0,
@@ -204,34 +209,35 @@ const withColumnChart = (ComposedComponent) => {
 
     _transformForHighContrast(should, config) {
       if (should) {
-        config.series = config.series.map(this.seriesIterateeHighcontrast);
+        config.series = config.series.map(this.highcontrastSeriesIteratee);
       }
       return config;
     }
 
     _transformPartitionedForHighContrast(should, config) {
       if (should) {
-        const series = config.series.map(this.seriesIterateeHighcontrast);
+        const series = config.series.map(this.highcontrastSeriesIteratee);
         return {series};
       }
       return {};
     }
 
-    _createHighContrastIteratee() {
+    _createHighContrastIteratees() {
       const highcontrast = makeHighContrastFill();
       this.props.definePatterns(highcontrast.getOptions());
-      return highcontrast.seriesIteratee;
+      return highcontrast;
     }
 
     render() {
       const {customLegend} = this.state;
       return (
         <ComposedComponent {...this.props}>
-          <div ref={el => _chartEl = el} />
+          <div ref={el => this._chartEl = el} />
           {customLegend && customLegend.length && <Legend data={customLegend} />}
         </ComposedComponent>
       )
     }
+
   }
 };
 

@@ -88,17 +88,15 @@ Highcharts.setOptions({
 // abstract methods from the Highcharts api
 const withHighcharts = (ComposedComponent) => {
 
-  let instance;
-
-
   return class extends PureComponent {
 
     constructor(props) {
       super(props);
+      this._instance = null;
       this.definePatterns = this.definePatterns.bind(this);
       this.renderChart = this.renderChart.bind(this);
       this.destroyChart = this.destroyChart.bind(this);
-      this.redrawChart = this.redrawChart.bind(this);
+      this.updateChart = this.updateChart.bind(this);
     }
 
     // provide unique unique to chart
@@ -112,20 +110,20 @@ const withHighcharts = (ComposedComponent) => {
       if (!config.chart && !config.chart.renderTo) {
         throw new Error('Must provide chart.renderTo on config.');
       }
-      instance = new Highcharts.chart(config);
+      this._instance = new Highcharts.chart(config);
+      return this._instance;
     }
 
     destroyChart() {
-      return instance && instance.destroy();
+      if (this._instance) {
+        this._instance.destroy();
+        this._instance = null;
+      }
     }
 
     updateChart(options) {
       const redraw = true;
-      return instance && instance.update(options, redraw);
-    }
-
-    redrawChart() {
-      return instance.redraw();
+      return this._instance && this._instance.update(options, redraw);
     }
 
     render() {
@@ -133,7 +131,6 @@ const withHighcharts = (ComposedComponent) => {
                                 renderChart={this.renderChart}
                                 destroyChart={this.destroyChart}
                                 definePatterns={this.definePatterns}
-                                redrawChart={this.redrawChart}
                                 updateChart={this.updateChart} />
     }
   }

@@ -24,6 +24,17 @@ export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
   const fillTypes = getFillTypes(fillTypeIdxs);
   const fillNamespace = 'high-contrast-pattern';
 
+
+  const getPatternIdx = (idx) => {
+    let patternIdx;
+    if (idx <= fillTypes.length) {
+      patternIdx = idx;
+    } else {
+      patternIdx = idx % fillTypes.length;
+    }
+    return patternIdx;
+  };
+
   return {
     getOptions: () => {
       return {
@@ -31,23 +42,19 @@ export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
         fillNamespace,
       }
     },
-    seriesIteratee: (item, idx) => {
-      let patternIdx;
-      if (idx <= fillTypes.length) {
-        patternIdx = idx;
-      } else {
-        patternIdx = idx % fillTypes.length;
-      }
 
-      // toggle color on and off
-      // todo - keep record of "lastColor" and flick to that rather than undefined
+    // todo - keep record of "lastColor" and flick to that rather than undefined
+
+    seriesIteratee: (item, idx) => {
+      const patternIdx = getPatternIdx(idx);
       if (!item.color) {
         item.color = fillTypes[patternIdx];
       } else {
         item.color = void 0;
       }
       return item;
-    }
+    },
+
   }
 
 };
