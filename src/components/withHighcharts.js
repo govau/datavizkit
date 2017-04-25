@@ -77,6 +77,14 @@ Highcharts.setOptions({
 });
 
 
+/**
+ * Exposes a charting API on top of Highcharts without exposing Highcharts primitives
+ *
+ * This way we can include different charting libraries or none with the same
+ * abstractions
+ *
+ */
+
 // abstract methods from the Highcharts api
 const withHighcharts = (ComposedComponent) => {
 

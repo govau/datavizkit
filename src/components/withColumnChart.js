@@ -3,10 +3,11 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
 
-import Legend from './customLegend.js';
 import {makeHighContrastFill} from './../utils/highContrastMode';
+import Legend from './customLegend.js';
 
 
+// todo - extract
 
 const transformXAxisForNullDataLayer = (xAxis, series) => {
 
@@ -44,6 +45,13 @@ const generateCustomLegend = (series, index) => {
 };
 
 
+/**
+ * A HOC to render a Column Chart, manage it's operations and internal state
+ *
+ * 2 important paradigms - creation and updating
+ *
+ */
+
 // render a column chart and manage column chart stuff
 // and manages *all state*
 const withColumnChart = (ComposedComponent) => {
@@ -58,7 +66,6 @@ const withColumnChart = (ComposedComponent) => {
 
     constructor(props) {
       super(props);
-
       this.seriesIterateeHighcontrast = this._createHighContrastIteratee();
       this.state = {
         customLegend: null,
@@ -66,31 +73,21 @@ const withColumnChart = (ComposedComponent) => {
     }
 
     // create the chart
-    // we now have access to chart node because component has been rendered
-    // so we can find chart.renderTo
+    // do this here because we need the destined chart node before we can render chart
     componentDidMount() {
       console.log('componentDidMount')
       _chartConfig = this.createConfig();
       this.props.renderChart(_chartConfig);
     }
 
-    // update
-    // props of component changed, need to *transform* the data
-    // once I update state, it will trigger a rerender
-    // todo
-    // componentWillReceiveProps(nextProps) {
-    //   console.log('componentWillReceiveProps')
-    // }
-
-    // only rerender if state has changed, ignore props changes
-    // ignore change to customLegend
     // shouldComponentUpdate() {
+    //    todo - perf: ignore change to customLegend
     // }
 
-    // todo
-    // state has changed and we need to emit change to highcharts and trigger a reflow
+    // update
+    // state has changed. purely mitigate updates to our highcharts node and trigger redraw
+    // *can not* call setState here
     componentWillUpdate(nextProps, nextState) {
-    // componentDidUpdate() { or this
       console.log('componentWillUpdate');
 
       let partition = {};
