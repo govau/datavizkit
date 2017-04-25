@@ -1,10 +1,10 @@
 
 import React, {PureComponent} from 'react';
+import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {makeHighContrastFill} from './../utils/highContrastMode';
 
-// todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
 // render a donut chart and manage donut chart stuff
@@ -14,31 +14,60 @@ const withDonutChart = (ComposedComponent) => {
 
     constructor(props) {
       super(props);
-      this.chartEl = null;
-      this.highContrast = makeHighContrastFill();
+
+      this._chartEl = null;
+      this._chartConfig = null;
+
+      const highcontrast = this._createHighContrastIteratees();
+      this.highcontrastSeriesIteratee = highcontrast.seriesIteratee;
+
       this.state = {
         customLegend: null,
       }
     }
+
     componentDidMount() {
-      this.props.definePatterns(this.highContrast.getOptions());
-      this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
+      this._chartConfig = this.createConfig();
+      this.props.renderChart(this._chartConfig);
     }
+
+    componentWillUpdate(nextProps) {
+      let partition = {};
+
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+        partition = {...this._transformPartitionedForHighContrast(true, this._chartConfig)};
+      }
+
+      if (Object.keys(partition).length) {
+        // keep _chartConfig in sync
+        merge(this._chartConfig, partition);
+
+        this.props.updateChart(partition);
+      }
+    }
+
     componentWillUnmount() {
       this.props.destroyChart(this.chart);
+      this._chartEl = null;
+      this._chartConfig = null;
+      this.highcontrastSeriesIteratee = null;
     }
-    getBaseConfig() {
+
+    createConfig() {
       const {
         title,
         dateLastUpdated,
+        displayHighContrast,
+        chartConfig,
       } = this.props;
 
-      const boundSetState = this.setState.bind(this);
+      const broadcastSetState = this.setState.bind(this);
 
-      return {
+      const baseConfig = {
         chart: {
           type: 'pie',
           events: {
+
             load: function() {  // equivalent to constructor callback
 
               const customLegendData = this.series[0].data.map(d => {
@@ -49,8 +78,21 @@ const withDonutChart = (ComposedComponent) => {
                   color: d.color
                 }
               });
-              boundSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': customLegendData});
             },
+
+            redraw: function() {
+              const customLegendData = this.series[0].data.map(d => {
+                return {
+                  key: d.name,
+                  y: d.percentage + '%',
+                  // y: Highcharts.numberFormat(d.percentage, 2) + '%',
+                  color: d.color
+                }
+              });
+              broadcastSetState({'customLegend': customLegendData});
+            }
+
           },
         },
         title: {
@@ -89,22 +131,17 @@ const withDonutChart = (ComposedComponent) => {
           },
         }
       };
-    }
-    getInstanceConfig() {
 
-      const {
-        chartConfig,
-        displayHighContrast,
-      } = this.props;
-
-      const config = {
+      const instanceConfig = {
         chart: {
-          renderTo: this.chartEl
+          renderTo: this._chartEl,
         },
         series: chartConfig.series,
       };
 
-      config.series = config.series.map((s, idx) => {
+      const config = merge({}, baseConfig, instanceConfig);
+
+      config.series = config.series.map(s => {
         return {
           ...s,
           colorByPoint: true,
@@ -112,18 +149,41 @@ const withDonutChart = (ComposedComponent) => {
         }
       });
 
-      if (displayHighContrast) {
-        config.series[0].data = config.series[0].data.map(this.highContrast.mapProps);
+      return this._transformForHighContrast(displayHighContrast, config);
+    }
+
+    _transformForHighContrast(should, config) {
+      if (should) {
+        config.series = config.series.map(s => {
+          s.data = s.data.map(this.highcontrastSeriesIteratee);
+          return s;
+        });
       }
-
-
       return config;
     }
+
+    _transformPartitionedForHighContrast(should, config) {
+      if (should) {
+        const series = config.series.map(s => {
+          s.data = s.data.map(this.highcontrastSeriesIteratee);
+          return s;
+        });
+        return {series}
+      }
+      return {};
+    }
+
+    _createHighContrastIteratees() {
+      const highcontrast = makeHighContrastFill();
+      this.props.definePatterns(highcontrast.getOptions());
+      return highcontrast;
+    }
+
     render() {
       const {customLegend} = this.state;
       return (
         <ComposedComponent {...this.props}>
-          <div ref={el => this.chartEl = el} />
+          <div ref={el => this._chartEl = el} />
           {customLegend && customLegend.length && <Legend data={customLegend} />}
         </ComposedComponent>
       )

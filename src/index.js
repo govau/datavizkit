@@ -58,6 +58,10 @@ class App extends Component {
           </svg>
         </div>
 
+        <button onClick={() => {
+          this.setState({hcState: !this.state.hcState})
+        }}>Toggle high contrast</button>
+
 
         {/*<SparklineWidget chartConfig={{"xAxis":{*/}
         {/*"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]*/}
@@ -73,22 +77,38 @@ class App extends Component {
         {/*_singleSection={true}*/}
         {/*minimumValue="13" />*/}
 
-        {/*<DonutWidget chartConfig={{"series":[{*/}
-        {/*name: "Jan",*/}
-        {/*data: [*/}
-        {/*{"name":"Mobile","y":183},*/}
-        {/*{"name":"Tablet","y":30},*/}
-        {/*{"name":"Desktop","y":200}*/}
-        {/*]*/}
-        {/*}]*/}
-        {/*}} title="Devices used"*/}
-        {/*units="percentage"*/}
-        {/*type="donut"*/}
-        {/*dateLastUpdated="2017-02-01T01:02:02.240Z"*/}
-        {/*_singleCategory={true}*/}
-        {/*_singleSection={false}*/}
-        {/*minimumValue="30"*/}
-        {/*displayHighContrast={true} />*/}
+        <DonutWidget chartConfig={{"series":[{
+          name: "Jan",
+          data: [
+          {"name":"Mobile","y":183},
+          {"name":"Tablet","y":30},
+          {"name":"Desktop","y":200}
+          ]
+          }]
+          }} title="Devices used"
+          units="percentage"
+          type="donut"
+          dateLastUpdated="2017-02-01T01:02:02.240Z"
+          _singleCategory={true}
+          _singleSection={false}
+          minimumValue="30"
+          displayHighContrast={hcState} />
+
+        <DonutWidget chartConfig={{"series":[{
+          name: "Jan",
+          data: [
+            {"name":"Girls","y":183},
+            {"name":"Guys","y":30},
+          ]
+          }]
+          }} title="People used"
+          units="percentage"
+          type="donut"
+          dateLastUpdated="2017-02-01T01:02:02.240Z"
+          _singleCategory={true}
+          _singleSection={false}
+          minimumValue="30"
+          displayHighContrast={hcState} />
 
         {/*<StackedColumnWidget*/}
         {/*chartConfig={{*/}
@@ -124,11 +144,7 @@ class App extends Component {
         {/*}}*/}
         {/*singleCategory={false}*/}
         {/*singleSection={true}*/}
-        {/*displayHighContrast={true} />*/}
-
-        <button onClick={() => {
-          this.setState({hcState: !this.state.hcState})
-        }}>Toggle high contrast</button>
+        {/*displayHighContrast={hcState} />*/}
 
 
         <ColumnWidget title='Number of page views'

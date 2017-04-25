@@ -3,8 +3,8 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
 
-import {makeHighContrastFill} from './../utils/highContrastMode';
 import Legend from './customLegend.js';
+import {makeHighContrastFill} from './../utils/highContrastMode';
 
 
 
@@ -110,6 +110,7 @@ const withColumnChart = (ComposedComponent) => {
       this.props.destroyChart();
       this._chartEl = null;
       this._chartConfig = null;
+      this.highcontrastSeriesIteratee = null;
     }
 
     createConfig() {
