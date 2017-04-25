@@ -27,13 +27,18 @@ const transformXAxisForNullDataLayer = (xAxis, series) => {
   return _xAxis;
 };
 
-const generateCustomLegend = (series) => {
+const generateCustomLegend = (series, index) => {
   return series.map(s => {
-    const lastData = last(s.data);
+    let data;
+    if (index) {
+      data = s.data[index];
+    } else {
+      data = last(s.data);
+    }
     return {
       key: s.name,
-      y: lastData.y,
-      color: lastData.color,
+      y: data.y,
+      color: data.color,
     }
   });
 };
@@ -44,7 +49,7 @@ const generateCustomLegend = (series) => {
 const withColumnChart = (ComposedComponent) => {
 
   // we don't want highcharts props to belong to state, because we don't
-  // want changes to them to be part of React's Lifecycle
+  // want changes to them to impact React's Lifecycle
   let _chartEl = null;
   let _chartConfig = null;
 
@@ -72,14 +77,10 @@ const withColumnChart = (ComposedComponent) => {
     // update
     // props of component changed, need to *transform* the data
     // once I update state, it will trigger a rerender
-    componentWillReceiveProps(nextProps) {
-      console.log('componentWillReceiveProps')
-
-
-      // technically we could maintain updates to legend in here
-
-
-    }
+    // todo
+    // componentWillReceiveProps(nextProps) {
+    //   console.log('componentWillReceiveProps')
+    // }
 
     // only rerender if state has changed, ignore props changes
     // ignore change to customLegend
@@ -163,22 +164,7 @@ const withColumnChart = (ComposedComponent) => {
             point: {
               events: {
                 mouseOver: function() {
-
-
-                  // todo - improve this
-
-                  const sliceIdx = this.index;
-                  // todo - verify this works for all data permutations
-                  const customLegendData = this.series.chart.series.map(s => {
-                    const sliceData = s.data[sliceIdx];
-                    return {
-                      key: s.name,
-                      y: sliceData.y,
-                      color: sliceData.color
-                    }
-                  });
-
-                  broadcastSetState({'customLegend': customLegendData});
+                  broadcastSetState({'customLegend': generateCustomLegend(this.series, this.index)});
                 }
               }
             },
@@ -213,6 +199,7 @@ const withColumnChart = (ComposedComponent) => {
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+
       const config = merge({}, baseConfig, instanceConfig);
 
       return this._transformForHighContrast(displayHighContrast, config);
