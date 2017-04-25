@@ -7,36 +7,66 @@ import Legend from './customLegend.js';
 import {makeHighContrastFill} from './../utils/highContrastMode';
 
 
+
+const transformXAxisForNullDataLayer = (xAxis, series) => {
+
+  const _xAxis = [...xAxis];
+
+  // todo - various data permutations
+  series[0].data.forEach((d, idx) => {
+    if (d.y === null) { //find null value in series
+      // adds plot band
+      _xAxis[0].addPlotBand({
+        from: idx -.5,  // point back
+        to: idx + .5,   // point after
+        color: 'url(#null-data-layer)', // this color represents the null value region
+      });
+    }
+  });
+
+  return _xAxis;
+};
+
+const generateCustomLegend = (series) => {
+  return series.map(s => {
+    const lastData = last(s.data);
+    return {
+      key: s.name,
+      y: lastData.y,
+      color: lastData.color,
+    }
+  });
+};
+
+
 // render a column chart and manage column chart stuff
 // and manages *all state*
 const withColumnChart = (ComposedComponent) => {
+
+  // we don't want highcharts props to belong to state, because we don't
+  // want changes to them to be part of React's Lifecycle
+  let _chartEl = null;
+  let _chartConfig = null;
+
 
   return class extends PureComponent {
 
     constructor(props) {
       super(props);
-      this.chartEl = null;
 
+      this.seriesIterateeHighcontrast = this._createHighContrastIteratee();
       this.state = {
-        chartConfig: null,
-        seriesIterateeHighcontrast: this.createHighContrast(),
         customLegend: null,
       };
     }
 
-    createHighContrast() {
-      const highcontrast = makeHighContrastFill();
-      this.props.definePatterns(highcontrast.getOptions());
-      return highcontrast.seriesIteratee;
-    }
-
     // create the chart
     // we now have access to chart node because component has been rendered
+    // so we can find chart.renderTo
     componentDidMount() {
       console.log('componentDidMount')
-      const chartConfig = this.createConfig();
-      this.setState({chartConfig});
-      this.props.renderChart(chartConfig);
+      _chartConfig = this.createConfig();
+      this.props.renderChart(_chartConfig);
     }
 
     // update
@@ -44,8 +74,11 @@ const withColumnChart = (ComposedComponent) => {
     // once I update state, it will trigger a rerender
     componentWillReceiveProps(nextProps) {
       console.log('componentWillReceiveProps')
-      const {chartConfig} = this.state;
-      this.setState({chartConfig})
+
+
+      // technically we could maintain updates to legend in here
+
+
     }
 
     // only rerender if state has changed, ignore props changes
@@ -53,22 +86,23 @@ const withColumnChart = (ComposedComponent) => {
     // shouldComponentUpdate() {
     // }
 
-    // update highcharts
     // todo
     // state has changed and we need to emit change to highcharts and trigger a reflow
     componentWillUpdate(nextProps, nextState) {
     // componentDidUpdate() { or this
       console.log('componentWillUpdate');
 
-      const {chartConfig} = this.state;
       let partition = {};
 
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        partition.series = this._transformPartitionedForHighContrast(true, chartConfig).series;
+        partition.series = this._transformPartitionedForHighContrast(true, _chartConfig).series;
       }
 
       if (Object.keys(partition).length) {
         this.props.updateChart(partition);
+
+        // keep _chartConfig in sync
+        merge(_chartConfig, partition);
       }
     }
 
@@ -81,39 +115,25 @@ const withColumnChart = (ComposedComponent) => {
       const {
         title,
         dateLastUpdated,
-        chartConfig,
         minimumValue,
         displayHighContrast,
+        chartConfig,
       } = this.props;
-      const boundSetState = this.setState.bind(this);
+
+      const broadcastSetState = this.setState.bind(this);
+
 
       const baseConfig = {
         chart: {
           type: 'column',
           events: {
-            load: function() {  // equivalent to constructor callback
 
-              var seriesData = this.series[0].data;//this is series data  // todo - this will be different for differnt dimensions of data
-              seriesData.forEach((d, idx) => {
-                if (d.y === null) { //find null value in series
-                  // adds plot band
-                  this.xAxis[0].addPlotBand({
-                    from: idx -.5,  // point back
-                    to: idx + .5,   // point after
-                    color: 'url(#null-data-layer)', // this color represents the null value region
-                  });
-                }
-              });
+            // equivalent to constructor callback
+            // hence, called only on creation, not on updates
+            load: function() {
+              this.xAxis = transformXAxisForNullDataLayer(this.xAxis, this.series);
 
-              let customLegendData = this.series.map(s => {
-                const lastData = last(s.data);
-                return {
-                  key: s.name,
-                  y: lastData.y,
-                  color: lastData.color,
-                }
-              });
-              boundSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': generateCustomLegend(this.series)});
 
               // "hover" over the last column
               const lastCol = last(this.series[0].data);
@@ -121,6 +141,12 @@ const withColumnChart = (ComposedComponent) => {
                 lastCol.onMouseOver && lastCol.onMouseOver();
               }
             },
+
+            // fired when update is called with redraw
+            redraw: function(e) {
+              broadcastSetState({'customLegend': generateCustomLegend(this.series)});
+            }
+
           },
         },
         title: {
@@ -137,6 +163,10 @@ const withColumnChart = (ComposedComponent) => {
             point: {
               events: {
                 mouseOver: function() {
+
+
+                  // todo - improve this
+
                   const sliceIdx = this.index;
                   // todo - verify this works for all data permutations
                   const customLegendData = this.series.chart.series.map(s => {
@@ -147,7 +177,8 @@ const withColumnChart = (ComposedComponent) => {
                       color: sliceData.color
                     }
                   });
-                  boundSetState({'customLegend': customLegendData});
+
+                  broadcastSetState({'customLegend': customLegendData});
                 }
               }
             },
@@ -171,9 +202,10 @@ const withColumnChart = (ComposedComponent) => {
           },
         }
       };
+
       const instanceConfig = {
         chart: {
-          renderTo: this.chartEl
+          renderTo: _chartEl,
         },
         yAxis: {
           min: minimumValue || 0,
@@ -188,26 +220,30 @@ const withColumnChart = (ComposedComponent) => {
 
     _transformForHighContrast(should, config) {
       if (should) {
-        const {seriesIterateeHighcontrast} = this.state;
-        config.series = config.series.map(seriesIterateeHighcontrast);
+        config.series = config.series.map(this.seriesIterateeHighcontrast);
       }
       return config;
     }
 
     _transformPartitionedForHighContrast(should, config) {
       if (should) {
-        const {seriesIterateeHighcontrast} = this.state;
-        const series = config.series.map(seriesIterateeHighcontrast);
+        const series = config.series.map(this.seriesIterateeHighcontrast);
         return {series};
       }
       return {};
+    }
+
+    _createHighContrastIteratee() {
+      const highcontrast = makeHighContrastFill();
+      this.props.definePatterns(highcontrast.getOptions());
+      return highcontrast.seriesIteratee;
     }
 
     render() {
       const {customLegend} = this.state;
       return (
         <ComposedComponent {...this.props}>
-          <div ref={el => this.chartEl = el} />
+          <div ref={el => _chartEl = el} />
           {customLegend && customLegend.length && <Legend data={customLegend} />}
         </ComposedComponent>
       )

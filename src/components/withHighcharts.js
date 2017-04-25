@@ -112,7 +112,8 @@ const withHighcharts = (ComposedComponent) => {
     }
 
     updateChart(options) {
-      return instance && instance.update(options);
+      const redraw = true;
+      return instance && instance.update(options, redraw);
     }
 
     redrawChart() {
