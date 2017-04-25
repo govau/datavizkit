@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/govau/datavizkit.git"
   },
-  "main": "index.js",
+  "main": "lib/Datavizkit.js",
   "bugs": {
     "url": "https://github.com/govau/datavizkit/issues"
   },
