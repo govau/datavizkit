@@ -77,6 +77,26 @@ class App extends Component {
         {/*_singleSection={true}*/}
         {/*minimumValue="13" />*/}
 
+        <StackedColumnWidget
+          chartConfig={{
+            "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
+            "series":[
+              {"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},
+              {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
+              {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
+              {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
+            ]
+          }}
+          title="Types of service"
+          units="number"
+          type="stackedColumn"
+          dateLastUpdated="2017-02-01T01:02:02.240Z"
+          _singleCategory={false}
+          _singleSection={false}
+          stackingType="normal"
+          displayHighContrast={hcState}
+        />
+
         <DonutWidget chartConfig={{"series":[{
           name: "Jan",
           data: [
@@ -109,25 +129,6 @@ class App extends Component {
           _singleSection={false}
           minimumValue="30"
           displayHighContrast={hcState} />
-
-        {/*<StackedColumnWidget*/}
-        {/*chartConfig={{*/}
-        {/*"xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},*/}
-        {/*"series":[*/}
-        {/*{"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},*/}
-        {/*{"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},*/}
-        {/*{"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},*/}
-        {/*{"name":"Other","data":[0,0,0,0,0,0,0,0,0]}*/}
-        {/*]*/}
-        {/*}}*/}
-        {/*title="Types of service"*/}
-        {/*units="number"*/}
-        {/*type="stackedColumn"*/}
-        {/*dateLastUpdated="2017-02-01T01:02:02.240Z"*/}
-        {/*_singleCategory={false}*/}
-        {/*_singleSection={false}*/}
-        {/*stackingType="normal"*/}
-        {/*/>*/}
 
         {/*<LineWidget title='Number of page views'*/}
         {/*units='number'*/}
