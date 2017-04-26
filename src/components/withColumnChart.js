@@ -49,7 +49,7 @@ const generateCustomLegend = (series, index) => {
 /**
  * A HOC to render a Column Chart, manage it's operations and internal state
  *
- * 2 important paradigms - creation and updating
+ * Creation and updating of the chart happens in a separate lifecycle to React
  *
  */
 

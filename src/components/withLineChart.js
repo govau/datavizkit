@@ -1,55 +1,77 @@
-/*
-
- todo
-
- chart update does not work as expected
- packet to update is too big
- improve the codes
-
-
- */
-
-
-
 
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
+import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {makeHighContrastDash} from './../utils/highContrastMode';
 
-// todo - export "Highcharts" related config ops to withHighcharts or as utils
-
 
 // render a line chart and manage line chart stuff
 const withLineChart = (ComposedComponent) => {
+
   return class extends PureComponent {
+
     constructor(props) {
       super(props);
-      this.chartEl = null;
-      this.highContrast = makeHighContrastDash();
+
+      this._chartEl = null;
+      this._chartConfig = null;
+
+      const highcontrast = this._createHighContrastIteratees();
+      this.highcontrastSeriesIteratee = highcontrast.seriesIteratee;
+
       this.state = {
         customLegend: null,
       }
     }
+
     componentDidMount() {
-      this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
+      this._chartConfig = this.createConfig();
+      this.props.renderChart(this._chartConfig);
     }
+
+    componentWillUpdate(nextProps) {
+      let partition = {};
+
+      console.log('componentWillUpdate')
+
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+        partition = {...this._transformPartitionedForHighContrast(true, this._chartConfig)};
+      }
+
+      if (Object.keys(partition).length) {
+        // keep _chartConfig in sync
+        merge(this._chartConfig, partition);
+
+        this.props.updateChart(partition);
+      }
+    }
+
     componentWillUnmount() {
-      this.props.destroyChart(this.chart);
+      console.log('componentWillUnmount')
+      this.props.destroyChart();
+      this._chartEl = null;
+      this._chartConfig = null;
+      this.highcontrastSeriesIteratee = null;
     }
-    getBaseConfig() {
+
+    createConfig() {
       const {
         title,
         dateLastUpdated,
+        minimumValue,
+        displayHighContrast,
+        chartConfig,
       } = this.props;
 
-      const boundSetState = this.setState.bind(this);
+      const broadcastSetState = this.setState.bind(this);
 
-      return {
+      const baseConfig = {
         chart: {
           type: 'line',
           events: {
+
             load: function() {  // equivalent to constructor callback
 
               var seriesData = this.series[0].data;//this is series data  // todo - this will be different for different dimensions of data
@@ -72,7 +94,7 @@ const withLineChart = (ComposedComponent) => {
                   color: lastData.color,
                 }
               });
-              boundSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': customLegendData});
 
               // "hover" over the last line
               const lastCol = last(this.series[0].data);
@@ -80,6 +102,19 @@ const withLineChart = (ComposedComponent) => {
                 lastCol.onMouseOver && lastCol.onMouseOver();
               }
             },
+
+            redraw: function() {
+              let customLegendData = this.series.map(s => {
+                const lastData = last(s.data);
+                return {
+                  key: s.name,
+                  y: lastData.y,
+                  color: lastData.color,
+                }
+              });
+              broadcastSetState({'customLegend': customLegendData});
+            }
+
           },
         },
         title: {
@@ -105,7 +140,7 @@ const withLineChart = (ComposedComponent) => {
                       color: sliceData.color
                     }
                   });
-                  boundSetState({'customLegend': customLegendData});
+                  broadcastSetState({'customLegend': customLegendData});
                 }
               }
             },
@@ -145,19 +180,10 @@ const withLineChart = (ComposedComponent) => {
           },
         }
       };
-    }
 
-    getInstanceConfig() {
-
-      const {
-        chartConfig,
-        minimumValue,
-        displayHighContrast,
-      } = this.props;
-
-      const config = {
+      const instanceConfig = {
         chart: {
-          renderTo: this.chartEl
+          renderTo: this._chartEl
         },
         yAxis: {
           min: minimumValue || 0,
@@ -166,16 +192,38 @@ const withLineChart = (ComposedComponent) => {
         series: chartConfig.series,
       };
 
-      if (displayHighContrast) {
-        config.series = config.series.map(this.highContrast.mapProps);
+      const config = merge({}, baseConfig, instanceConfig);
+
+      return this._transformForHighContrast(displayHighContrast, config);
+
+    }
+
+    _transformForHighContrast(should, config) {
+      if (should) {
+        config.series = config.series.map(this.highcontrastSeriesIteratee);
       }
       return config;
     }
+
+    _transformPartitionedForHighContrast(should, config) {
+      if (should) {
+        const series = config.series.map(this.highcontrastSeriesIteratee);
+        return {series};
+      }
+      return {};
+    }
+
+    _createHighContrastIteratees() {
+      const highcontrast = makeHighContrastDash();
+      return highcontrast;
+    }
+
+
     render() {
       const {customLegend} = this.state;
       return (
         <ComposedComponent {...this.props}>
-          <div ref={el => this.chartEl = el} />
+          <div ref={el => this._chartEl = el} />
           {customLegend && customLegend.length && <Legend data={customLegend} />}
         </ComposedComponent>
       )

@@ -36,6 +36,7 @@ export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
   };
 
   return {
+
     getOptions: () => {
       return {
         fillTypeIdxs: fillTypeIdxs,
@@ -63,6 +64,7 @@ export const makeHighContrastFill = (fillTypeIdxs = [4,5,2,6,7,3,8]) => {
 // dash style patterns available: http://api.highcharts.com/highcharts/series%3Cline%3E.dashStyle
 
 export const makeHighContrastDash = () => {
+
   const dashTypes = [
     // 'Solid',   // reserved
     'ShortDash',
@@ -76,19 +78,28 @@ export const makeHighContrastDash = () => {
     'LongDashDot',
     'LongDashDotDot',
   ];
+
+  const getDashIdx = (idx) => {
+    let dashIdx;
+    if (idx <= dashTypes.length) {
+      dashIdx = idx;
+    } else {
+      dashIdx = idx % dashTypes.length;
+    }
+    return dashIdx;
+  };
+
   return {
+
     seriesIteratee: (item, idx) => {
-      let dashIdx;
-      if (idx <= dashTypes.length) {
-        dashIdx = idx;
+      const dashIdx = getDashIdx(idx);
+
+      if (typeof item.dashStyle === 'undefined' || item.dashStyle === 'Solid') {
+        item.dashStyle = dashTypes[dashIdx];
       } else {
-        dashIdx = idx % dashTypes.length;
+        item.dashStyle = 'Solid';
       }
 
-
-      // todo - toggle with solid
-
-      item.dashStyle = dashTypes[dashIdx];
       return item;
     }
   }

@@ -63,6 +63,23 @@ class App extends Component {
         }}>Toggle high contrast</button>
 
 
+        <LineWidget title='Number of page views'
+          units='number'
+          type='column'
+          dateLastUpdated='22 Feb 2016'
+          minimumValue="20000"
+          chartConfig={{
+          "xAxis":{
+          "categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]
+          },
+          "series":[
+          {"name":"Time to clear","data":[84807,48317,51420,62400,48060,37560,39300]}
+          ]
+          }}
+          singleCategory={false}
+          singleSection={true}
+          displayHighContrast={hcState} />
+
         {/*<SparklineWidget chartConfig={{"xAxis":{*/}
         {/*"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]*/}
         {/*},*/}
@@ -129,23 +146,6 @@ class App extends Component {
           _singleSection={false}
           minimumValue="30"
           displayHighContrast={hcState} />
-
-        {/*<LineWidget title='Number of page views'*/}
-        {/*units='number'*/}
-        {/*type='column'*/}
-        {/*dateLastUpdated='22 Feb 2016'*/}
-        {/*minimumValue="20000"*/}
-        {/*chartConfig={{*/}
-        {/*"xAxis":{*/}
-        {/*"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]*/}
-        {/*},*/}
-        {/*"series":[*/}
-        {/*{"name":"Time to clear","data":[84807,48317,51420,62400,48060,37560,39300]}*/}
-        {/*]*/}
-        {/*}}*/}
-        {/*singleCategory={false}*/}
-        {/*singleSection={true}*/}
-        {/*displayHighContrast={hcState} />*/}
 
 
         <ColumnWidget title='Number of page views'
