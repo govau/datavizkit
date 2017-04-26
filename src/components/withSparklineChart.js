@@ -1,36 +1,48 @@
 
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
+import merge from 'lodash/merge';
 
 import TrendLegend from './trendLegend.js';
-// todo - export "Highcharts" related config ops to withHighcharts or as utils
 
 
 // render a sparkline chart and manage sparkline chart stuff
 const withSparklineChart = (ComposedComponent) => {
+
   return class extends PureComponent {
+
     constructor(props) {
       super(props);
-      this.chartEl = null;
+
+      this._chartEl = null;
+      this._chartConfig = null;
+
       this.state = {
         trendLegend: null,
       }
     }
+
     componentDidMount() {
-      this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
+      this._chartConfig = this.createConfig();
+      this.props.renderChart(this._chartConfig);
     }
+
     componentWillUnmount() {
-      this.props.destroyChart(this.chart);
+      this.props.destroyChart();
+      this._chartEl = null;
+      this._chartConfig = null;
     }
-    getBaseConfig() {
+
+    createConfig() {
       const {
         title,
         dateLastUpdated,
+        chartConfig,
       } = this.props;
 
-      const boundSetState = this.setState.bind(this);
+      const broadcastSetState = this.setState.bind(this);
 
-      return {
+      const baseConfig = {
         chart: {
           type: 'spline',
           margin: [150, 0, 0, 0],
@@ -51,7 +63,7 @@ const withSparklineChart = (ComposedComponent) => {
                 .add();
 
               if (this.series[0].data.length >= 2) {
-                boundSetState({'trendLegend': this.series[0].data});
+                broadcastSetState({'trendLegend': this.series[0].data});
               }
             },
           },
@@ -95,24 +107,25 @@ const withSparklineChart = (ComposedComponent) => {
           enabled: false
         },
       };
-    }
-    getInstanceConfig() {
-      const {
-        chartConfig,
-      } = this.props;
-      return {
+
+      const instanceConfig = {
         chart: {
-          renderTo: this.chartEl
+          renderTo: this._chartEl
         },
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+
+      const config = merge({}, baseConfig, instanceConfig);
+
+      return config;
     }
+
     render() {
       const {trendLegend} = this.state;
       return (
         <ComposedComponent {...this.props}>
-          <div ref={el => this.chartEl = el} />
+          <div ref={el => this._chartEl = el} />
           {trendLegend && trendLegend.length && <TrendLegend data={trendLegend} />}
         </ComposedComponent>
       )

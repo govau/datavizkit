@@ -2,7 +2,6 @@
 import React, {PureComponent} from 'react';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
-import Highcharts from 'highcharts';
 
 
 const symbolChars = {
@@ -18,28 +17,36 @@ const valueFormats = {
 };
 
 const withHeroChart = (ComposedComponent) => {
+
   return class extends PureComponent {
+
     constructor(props) {
       super(props);
-
       this._chartEl = null;
+      this._chartConfig = null;
+    }
 
-      this.state = {};
-    }
     componentDidMount() {
-      this.props.renderChart(merge({}, this.getBaseConfig(), this.getInstanceConfig()));
+      this._chartConfig = this.createConfig();
+      this.props.renderChart(this._chartConfig);
     }
+
     componentWillUnmount() {
       this.props.destroyChart();
+      this._chartEl = null;
+      this._chartConfig = null;
     }
 
-    getBaseConfig() {
+    createConfig() {
       const {
         title,
         dateLastUpdated,
+        minimumValue,
+        displayHighContrast,
+        chartConfig,
       } = this.props;
 
-      return {
+      const baseConfig = {
         chart: {
           type: 'spline',
         },
@@ -140,14 +147,8 @@ const withHeroChart = (ComposedComponent) => {
           // }
         }
       };
-    }
-    getInstanceConfig() {
-      const {
-        chartConfig,
-        minimumValue
-      } = this.props;
 
-      return {
+      const instanceConfig = {
         chart: {
           renderTo: this._chartEl,
         },
@@ -161,7 +162,12 @@ const withHeroChart = (ComposedComponent) => {
         }),
         series: chartConfig.series
       };
+
+      const config = merge({}, baseConfig, instanceConfig);
+
+      return config;
     }
+
     render() {
       return (
         <ComposedComponent {...this.props}>
