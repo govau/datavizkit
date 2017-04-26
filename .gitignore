@@ -2,7 +2,7 @@
 lib/
 
 _trash/
-docs/
+docs/.out/
 
 webpackstats.json
 public/report.html
