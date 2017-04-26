@@ -1,37 +1,74 @@
 
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
+import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
-// todo - export "Highcharts" related config ops to withHighcharts or as utils
+import {makeHighContrastFill} from './../utils/highContrastMode';
 
 
 // render a stackedColumn chart and manage stackedColumn chart stuff
 const withStackedColumnChart = (ComposedComponent) => {
+
   return class extends PureComponent {
     constructor(props) {
       super(props);
-      this.chartEl = null;
+
+      this._chartEl = null;
+      this._chartConfig = null;
+
+      const highcontrast = this._createHighContrastIteratees();
+      this.highcontrastSeriesIteratee = highcontrast.seriesIteratee;
+
       this.state = {
         customLegend: null,
       }
     }
+
     componentDidMount() {
-      this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
+      this._chartConfig = this.createConfig();
+      this.props.renderChart(this._chartConfig);
     }
+
+    componentWillUpdate(nextProps) {
+      let partition = {};
+
+      console.log('componentWillUpdate')
+
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+        partition = {...this._transformPartitionedForHighContrast(true, this._chartConfig)};
+      }
+
+      if (Object.keys(partition).length) {
+        // keep _chartConfig in sync
+        merge(this._chartConfig, partition);
+
+        this.props.updateChart(partition);
+      }
+    }
+
     componentWillUnmount() {
-      this.props.destroyChart(this.chart);
+      console.log('componentWillUnmount')
+      this.props.destroyChart();
+      this._chartEl = null;
+      this._chartConfig = null;
+      this.highcontrastSeriesIteratee = null;
     }
-    getBaseConfig() {
+
+    createConfig() {
       const {
         title,
         dateLastUpdated,
         stackingType,
+        chartConfig,
+        minimumValue,
+        displayHighContrast,
       } = this.props;
 
-      const boundSetState = this.setState.bind(this);
+      const broadcastSetState = this.setState.bind(this);
 
-      return {
+
+      const baseConfig = {
         chart: {
           type: 'column',
           events: {
@@ -44,7 +81,7 @@ const withStackedColumnChart = (ComposedComponent) => {
                   this.xAxis[0].addPlotBand({
                     from: idx -.5,  // point back
                     to: idx + .5,   // point after
-                    color: 'url(#diagonal-stripe-1)', // this color represents the null value region
+                    color: 'url(#null-data-layer)', // this color represents the null value region
                   });
                 }
               });
@@ -58,7 +95,7 @@ const withStackedColumnChart = (ComposedComponent) => {
                   color: lastData.color,
                 }
               });
-              boundSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': customLegendData});
 
               // "hover" over the last stackedColumn
               const lastCol = last(this.series[0].data);
@@ -95,7 +132,7 @@ const withStackedColumnChart = (ComposedComponent) => {
                       color: sliceData.color
                     }
                   });
-                  boundSetState({'customLegend': customLegendData});
+                  broadcastSetState({'customLegend': customLegendData});
                 },
                 mouseOut: function() {
                   // todo - something weird going on here
@@ -126,32 +163,50 @@ const withStackedColumnChart = (ComposedComponent) => {
           },
         }
       };
-    }
-    getInstanceConfig() {
-      const {
-        chartConfig,
-        minimumValue,
-        stackingType
-      } = this.props;
 
-      const conf = {
+      const instanceConfig = {
         chart: {
-          renderTo: this.chartEl
+          renderTo: this._chartEl
         },
-        yAxis: {},
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
       if (stackingType === 'normal' && minimumValue) {
-        conf.yAxis.min = minimumValue;
+        instanceConfig.yAxis.min = minimumValue;
       }
-      return conf;
+
+      const config = merge({}, baseConfig, instanceConfig);
+
+      return this._transformForHighContrast(displayHighContrast, config);
+
     }
+
+    _transformForHighContrast(should, config) {
+      if (should) {
+        config.series = config.series.map(this.highcontrastSeriesIteratee);
+      }
+      return config;
+    }
+
+    _transformPartitionedForHighContrast(should, config) {
+      if (should) {
+        const series = config.series.map(this.highcontrastSeriesIteratee);
+        return {series};
+      }
+      return {};
+    }
+
+    _createHighContrastIteratees() {
+      const highcontrast = makeHighContrastFill();
+      this.props.definePatterns(highcontrast.getOptions());
+      return highcontrast;
+    }
+
     render() {
       const {customLegend} = this.state;
       return (
         <ComposedComponent {...this.props}>
-          <div ref={el => this.chartEl = el} />
+          <div ref={el => this._chartEl = el} />
           {customLegend && customLegend.length && <Legend data={customLegend} />}
         </ComposedComponent>
       )
