@@ -1,7 +1,9 @@
 
 import React, {PureComponent} from 'react';
 import omit from 'lodash/omit';
+import merge from 'lodash/merge';
 import Highcharts from 'highcharts';
+
 
 const symbolChars = {
   'circle': 9679,
@@ -19,22 +21,23 @@ const withHeroChart = (ComposedComponent) => {
   return class extends PureComponent {
     constructor(props) {
       super(props);
-      this.chartEl = null;
+
+      this._chartEl = null;
+
       this.state = {};
     }
     componentDidMount() {
-      this.props.renderChart(this.getBaseConfig(), this.getInstanceConfig());
+      this.props.renderChart(merge({}, this.getBaseConfig(), this.getInstanceConfig()));
     }
     componentWillUnmount() {
-      this.props.destroyChart(this.chart);
+      this.props.destroyChart();
     }
+
     getBaseConfig() {
       const {
         title,
         dateLastUpdated,
       } = this.props;
-
-      const boundSetState = this.setState.bind(this);
 
       return {
         chart: {
@@ -75,9 +78,9 @@ const withHeroChart = (ComposedComponent) => {
           line: {},
           series: { // todo
             animation: false,
-            marker: { 
+            marker: {
               enabled: false, // Can't figure out a way to hide markers on lines yet show on legend :(
-              states: { 
+              states: {
                 hover: {
                   enabled: true
                 }
@@ -106,11 +109,11 @@ const withHeroChart = (ComposedComponent) => {
             var color = this.series.color;
             var symbol = symbolChars[this.series.symbol];
             var valueFormatter, value;
-            
+
             if (valueFormatter = valueFormats[this.series.options.units]) {
               value = valueFormatter(this.y)
             }
-            else { 
+            else {
               value = this.y;
             }
 
@@ -146,10 +149,10 @@ const withHeroChart = (ComposedComponent) => {
 
       return {
         chart: {
-          renderTo: this.chartEl
+          renderTo: this._chartEl,
         },
         yAxis: chartConfig.yAxis,
-        xAxis: Object.assign({}, omit(chartConfig.xAxis, 'categories'), {
+        xAxis: merge({}, omit(chartConfig.xAxis, 'categories'), {
           labels: {
             formatter: function() {
               return chartConfig.xAxis.categories[this.value];
@@ -162,7 +165,7 @@ const withHeroChart = (ComposedComponent) => {
     render() {
       return (
         <ComposedComponent {...this.props}>
-          <div ref={el => this.chartEl = el} />
+          <div ref={el => this._chartEl = el} />
         </ComposedComponent>
       )
     }
