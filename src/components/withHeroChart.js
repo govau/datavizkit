@@ -3,6 +3,18 @@ import React, {PureComponent} from 'react';
 import omit from 'lodash/omit';
 import Highcharts from 'highcharts';
 
+const symbolChars = {
+  'circle': 9679,
+  'diamond': 9670,
+  'triangle': 9652,
+  'square': 9632,
+  'triangle-down': 9660 };
+
+const valueFormats = {
+  'percentage': function(val) { return `${val}%`; },
+  'money': function(val) { return `$${val}`; }
+};
+
 const withHeroChart = (ComposedComponent) => {
   return class extends PureComponent {
     constructor(props) {
@@ -40,6 +52,21 @@ const withHeroChart = (ComposedComponent) => {
           y: 100,
           itemMarginBottom: 15
         },
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal',
+                y: 0
+              }
+            }
+          }]
+        },
         subtitle: {
           useHTML: true,
           text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
@@ -76,18 +103,6 @@ const withHeroChart = (ComposedComponent) => {
             return { x: point.plotX, y: this.chart.plotTop + this.chart.plotHeight - labelHeight };
           },
           pointFormatter: function() {
-            const symbolChars = {
-              'circle': 9679,
-              'diamond': 9670,
-              'triangle': 9652,
-              'square': 9632,
-              'triangle-down': 9660 };
-
-            const valueFormats = {
-              'percentage': function(val) { return `${val}%`; },
-              'number': function(val) { return `$${val}`; }
-            };
-            
             var color = this.series.color;
             var symbol = symbolChars[this.series.symbol];
             var valueFormatter, value;

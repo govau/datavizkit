@@ -8,7 +8,7 @@ import withHeroChart from './../withHeroChart';
 // might also have a ColumnWidgetLarge or ColumnWidgetMonochrome
 const HeroWidget = (props) => {
   return (
-    <article className="chart--line" role="article">
+    <article className="chart--hero" role="article">
       <header>
         <div>Hero Widget</div>
       </header>

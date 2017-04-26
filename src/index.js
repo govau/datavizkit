@@ -123,7 +123,7 @@ render(
                        },
                        {
                          'name':'Cost per transaction',
-                         'units': 'number',
+                         'units': 'money',
                          'yAxis': 1,
                          'data': [null, 578, 442, 80, 27, 25, 24]
                        },
