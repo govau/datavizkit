@@ -96,7 +96,8 @@ const withDonutChart = (ComposedComponent) => {
           },
         },
         title: {
-          text: title,
+          useHTML: true,
+          text: `<span>${title}</span>`,
         },
         subtitle: {
           useHTML: true,

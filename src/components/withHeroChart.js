@@ -51,7 +51,8 @@ const withHeroChart = (ComposedComponent) => {
           type: 'spline',
         },
         title: {
-          text: title,
+          useHTML: true,
+          text: `<span>${title}</span>`,
         },
         legend: {
           enabled: true,
