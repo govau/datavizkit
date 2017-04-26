@@ -2,7 +2,6 @@
 import React, {PureComponent} from 'react';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
-import Highcharts from 'highcharts';
 
 
 const symbolChars = {
