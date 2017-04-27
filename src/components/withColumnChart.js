@@ -2,10 +2,9 @@
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
-
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-
+import {displayLastUpdated} from './../utils/displayFormats';
 
 
 // todo - extract
@@ -155,7 +154,7 @@ const withColumnChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: displayLastUpdated(dateLastUpdated)
         },
         plotOptions: {
           column: {},

@@ -5,6 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
+import {displayLastUpdated} from './../utils/displayFormats';
 
 
 // render a stackedColumn chart and manage stackedColumn chart stuff
@@ -109,7 +110,7 @@ const withStackedColumnChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: displayLastUpdated(dateLastUpdated)
         },
         plotOptions: {
           column: {
