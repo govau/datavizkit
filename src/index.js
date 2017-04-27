@@ -39,7 +39,7 @@ class App extends Component {
         <LineWidget title='Number of page views'
           units='number'
           type='column'
-          dateLastUpdated='22 Feb 2016'
+          dateLastUpdated='2017-02-22T23:11:18.675Z'
           minimumValue="20000"
           chartConfig={{
           "xAxis":{
@@ -128,7 +128,7 @@ class App extends Component {
         <ColumnWidget title='Number of page views'
                       units='number'
                       type='column'
-                      dateLastUpdated='22 Feb 2016'
+                      dateLastUpdated='2017-02-14T23:11:18.675Z'
                       infoText="Something amazing about this widget."
                       minimumValue="20000"
                       chartConfig={{"xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},"series":[{"name":"Time to clear","data":[84807,null,null,62400,null,37560,39300]}]}}
@@ -139,7 +139,7 @@ class App extends Component {
         <ColumnWidget title='Boo of page views'
                       units='number'
                       type='column'
-                      dateLastUpdated='22 Feb 2016'
+                      dateLastUpdated='2017-02-15T23:11:18.675Z'
                       infoText="Something amazing about this widget."
                       minimumValue="8000"
                       chartConfig={{"xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},"series":[{"name":"Time to clear","data":[84807,62400,null,37560,39300,8000,null]}]}}
@@ -148,7 +148,7 @@ class App extends Component {
                       displayHighContrast={hcState} />
 
        <HeroWidget title='Performance Dashboard'
-                     dateLastUpdated='23 Mar 2017'
+                     dateLastUpdated='2017-02-01T23:11:18.675Z'
                      chartConfig={{
                        'xAxis': {
                          'categories':['Aug','Sep','Oct','Nov','Dec','Jan','Feb']

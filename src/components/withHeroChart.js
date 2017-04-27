@@ -2,7 +2,7 @@
 import React, {PureComponent} from 'react';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
-import {symbolChars, valueFormats} from './../utils/displayFormats';
+import {symbolChars, valueFormats, displayLastUpdated} from './../utils/displayFormats';
 
 const withHeroChart = (ComposedComponent) => {
 
@@ -68,7 +68,7 @@ const withHeroChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: displayLastUpdated(dateLastUpdated)
         },
         plotOptions: {
           line: {},

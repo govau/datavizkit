@@ -2,10 +2,9 @@
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
-
 import Legend from './customLegend.js';
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-
+import {displayLastUpdated} from './../utils/displayFormats';
 
 // render a line chart and manage line chart stuff
 const withLineChart = (ComposedComponent) => {
@@ -121,7 +120,7 @@ const withLineChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: displayLastUpdated(dateLastUpdated)
         },
         plotOptions: {
           line: {},

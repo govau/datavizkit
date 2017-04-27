@@ -4,7 +4,7 @@ import last from 'lodash/last';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import TrendLegend from './trendLegend.js';
-import {unitFormats} from './../utils/displayFormats';
+import {unitFormats, displayLastUpdated} from './../utils/displayFormats';
 
 // render a sparkline chart and manage sparkline chart stuff
 const withSparklineChart = (ComposedComponent) => {
@@ -85,7 +85,7 @@ const withSparklineChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: displayLastUpdated(dateLastUpdated)
         },
         yAxis: {
           visible: false

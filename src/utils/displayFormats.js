@@ -1,6 +1,4 @@
-
 import Highcharts from 'highcharts';
-
 
 export const symbolChars = {
   'circle': 9679,
@@ -18,3 +16,8 @@ export const unitFormats = {
   'money':      { 'symbol': '$', prefix: true },
   'percentage': { 'symbol': '%'}
 };
+
+export const displayLastUpdated = function(dateStr) {
+  var formattedDate = moment(dateStr).strftime('%e %b %Y');
+  return `<span>Last updated <time dateTime="${dateStr}">${formattedDate}</time></span>`;
+}

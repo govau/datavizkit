@@ -4,9 +4,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-import {valueFormats} from './../utils/displayFormats'
-
-
+import {valueFormats, displayLastUpdated} from './../utils/displayFormats'
 
 // render a donut chart and manage donut chart stuff
 const withDonutChart = (ComposedComponent) => {
@@ -98,7 +96,7 @@ const withDonutChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: displayLastUpdated(dateLastUpdated)
         },
         plotOptions: {
           pie: {
