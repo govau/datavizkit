@@ -5,7 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-
+import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
 
 
 // todo - extract
@@ -29,21 +29,9 @@ const transformXAxisForNullDataLayer = (xAxis, series) => {
   return _xAxis;
 };
 
-const generateCustomLegend = (series, index) => {
-  return series.map(s => {
-    let data;
-    if (index) {
-      data = s.data[index];
-    } else {
-      data = last(s.data);
-    }
-    return {
-      key: s.name,
-      y: data.y,
-      color: data.color,
-    }
-  });
-};
+
+
+
 
 
 /**
@@ -69,7 +57,6 @@ const withColumnChart = (ComposedComponent) => {
       this.state = {
         customLegend: null,
       };
-
     }
 
     // create the chart
@@ -133,7 +120,7 @@ const withColumnChart = (ComposedComponent) => {
             load: function() {
               this.xAxis = transformXAxisForNullDataLayer(this.xAxis, this.series);
 
-              broadcastSetState({'customLegend': generateCustomLegend(this.series)});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
               // "hover" over the last column
               const lastCol = last(this.series[0].data);
@@ -144,7 +131,7 @@ const withColumnChart = (ComposedComponent) => {
 
             // fired when update is called with redraw
             redraw: function(e) {
-              broadcastSetState({'customLegend': generateCustomLegend(this.series)});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
             }
 
           },
@@ -165,7 +152,7 @@ const withColumnChart = (ComposedComponent) => {
               events: {
 
                 mouseOver: function() {
-                  broadcastSetState({'customLegend': generateCustomLegend(this.series.chart.series, this.index)});
+                  broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
                 }
 
               }

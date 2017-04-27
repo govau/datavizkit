@@ -5,6 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
+import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
 
 
 // render a stackedColumn chart and manage stackedColumn chart stuff
@@ -70,8 +71,8 @@ const withStackedColumnChart = (ComposedComponent) => {
         chart: {
           type: 'column',
           events: {
-            load: function() {  // equivalent to constructor callback
 
+            load: function() {  // equivalent to constructor callback
               var seriesData = this.series[0].data;//this is series data
               seriesData.forEach((d, idx) => {
                 if (d.y === null) { //find null value in series
@@ -84,16 +85,7 @@ const withStackedColumnChart = (ComposedComponent) => {
                 }
               });
 
-              let customLegendData = this.series.map(s => {
-                const lastData = last(s.data);
-                return {
-                  // key: lastData.category,
-                  key: s.name,
-                  y: lastData.y,
-                  color: lastData.color,
-                }
-              });
-              broadcastSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
               // "hover" over the last stackedColumn
               const lastCol = last(this.series[0].data);
@@ -101,6 +93,12 @@ const withStackedColumnChart = (ComposedComponent) => {
                 lastCol.onMouseOver && lastCol.onMouseOver();
               }
             },
+
+            // fired when update is called with redraw
+            redraw: function(e) {
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
+            }
+
           },
         },
         title: {
@@ -119,27 +117,11 @@ const withStackedColumnChart = (ComposedComponent) => {
             animation: false,
             point: {
               events: {
+
                 mouseOver: function() {
-                  const sliceIdx = this.index;
-                  const chartSeries = this.series.chart.series;
-                  const customLegendData = chartSeries.map((s, i) => {
-                    const sliceData = s.data[sliceIdx];
-                    sliceData.setState('hover');
-                    return {
-                      key: s.name,
-                      y: sliceData.y,
-                      color: sliceData.color
-                    }
-                  });
-                  broadcastSetState({'customLegend': customLegendData});
+                  broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
                 },
-                mouseOut: function() {
-                  // todo - something weird going on here
-                  const sliceIdx = this.index;
-                  this.series.chart.series.forEach((s, i) => {
-                    s.data[sliceIdx].setState('');
-                  });
-                },
+
               }
             },
             states: {

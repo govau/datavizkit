@@ -4,8 +4,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-import {valueFormats} from './../utils/displayFormats'
-
+import {createPolarCustomLegendData} from './../utils/chartOptionsHelpers';
 
 
 // render a donut chart and manage donut chart stuff
@@ -68,26 +67,11 @@ const withDonutChart = (ComposedComponent) => {
           events: {
 
             load: function() {  // equivalent to constructor callback
-
-              const customLegendData = this.series[0].data.map(d => {
-                return {
-                  key: d.name,
-                  y: valueFormats.percentage(d.percentage),
-                  color: d.color
-                }
-              });
-              broadcastSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': createPolarCustomLegendData(this.series)});
             },
 
             redraw: function() {
-              const customLegendData = this.series[0].data.map(d => {
-                return {
-                  key: d.name,
-                  y: valueFormats.percentage(d.percentage),
-                  color: d.color
-                }
-              });
-              broadcastSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': createPolarCustomLegendData(this.series)});
             }
 
           },
