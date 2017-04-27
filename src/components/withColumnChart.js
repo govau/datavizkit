@@ -5,7 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-
+import {createCustomLegendData} from './../utils/chartOptionsHelpers';
 
 
 // todo - extract
@@ -31,20 +31,6 @@ const transformXAxisForNullDataLayer = (xAxis, series) => {
 
 
 
-const getCustomLegendData = (series, seriesDataIndex = null) => {
-  // supplied index or default to last (latest data)
-  const _i = seriesDataIndex || series[0].data.length - 1;
-  return series.map(s => {
-    const d = s.data[_i];
-    return {
-      key: s.name,
-      y: d.y || 'No data',
-      color: d.color,
-    }
-  }).reduce((a, b) => { // flatten
-    return [...a, b];
-  }, []);
-};
 
 
 
@@ -134,7 +120,7 @@ const withColumnChart = (ComposedComponent) => {
             load: function() {
               this.xAxis = transformXAxisForNullDataLayer(this.xAxis, this.series);
 
-              broadcastSetState({'customLegend': getCustomLegendData(this.series)});
+              broadcastSetState({'customLegend': createCustomLegendData(this.series)});
 
               // "hover" over the last column
               const lastCol = last(this.series[0].data);
@@ -145,7 +131,7 @@ const withColumnChart = (ComposedComponent) => {
 
             // fired when update is called with redraw
             redraw: function(e) {
-              broadcastSetState({'customLegend': getCustomLegendData(this.series)});
+              broadcastSetState({'customLegend': createCustomLegendData(this.series)});
             }
 
           },
@@ -166,7 +152,7 @@ const withColumnChart = (ComposedComponent) => {
               events: {
 
                 mouseOver: function() {
-                  broadcastSetState({'customLegend': getCustomLegendData(this.series.chart.series, this.index)});
+                  broadcastSetState({'customLegend': createCustomLegendData(this.series.chart.series, this.index)});
                 }
 
               }
