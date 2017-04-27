@@ -5,6 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
+import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
 
 
 // render a line chart and manage line chart stuff
@@ -84,15 +85,7 @@ const withLineChart = (ComposedComponent) => {
                 }
               });
 
-              let customLegendData = this.series.map(s => {
-                const lastData = last(s.data);
-                return {
-                  key: s.name,
-                  y: lastData.y,
-                  color: lastData.color,
-                }
-              });
-              broadcastSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
               // "hover" over the last line
               const lastCol = last(this.series[0].data);
@@ -102,15 +95,7 @@ const withLineChart = (ComposedComponent) => {
             },
 
             redraw: function() {
-              let customLegendData = this.series.map(s => {
-                const lastData = last(s.data);
-                return {
-                  key: s.name,
-                  y: lastData.y,
-                  color: lastData.color,
-                }
-              });
-              broadcastSetState({'customLegend': customLegendData});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
             }
 
           },
@@ -129,18 +114,7 @@ const withLineChart = (ComposedComponent) => {
             animation: false,
             point: {
               events: {
-                mouseOver: function() {
-                  const sliceIdx = this.index;
-                  const customLegendData = this.series.chart.series.map(s => {
-                    const sliceData = s.data[sliceIdx];
-                    return {
-                      key: s.name,
-                      y: sliceData.y,
-                      color: sliceData.color
-                    }
-                  });
-                  broadcastSetState({'customLegend': customLegendData});
-                }
+                mouseOver: function() {}
               }
             },
             states: {
