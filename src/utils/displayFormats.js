@@ -18,6 +18,13 @@ export const unitFormats = {
 };
 
 export const displayLastUpdated = function(dateStr) {
-  var formattedDate = moment(dateStr).strftime('%e %b %Y');
-  return `<span>Last updated <time dateTime="${dateStr}">${formattedDate}</time></span>`;
+  var ts = Date.parse(dateStr);
+
+  if (isNaN(ts)) {
+    return '';
+  }
+  else {
+    var formattedDate = Highcharts.dateFormat('%e %b %Y', new Date(ts));
+    return `<span>Last updated <time dateTime="${dateStr}">${formattedDate}</time></span>`;
+  }
 }
