@@ -42,24 +42,24 @@ const getDifference = (data) => {
 };
 
 
-const TrendLegend = ({data}) => {
+const TrendLegend = ({data, className}) => {
   const difference = getDifference(data);
   const date = getPreviousDate(data);
   const trend = getTrend(difference);
   const volume = getVolume(difference);
   return (
-    <div className="trend-legend">
-      <i className={`metric-trend fa fa-arrow-${trend}`}></i>
-      {date && <span className='summary-text'>{trend} {volume} since {date}</span>}
+    <div className={className}>
+      <span>
+        <i className={`metric-trend fa fa-arrow-${trend}`}></i>
+        {date && <span className='summary-text'>{trend} {volume} since {date}</span>}
+      </span>
     </div>
   )
 };
 
 const StyledTrendLegend = styled(TrendLegend)`
-  .trend-legend {
-    width: 100%;
-    text-align:center;
-  }
+  width: 100%;
+  text-align:center;
 `;
 
 export default StyledTrendLegend;
