@@ -103,6 +103,7 @@ const withDonutChart = (ComposedComponent) => {
         },
         plotOptions: {
           pie: {
+            size: '60%',
             animation: false,
             dataLabels: {
               enabled: false
