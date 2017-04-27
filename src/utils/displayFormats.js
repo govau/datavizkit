@@ -1,3 +1,7 @@
+
+import Highcharts from 'highcharts';
+
+
 export const symbolChars = {
   'circle': 9679,
   'diamond': 9670,
@@ -6,7 +10,7 @@ export const symbolChars = {
   'triangle-down': 9660 };
 
 export const valueFormats = {
-  'percentage': function(val) { return `${val}%`; },
+  'percentage': (val) => `${Highcharts.numberFormat(val, 2)}%`,
   'money': function(val) { return `$${val}`; }
 };
 
