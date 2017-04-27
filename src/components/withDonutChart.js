@@ -4,6 +4,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
+import {valueFormats} from './../utils/displayFormats'
 
 
 
@@ -71,8 +72,7 @@ const withDonutChart = (ComposedComponent) => {
               const customLegendData = this.series[0].data.map(d => {
                 return {
                   key: d.name,
-                  y: d.percentage + '%',
-                  // y: Highcharts.numberFormat(d.percentage, 2) + '%',
+                  y: valueFormats.percentage(d.percentage),
                   color: d.color
                 }
               });
@@ -83,8 +83,7 @@ const withDonutChart = (ComposedComponent) => {
               const customLegendData = this.series[0].data.map(d => {
                 return {
                   key: d.name,
-                  y: d.percentage + '%',
-                  // y: Highcharts.numberFormat(d.percentage, 2) + '%',
+                  y: valueFormats.percentage(d.percentage),
                   color: d.color
                 }
               });
