@@ -5,7 +5,7 @@ import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 
-import ProvidePatternFill from './../vendor/pattern-fill-v2';
+import makeHighcontrastPatterns from './../utils/highcontrastPatterns';
 
 
 const THEME = {
@@ -85,6 +85,10 @@ Highcharts.setOptions({
  *
  */
 
+// expose this Component as a public component
+export const HighcontrastPatterns = makeHighcontrastPatterns(Highcharts);
+
+
 // abstract methods from the Highcharts api
 const withHighcharts = (ComposedComponent) => {
 
@@ -93,16 +97,9 @@ const withHighcharts = (ComposedComponent) => {
     constructor(props) {
       super(props);
       this._instance = null;
-      this.definePatterns = this.definePatterns.bind(this);
       this.renderChart = this.renderChart.bind(this);
       this.destroyChart = this.destroyChart.bind(this);
       this.updateChart = this.updateChart.bind(this);
-    }
-
-    // provide unique unique to chart
-    // will render defs for each chart
-    definePatterns(options) {
-      ProvidePatternFill(Highcharts, options);
     }
 
     renderChart(instanceConfig) {
@@ -130,10 +127,11 @@ const withHighcharts = (ComposedComponent) => {
       return <ComposedComponent {...this.props}
                                 renderChart={this.renderChart}
                                 destroyChart={this.destroyChart}
-                                definePatterns={this.definePatterns}
-                                updateChart={this.updateChart} />
+                                updateChart={this.updateChart}
+                                HighcontrastPatterns={HighcontrastPatterns} />
     }
   }
 };
+
 
 export default withHighcharts;

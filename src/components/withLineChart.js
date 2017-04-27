@@ -4,7 +4,7 @@ import last from 'lodash/last';
 import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
-import {makeHighContrastDash} from './../utils/highContrastMode';
+import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
 
 
 // render a line chart and manage line chart stuff
@@ -17,9 +17,7 @@ const withLineChart = (ComposedComponent) => {
 
       this._chartEl = null;
       this._chartConfig = null;
-
-      const highcontrast = this._createHighContrastIteratees();
-      this.highcontrastSeriesIteratee = highcontrast.seriesIteratee;
+      this._highcontrastSeriesIteratee = createHighcontrastDashSeriesIteratee();
 
       this.state = {
         customLegend: null,
@@ -53,7 +51,7 @@ const withLineChart = (ComposedComponent) => {
       this.props.destroyChart();
       this._chartEl = null;
       this._chartConfig = null;
-      this.highcontrastSeriesIteratee = null;
+      this._highcontrastSeriesIteratee = null;
     }
 
     createConfig() {
@@ -201,24 +199,18 @@ const withLineChart = (ComposedComponent) => {
 
     _transformForHighContrast(should, config) {
       if (should) {
-        config.series = config.series.map(this.highcontrastSeriesIteratee);
+        config.series = config.series.map(this._highcontrastSeriesIteratee);
       }
       return config;
     }
 
     _transformPartitionedForHighContrast(should, config) {
       if (should) {
-        const series = config.series.map(this.highcontrastSeriesIteratee);
+        const series = config.series.map(this._highcontrastSeriesIteratee);
         return {series};
       }
       return {};
     }
-
-    _createHighContrastIteratees() {
-      const highcontrast = makeHighContrastDash();
-      return highcontrast;
-    }
-
 
     render() {
       const {customLegend} = this.state;
