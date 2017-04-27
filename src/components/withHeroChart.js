@@ -2,19 +2,7 @@
 import React, {PureComponent} from 'react';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
-
-
-const symbolChars = {
-  'circle': 9679,
-  'diamond': 9670,
-  'triangle': 9652,
-  'square': 9632,
-  'triangle-down': 9660 };
-
-const valueFormats = {
-  'percentage': function(val) { return `${val}%`; },
-  'money': function(val) { return `$${val}`; }
-};
+import {symbolChars, valueFormats} from './../utils/displayFormats';
 
 const withHeroChart = (ComposedComponent) => {
 
