@@ -29,21 +29,23 @@ const transformXAxisForNullDataLayer = (xAxis, series) => {
   return _xAxis;
 };
 
-const generateCustomLegend = (series, index) => {
+
+
+const getCustomLegendData = (series, seriesDataIndex = null) => {
+  // supplied index or default to last (latest data)
+  const _i = seriesDataIndex || series[0].data.length - 1;
   return series.map(s => {
-    let data;
-    if (index) {
-      data = s.data[index];
-    } else {
-      data = last(s.data);
-    }
+    const d = s.data[_i];
     return {
       key: s.name,
-      y: data.y,
-      color: data.color,
+      y: d.y || 'No data',
+      color: d.color,
     }
-  });
+  }).reduce((a, b) => { // flatten
+    return [...a, b];
+  }, []);
 };
+
 
 
 /**
@@ -69,7 +71,6 @@ const withColumnChart = (ComposedComponent) => {
       this.state = {
         customLegend: null,
       };
-
     }
 
     // create the chart
@@ -133,7 +134,7 @@ const withColumnChart = (ComposedComponent) => {
             load: function() {
               this.xAxis = transformXAxisForNullDataLayer(this.xAxis, this.series);
 
-              broadcastSetState({'customLegend': generateCustomLegend(this.series)});
+              broadcastSetState({'customLegend': getCustomLegendData(this.series)});
 
               // "hover" over the last column
               const lastCol = last(this.series[0].data);
@@ -144,7 +145,7 @@ const withColumnChart = (ComposedComponent) => {
 
             // fired when update is called with redraw
             redraw: function(e) {
-              broadcastSetState({'customLegend': generateCustomLegend(this.series)});
+              broadcastSetState({'customLegend': getCustomLegendData(this.series)});
             }
 
           },
@@ -165,7 +166,7 @@ const withColumnChart = (ComposedComponent) => {
               events: {
 
                 mouseOver: function() {
-                  broadcastSetState({'customLegend': generateCustomLegend(this.series.chart.series, this.index)});
+                  broadcastSetState({'customLegend': getCustomLegendData(this.series.chart.series, this.index)});
                 }
 
               }
