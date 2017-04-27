@@ -21,3 +21,9 @@ export {DonutWidget};
 
 import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
 export {StackedColumnWidget};
+
+import {HighcontrastPatterns} from './components/withHighcharts.js';
+export {HighcontrastPatterns};
+
+import {NullDataLayerPattern} from './utils/highcontrastPatterns';
+export {NullDataLayerPattern};

@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
-import {makeHighContrastFill} from './../utils/highContrastMode';
+import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
 
 
 
@@ -17,9 +17,7 @@ const withDonutChart = (ComposedComponent) => {
 
       this._chartEl = null;
       this._chartConfig = null;
-
-      const highcontrast = this._createHighContrastIteratees();
-      this.highcontrastSeriesIteratee = highcontrast.seriesIteratee;
+      this._highcontrastSeriesIteratee = createHighcontrastFillSeriesIteratee();
 
       this.state = {
         customLegend: null,
@@ -50,7 +48,7 @@ const withDonutChart = (ComposedComponent) => {
       this.props.destroyChart(this.chart);
       this._chartEl = null;
       this._chartConfig = null;
-      this.highcontrastSeriesIteratee = null;
+      this._highcontrastSeriesIteratee = null;
     }
 
     createConfig() {
@@ -156,7 +154,7 @@ const withDonutChart = (ComposedComponent) => {
     _transformForHighContrast(should, config) {
       if (should) {
         config.series = config.series.map(s => {
-          s.data = s.data.map(this.highcontrastSeriesIteratee);
+          s.data = s.data.map(this._highcontrastSeriesIteratee);
           return s;
         });
       }
@@ -166,18 +164,12 @@ const withDonutChart = (ComposedComponent) => {
     _transformPartitionedForHighContrast(should, config) {
       if (should) {
         const series = config.series.map(s => {
-          s.data = s.data.map(this.highcontrastSeriesIteratee);
+          s.data = s.data.map(this._highcontrastSeriesIteratee);
           return s;
         });
         return {series}
       }
       return {};
-    }
-
-    _createHighContrastIteratees() {
-      const highcontrast = makeHighContrastFill();
-      this.props.definePatterns(highcontrast.getOptions());
-      return highcontrast;
     }
 
     render() {
