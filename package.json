@@ -27,7 +27,8 @@
     "pui-react-overlay-trigger": "^8.0.5",
     "pui-react-tooltip": "^8.0.5",
     "recompose": "^0.23.1",
-    "styled-components": "^1.4.5"
+    "styled-components": "^1.4.5",
+    "tinycolor2": "^1.4.1"
   },
   "peerDependencies": {
     "react": "^15.5.4",
