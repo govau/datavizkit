@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {symbolChars, valueFormats} from './../utils/displayFormats';
+import {symbolChars, valueFormats, dateFormats} from './../utils/displayFormats';
 
 
 const withHeroChart = (ComposedComponent) => {
@@ -71,7 +71,7 @@ const withHeroChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
         },
         plotOptions: {
           line: {},

@@ -9,6 +9,7 @@ import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
 } from './../utils/chartOptionsHelpers';
+import {dateFormats} from './../utils/displayFormats';
 
 
 // render a stackedColumn chart and manage stackedColumn chart stuff
@@ -101,7 +102,7 @@ const withStackedColumnChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
         },
         plotOptions: {
           column: {
