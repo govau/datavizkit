@@ -53,19 +53,23 @@ class App extends Component {
           singleSection={true}
           displayHighContrast={hcState} />
 
-        {/*<SparklineWidget chartConfig={{"xAxis":{*/}
-        {/*"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]*/}
-        {/*},*/}
-        {/*"series":[*/}
-        {/*{"name":"Total opportunities","data":[null,null,13,29,42,58,74]}*/}
-        {/*]*/}
-        {/*}} title="Total opportunities"*/}
-        {/*units="number"*/}
-        {/*type="sparkline"*/}
-        {/*dateLastUpdated="2017-02-01T23:11:18.675Z"*/}
-        {/*_singleCategory={false}*/}
-        {/*_singleSection={true}*/}
-        {/*minimumValue="13" />*/}
+        <SparklineWidget chartConfig={{
+          "xAxis":{
+            "categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]
+          },
+          "series":[
+            { "name":"Total opportunities",
+              "units": "money",
+              "data":[null,null,13,29,42,58,74]
+            }
+        ]
+        }} title="Total opportunities"
+        type="sparkline"
+        dateLastUpdated="2017-02-01T23:11:18.675Z"
+        _singleCategory={false}
+        _singleSection={true}
+        minimumValue="13" />
+
 
         {/*<StackedColumnWidget*/}
           {/*chartConfig={{*/}
@@ -143,7 +147,7 @@ class App extends Component {
                       _singleSection={true}
                       displayHighContrast={hcState} />
 
-       {/*<HeroWidget title='Performance Dashboard'
+       <HeroWidget title='Performance Dashboard'
                      dateLastUpdated='23 Mar 2017'
                      chartConfig={{
                          'xAxis': {
@@ -185,7 +189,7 @@ class App extends Component {
                          ]
                        }}
                        _singleCategory={true}
-                       _singleSection={false} />*/}
+                       _singleSection={false} />
 
 
       </div>

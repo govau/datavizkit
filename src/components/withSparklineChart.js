@@ -2,9 +2,9 @@
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
-
+import get from 'lodash/get';
 import TrendLegend from './trendLegend.js';
-
+import {unitFormats} from './../utils/displayFormats';
 
 // render a sparkline chart and manage sparkline chart stuff
 const withSparklineChart = (ComposedComponent) => {
@@ -48,16 +48,27 @@ const withSparklineChart = (ComposedComponent) => {
           margin: [150, 0, 0, 0],
           events: {
             load: function() {  // equivalent to constructor callback
-
               var latestValue = last(this.series[0].data).y;
-              this.renderer.text(latestValue)
+              var unitFormat = unitFormats[this.series[0].options.units];
+              var unitSymbol = get(unitFormat, 'symbol') || '';
+              var valueSpan = `<span style="font-size:700%;">${latestValue}</span>`;
+              var unitSpan = `<span style="font-size:200%; baseline-shift: super;">${unitSymbol}</span>`;
+              var splineHtml = '';
+
+              if (get(unitFormat, 'prefix')) {
+                splineHtml = `${unitSpan} ${valueSpan}`;
+              }
+              else {
+                splineHtml = `${valueSpan} ${unitSpan}`;
+              }
+
+              this.renderer.text(splineHtml)
                 .attr({
                   zIndex: 6,
                   x: '50%',
                   y: '35%'
                 })
                 .css({
-                  fontSize: '700%',
                   textAnchor: 'middle'
                 })
                 .add();
