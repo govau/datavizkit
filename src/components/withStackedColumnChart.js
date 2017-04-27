@@ -5,7 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-import {createCustomLegendData} from './../utils/chartOptionsHelpers';
+import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
 
 
 // render a stackedColumn chart and manage stackedColumn chart stuff
@@ -85,7 +85,7 @@ const withStackedColumnChart = (ComposedComponent) => {
                 }
               });
 
-              broadcastSetState({'customLegend': createCustomLegendData(this.series)});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
               // "hover" over the last stackedColumn
               const lastCol = last(this.series[0].data);
@@ -96,7 +96,7 @@ const withStackedColumnChart = (ComposedComponent) => {
 
             // fired when update is called with redraw
             redraw: function(e) {
-              broadcastSetState({'customLegend': createCustomLegendData(this.series)});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
             }
 
           },
@@ -119,7 +119,7 @@ const withStackedColumnChart = (ComposedComponent) => {
               events: {
 
                 mouseOver: function() {
-                  broadcastSetState({'customLegend': createCustomLegendData(this.series.chart.series, this.index)});
+                  broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
                 },
 
               }

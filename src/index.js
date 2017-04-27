@@ -80,7 +80,7 @@ class App extends Component {
           displayHighContrast={hcState}
         />
 
-        {/*<DonutWidget chartConfig={{
+        {<DonutWidget chartConfig={{
           series:[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]
         }} title="Devices used"
           units="percentage"
@@ -89,7 +89,7 @@ class App extends Component {
           _singleCategory={true}
           _singleSection={false}
           minimumValue="30"
-          displayHighContrast={hcState} />*/}
+          displayHighContrast={hcState} />}
 
         {/*<DonutWidget chartConfig={{
               series:[{name:"Jan",data:[{name:"Girls",y:183},{name:"Guys",y:30}]}]

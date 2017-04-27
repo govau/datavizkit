@@ -5,7 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-import {createCustomLegendData} from './../utils/chartOptionsHelpers';
+import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
 
 
 // todo - extract
@@ -120,7 +120,7 @@ const withColumnChart = (ComposedComponent) => {
             load: function() {
               this.xAxis = transformXAxisForNullDataLayer(this.xAxis, this.series);
 
-              broadcastSetState({'customLegend': createCustomLegendData(this.series)});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
               // "hover" over the last column
               const lastCol = last(this.series[0].data);
@@ -131,7 +131,7 @@ const withColumnChart = (ComposedComponent) => {
 
             // fired when update is called with redraw
             redraw: function(e) {
-              broadcastSetState({'customLegend': createCustomLegendData(this.series)});
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
             }
 
           },
@@ -152,7 +152,7 @@ const withColumnChart = (ComposedComponent) => {
               events: {
 
                 mouseOver: function() {
-                  broadcastSetState({'customLegend': createCustomLegendData(this.series.chart.series, this.index)});
+                  broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
                 }
 
               }
