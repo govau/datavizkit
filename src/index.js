@@ -50,8 +50,15 @@ class App extends Component {
           displayHighContrast={hcState} />
 
         {/*<SparklineWidget chartConfig={{
-          xAxis:{categories:["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
-          series:[{name:"Total opportunities",units:"money",data:[null,null,13,29,42,58,74]}]
+          "xAxis":{
+            "categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]
+          },
+          "series":[
+            { "name":"Total opportunities",
+              "units": "money",
+              "data":[null,null,13,29,42,58,74]
+            }
+        ]
         }} title="Total opportunities"
         type="sparkline"
         dateLastUpdated="2017-02-01T23:11:18.675Z"
@@ -83,6 +90,22 @@ class App extends Component {
         {/*<DonutWidget chartConfig={{
           series:[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]
         }} title="Devices used"
+          units="percentage"
+          type="donut"
+          dateLastUpdated="2017-02-01T01:02:02.240Z"
+          _singleCategory={true}
+          _singleSection={false}
+          minimumValue="30"
+          displayHighContrast={hcState} />*/}
+
+        {/*<DonutWidget chartConfig={{"series":[{
+          name: "Jan",
+          data: [
+            {"name":"Girls","y":183},
+            {"name":"Guys","y":30},
+          ]
+          }]
+          }} title="People used"
           units="percentage"
           type="donut"
           dateLastUpdated="2017-02-01T01:02:02.240Z"
@@ -145,7 +168,8 @@ class App extends Component {
                        ]
                      }}
                      _singleCategory={true}
-                     _singleSection={false} />
+                     _singleSection={false}
+                   displayHighContrast={hcState} />
 
 
       </div>
