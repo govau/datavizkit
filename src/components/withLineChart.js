@@ -5,6 +5,7 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
+import {dateFormats} from './../utils/displayFormats';
 import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
@@ -99,7 +100,7 @@ const withLineChart = (ComposedComponent) => {
         },
         subtitle: {
           useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateLastUpdated}">${dateLastUpdated}</time></span>`,
+          text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
         },
         plotOptions: {
           line: {},

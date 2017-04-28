@@ -10,11 +10,16 @@ export const symbolChars = {
   'triangle-down': 9660 };
 
 export const valueFormats = {
-  'percentage': (val) => `${Highcharts.numberFormat(val, 2)}%`,
+  'percentage': val => `${Highcharts.numberFormat(val, 2)}%`,
   'money': function(val) { return `$${val}`; }
 };
 
 export const unitFormats = {
   'money':      { 'symbol': '$', prefix: true },
   'percentage': { 'symbol': '%'}
+};
+
+export const dateFormats = {
+  dateTime: val => new Date(val),
+  dayMonthYear: val => Highcharts.dateFormat('%e %h %Y', new Date(val)),
 };
