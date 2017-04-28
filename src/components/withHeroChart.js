@@ -2,7 +2,10 @@
 import React, {PureComponent} from 'react';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
+
+import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
 import {symbolChars, valueFormats} from './../utils/displayFormats';
+
 
 const withHeroChart = (ComposedComponent) => {
 
@@ -12,6 +15,7 @@ const withHeroChart = (ComposedComponent) => {
       super(props);
       this._chartEl = null;
       this._chartConfig = null;
+      this._highcontrastSeriesIteratee = createHighcontrastDashSeriesIteratee();
     }
 
     componentDidMount() {
@@ -29,7 +33,6 @@ const withHeroChart = (ComposedComponent) => {
       const {
         title,
         dateLastUpdated,
-        minimumValue,
         displayHighContrast,
         chartConfig,
       } = this.props;
@@ -94,13 +97,10 @@ const withHeroChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: true, //false,
+          enabled: true,
           shared: true,
           crosshairs: true,
           borderRadius: 8,
-          positioner: function(labelWidth, labelHeight, point) {
-            return { x: point.plotX, y: this.chart.plotTop + this.chart.plotHeight - labelHeight };
-          },
           pointFormatter: function() {
             var color = this.series.color;
             var symbol = symbolChars[this.series.symbol];
@@ -154,7 +154,22 @@ const withHeroChart = (ComposedComponent) => {
 
       const config = merge({}, baseConfig, instanceConfig);
 
+      return this._transformForHighContrast(displayHighContrast, config);
+    }
+
+    _transformForHighContrast(should, config) {
+      if (should) {
+        config.series = config.series.map(this._highcontrastSeriesIteratee);
+      }
       return config;
+    }
+
+    _transformPartitionedForHighContrast(should, config) {
+      if (should) {
+        const series = config.series.map(this._highcontrastSeriesIteratee);
+        return {series};
+      }
+      return {};
     }
 
     render() {
