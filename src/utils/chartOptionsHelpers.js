@@ -43,7 +43,9 @@ export const plotNullDataLayerToAxis = (xAxis, series) => {
   }).reduce((a,b) => {
     // find an intersection between the arrays - common null vals in a series set
     if (a.length) {
-      return [...a].filter(x => b.has(x));
+      return [...a].filter(x => {
+        return b.includes(x);
+      });
     }
     return b;
   }, []);
