@@ -101,9 +101,6 @@ const withHeroChart = (ComposedComponent) => {
           shared: true,
           crosshairs: true,
           borderRadius: 8,
-          // positioner: function(labelWidth, labelHeight, point) {
-          //   return { x: point.plotX, y: this.chart.plotTop + this.chart.plotHeight - labelHeight };
-          // },
           pointFormatter: function() {
             var color = this.series.color;
             var symbol = symbolChars[this.series.symbol];
