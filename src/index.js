@@ -60,7 +60,7 @@ class App extends Component {
         minimumValue="13" />*/}
 
 
-        <StackedColumnWidget
+        {/*<StackedColumnWidget
           chartConfig={{
             "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
             "series":[
@@ -78,9 +78,9 @@ class App extends Component {
           _singleSection={false}
           stackingType="normal"
           displayHighContrast={hcState}
-        />
+        />*/}
 
-        <DonutWidget chartConfig={{
+        {/*<DonutWidget chartConfig={{
           series:[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]
         }} title="Devices used"
           units="percentage"
@@ -89,9 +89,9 @@ class App extends Component {
           _singleCategory={true}
           _singleSection={false}
           minimumValue="30"
-          displayHighContrast={hcState} />
+          displayHighContrast={hcState} />*/}
 
-        <DonutWidget chartConfig={{
+        {/*<DonutWidget chartConfig={{
               series:[{name:"Jan",data:[{name:"Girls",y:183},{name:"Guys",y:30}]}]
             }}
                      title="People used"
@@ -101,7 +101,7 @@ class App extends Component {
             _singleCategory={true}
             _singleSection={false}
             minimumValue="30"
-            displayHighContrast={hcState} />
+            displayHighContrast={hcState} />*/}
 
 
         <ColumnWidget title='Number of page views'

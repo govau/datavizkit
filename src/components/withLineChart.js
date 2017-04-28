@@ -5,7 +5,10 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
+import {
+  createCartesianCustomLegendData,
+  plotNullDataLayerToAxis
+} from './../utils/chartOptionsHelpers';
 
 
 // render a line chart and manage line chart stuff
@@ -73,17 +76,7 @@ const withLineChart = (ComposedComponent) => {
 
             load: function() {  // equivalent to constructor callback
 
-              var seriesData = this.series[0].data;//this is series data  // todo - this will be different for different dimensions of data
-              seriesData.forEach((d, idx) => {
-                if (d.y === null) { //find null value in series
-                  // adds plot band
-                  this.xAxis[0].addPlotBand({
-                    from: idx -.5,  // point back
-                    to: idx + .5,   // point after
-                    color: 'url(#null-data-layer)', // this color represents the null value region
-                  });
-                }
-              });
+              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series);
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 

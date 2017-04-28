@@ -5,33 +5,10 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
-
-
-// todo - extract
-
-const transformXAxisForNullDataLayer = (xAxis, series) => {
-
-  const _xAxis = [...xAxis];
-
-  // todo - various data permutations
-  series[0].data.forEach((d, idx) => {
-    if (d.y === null) { //find null value in series
-      // adds plot band
-      _xAxis[0].addPlotBand({
-        from: idx -.5,  // point back
-        to: idx + .5,   // point after
-        color: 'url(#null-data-layer)', // this color represents the null value region
-      });
-    }
-  });
-
-  return _xAxis;
-};
-
-
-
-
+import {
+  createCartesianCustomLegendData,
+  plotNullDataLayerToAxis
+} from './../utils/chartOptionsHelpers';
 
 
 /**
@@ -118,7 +95,8 @@ const withColumnChart = (ComposedComponent) => {
             // equivalent to constructor callback
             // hence, called only on creation, not on updates
             load: function() {
-              this.xAxis = transformXAxisForNullDataLayer(this.xAxis, this.series);
+
+              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series);
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
