@@ -5,64 +5,10 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
-import {createCartesianCustomLegendData} from './../utils/chartOptionsHelpers';
-
-
-// todo - extract
-
-const transformXAxisForNullDataLayer = (xAxis, series) => {
-
-  const _xAxis = [...xAxis];
-
-  // todo - various data permutations
-  series[0].data.forEach((d, idx) => {
-    if (d.y === null) { //find null value in series
-      // adds plot band
-      _xAxis[0].addPlotBand({
-        from: idx -.5,  // point back
-        to: idx + .5,   // point after
-        color: 'url(#null-data-layer)', // this color represents the null value region
-      });
-    }
-  });
-
-  return _xAxis;
-};
-
-const plotNullDataLayerToAxis = (xAxis, series) => {
-  if (xAxis.length > 1) {
-    throw new Error('Null data layer can currently only be plotted to a single axis.')
-  }
-
-  const idxsWithNullValue = series.map(s => {
-    return s.data.map((d, idx) => {
-      if (d.y === null) {
-        return idx;
-      }
-    });
-  }).reduce((a,b) => {
-    // find an intersection between the arrays - common null vals in a series set
-    if (a.length) {
-      return [...a].filter(x => b.has(x));
-    }
-    return b;
-  }, []);
-
-  idxsWithNullValue.forEach((i, idx) => {
-    if (typeof i !== 'undefined') {
-      xAxis[0].addPlotBand({
-        from: i -.5,  // point back
-        to: i + .5,   // point after
-        color: 'url(#null-data-layer)', // this color represents the null value region
-      });
-    }
-  });
-
-  return xAxis;
-};
-
-
-
+import {
+  createCartesianCustomLegendData,
+  plotNullDataLayerToAxis
+} from './../utils/chartOptionsHelpers';
 
 
 /**
@@ -150,8 +96,7 @@ const withColumnChart = (ComposedComponent) => {
             // hence, called only on creation, not on updates
             load: function() {
 
-
-              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series);;
+              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series);
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 

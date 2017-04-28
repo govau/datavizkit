@@ -27,3 +27,36 @@ export const createPolarCustomLegendData = (series) => {
     }
   });
 };
+
+
+export const plotNullDataLayerToAxis = (xAxis, series) => {
+  if (xAxis.length > 1) {
+    throw new Error('Null data layer can currently only be plotted to a single axis.')
+  }
+
+  const idxsWithNullValue = series.map(s => {
+    return s.data.map((d, idx) => {
+      if (d.y === null) {
+        return idx;
+      }
+    });
+  }).reduce((a,b) => {
+    // find an intersection between the arrays - common null vals in a series set
+    if (a.length) {
+      return [...a].filter(x => b.has(x));
+    }
+    return b;
+  }, []);
+
+  idxsWithNullValue.forEach((i, idx) => {
+    if (typeof i !== 'undefined') {
+      xAxis[0].addPlotBand({
+        from: i -.5,  // point back
+        to: i + .5,   // point after
+        color: 'url(#null-data-layer)', // this color represents the null value region
+      });
+    }
+  });
+
+  return xAxis;
+};
