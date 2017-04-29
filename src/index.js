@@ -12,6 +12,7 @@ import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
 import DonutWidget from './components/donutWidget/donutWidget.js';
 import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
 import HeroWidget from './components/heroWidget/heroWidget.js';
+import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget.js'
 
 
 class App extends Component {
@@ -36,7 +37,11 @@ class App extends Component {
         }}>Toggle high contrast</button>
 
 
-        <LineWidget title='Number of page views'
+        <CountWithTrendWidget />
+
+
+
+        {/*<LineWidget title='Number of page views'
           units='number'
           type='column'
           dateLastUpdated='22 Feb 2016'
@@ -49,7 +54,7 @@ class App extends Component {
           singleSection={true}
           displayHighContrast={hcState} />
 
-        {/*<SparklineWidget chartConfig={{
+        <SparklineWidget chartConfig={{
           "xAxis":{
             "categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]
           },
@@ -64,10 +69,10 @@ class App extends Component {
         dateLastUpdated="2017-02-01T23:11:18.675Z"
         _singleCategory={false}
         _singleSection={true}
-        minimumValue="13" />*/}
+        minimumValue="13" />
 
 
-        {/*<StackedColumnWidget
+        <StackedColumnWidget
           chartConfig={{
             "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
             "series":[
@@ -85,9 +90,9 @@ class App extends Component {
           _singleSection={false}
           stackingType="normal"
           displayHighContrast={hcState}
-        />*/}
+        />
 
-        {/*<DonutWidget chartConfig={{
+        <DonutWidget chartConfig={{
           series:[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]
         }} title="Devices used"
           units="percentage"
@@ -96,9 +101,9 @@ class App extends Component {
           _singleCategory={true}
           _singleSection={false}
           minimumValue="30"
-          displayHighContrast={hcState} />*/}
+          displayHighContrast={hcState} />
 
-        {/*<DonutWidget chartConfig={{"series":[{
+        <DonutWidget chartConfig={{"series":[{
           name: "Jan",
           data: [
             {"name":"Girls","y":183},
@@ -112,9 +117,9 @@ class App extends Component {
           _singleCategory={true}
           _singleSection={false}
           minimumValue="30"
-          displayHighContrast={hcState} />*/}
+          displayHighContrast={hcState} />
 
-        {/*<DonutWidget chartConfig={{
+        <DonutWidget chartConfig={{
               series:[{name:"Jan",data:[{name:"Girls",y:183},{name:"Guys",y:30}]}]
             }}
                      title="People used"
@@ -124,7 +129,7 @@ class App extends Component {
             _singleCategory={true}
             _singleSection={false}
             minimumValue="30"
-            displayHighContrast={hcState} />*/}
+            displayHighContrast={hcState} />
 
 
         <ColumnWidget title='Number of page views'
@@ -169,7 +174,7 @@ class App extends Component {
                      }}
                      _singleCategory={true}
                      _singleSection={false}
-                   displayHighContrast={hcState} />
+                   displayHighContrast={hcState} />*/}
 
 
       </div>

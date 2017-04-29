@@ -6,27 +6,20 @@ Exports the library
 
  */
 
+export {default as ColumnWidget} from './components/columnWidget/columnWidget.js';
 
-import ColumnWidget from './components/columnWidget/columnWidget.js';
-export {ColumnWidget};
+export {default as LineWidget} from './components/lineWidget/lineWidget.js';
 
-import LineWidget from './components/lineWidget/lineWidget.js';
-export {LineWidget};
+export {default as SparklineWidget} from './components/sparklineWidget/sparklineWidget.js';
 
-import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
-export {SparklineWidget};
+export {default as DonutWidget} from './components/donutWidget/donutWidget.js';
 
-import DonutWidget from './components/donutWidget/donutWidget.js';
-export {DonutWidget};
+export {default as StackedColumnWidget} from './components/stackedColumnWidget/stackedColumnWidget.js';
 
-import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
-export {StackedColumnWidget};
+export {default as HeroWidget} from './components/heroWidget/heroWidget.js';
 
-import HeroWidget from './components/heroWidget/heroWidget.js';
-export {HeroWidget};
+export {HighcontrastPatterns} from './components/withHighcharts.js';
 
-import {HighcontrastPatterns} from './components/withHighcharts.js';
-export {HighcontrastPatterns};
+export {NullDataLayerPattern} from './utils/highcontrastPatterns';
 
-import {NullDataLayerPattern} from './utils/highcontrastPatterns';
-export {NullDataLayerPattern};
+export {default as CountWithTrendWidget} from './components/countWithTrendWidget/countWithTrendWidget';

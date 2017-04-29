@@ -1,4 +1,7 @@
 
+// todo - refactor classes in here to S-C
+
+
 import React from 'react';
 import styled from 'styled-components';
 
