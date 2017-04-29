@@ -51,7 +51,7 @@ const StyledHeader = styled.header`
 
 const StyledCountContainer = styled.div`
   border-bottom: 2px solid #cccccc;
-  padding: 8px 2px 14px;
+  // padding: 2px 2px 4px;
   min-height: 150px;
   display: table;
   width: 100%;
@@ -59,7 +59,7 @@ const StyledCountContainer = styled.div`
   .count-value {
     display:table-cell;
     vertical-align: middle;
-    font-size: 77px;
+    font-size: 70px;
     font-weight: 300;
     opacity: 0.9;
     
@@ -85,6 +85,9 @@ const StyledTrendContainer = styled.div`
   }
 
   .trend-value {
+    .fa {
+      color: #0075cd;
+    }
   }
   .trend-date {
   }
@@ -108,10 +111,6 @@ const CountWithTrendWidget = (props) => {
     trendDate,
   } = props;
 
-  // const  = 46;
-  // const units = '%';
-  // const  = '-2% ^';
-  // const  = 'since 30 Jun 2016';
 
   const CountValue = ({value, units}) => {
     if (!value) {
@@ -132,12 +131,15 @@ const CountWithTrendWidget = (props) => {
     if (!value) {
       return null;
     }
+
+    console.log(value)
     return (
       <span className="trend-value">
-        {value > 0 ?
+        {Number(value) > 0 ?
           <span>+{value} <i className="fa fa-arrow-up" /></span> :
-          <span>-{value} <i className="fa fa-arrow-down" /></span>
-        }
+          Number(value) < 0 ?
+            <span>{value} <i className="fa fa-arrow-down" /></span> :
+            <span>&nbsp;</span>}
       </span>
     )
   };
