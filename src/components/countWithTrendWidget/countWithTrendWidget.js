@@ -11,6 +11,7 @@ const StyledCount = styled.article`
 `;
 
 const StyledHeader = styled.header`
+  
   // background: ${props => props.yellow ? 'yellow' : 'red'};
   
   &:after {
@@ -44,15 +45,15 @@ const StyledHeader = styled.header`
   h1 {
   	font-size: 20px;
   	font-weight: 600;
-	  line-height: 1.26;
+	  line-height: 1;
+	  margin-bottom: 1rem;
 	  color: #000000;
   }
 `;
 
 const StyledCountContainer = styled.div`
   border-bottom: 2px solid #cccccc;
-  // padding: 2px 2px 4px;
-  min-height: 150px;
+  min-height: 130px;
   display: table;
   width: 100%;
   
@@ -139,7 +140,7 @@ const CountWithTrendWidget = (props) => {
           <span>+{value} <i className="fa fa-arrow-up" /></span> :
           Number(value) < 0 ?
             <span>{value} <i className="fa fa-arrow-down" /></span> :
-            <span>&nbsp;</span>}
+            <span>-&nbsp;</span>}
       </span>
     )
   };
