@@ -30,3 +30,6 @@ export {HighcontrastPatterns};
 
 import {NullDataLayerPattern} from './utils/highcontrastPatterns';
 export {NullDataLayerPattern};
+
+import {CountWithTrendWidget} from './components/countWithTrendWidget/countWithTrendWidget.js';
+export {CountWithTrendWidget};
