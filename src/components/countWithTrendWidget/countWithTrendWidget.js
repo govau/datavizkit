@@ -51,12 +51,21 @@ const StyledHeader = styled.header`
 
 const StyledCountContainer = styled.div`
   border-bottom: 2px solid #cccccc;
-  padding: 1em 2px;
+  padding: 8px 2px 14px;
+  min-height: 150px;
+  display: table;
+  width: 100%;
   
   .count-value {
+    display:table-cell;
+    vertical-align: middle;
     font-size: 77px;
     font-weight: 300;
     opacity: 0.9;
+    
+    &.no-data {
+      font-size: 40px;
+    }
   }
   .count-units {
     font-size: 32px;
@@ -90,34 +99,67 @@ const StyledTrendContainer = styled.div`
  */
 
 const CountWithTrendWidget = (props) => {
+  console.log(props)
 
-  const headerClass = 'orange';//title.toLowerCase();
+  const {
+    widget: {title, infoText, units},
+    value,
+    trendValue,
+    trendDate,
+  } = props;
 
-  const title = 'Digital Take up';
-  const infoText = null; //'info about dtu'; todo
-  const value = 46;
-  const units = '%';
-  const trendValue = '-2% ^';
-  const trendDate = 'since 30 Jun 2016';
+  // const  = 46;
+  // const units = '%';
+  // const  = '-2% ^';
+  // const  = 'since 30 Jun 2016';
+
+  const CountValue = ({value, units}) => {
+    if (!value) {
+      return <span className="count-value no-data">No data</span>
+    }
+    return (
+      <span className="count-value">
+        {!units && value}
+        {units === '$' ?
+          <span>{units && <span className="count-units">{units}</span>}{value}</span> :
+          <span>{value}{units && <span className="count-units">{units}</span>}</span>
+        }
+      </span>
+    )
+  };
+
+  const TrendValue = ({value}) => {
+    if (!value) {
+      return null;
+    }
+    return (
+      <span className="trend-value">
+        {value > 0 ?
+          <span>+{value} <i className="fa fa-arrow-up" /></span> :
+          <span>-{value} <i className="fa fa-arrow-down" /></span>
+        }
+      </span>
+    )
+  };
 
   return (
     <StyledCount className={`chart--count`} role="article">
-      <StyledHeader yellow {...headerClass} className={classnames({
+      <StyledHeader className={classnames({
         'yellow': title.toLowerCase() === 'user satisfaction',
         'green': title.toLowerCase() === 'cost per transaction',
-        'blue': title.toLowerCase() === 'digital take up',
+        'blue': title.toLowerCase() === 'digital take-up',
         'purple': title.toLowerCase() === 'completion rate',
       })}>
-        <h1>{title}</h1>{infoText && <Tooltip text={infoText}>?</Tooltip>}
+        <h1>{title} {infoText && <Tooltip text={infoText}>?</Tooltip>}</h1>
       </StyledHeader>
       <section>
         <StyledCountContainer>
-          <span className="count-value">{value}{units && <span className="count-units">{units}</span>}</span>
+          <CountValue value={value} units={units} />
         </StyledCountContainer>
-        <StyledTrendContainer>
-          <span className="trend-value">{trendValue}</span>
+        {value && <StyledTrendContainer>
+          <TrendValue value={trendValue} />
           <span className="trend-date">{trendDate}</span>
-        </StyledTrendContainer>
+        </StyledTrendContainer>}
       </section>
     </StyledCount>
   )
