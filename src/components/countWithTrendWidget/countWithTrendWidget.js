@@ -103,8 +103,6 @@ const StyledTrendContainer = styled.div`
  */
 
 const CountWithTrendWidget = (props) => {
-  console.log(props)
-
   const {
     widget: {title, infoText, units},
     value,
@@ -133,7 +131,6 @@ const CountWithTrendWidget = (props) => {
       return null;
     }
 
-    console.log(value)
     return (
       <span className="trend-value">
         {Number(value) > 0 ?
