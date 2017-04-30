@@ -6,4 +6,3 @@ export const breakpoints = {
   screenLg: '992px',
   screenXl: '1200px',
 };
-

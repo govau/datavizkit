@@ -5,5 +5,6 @@ module.exports = {
     "__DEV__": true
   },
   "rules": {
+    'react/jsx-pascal-case': 0
   }
 };
