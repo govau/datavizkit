@@ -8,37 +8,7 @@ import {breakpoints} from './../../utils/styleVariables';
 
 
 const StyledCount = styled.article`
-  margin-bottom: 1em;
-  border: 1px solid red;
-  
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 4px 2px -2px rgba(0,0,0,0.4);
-    
-      
-  @media (min-width: ${breakpoints.screenMd}) {
-    text-align: center;
-  }
-`;
-
-const Div_StyledContainerMobile = styled.div`
-  display: table;
-  width: 100%;
-
-  div {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 0 6px;
-  }
-  div:first-child {
-  }
-  div-second-child {
-  }
-`;
-
-const Span_styledTrendMobile = styled.span`
-  display: block;
-  margin-bottom: 8px;
+  text-align: center;
 `;
 
 const StyledHeader = styled.header`
@@ -49,14 +19,8 @@ const StyledHeader = styled.header`
     content: ' ';
     display: block;
     background: #ccc;
-    border-radius-bottom-right: 4px;
-    border-radius-bottom-left: 4px;
+    border-radius: 4px;
     height: 8px;
-    
-    @media (min-width: ${breakpoints.screenMd}) {
-      border-radius-top-right: 4px;
-      border-radius-top-left: 4px;
-    }
   }
   
   &.blue {
@@ -79,22 +43,14 @@ const StyledHeader = styled.header`
       background: #7066a5;
     }
   }
-  
   h1 {
-  	font-size: 18px;
+  	font-size: 20px;
   	font-weight: 600;
 	  line-height: 1;
+	  margin-bottom: 1rem;
 	  color: #000000;
-	  margin-bottom: 6px;
-  }
-  @media (min-width: ${breakpoints.screenMd}) {
-    h1 {
-      font-size: 20px;
-      margin-bottom: 1rem;
-    }
   }
 `;
-
 
 const StyledCountContainer = styled.div`
   border-bottom: 2px solid #cccccc;
@@ -136,25 +92,6 @@ const StyledTrendContainer = styled.div`
     }
   }
   .trend-date {
-  }
-`;
-
-const Div_styledCountContainerMobile = styled.div`
-  text-align: right; 
-  .count-value {
-    font-size: 36px;
-    font-weight: 300;
-    opacity: 0.9;
-
-    &.no-data {
-      font-size: 22px;
-    }
-  }
-  .count-units {
-    font-size: 20px;
-    font-weight: 600;
-    margin-left: 4px;
-    vertical-align: middle;
   }
 `;
 
@@ -206,28 +143,24 @@ const CountWithTrendWidget = (props) => {
   };
 
   return (
-    <StyledCount role="article">
-
+    <StyledCount className={`chart--count`} role="article">
       <StyledHeader className={classnames({
         'yellow': title.toLowerCase() === 'user satisfaction',
         'green': title.toLowerCase() === 'cost per transaction',
         'blue': title.toLowerCase() === 'digital take-up',
         'purple': title.toLowerCase() === 'completion rate',
       })}>
-        <Div_StyledContainerMobile>
-          <div>
-            <h1>{title}</h1>
-            <Span_styledTrendMobile>
-              <TrendValue value={trendValue} />
-              <span className="trend-date">{trendDate}</span>
-            </Span_styledTrendMobile>
-          </div>
-          <Div_styledCountContainerMobile>
-            <CountValue value={value} units={units} />
-          </Div_styledCountContainerMobile>
-        </Div_StyledContainerMobile>
+        <h1>{title} {infoText && <Tooltip text={infoText}>?</Tooltip>}</h1>
       </StyledHeader>
-
+      <section>
+        <StyledCountContainer>
+          <CountValue value={value} units={units} />
+        </StyledCountContainer>
+        {value && <StyledTrendContainer>
+          <TrendValue value={trendValue} />
+          <span className="trend-date">{trendDate}</span>
+        </StyledTrendContainer>}
+      </section>
     </StyledCount>
   )
 };
