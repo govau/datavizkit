@@ -46,7 +46,7 @@ export const TrendValue = ({value}) => {
 const CountWithTrendWidget = (props) => {
   const {viewport, ...rest} = props;
 
-  if (typeof viewport === 'undefined' || viewport === 'sm') {
+  if (typeof viewport === 'undefined' || viewport === 'sm' || viewport === 'md') {
     return <MobileComponent {...rest} />
   } else {
     return <DesktopComponent {...rest} />
