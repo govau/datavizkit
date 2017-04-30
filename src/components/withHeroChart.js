@@ -122,7 +122,11 @@ const withHeroChart = (ComposedComponent) => {
           useHTML: true
         },
         xAxis: {
-          crosshair: true,
+          crosshair: {
+            width: 40,
+            color: 'rgba(204,214,235,0.25)'
+          }
+
           // type: 'datetime', // todo - format x labels to datetime
           // Format 24 hour time to AM/PM
           // dateTimeLabelFormats: {
