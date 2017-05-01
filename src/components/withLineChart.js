@@ -37,8 +37,6 @@ const withLineChart = (ComposedComponent) => {
     componentWillUpdate(nextProps) {
       let partition = {};
 
-      console.log('componentWillUpdate')
-
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
         partition = {...this._transformPartitionedForHighContrast(true, this._chartConfig)};
       }
@@ -52,7 +50,6 @@ const withLineChart = (ComposedComponent) => {
     }
 
     componentWillUnmount() {
-      console.log('componentWillUnmount')
       this.props.destroyChart();
       this._chartEl = null;
       this._chartConfig = null;
@@ -123,7 +120,6 @@ const withLineChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: true, //false,
           shared: true,
           crosshairs: true,
         },

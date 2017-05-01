@@ -2,14 +2,27 @@
 import {valueFormats} from './../utils/displayFormats'
 
 
+const getValueForLegend = (y, units = '') => {
+  if (typeof y === 'undefined') {
+    return 'No data';
+  }
+  if (units.toLowerCase() === 'Money') {
+    return `${units}${y}`;
+  } else if (units.toLowerCase() === 'percentage') {
+    return `${units}${y}`;
+  } else
+    return y;
+};
+
 export const createCartesianCustomLegendData = (series, seriesDataIndex = null) => {
   // supplied index or default to last (latest data)
   const _i = seriesDataIndex || series[0].data.length - 1;
+
   return series.map(s => {
     const d = s.data[_i];
     return {
       key: s.name,
-      y: d.y || 'No data',
+      value: getValueForLegend(d.y, s.options.units),
       color: d.color,
     }
   }).reduce((a, b) => { // flatten
