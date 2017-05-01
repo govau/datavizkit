@@ -70,7 +70,7 @@ const withColumnChart = (ComposedComponent) => {
       this.props.destroyChart();
       this._chartEl = null;
       this._chartConfig = null;
-      this.highcontrastSeriesIteratee = null;
+      this._highcontrastSeriesIteratee = null;
     }
 
     createConfig() {
