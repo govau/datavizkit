@@ -47,27 +47,9 @@ const withHeroChart = (ComposedComponent) => {
         },
         legend: {
           enabled: true,
-          align: 'right',
-          verticalAlign: 'top',
-          layout: 'vertical',
-          x: 0,
-          y: 100,
-          itemMarginBottom: 15
-        },
-        responsive: {
-          rules: [{
-            condition: {
-              maxWidth: 500
-            },
-            chartOptions: {
-              legend: {
-                align: 'center',
-                verticalAlign: 'bottom',
-                layout: 'horizontal',
-                y: 0
-              }
-            }
-          }]
+          align: 'center',
+          verticalAlign: 'bottom',
+          layout: 'horizontal'
         },
         subtitle: {
           useHTML: true,
