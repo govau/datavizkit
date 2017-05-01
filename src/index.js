@@ -82,8 +82,8 @@ class App extends Component {
           },
           "series":[
             { "name":"Total opportunities",
-              "units": "money",
-              "data":[null,null,13,29,42,58,74]
+              "units": "percentage",
+              "data":[null,null,13,29,42,58,74, 23654723654]
             }
         ]
         }} title="Total opportunities"
