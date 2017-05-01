@@ -3,6 +3,7 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
+import isObject from 'lodash/isObject';
 import TrendLegend from './trendLegend.js';
 import {unitFormats, dateFormats} from './../utils/displayFormats';
 
@@ -79,6 +80,12 @@ const withSparklineChart = (ComposedComponent) => {
               if (this.series[0].data.length >= 2) {
                 broadcastSetState({'trendLegend': this.series[0].data});
               }
+
+              // "select" the last column
+              const lastCol = last(this.series[0].data);
+              if (lastCol) {
+                lastCol.select();
+              }
             },
           },
         },
@@ -101,15 +108,25 @@ const withSparklineChart = (ComposedComponent) => {
             animation: false,
           },
           series: {
+            stickyTracking: false,
+            enableMouseTracking: false,
             marker: {
-              enabled: false
+              enabled: false,
+              states: {
+                hover: {
+                  enabled: false,
+                },
+                select: {
+                  // enabled: false
+                }
+              }
             },
             states: {
               hover: {
                 enabled: false,
-                marker: {
-                  enabled: false,
-                }
+              //   marker: {
+              //     enabled: false,
+              //   }
               },
             },
           },
