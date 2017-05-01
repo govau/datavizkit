@@ -79,12 +79,19 @@ const withStackedColumnChart = (ComposedComponent) => {
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
+
+              // hoverLastColumn()
               // "hover" over the last stackedColumn
-              const lastCol = last(this.series[0].data);
-              if (lastCol) {
-                lastCol.onMouseOver && lastCol.onMouseOver();
-              }
+              this.series.forEach(s => {
+                return s.data.filter((d,idx,arr) => {
+                  return idx == arr.length - 1;
+                }).forEach(d => {
+                  d.setState('hover');
+                });
+              });
+
             },
+
 
             // fired when update is called with redraw
             redraw: function(e) {
@@ -112,7 +119,25 @@ const withStackedColumnChart = (ComposedComponent) => {
 
                 mouseOver: function() {
                   broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
+
+                  this.series.chart.series.forEach(s => {
+                    return s.data.filter((d, idx) => {
+                      return idx == this.index;
+                    }).forEach(d => {
+                      d.setState('hover');
+                    });
+                  });
                 },
+
+                mouseOut: function() {
+                  this.series.chart.series.forEach(s => {
+                    return s.data.filter((d, idx) => {
+                      return idx == this.index;
+                    }).forEach(d => {
+                      d.setState('');
+                    });
+                  });
+                }
 
               }
             },
@@ -128,6 +153,7 @@ const withStackedColumnChart = (ComposedComponent) => {
           },
         },
         tooltip: {
+          // shared: true,
           enabled: false,
         },
         yAxis: {
