@@ -100,13 +100,17 @@ const withLineChart = (ComposedComponent) => {
           text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
         },
         plotOptions: {
-          line: {},
-          series: { 
+          line: {
+            marker: {
+              radius: 2,
+            }
+          },
+          series: {
             lineWidth: 4,
             animation: false,
             point: {
               events: {
-                mouseOver: function() {}
+                // mouseOver: function() {}
               }
             },
             states: {

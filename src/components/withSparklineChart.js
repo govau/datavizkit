@@ -3,8 +3,10 @@ import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
+import isObject from 'lodash/isObject';
 import TrendLegend from './trendLegend.js';
 import {unitFormats, dateFormats} from './../utils/displayFormats';
+
 
 // render a sparkline chart and manage sparkline chart stuff
 const withSparklineChart = (ComposedComponent) => {
@@ -42,11 +44,13 @@ const withSparklineChart = (ComposedComponent) => {
 
       const broadcastSetState = this.setState.bind(this);
 
+
       const baseConfig = {
         chart: {
           type: 'spline',
           margin: [150, 0, 0, 0],
           events: {
+
             load: function() {  // equivalent to constructor callback
               var latestValue = last(this.series[0].data).y;
               var unitFormat = unitFormats[this.series[0].options.units];
@@ -76,6 +80,12 @@ const withSparklineChart = (ComposedComponent) => {
               if (this.series[0].data.length >= 2) {
                 broadcastSetState({'trendLegend': this.series[0].data});
               }
+
+              // "select" the last column
+              const lastCol = last(this.series[0].data);
+              if (lastCol) {
+                lastCol.select();
+              }
             },
           },
         },
@@ -95,26 +105,32 @@ const withSparklineChart = (ComposedComponent) => {
         },
         plotOptions: {
           line: {
-
             animation: false,
-            allowPointSelect: false,
-            stickyTracking: true
           },
           series: { 
             lineWidth: 4,
             animation: false,
+            stickyTracking: false,
+            enableMouseTracking: false,
             marker: {
-              enabled: false
+              enabled: false,
+              states: {
+                hover: {
+                  enabled: false,
+                },
+                select: {
+                  // enabled: false
+                }
+              }
             },
             states: {
-              select: { // required because can be selected programatically
-                enabled: false
-              },
               hover: {
-                brightness: -.2,
+                enabled: false,
+              //   marker: {
+              //     enabled: false,
+              //   }
               },
             },
-            allowPointSelect: false,
           },
         },
         tooltip: {
