@@ -17,7 +17,7 @@ const Legend = ({data, className}) => {
                 <g>{d.color && <rect x="0" y="0" width="12" height="12" fill={d.color} visibility="visible" rx="6" ry="6"></rect>}</g>
               </svg>{d.key}
             </div>
-            <div className="DVK-value">{d.y}</div>
+            <div className="DVK-value">{d.value}</div>
           </div>
         )
       })}
