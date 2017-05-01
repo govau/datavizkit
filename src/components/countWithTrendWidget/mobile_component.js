@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import styled from 'styled-components';
 
 import {CountValue, TrendValue} from './countWithTrendWidget';
+import {dateFormats} from './../../utils/displayFormats';
 
 
 /**
@@ -33,7 +34,7 @@ const CountWithTrendWidget = (props) => {
             <h1>{title}</h1>
             <Span_styledTrend>
               <TrendValue value={trendValue} />
-              <span className="trend-date">{trendDate}</span>
+              <span className="trend-date">since {dateFormats.monthYear(trendDate)}</span>
             </Span_styledTrend>
           </div>
 
