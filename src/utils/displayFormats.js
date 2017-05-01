@@ -21,5 +21,5 @@ export const unitFormats = {
 
 export const dateFormats = {
   dateTime: val => new Date(val),
-  dayMonthYear: val => Highcharts.dateFormat('%e %h %Y', new Date(val)),
+  dayMonthYear: val => Highcharts.dateFormat('%e %b %Y', new Date(val)),
 };
