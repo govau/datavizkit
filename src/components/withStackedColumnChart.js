@@ -75,7 +75,7 @@ const withStackedColumnChart = (ComposedComponent) => {
 
             load: function() {  // equivalent to constructor callback
 
-              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series);
+              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 

@@ -94,7 +94,7 @@ const withColumnChart = (ComposedComponent) => {
             // hence, called only on creation, not on updates
             load: function() {
 
-              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series);
+              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
@@ -120,6 +120,15 @@ const withColumnChart = (ComposedComponent) => {
           useHTML: true,
           text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
         },
+        // xAxis: {
+        //   plotBands: {
+        //     events: {
+        //       mouseover: function(e) {
+        //         debugger;
+        //       }
+        //     },
+        //   },
+        // },
         plotOptions: {
           column: {},
           series: {
@@ -127,12 +136,13 @@ const withColumnChart = (ComposedComponent) => {
             point: {
               events: {
 
-                mouseOver: function() {
+                mouseOver: function(e) {
                   broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
-                }
+                },
 
               }
             },
+
             states: {
               hover: {
                 brightness: -.2,
@@ -145,7 +155,7 @@ const withColumnChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: false,
+          enabled: true,
         },
         yAxis: {
           title: {
@@ -162,7 +172,10 @@ const withColumnChart = (ComposedComponent) => {
           min: minimumValue || 0,
         },
         xAxis: chartConfig.xAxis,
-        series: chartConfig.series,
+        series: chartConfig.series.map(d => {
+          d.stickyTracking = false;
+          return d;
+        }),
       };
 
       const config = merge({}, baseConfig, instanceConfig);

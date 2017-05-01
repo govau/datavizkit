@@ -14,7 +14,12 @@ const getValueForLegend = (y, units = '') => {
     return y;
 };
 
-export const createCartesianCustomLegendData = (series, seriesDataIndex = null) => {
+/**
+ * @param series
+ * @param seriesDataIndex {Null|Undefined|Number}
+ * @returns {*}
+ */
+export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
   // supplied index or default to last (latest data)
   const _i = seriesDataIndex || series[0].data.length - 1;
 
@@ -22,7 +27,8 @@ export const createCartesianCustomLegendData = (series, seriesDataIndex = null) 
     const d = s.data[_i];
     return {
       key: s.name,
-      value: getValueForLegend(d.y, s.options.units),
+      // if _i is null, it's coming from a plot band
+      value: seriesDataIndex === null ? 'No data' : getValueForLegend(d.y, s.options.units),
       color: d.color,
     }
   }).reduce((a, b) => { // flatten
@@ -42,7 +48,7 @@ export const createPolarCustomLegendData = (series) => {
 };
 
 
-export const plotNullDataLayerToAxis = (xAxis, series) => {
+export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
   if (xAxis.length > 1) {
     throw new Error('Null data layer can currently only be plotted to a single axis.')
   }
@@ -69,6 +75,12 @@ export const plotNullDataLayerToAxis = (xAxis, series) => {
         from: i -.5,  // point back
         to: i + .5,   // point after
         color: 'url(#null-data-layer)', // this color represents the null value region
+        events: {
+          mouseover: function(e) {
+            broadcastSetState &&
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, null)});
+          },
+        }
       });
     }
   });
