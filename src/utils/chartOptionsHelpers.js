@@ -25,11 +25,13 @@ export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
 
   return series.map(s => {
     const d = s.data[_i];
+
     return {
       key: s.name,
       // if _i is null, it's coming from a plot band
       value: seriesDataIndex === null ? 'No data' : getValueForLegend(d.y, s.options.units),
       color: d.color,
+      category: d.category,
     }
   }).reduce((a, b) => { // flatten
     return [...a, b];
@@ -43,6 +45,7 @@ export const createPolarCustomLegendData = (series) => {
       key: d.name,
       y: d.percentage ? valueFormats.percentage(d.percentage) : 'No data',
       color: d.color,
+      category: d.category,
     }
   });
 };
