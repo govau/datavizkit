@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import Tooltip from './../tooltip';
 import {CountValue, TrendValue} from './countWithTrendWidget';
+import {dateFormats} from './../../utils/displayFormats';
 
 
 /**
@@ -35,7 +36,7 @@ const CountWithTrendWidget = (props) => {
         </StyledCountContainer>
         {value && <StyledTrendContainer>
           <TrendValue value={trendValue} />
-          <span className="trend-date">{trendDate}</span>
+          <span className="trend-date">since {dateFormats.monthYear(trendDate)}</span>
         </StyledTrendContainer>}
       </section>
     </StyledCount>
