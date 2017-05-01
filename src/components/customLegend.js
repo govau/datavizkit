@@ -9,6 +9,9 @@ import styled from 'styled-components';
 const Legend = ({data, className}) => {
   return (
     <div className={className}>
+      <div className="DVK-row">
+        {data[0].category}
+      </div>
       {data.map((d, idx) => {
         return (
           <div key={idx} className="DVK-row">

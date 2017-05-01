@@ -94,7 +94,7 @@ const withColumnChart = (ComposedComponent) => {
             // hence, called only on creation, not on updates
             load: function() {
 
-              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series);
+              this.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
@@ -127,12 +127,13 @@ const withColumnChart = (ComposedComponent) => {
             point: {
               events: {
 
-                mouseOver: function() {
+                mouseOver: function(e) {
                   broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
-                }
+                },
 
               }
             },
+
             states: {
               hover: {
                 brightness: -.2,
@@ -151,7 +152,8 @@ const withColumnChart = (ComposedComponent) => {
           title: {
             text: null
           },
-        }
+        },
+
       };
 
       const instanceConfig = {

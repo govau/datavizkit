@@ -97,7 +97,7 @@ const withHeroChart = (ComposedComponent) => {
             }
 
             var labelHtml = `<span style="color:${color}; font-size: 1.5em; text-decoration: line-through;">&nbsp;&#${symbol};&nbsp;</span>`;
-            var valueHtml = `<span style="float:right;">${value}</span>`
+            var valueHtml = `<span style="float:right;">${value}</span>`;
 
             return `<div style="width:100px;">${labelHtml}${valueHtml}</span>`;
           },
@@ -129,13 +129,13 @@ const withHeroChart = (ComposedComponent) => {
           renderTo: this._chartEl,
         },
         yAxis: chartConfig.yAxis,
-        xAxis: merge({}, omit(chartConfig.xAxis, 'categories'), {
+        xAxis: {
           labels: {
-            formatter: function() {
+            formatter: function () {
               return chartConfig.xAxis.categories[this.value];
             }
           }
-        }),
+        },
         series: chartConfig.series
       };
 
