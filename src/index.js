@@ -63,7 +63,7 @@ class App extends Component {
 
 
 
-        {/*<LineWidget title='Number of page views'
+        <LineWidget title='Number of page views'
           units='number'
           type='column'
           dateLastUpdated='22 Feb 2016'
@@ -196,7 +196,7 @@ class App extends Component {
                      }}
                      _singleCategory={true}
                      _singleSection={false}
-                   displayHighContrast={hcState} />*/}
+                   displayHighContrast={hcState} />
 
 
       </div>
