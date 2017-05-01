@@ -51,17 +51,6 @@ const withHeroChart = (ComposedComponent) => {
           verticalAlign: 'bottom',
           layout: 'horizontal'
         },
-        responsive: {
-          rules: [{
-            condition: {
-              maxWidth: 500
-            },
-            chartOptions: {
-              legend: {
-              }
-            }
-          }]
-        },
         subtitle: {
           useHTML: true,
           text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
