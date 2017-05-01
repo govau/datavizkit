@@ -27,13 +27,13 @@ export const TrendValue = ({value}) => {
     return null;
   }
   return (
-    <span className="trend-value">
+    <strong className="trend-value">
         {Number(value) > 0 ?
           <span>+{value} <i className="fa fa-arrow-up" /></span> :
           Number(value) < 0 ?
             <span>{value} <i className="fa fa-arrow-down" /></span> :
-            <span>-&nbsp;</span>}
-      </span>
+            <span>Unchanged <i className="fa fa-minus" /></span>}
+      </strong>
   )
 };
 
