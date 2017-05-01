@@ -101,7 +101,8 @@ const withLineChart = (ComposedComponent) => {
         },
         plotOptions: {
           line: {},
-          series: { // todo
+          series: { 
+            lineWidth: 4,
             animation: false,
             point: {
               events: {
