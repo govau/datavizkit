@@ -107,7 +107,9 @@ const withSparklineChart = (ComposedComponent) => {
           line: {
             animation: false,
           },
-          series: {
+          series: { 
+            lineWidth: 4,
+            animation: false,
             stickyTracking: false,
             enableMouseTracking: false,
             marker: {

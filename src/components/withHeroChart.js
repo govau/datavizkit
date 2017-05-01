@@ -57,7 +57,8 @@ const withHeroChart = (ComposedComponent) => {
         },
         plotOptions: {
           line: {},
-          series: { // todo
+          series: { // todo 
+            lineWidth: 4,
             animation: false,
             marker: {
               enabled: false, // Can't figure out a way to hide markers on lines yet show on legend :(
