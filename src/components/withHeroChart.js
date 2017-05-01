@@ -140,9 +140,6 @@ const withHeroChart = (ComposedComponent) => {
 
       const config = merge({}, baseConfig, instanceConfig);
 
-      console.log(config)
-
-
       return this._transformForHighContrast(displayHighContrast, config);
     }
 

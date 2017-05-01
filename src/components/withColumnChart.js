@@ -120,15 +120,6 @@ const withColumnChart = (ComposedComponent) => {
           useHTML: true,
           text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
         },
-        // xAxis: {
-        //   plotBands: {
-        //     events: {
-        //       mouseover: function(e) {
-        //         debugger;
-        //       }
-        //     },
-        //   },
-        // },
         plotOptions: {
           column: {},
           series: {
@@ -155,13 +146,14 @@ const withColumnChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: true,
+          enabled: false,
         },
         yAxis: {
           title: {
             text: null
           },
-        }
+        },
+
       };
 
       const instanceConfig = {
@@ -172,10 +164,7 @@ const withColumnChart = (ComposedComponent) => {
           min: minimumValue || 0,
         },
         xAxis: chartConfig.xAxis,
-        series: chartConfig.series.map(d => {
-          d.stickyTracking = false;
-          return d;
-        }),
+        series: chartConfig.series,
       };
 
       const config = merge({}, baseConfig, instanceConfig);
