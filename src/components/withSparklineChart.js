@@ -6,6 +6,7 @@ import get from 'lodash/get';
 import TrendLegend from './trendLegend.js';
 import {unitFormats, dateFormats} from './../utils/displayFormats';
 
+
 // render a sparkline chart and manage sparkline chart stuff
 const withSparklineChart = (ComposedComponent) => {
 
@@ -42,11 +43,13 @@ const withSparklineChart = (ComposedComponent) => {
 
       const broadcastSetState = this.setState.bind(this);
 
+
       const baseConfig = {
         chart: {
           type: 'spline',
           margin: [150, 0, 0, 0],
           events: {
+
             load: function() {  // equivalent to constructor callback
               var latestValue = last(this.series[0].data).y;
               var unitFormat = unitFormats[this.series[0].options.units];
@@ -95,25 +98,20 @@ const withSparklineChart = (ComposedComponent) => {
         },
         plotOptions: {
           line: {
-
             animation: false,
-            allowPointSelect: false,
-            stickyTracking: true
           },
           series: {
-            animation: false,
             marker: {
               enabled: false
             },
             states: {
-              select: { // required because can be selected programatically
-                enabled: false
-              },
               hover: {
-                brightness: -.2,
+                enabled: false,
+                marker: {
+                  enabled: false,
+                }
               },
             },
-            allowPointSelect: false,
           },
         },
         tooltip: {

@@ -60,6 +60,11 @@ const TrendLegend = ({data, className}) => {
 const StyledTrendLegend = styled(TrendLegend)`
   width: 100%;
   text-align:center;
+  
+  .fa {
+    color: #0075cd;
+    margin-right: 4px;
+  }
 `;
 
 export default StyledTrendLegend;
