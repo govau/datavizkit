@@ -37,7 +37,6 @@ class App extends Component {
         }}>Toggle high contrast</button>
 
 
-
         <div style={{marginBottom: '1em'}}>
           <CountWithTrendWidget widget={{"title": "User satisfaction", "infoText": "Overall satisfaction score includes all ratings weighted from 100% for very satisfied, to 0% for very dissatisfied", "units": "%"}}
                                 idxInWidgets="0"

@@ -1,0 +1,73 @@
+
+.countWithTrendWidget {
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.countWithTrendWidget .DVK-cwt__tooltip-container {
+  display: block;
+  padding: 4px 8px;
+  text-align: right;
+}
+
+.countWithTrendWidget .DVK-cwt__header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 8px;
+  margin-bottom: 1rem;
+  color: #000000;
+}
+
+.countWithTrendWidget .DVK-cwt__header:after {
+  content: ' ';
+  display: block;
+  background: #ccc;
+  height: 8px;
+}
+
+.countWithTrendWidget .DVK-cwt__header.blue:after {
+  background: #4892c0;
+}
+
+.countWithTrendWidget .DVK-cwt__header.green:after {
+  background: #75a370;
+}
+
+.countWithTrendWidget .DVK-cwt__header.yellow:after {
+  background: #f2b038;
+}
+
+.countWithTrendWidget .DVK-cwt__header.purple:after {
+  background: #7066a5;
+}
+
+
+.countWithTrendWidget .DVK-cwt__count-container .count-value {
+  font-size: 70px;
+  font-weight: 300;
+  opacity: 0.9;
+}
+.countWithTrendWidget .DVK-cwt__count-container .count-value.no-data {
+  font-size: 40px;
+}
+.countWithTrendWidget .DVK-cwt__count-container .count-units {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+
+.countWithTrendWidget .DVK-cwt__trend-container {
+  padding: 1em 2px;
+}
+
+.countWithTrendWidget .DVK-cwt__trend-container .trend-value,
+.countWithTrendWidget .DVK-cwt__trend-container .trend-date{
+  display: block;
+}
+
+.countWithTrendWidget .DVK-cwt__trend-container .trend-value .fa {
+  color: #0075cd;
+}
