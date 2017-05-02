@@ -1,6 +1,5 @@
 
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
