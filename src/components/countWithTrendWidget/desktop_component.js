@@ -21,38 +21,49 @@ const CountWithTrendWidget = (props) => {
   } = props;
 
   return (
-    <StyledCount className={`chart--count`} role="article">
-      <StyledHeader className={classnames({
+    <Article_root role="article">
+      <Span_tooltipContainer>{infoText && <Tooltip text={infoText} iconOnly={false} />}</Span_tooltipContainer>
+
+      <Header_styled className={classnames({
         'yellow': title.toLowerCase() === 'user satisfaction',
         'green': title.toLowerCase() === 'cost per transaction',
         'blue': title.toLowerCase() === 'digital take-up',
         'purple': title.toLowerCase() === 'completion rate',
       })}>
-        <h1>{title} {infoText && <Tooltip text={infoText} />}</h1>
-      </StyledHeader>
+        <h1>{title}</h1>
+      </Header_styled>
       <section>
-        <StyledCountContainer>
+        <Div_countContainer>
           <CountValue value={value} units={units} />
-        </StyledCountContainer>
-        {value && <StyledTrendContainer>
+        </Div_countContainer>
+        {value && <Div_trendContainer>
           <TrendValue value={trendValue} />
           <span className="trend-date">since {dateFormats.monthYear(trendDate)}</span>
-        </StyledTrendContainer>}
+        </Div_trendContainer>}
       </section>
-    </StyledCount>
+
+    </Article_root>
   )
 };
 
-const StyledCount = styled.article`
+const Article_root = styled.article`
+	border-radius: 4px;
+	background-color: #ffffff;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
 `;
 
-const StyledHeader = styled.header`
+const Span_tooltipContainer = styled.span`
+  display: block;
+  padding: 4px 8px;
+  text-align: right;
+`;
+
+const Header_styled = styled.header`
   &:after {
     content: ' ';
     display: block;
     background: #ccc;
-    border-radius: 4px;
     height: 8px;
   }
   
@@ -80,24 +91,35 @@ const StyledHeader = styled.header`
   	font-size: 20px;
   	font-weight: 600;
 	  line-height: 1;
+	  margin-top: 8px;
 	  margin-bottom: 1rem;
 	  color: #000000;
   }
 `;
 
-const StyledCountContainer = styled.div`
-  border-bottom: 2px solid #cccccc;
-  min-height: 130px;
-  display: table;
-  width: 100%;
+const Div_countContainer = styled.div`
+  border: 1px solid red;
+
+  padding: 2px 0 8px;
+  // border-bottom: 2px solid #cccccc;
+  // min-height: 120px;
+  //
+  // .countValue-component {
+  //   display: table;
+  //   width: 100%;
+  // }
+  //
+  // .count-value,
+  // .count-units {
+  //   display:table-cell;
+  //   vertical-align: middle;
+  // }
   
   .count-value {
-    display:table-cell;
-    vertical-align: middle;
     font-size: 70px;
     font-weight: 300;
     opacity: 0.9;
-    
+
     &.no-data {
       font-size: 40px;
     }
@@ -105,12 +127,10 @@ const StyledCountContainer = styled.div`
   .count-units {
     font-size: 32px;
     font-weight: 600;
-    vertical-align: middle;
-    margin-left: 4px;
   }
 `;
 
-const StyledTrendContainer = styled.div`
+const Div_trendContainer = styled.div`
   padding: 1em 2px;
 
   .trend-value,

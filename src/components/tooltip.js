@@ -12,7 +12,7 @@ const TooltipComponent = ({placement = 'bottom', text, iconOnly = false}) => {
   return (
     <OverlayTrigger placement={placement} overlay={<Tooltip trigger="click" delayHide="900000">{text}</Tooltip>}>
       <Span_styledText className="overlay-trigger" tabIndex="0">
-        <span>{iconOnly ? '' : 'About this chart '}<i className="fa fa-question-circle" /></span>}
+        <span>{iconOnly ? '' : 'About this chart '}<i className="fa fa-question-circle" /></span>
       </Span_styledText>
     </OverlayTrigger>
   )

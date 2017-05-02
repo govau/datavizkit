@@ -9,17 +9,46 @@ import DesktopComponent from './desktop_component';
 
 export const CountValue = ({value, units}) => {
   if (!value) {
-    return <span className="count-value no-data">No data</span>
+    return (
+      <div className='countValue-component'>
+        <div style={{display: 'block', textAlign:'center'}}>
+          <span className="count-value no-data">No data</span>
+        </div>
+      </div>
+    )
   }
-  return (
-    <span className="count-value">
-        {!units && value}
-      {units === '$' ?
-        <span>{units && <span className="count-units">{units}</span>}{value}</span> :
-        <span>{value}{units && <span className="count-units">{units}</span>}</span>
-      }
-      </span>
-  )
+
+  if (units === '$') {
+    return (
+      <div className='countValue-component'>
+        <div style={{width: '54%', display: 'inline-block', textAlign:'right'}}>
+          <span className="count-units" style={{paddingRight: '4px'}}>{units}</span>
+        </div>
+        <div style={{width: '46%', display: 'inline-block', textAlign:'left'}}>
+          <span className="count-value">{value}</span>
+        </div>
+      </div>
+    )
+  } else if (units === '%') {
+    return (
+      <div className='countValue-component' style={{display:'table', width: '100%'}}>
+        <div style={{width: '54%', display: 'table-cell', textAlign:'right', verticalAlign:'middle'}}>
+          <span className="count-value">{value}</span>
+        </div>
+        <div style={{width: '46%', display: 'table-cell', textAlign:'left', verticalAlign:'middle'}}>
+          <span className="count-units" style={{paddingLeft: '4px'}}>{units}</span>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className='countValue-component'>
+        <div style={{display: 'block', textAlign:'center'}}>
+          <span className="count-value">{value}</span>
+        </div>
+      </div>
+    )
+  }
 };
 
 export const TrendValue = ({value}) => {
@@ -29,7 +58,7 @@ export const TrendValue = ({value}) => {
   return (
     <strong className="trend-value">
         {Number(value) > 0 ?
-          <span>+{value} <i className="fa fa-arrow-up" /></span> :
+          <span>{value} <i className="fa fa-arrow-up" /></span> :
           Number(value) < 0 ?
             <span>{value} <i className="fa fa-arrow-down" /></span> :
             <span>Unchanged <i className="fa fa-minus" /></span>}
@@ -46,11 +75,11 @@ export const TrendValue = ({value}) => {
 const CountWithTrendWidget = (props) => {
   const {viewport, ...rest} = props;
 
-  if (typeof viewport === 'undefined' || viewport === 'sm' || viewport === 'md') {
-    return <MobileComponent {...rest} />
-  } else {
+  // if (typeof viewport === 'undefined' || viewport === 'sm' || viewport === 'md') {
+    {/*return <MobileComponent {...rest} />*/}
+  // } else {
     return <DesktopComponent {...rest} />
-  }
+  // }
 };
 
 if (__DEV__) {
