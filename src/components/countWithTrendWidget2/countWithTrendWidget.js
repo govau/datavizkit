@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import MobileComponent from './mobile_component';
+import MobileComponent from './mobile_component';
 import DesktopComponent from './desktop_component';
 
 import sheet from './styles.css';
@@ -32,22 +32,22 @@ export const CountValue = ({value, units}) => {
     )
   } else if (units === '%') {
     return (
-      <div className={sheet.countValue}>
+      <Div_root>
         <div className={sheet.layoutSpanLeftValue}>
           <span className="count-value">{value}</span>
         </div>
         <div className={sheet.layoutSpanRightSuffix}>
           <span className="count-units" style={{paddingLeft: '4px'}}>{units}</span>
         </div>
-      </div>
+      </Div_root>
     )
   } else {
     return (
-      <div className={sheet.countValue}>
+      <Div_root>
         <div className={sheet.layoutSpanWhole}>
           <span className="count-value">{value}</span>
         </div>
-      </div>
+      </Div_root>
     )
   }
 };
