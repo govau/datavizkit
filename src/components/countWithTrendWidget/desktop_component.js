@@ -28,7 +28,7 @@ const CountWithTrendWidget = (props) => {
         'blue': title.toLowerCase() === 'digital take-up',
         'purple': title.toLowerCase() === 'completion rate',
       })}>
-        <h1>{title} {infoText && <Tooltip text={infoText}>?</Tooltip>}</h1>
+        <h1>{title} {infoText && <Tooltip text={infoText} />}</h1>
       </StyledHeader>
       <section>
         <StyledCountContainer>

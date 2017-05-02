@@ -1,6 +1,7 @@
 
 import React from 'react';
 import {compose} from 'recompose';
+import styled from 'styled-components';
 
 import withHighcharts from './../withHighcharts';
 import withLineChart from './../withLineChart';
@@ -12,15 +13,15 @@ import Tooltip from './../tooltip';
 const LineWidget = ({infoText, children}) => {
   return (
     <article className="chart--line" role="article">
-      <header>
-        {infoText && <Tooltip text={infoText}>
-          What is this?
-        </Tooltip>}
-      </header>
+      {infoText && <Div_styledInfoTextContainer><Tooltip text={infoText} /></Div_styledInfoTextContainer>}
       <section>{children}</section>
     </article>
   )
 };
+
+const Div_styledInfoTextContainer = styled.div`
+  text-align: right;
+`;
 
 const enhance = compose(
   withHighcharts,
