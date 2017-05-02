@@ -79,19 +79,16 @@ const withStackedColumnChart = (ComposedComponent) => {
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
-
-              // hoverLastColumn()
-              // "hover" over the last stackedColumn
+              // todo - extract to setHighchartsSeriesDataState
               this.series.forEach(s => {
-                return s.data.filter((d,idx,arr) => {
+                s.data.filter((d,idx,arr) => {
                   return idx == arr.length - 1;
-                }).forEach(d => {
+                }).map(d => {
                   d.setState('hover');
                 });
               });
 
             },
-
 
             // fired when update is called with redraw
             redraw: function(e) {
@@ -120,20 +117,22 @@ const withStackedColumnChart = (ComposedComponent) => {
                 mouseOver: function() {
                   broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
 
+                  // todo - extract to setHighchartsSeriesDataState
                   this.series.chart.series.forEach(s => {
-                    return s.data.filter((d, idx) => {
-                      return idx == this.index;
-                    }).forEach(d => {
+                    s.data.filter((d,idx) => {
+                      return this.index === idx;
+                    }).map(d => {
                       d.setState('hover');
                     });
                   });
                 },
 
                 mouseOut: function() {
+                  // todo - extract to setHighchartsSeriesDataState
                   this.series.chart.series.forEach(s => {
-                    return s.data.filter((d, idx) => {
-                      return idx == this.index;
-                    }).forEach(d => {
+                    s.data.filter((d,idx) => {
+                      return this.index === idx;
+                    }).map(d => {
                       d.setState('');
                     });
                   });
