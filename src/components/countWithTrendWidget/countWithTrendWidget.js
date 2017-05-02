@@ -1,6 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 // import MobileComponent from './mobile_component';
 import DesktopComponent from './desktop_component';
@@ -13,7 +14,10 @@ export const CountValue = ({value, units}) => {
     return (
       <div className={sheet.countValue}>
         <div className={sheet.layoutSpanWhole}>
-          <span className="count-value no-data">No data</span>
+          <span className={classnames({
+            [sheet.countValue]: true,
+            [sheet.countNodata]: true,
+          })}>No data</span>
         </div>
       </div>
     )
@@ -26,7 +30,7 @@ export const CountValue = ({value, units}) => {
           <span className={sheet.countUnits} style={{paddingRight: '4px'}}>{units}</span>
         </div>
         <div className={sheet.layoutSpanRightValue}>
-          <span className="count-value">{value}</span>
+          <span className={sheet.countValue}>{value}</span>
         </div>
       </div>
     )
@@ -34,10 +38,10 @@ export const CountValue = ({value, units}) => {
     return (
       <div className={sheet.countValue}>
         <div className={sheet.layoutSpanLeftValue}>
-          <span className="count-value">{value}</span>
+          <span className={sheet.countValue}>{value}</span>
         </div>
         <div className={sheet.layoutSpanRightSuffix}>
-          <span className="count-units" style={{paddingLeft: '4px'}}>{units}</span>
+          <span className={sheet.countUnits} style={{paddingLeft: '4px'}}>{units}</span>
         </div>
       </div>
     )
@@ -45,7 +49,7 @@ export const CountValue = ({value, units}) => {
     return (
       <div className={sheet.countValue}>
         <div className={sheet.layoutSpanWhole}>
-          <span className="count-value">{value}</span>
+          <span className={sheet.countValue}>{value}</span>
         </div>
       </div>
     )
@@ -59,7 +63,7 @@ export const TrendValue = ({value}) => {
     return null;
   }
   return (
-    <strong className="trend-value">
+    <strong className="trendValue">
         {Number(value) > 0 ?
           <span>{value} <i className="fa fa-arrow-up" /></span> :
           Number(value) < 0 ?

@@ -62,32 +62,19 @@
 
 
 
-.countContainer .count-value {
+.countValue {
   font-size: 70px;
   font-weight: 300;
   opacity: 0.9;
 }
-.countContainer .count-value.no-data {
+.countNoData {
   font-size: 40px;
 }
-.countContainer .count-units {
+.countUnits {
   font-size: 32px;
   font-weight: 600;
 }
 
-
-.countTrend {
-  padding: 1em 2px;
-}
-
-.countTrend .trend-value,
-.countTrend .trend-date {
-  display: block;
-}
-
-.countTrend .trend-value .fa {
-  color: #0075cd;
-}
 
 
 
@@ -131,4 +118,22 @@
   display: table-cell;
   vertical-align: middle;
   text-align: left;
+}
+
+
+
+
+
+
+.countTrend {
+  padding: 1em 2px;
+}
+
+.trendValue,
+.trendDate {
+  display: block;
+}
+
+.trendValue .fa {
+  color: #0075cd;
 }
