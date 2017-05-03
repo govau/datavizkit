@@ -65,8 +65,11 @@ const TrendValue = ({value, date}) => {
  *
  */
 const MobileCountWithTrendWidget = (props) => {
+
   const {
-    widget: {title, units},
+    title,
+    units,
+    infoText,
     value,
     trendValue,
     trendDate,

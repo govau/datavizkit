@@ -79,8 +79,12 @@ const TrendValue = ({value, date}) => {
  *
  */
 const DesktopCountWithTrendWidget = (props) => {
+
   const {
-    widget: {title, infoText, units, color},
+    title,
+    infoText,
+    units,
+    color,
     value,
     trendValue,
     trendDate,
