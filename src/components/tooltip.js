@@ -10,7 +10,7 @@ import styled from 'styled-components';
 
 const TooltipComponent = ({placement = 'bottom', text, iconOnly = false}) => {
   return (
-    <OverlayTrigger placement={placement} overlay={<Tooltip trigger="click" delayHide="900000">{text}</Tooltip>}>
+    <OverlayTrigger placement={placement} overlay={<Tooltip delayHide="900000">{text}</Tooltip>}>
       <Span_styledText className="overlay-trigger" tabIndex="0">
         <span>{iconOnly ? '' : 'About this chart '}<i className="fa fa-question-circle" style={{fontSize:'20px'}} /></span>
       </Span_styledText>
