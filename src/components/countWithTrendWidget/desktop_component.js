@@ -2,11 +2,75 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import Tooltip from './../tooltip';
-import {CountValue, TrendValue} from './countWithTrendWidget';
 import {dateFormats} from './../../utils/displayFormats';
+import Tooltip from './../tooltip';
 
-import sheet from './styles.css'
+import sheet from './desktop.css'
+
+
+export const CountValue = ({value, units}) => {
+  if (!value) {
+    return (
+      <div className={sheet.countContainer}>
+        <div className={sheet.layoutFull}>
+          <span className={sheet.countNodata}>No data</span>
+        </div>
+      </div>
+    )
+  }
+
+  if (units === '$') {
+    return (
+      <div className={sheet.countContainer}>
+        <div className={sheet.layoutLeftPrefix}>
+          <span className={sheet.countUnits} style={{paddingRight: '4px'}}>{units}</span>
+        </div>
+        <div className={sheet.layoutRightValue}>
+          <span className={sheet.countValue}>{value}</span>
+        </div>
+      </div>
+    )
+  } else if (units === '%') {
+    return (
+      <div className={sheet.countContainer}>
+        <div className={sheet.layoutLeftValue}>
+          <span className={sheet.countValue}>{value}</span>
+        </div>
+        <div className={sheet.layoutRightSuffix}>
+          <span className={sheet.countUnits} style={{paddingLeft: '4px'}}>{units}</span>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className={sheet.countContainer}>
+        <div className={sheet.layoutFull}>
+          <span className={sheet.countValue}>{value}</span>
+        </div>
+      </div>
+    )
+  }
+};
+
+
+export const TrendValue = ({value, date}) => {
+  return (
+    <div className={sheet.trendContainer}>
+      <div className={sheet.trendContainerInner}>
+        {value && <div>
+          <strong className={sheet.trendValue}>
+            {Number(value) > 0 ?
+              <span>{value} <i className="fa fa-arrow-up" /></span> :
+              Number(value) < 0 ?
+                <span>{value} <i className="fa fa-arrow-down" /></span> :
+                <span>Unchanged <i className="fa fa-minus" /></span>}
+          </strong>
+          <span className={sheet.trendDate}>since {dateFormats.monthYear(date)}</span>
+        </div>}
+      </div>
+    </div>
+  )
+};
 
 
 /**
@@ -24,11 +88,11 @@ const CountWithTrendWidget = (props) => {
   return (
     <article className={sheet.root} role="article">
       <span className={sheet.tooltipContainer}>
-        {infoText && <Tooltip text={infoText} iconOnly={false} />}
+        {infoText ? <Tooltip text={infoText} iconOnly={false} /> : <span>&nbsp;</span>}
         </span>
 
       <header className={classnames(
-        sheet.header, {
+        sheet.header, { // todo - make this defined by "color"
           [sheet.headerYellow]: title.toLowerCase() === 'user satisfaction',
           [sheet.headerGreen]: title.toLowerCase() === 'cost per transaction',
           [sheet.headerBlue]: title.toLowerCase() === 'digital take-up',
@@ -36,19 +100,15 @@ const CountWithTrendWidget = (props) => {
         }
       )}>
         <div className={sheet.h1Container}>
-          <div className={sheet.h1ContainerInner}>
-            <h1>{title}</h1>
-          </div>
+          <h1>{title}</h1>
         </div>
       </header>
       <section>
-        <div className={sheet.countContainer}>
-          <CountValue value={value} units={units} />
-        </div>
-        {value && <div className={sheet.countTrend}>
-          <TrendValue value={trendValue} />
-          <span className="trend-date">since {dateFormats.monthYear(trendDate)}</span>
-        </div>}
+
+        <CountValue value={value} units={units} />
+
+        <TrendValue value={trendValue} date={trendDate} />
+
       </section>
 
     </article>

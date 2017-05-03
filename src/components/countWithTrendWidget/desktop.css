@@ -17,6 +17,7 @@
   width: 100%;
 }
 
+/*block color*/
 .header:after {
   content: ' ';
   display: block;
@@ -43,15 +44,10 @@
 
 .h1Container {
   display: block;
+  min-height: 20px;
 }
 
-.h1ContainerInner {
-  display: table-cell;
-  vertical-align: middle;
-  min-height: 100px;
-}
-
-.header h1 {
+.h1Container h1 {
   font-size: 20px;
   font-weight: 600;
   line-height: 1;
@@ -61,77 +57,76 @@
 }
 
 
+.countContainer {
+  display: table;
+  width: 100%;
+  min-height: 120px;
+}
+
+.layoutLeftValue,
+.layoutRightSuffix {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.layoutLeftValue {
+  width: 54%;
+  text-align: right;
+}
+
+.layoutRightSuffix {
+  width: 46%;
+  text-align: left;
+}
+
+.layoutLeftPrefix {
+  width: 46%;
+  text-align: right;
+}
+
+.layoutRightValue {
+  width: 54%;
+  text-align: left;
+}
+
+.layoutFull {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
 
 .countValue {
   font-size: 70px;
   font-weight: 300;
   opacity: 0.9;
 }
-.countNoData {
-  font-size: 40px;
-}
+
 .countUnits {
   font-size: 32px;
   font-weight: 600;
 }
 
-
-
-
-
-
-.countValue {
-  display: table;
-  width: 100%;
-  min-height: 100px;
-}
-
-.layoutSpanWhole {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
-
-.layoutSpanLeftPrefix {
-  width: 54%;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: right;
-
-}
-.layoutSpanRightValue {
-  width: 46%;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: left;
-}
-
-.layoutSpanLeftValue {
-  width: 54%;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: right;
-}
-
-.layoutSpanRightSuffix {
-  width: 46%;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: left;
+.countNodata {
+  font-size: 40px;
 }
 
 
+.trendContainer {
+  min-height: 80px;
+  padding: 0 2px 0;
+}
 
-
-
-
-.countTrend {
+.trendContainerInner {
   padding: 1em 2px;
+  margin: 0 1em;
+  border-top: 1px solid #cfcfcf;
 }
 
 .trendValue,
 .trendDate {
   display: block;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .trendValue .fa {
