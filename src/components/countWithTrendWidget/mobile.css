@@ -13,6 +13,8 @@
   text-align: left;
 }
 
+
+
 /*block color*/
 .D_CTW_M_header:after {
   content: ' ';
@@ -43,7 +45,11 @@
   font-size: 16px;
   margin: 0 0 2px;
 }
-
+@media (min-width: 1200px) {
+  .D_CTW_M_header h1 {
+    font-size: 20px;
+  }
+}
 
 .D_CTW_M_layoutContainer {
   display: table;
