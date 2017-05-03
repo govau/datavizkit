@@ -39,7 +39,10 @@ class App extends Component {
 
         <div>
           <div style={{marginBottom: '1em', width: '300px',  display:'inline-block', float:'left'}}>
-            <CountWithTrendWidget widget={{"title": "User satisfaction", "infoText": "Overall satisfaction score includes all ratings weighted from 100% for very satisfied, to 0% for very dissatisfied", "units": "%"}}
+            <CountWithTrendWidget title="User satisfaction"
+              infoText="Overall satisfaction score includes all ratings weighted from 100% for very satisfied, to 0% for very dissatisfied"
+                                  units="%"
+                                  unitsType="percentage"
                                   idxInWidgets="0"
                                   value="8"
                                   trendValue="100"
@@ -47,7 +50,10 @@ class App extends Component {
           </div>
 
           <div style={{marginBottom: '1em', width: '300px', display:'inline-block'}}>
-            <CountWithTrendWidget widget={{"title": "Cost per transaction", "infoText": null, "units": "$"}}
+            <CountWithTrendWidget title="Cost per transaction"
+                                  infoText={null}
+                                  units="$"
+                                  unitsType="money"
                                   idxInWidgets="1"
                                   value=""
                                   trendValue=""
