@@ -1,5 +1,5 @@
 
-.D_CTWM_root {
+.D_CTW_M_root {
   border-radius: 5px;
   background-color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
@@ -7,14 +7,14 @@
   margin-bottom: 1em;
 }
 
-.D_CTWM_header {
+.D_CTW_M_header {
   display: table;
   width: 100%;
   text-align: left;
 }
 
 /*block color*/
-.D_CTWM_header:after {
+.D_CTW_M_header:after {
   content: ' ';
   display: block;
   background: #ccc;
@@ -23,72 +23,82 @@
   border-bottom-left-radius: 4px;
 }
 
-.D_CTWM_headerBlue:after {
+.D_CTW_M_headerBlue:after {
   background: #4892c0;
 }
 
-.D_CTWM_headerGreen:after {
+.D_CTW_M_headerGreen:after {
   background: #75a370;
 }
 
-.D_CTWM_headerYellow:after {
+.D_CTW_M_headerYellow:after {
   background: #f2b038;
 }
 
-.D_CTWM_headerPurple:after {
+.D_CTW_M_headerPurple:after {
   background: #7066a5;
 }
 
-.D_CTWM_header h1 {
+.D_CTW_M_header h1 {
   font-size: 16px;
   margin: 0 0 2px;
 }
 
 
-.D_CTWM_layoutContainer {
+.D_CTW_M_layoutContainer {
   display: table;
   width: 100%;
-  padding: 6px 12px;
+  padding: 3px 12px;
   min-height: 55px;
 }
 
-.D_CTWM_layoutLeft,
-.D_CTWM_layoutRight {
+.D_CTW_M_layoutLeft,
+.D_CTW_M_layoutRight {
   display: table-cell;
   vertical-align: middle;
 }
 
-.D_CTWM_layoutLeft {}
-.D_CTWM_layoutRight {}
+.D_CTW_M_layoutLeft {}
+.D_CTW_M_layoutRight {}
 
 
-.D_CTWM_countContainer {
+.D_CTW_M_countContainer {
   display: table;
   text-align: right;
+  width: 100%;
 }
 
-.D_CTWM_countValue,
-.D_CTWM_countUnits {
+.D_CTW_M_countValue,
+.D_CTW_M_countUnits {
   display: table-cell;
   vertical-align: middle;
 }
 
-.D_CTWM_countValue {
+.D_CTW_M_countValue,
+.D_CTW_M_countUnits {
+  display: inline-block;
+}
+
+.D_CTW_M_countValue {
   font-size: 40px;
   font-weight: 300;
   opacity: 0.9;
 }
 
-.D_CTWM_countUnits {
+.D_CTW_M_countUnits {
   font-size: 16px;
   font-weight: 600;
   vertical-align: middle;
 }
 
-.D_CTWM_countNodata {
+.D_CTW_M_countNodata {
   font-size: 22px;
 }
 
-.D_CTWM_trendValue {
+.D_CTW_M_trendValue {
   margin-right: 4px;
+}
+
+.D_CTW_M_trendValue .fa {
+  color: #0075cd;
 }

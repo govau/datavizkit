@@ -10,30 +10,32 @@ try {require('./mobile.css');} catch(e) {}
 const CountValue = ({value, units}) => {
   if (!value) {
     return (
-      <div className="D_CTWM_countContainer">
-        <span className="D_CTWM_countNodata">No data</span>
+      <div className="D_CTW_M_countContainer">
+        <span className="D_CTW_M_countNodata">No data</span>
       </div>
     )
   }
 
   if (units === '$') {
     return (
-      <div className="D_CTWM_countContainer">
-        <span className="D_CTWM_countUnits" style={{paddingRight: '4px'}}>{units}</span>
-        <span className="D_CTWM_countValue">{value}</span>
+      <div className="D_CTW_M_countContainer">
+        <span className="D_CTW_M_countValue">
+          <span className="D_CTW_M_countUnits" style={{paddingRight: '4px'}}>{units}</span>
+          {value}</span>
       </div>
     )
   } else if (units === '%') {
     return (
-      <div className="D_CTWM_countContainer">
-        <span className="D_CTWM_countValue">{value}</span>
-        <span className="D_CTWM_countUnits" style={{paddingLeft: '4px'}}>{units}</span>
+      <div className="D_CTW_M_countContainer">
+        <span className="D_CTW_M_countValue">{value}
+          <span className="D_CTW_M_countUnits" style={{paddingLeft: '4px'}}>{units}</span>
+        </span>
       </div>
     )
   } else {
     return (
-      <div className="D_CTWM_countContainer">
-        <span className="D_CTWM_countValue">{value}</span>
+      <div className="D_CTW_M_countContainer">
+        <span className="D_CTW_M_countValue">{value}</span>
       </div>
     )
   }
@@ -42,17 +44,17 @@ const CountValue = ({value, units}) => {
 
 const TrendValue = ({value, date}) => {
   return (
-    <div className="D_CTWM_trendContainer">
-      {value ? <div>
-        <strong className="D_CTWM_trendValue">
+    <div className="D_CTW_M_trendContainer">
+      {value && <div>
+        <strong className="D_CTW_M_trendValue">
           {Number(value) > 0 ?
             <span>{value} <i className="fa fa-arrow-up" /></span> :
             Number(value) < 0 ?
               <span>{value} <i className="fa fa-arrow-down" /></span> :
               <span>Unchanged <i className="fa fa-minus" /></span>}
         </strong>
-        <span className="D_CTWM_trendDate">since {dateFormats.monthYear(date)}</span>
-      </div> : <span>&nbsp;</span>}
+        <span className="D_CTW_M_trendDate">since {dateFormats.monthYear(date)}</span>
+      </div>}
     </div>
   )
 };
@@ -71,24 +73,24 @@ const MobileCountWithTrendWidget = (props) => {
   } = props;
 
   return (
-    <article className="D_CTWM_root" role="article">
+    <article className="D_CTW_M_root" role="article">
 
       <div className={classnames(
-        "D_CTWM_header", { // todo - make this defined by "color"
-          "D_CTWM_headerYellow": title.toLowerCase() === 'user satisfaction',
-          "D_CTWM_headerGreen": title.toLowerCase() === 'cost per transaction',
-          "D_CTWM_headerBlue": title.toLowerCase() === 'digital take-up',
-          "D_CTWM_headerPurple": title.toLowerCase() === 'completion rate',
+        "D_CTW_M_header", { // todo - make this defined by "color"
+          "D_CTW_M_headerYellow": title.toLowerCase() === 'user satisfaction',
+          "D_CTW_M_headerGreen": title.toLowerCase() === 'cost per transaction',
+          "D_CTW_M_headerBlue": title.toLowerCase() === 'digital take-up',
+          "D_CTW_M_headerPurple": title.toLowerCase() === 'completion rate',
         }
       )}>
-        <div className="D_CTWM_layoutContainer">
+        <div className="D_CTW_M_layoutContainer">
 
-          <div className="D_CTWM_layoutLeft">
+          <div className="D_CTW_M_layoutLeft">
             <h1>{title}</h1>
             <TrendValue value={trendValue} date={trendDate} />
           </div>
 
-          <div className="D_CTWM_layoutRight">
+          <div className="D_CTW_M_layoutRight">
             <CountValue value={value} units={units} />
           </div>
 

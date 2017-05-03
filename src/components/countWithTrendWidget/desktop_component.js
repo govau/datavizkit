@@ -12,9 +12,9 @@ try {require('./desktop.css');} catch(e) {}
 const CountValue = ({value, units}) => {
   if (!value) {
     return (
-      <div className="D_CTWD_countContainer">
-        <div className="D_CTWD_layoutFull">
-          <span className="D_CTWD_countNodata">No data</span>
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutFull">
+          <span className="D_CTW_D_countNodata">No data</span>
         </div>
       </div>
     )
@@ -22,31 +22,31 @@ const CountValue = ({value, units}) => {
 
   if (units === '$') {
     return (
-      <div className="D_CTWD_countContainer">
-        <div className="D_CTWD_layoutLeftPrefix">
-          <span className="D_CTWD_countUnits" style={{paddingRight: '4px'}}>{units}</span>
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutLeftPrefix">
+          <span className="D_CTW_D_countUnits" style={{paddingRight: '4px'}}>{units}</span>
         </div>
-        <div className="D_CTWD_layoutRightValue">
-          <span className="D_CTWD_countValue">{value}</span>
+        <div className="D_CTW_D_layoutRightValue">
+          <span className="D_CTW_D_countValue">{value}</span>
         </div>
       </div>
     )
   } else if (units === '%') {
     return (
-      <div className="D_CTWD_countContainer">
-        <div className="D_CTWD_layoutLeftValue">
-          <span className="D_CTWD_countValue">{value}</span>
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutLeftValue">
+          <span className="D_CTW_D_countValue">{value}</span>
         </div>
-        <div className="D_CTWD_layoutRightSuffix">
-          <span className="D_CTWD_countUnits" style={{paddingLeft: '4px'}}>{units}</span>
+        <div className="D_CTW_D_layoutRightSuffix">
+          <span className="D_CTW_D_countUnits" style={{paddingLeft: '4px'}}>{units}</span>
         </div>
       </div>
     )
   } else {
     return (
-      <div className="D_CTWD_countContainer">
-        <div className="D_CTWD_layoutFull">
-          <span className="D_CTWD_countValue">{value}</span>
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutFull">
+          <span className="D_CTW_D_countValue">{value}</span>
         </div>
       </div>
     )
@@ -56,17 +56,17 @@ const CountValue = ({value, units}) => {
 
 const TrendValue = ({value, date}) => {
   return (
-    <div className="D_CTWD_trendContainer">
-      <div className="D_CTWD_trendContainerInner">
+    <div className="D_CTW_D_trendContainer">
+      <div className="D_CTW_D_trendContainerInner">
         {value && <div>
-          <strong className="D_CTWD_trendValue">
+          <strong className="D_CTW_D_trendValue">
             {Number(value) > 0 ?
               <span>{value} <i className="fa fa-arrow-up" /></span> :
               Number(value) < 0 ?
                 <span>{value} <i className="fa fa-arrow-down" /></span> :
                 <span>Unchanged <i className="fa fa-minus" /></span>}
           </strong>
-          <span className="D_CTWD_trendDate">since {dateFormats.monthYear(date)}</span>
+          <span className="D_CTW_D_trendDate">since {dateFormats.monthYear(date)}</span>
         </div>}
       </div>
     </div>
@@ -87,21 +87,21 @@ const DesktopCountWithTrendWidget = (props) => {
   } = props;
 
   return (
-    <article className="D_CTWD_root" role="article">
-      <span className="D_CTWD_tooltipContainer">
+    <article className="D_CTW_D_root" role="article">
+      <span className="D_CTW_D_tooltipContainer">
         {infoText ? <Tooltip text={infoText} iconOnly={true} /> : <span>&nbsp;</span>}
         </span>
 
       <header className={classnames(
-        "D_CTWD_header", { // todo - make this defined by "color"
-          "D_CTWD_headerYellow": title.toLowerCase() === 'user satisfaction',
-          "D_CTWD_headerGreen": title.toLowerCase() === 'cost per transaction',
-          "D_CTWD_headerBlue": title.toLowerCase() === 'digital take-up',
-          "D_CTWD_headerPurple": title.toLowerCase() === 'completion rate',
+        "D_CTW_D_header", { // todo - make this defined by "color"
+          "D_CTW_D_headerYellow": title.toLowerCase() === 'user satisfaction',
+          "D_CTW_D_headerGreen": title.toLowerCase() === 'cost per transaction',
+          "D_CTW_D_headerBlue": title.toLowerCase() === 'digital take-up',
+          "D_CTW_D_headerPurple": title.toLowerCase() === 'completion rate',
         }
       )}>
-        <div className="D_CTWD_h1Container">
-          <div className="D_CTWD_h1ContainerInner">
+        <div className="D_CTW_D_h1Container">
+          <div className="D_CTW_D_h1ContainerInner">
             <h1>{title}</h1>
           </div>
         </div>
