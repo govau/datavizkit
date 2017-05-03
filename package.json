@@ -94,12 +94,15 @@
     "whatwg-fetch": "2.0.2"
   },
   "scripts": {
+    "copy-css:lib": "rsync -a --include '*/' --include '*.css' --exclude '*' src/ lib/",
+    "precopy-compiledcss:lib": "yarn run build",
+    "copy-compiledcss:lib": "cp ./build/static/css/main.css ./lib/Datavizkit.css && cp ./build/static/css/main.css.map ./lib/Datavizkit.css.map",
     "clean:lib": "rm -rf lib",
     "postmerge": "yarn install",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "prebuild:lib": "yarn clean:lib",
-    "build:lib": "babel src/ -d lib --ignore=index.js --source-maps",
+    "build:lib": "babel src/ -d lib --ignore=index.js --source-maps && yarn run copy-css:lib && yarn run copy-compiledcss:lib",
     "start:lib": "yarn run build:lib -- --watch",
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "npm run test -- --coverage --runInBand",

@@ -4,36 +4,36 @@ import classnames from 'classnames';
 
 import {dateFormats} from './../../utils/displayFormats';
 
-import sheet from './mobile.css';
+try {require('./mobile.css');} catch(e) {}
 
 
 const CountValue = ({value, units}) => {
   if (!value) {
     return (
-      <div className={sheet.countContainer}>
-        <span className={sheet.countNodata}>No data</span>
+      <div className="D_CTWM_countContainer">
+        <span className="D_CTWM_countNodata">No data</span>
       </div>
     )
   }
 
   if (units === '$') {
     return (
-      <div className={sheet.countContainer}>
-        <span className={sheet.countUnits} style={{paddingRight: '4px'}}>{units}</span>
-        <span className={sheet.countValue}>{value}</span>
+      <div className="D_CTWM_countContainer">
+        <span className="D_CTWM_countUnits" style={{paddingRight: '4px'}}>{units}</span>
+        <span className="D_CTWM_countValue">{value}</span>
       </div>
     )
   } else if (units === '%') {
     return (
-      <div className={sheet.countContainer}>
-        <span className={sheet.countValue}>{value}</span>
-        <span className={sheet.countUnits} style={{paddingLeft: '4px'}}>{units}</span>
+      <div className="D_CTWM_countContainer">
+        <span className="D_CTWM_countValue">{value}</span>
+        <span className="D_CTWM_countUnits" style={{paddingLeft: '4px'}}>{units}</span>
       </div>
     )
   } else {
     return (
-      <div className={sheet.countContainer}>
-        <span className={sheet.countValue}>{value}</span>
+      <div className="D_CTWM_countContainer">
+        <span className="D_CTWM_countValue">{value}</span>
       </div>
     )
   }
@@ -42,16 +42,16 @@ const CountValue = ({value, units}) => {
 
 const TrendValue = ({value, date}) => {
   return (
-    <div className={sheet.trendContainer}>
+    <div className="D_CTWM_trendContainer">
       {value ? <div>
-        <strong className={sheet.trendValue}>
+        <strong className="D_CTWM_trendValue">
           {Number(value) > 0 ?
             <span>{value} <i className="fa fa-arrow-up" /></span> :
             Number(value) < 0 ?
               <span>{value} <i className="fa fa-arrow-down" /></span> :
               <span>Unchanged <i className="fa fa-minus" /></span>}
         </strong>
-        <span className={sheet.trendDate}>since {dateFormats.monthYear(date)}</span>
+        <span className="D_CTWM_trendDate">since {dateFormats.monthYear(date)}</span>
       </div> : <span>&nbsp;</span>}
     </div>
   )
@@ -71,24 +71,24 @@ const MobileCountWithTrendWidget = (props) => {
   } = props;
 
   return (
-    <article className={sheet.root} role="article">
+    <article className="D_CTWM_root" role="article">
 
       <div className={classnames(
-        sheet.header, { // todo - make this defined by "color"
-          [sheet.headerYellow]: title.toLowerCase() === 'user satisfaction',
-          [sheet.headerGreen]: title.toLowerCase() === 'cost per transaction',
-          [sheet.headerBlue]: title.toLowerCase() === 'digital take-up',
-          [sheet.headerPurple]: title.toLowerCase() === 'completion rate',
+        "D_CTWM_header", { // todo - make this defined by "color"
+          "D_CTWM_headerYellow": title.toLowerCase() === 'user satisfaction',
+          "D_CTWM_headerGreen": title.toLowerCase() === 'cost per transaction',
+          "D_CTWM_headerBlue": title.toLowerCase() === 'digital take-up',
+          "D_CTWM_headerPurple": title.toLowerCase() === 'completion rate',
         }
       )}>
-        <div className={sheet.layoutContainer}>
+        <div className="D_CTWM_layoutContainer">
 
-          <div className={sheet.layoutLeft}>
+          <div className="D_CTWM_layoutLeft">
             <h1>{title}</h1>
             <TrendValue value={trendValue} date={trendDate} />
           </div>
 
-          <div className={sheet.layoutRight}>
+          <div className="D_CTWM_layoutRight">
             <CountValue value={value} units={units} />
           </div>
 

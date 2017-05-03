@@ -12,7 +12,7 @@ import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
 import DonutWidget from './components/donutWidget/donutWidget.js';
 import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
 import HeroWidget from './components/heroWidget/heroWidget.js';
-import CountWithTrendWidget from './components/countWithTrendWidget';
+import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget.js';
 
 
 class App extends Component {

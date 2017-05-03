@@ -1,53 +1,53 @@
 
-.root {
+.D_CTWD_root {
   border-radius: 4px;
   background-color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
-.tooltipContainer {
+.D_CTWD_tooltipContainer {
   display: block;
   padding: 4px 8px;
   text-align: right;
 }
 
-.header {
+.D_CTWD_header {
   display: table;
   width: 100%;
 }
 
 /*block color*/
-.header:after {
+.D_CTWD_header:after {
   content: ' ';
   display: block;
   background: #ccc;
   height: 8px;
 }
 
-.headerBlue:after {
+.D_CTWD_headerBlue:after {
   background: #4892c0;
 }
 
-.headerGreen:after {
+.D_CTWD_headerGreen:after {
   background: #75a370;
 }
 
-.headerYellow:after {
+.D_CTWD_headerYellow:after {
   background: #f2b038;
 }
 
-.headerPurple:after {
+.D_CTWD_headerPurple:after {
   background: #7066a5;
 }
 
 
-.h1Container {
+.D_CTWD_h1Container {
   display: block;
   min-height: 20px;
 }
 
-.h1Container h1 {
+.D_CTWD_h1Container h1 {
   font-size: 20px;
   font-weight: 600;
   line-height: 1;
@@ -57,78 +57,78 @@
 }
 
 
-.countContainer {
+.D_CTWD_countContainer {
   display: table;
   width: 100%;
   min-height: 120px;
 }
 
-.layoutLeftValue,
-.layoutRightSuffix {
+.D_CTWD_layoutLeftValue,
+.D_CTWD_layoutRightSuffix {
   display: table-cell;
   vertical-align: middle;
 }
 
-.layoutLeftValue {
+.D_CTWD_layoutLeftValue {
   width: 54%;
   text-align: right;
 }
 
-.layoutRightSuffix {
+.D_CTWD_layoutRightSuffix {
   width: 46%;
   text-align: left;
 }
 
-.layoutLeftPrefix {
+.D_CTWD_layoutLeftPrefix {
   width: 46%;
   text-align: right;
 }
 
-.layoutRightValue {
+.D_CTWD_layoutRightValue {
   width: 54%;
   text-align: left;
 }
 
-.layoutFull {
+.D_CTWD_layoutFull {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
 }
 
-.countValue {
+.D_CTWD_countValue {
   font-size: 70px;
   font-weight: 300;
   opacity: 0.9;
 }
 
-.countUnits {
+.D_CTWD_countUnits {
   font-size: 32px;
   font-weight: 600;
 }
 
-.countNodata {
+.D_CTWD_countNodata {
   font-size: 40px;
 }
 
 
-.trendContainer {
+.D_CTWD_trendContainer {
   min-height: 80px;
   padding: 0 2px 0;
 }
 
-.trendContainerInner {
+.D_CTWD_trendContainerInner {
   padding: 1em 2px;
   margin: 0 1em;
   border-top: 1px solid #cfcfcf;
 }
 
-.trendValue,
-.trendDate {
+.D_CTWD_trendValue,
+.D_CTWD_trendDate {
   display: block;
   vertical-align: middle;
   text-align: center;
 }
 
-.trendValue .fa {
+.D_CTWD_trendValue .fa {
   color: #0075cd;
 }

@@ -1,5 +1,5 @@
 
-.root {
+.D_CTWM_root {
   border-radius: 5px;
   background-color: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
@@ -7,14 +7,14 @@
   margin-bottom: 1em;
 }
 
-.header {
+.D_CTWM_header {
   display: table;
   width: 100%;
   text-align: left;
 }
 
 /*block color*/
-.header:after {
+.D_CTWM_header:after {
   content: ' ';
   display: block;
   background: #ccc;
@@ -23,77 +23,72 @@
   border-bottom-left-radius: 4px;
 }
 
-.headerBlue:after {
+.D_CTWM_headerBlue:after {
   background: #4892c0;
 }
 
-.headerGreen:after {
+.D_CTWM_headerGreen:after {
   background: #75a370;
 }
 
-.headerYellow:after {
+.D_CTWM_headerYellow:after {
   background: #f2b038;
 }
 
-.headerPurple:after {
+.D_CTWM_headerPurple:after {
   background: #7066a5;
 }
 
-.header h1 {
+.D_CTWM_header h1 {
   font-size: 16px;
   margin: 0 0 2px;
 }
 
 
-.layoutContainer {
+.D_CTWM_layoutContainer {
   display: table;
   width: 100%;
   padding: 6px 12px;
   min-height: 55px;
 }
 
-.layoutLeft,
-.layoutRight {
+.D_CTWM_layoutLeft,
+.D_CTWM_layoutRight {
   display: table-cell;
   vertical-align: middle;
 }
 
-.layoutLeft {}
-.layoutRight {}
+.D_CTWM_layoutLeft {}
+.D_CTWM_layoutRight {}
 
 
-.countContainer {
+.D_CTWM_countContainer {
   display: table;
   text-align: right;
 }
 
-.countValue,
-.countUnits {
+.D_CTWM_countValue,
+.D_CTWM_countUnits {
   display: table-cell;
   vertical-align: middle;
 }
 
-.countValue {
+.D_CTWM_countValue {
   font-size: 40px;
   font-weight: 300;
   opacity: 0.9;
 }
 
-.countUnits {
+.D_CTWM_countUnits {
   font-size: 16px;
   font-weight: 600;
   vertical-align: middle;
 }
 
-.countNodata {
+.D_CTWM_countNodata {
   font-size: 22px;
 }
 
-
-.trendContainer {
-
-}
-.trendValue {
+.D_CTWM_trendValue {
   margin-right: 4px;
 }
-.trendDate {}

@@ -22,4 +22,4 @@ export {HighcontrastPatterns} from './components/withHighcharts.js';
 
 export {NullDataLayerPattern} from './utils/highcontrastPatterns';
 
-export {default as CountWithTrendWidget} from './components/countWithTrendWidget/index.js';
+export {default as CountWithTrendWidget} from './components/countWithTrendWidget/countWithTrendWidget.js';
