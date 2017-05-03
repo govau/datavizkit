@@ -73,7 +73,6 @@ class App extends Component {
 
 
         <LineWidget title='Number of page views'
-          units='number'
           type='column'
           dateLastUpdated='22 Feb 2016'
           minimumValue="20000"
@@ -114,7 +113,6 @@ class App extends Component {
             ]
           }}
           title="Types of service"
-          units="number"
           type="stackedColumn"
           dateLastUpdated="2017-02-01T01:02:02.240Z"
           _singleCategory={false}
@@ -126,7 +124,6 @@ class App extends Component {
         <DonutWidget chartConfig={{
           series:[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]
         }} title="Devices used"
-          units="percentage"
           type="donut"
           dateLastUpdated="2017-02-01T01:02:02.240Z"
           _singleCategory={true}
@@ -142,7 +139,6 @@ class App extends Component {
           ]
           }]
           }} title="People used"
-          units="percentage"
           type="donut"
           dateLastUpdated="2017-02-01T01:02:02.240Z"
           _singleCategory={true}
@@ -154,7 +150,6 @@ class App extends Component {
               series:[{name:"Jan",data:[{name:"Girls",y:183},{name:"Guys",y:30}]}]
             }}
                      title="People used"
-            units="percentage"
             type="donut"
             dateLastUpdated="2017-02-01T01:02:02.240Z"
             _singleCategory={true}
@@ -164,7 +159,6 @@ class App extends Component {
 
 
         <ColumnWidget title='Number of page views'
-                      units='number'
                       type='column'
                       dateLastUpdated='22 Feb 2016'
                       infoText="Something amazing about this widget."
@@ -178,7 +172,6 @@ class App extends Component {
                       displayHighContrast={hcState} />
 
         <ColumnWidget title='Boo of page views'
-                      units='number'
                       type='column'
                       dateLastUpdated='22 Feb 2016'
                       infoText="Something amazing about this widget."
@@ -191,8 +184,9 @@ class App extends Component {
                       _singleSection={true}
                       displayHighContrast={hcState} />
 
-       <HeroWidget title='Performance Dashboard'
-                     dateLastUpdated='23 Mar 2017'
+       <HeroWidget
+         title=""
+         dateLastUpdated='23 Mar 2017'
                      chartConfig={{
                        xAxis:{categories:["Aug","Sep","Oct","Nov","Dec","Jan","Feb"]},
                        yAxis:[{title:{text:"Percentage"}},{title:{text:"AUSD"},opposite:!0}],
