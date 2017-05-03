@@ -3,10 +3,6 @@ import {valueFormats} from './../utils/displayFormats'
 
 
 const getValueForLegend = (y, units = '') => {
-
-  console.log(units);
-
-  // todo - not fixed
   if (typeof y === 'undefined') {
     return 'No data';
   }
