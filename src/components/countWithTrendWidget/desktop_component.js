@@ -8,7 +8,7 @@ import Tooltip from './../tooltip';
 import sheet from './desktop.css'
 
 
-export const CountValue = ({value, units}) => {
+const CountValue = ({value, units}) => {
   if (!value) {
     return (
       <div className={sheet.countContainer}>
@@ -53,7 +53,7 @@ export const CountValue = ({value, units}) => {
 };
 
 
-export const TrendValue = ({value, date}) => {
+const TrendValue = ({value, date}) => {
   return (
     <div className={sheet.trendContainer}>
       <div className={sheet.trendContainerInner}>
@@ -77,7 +77,7 @@ export const TrendValue = ({value, date}) => {
  * Desktop adaption of Count with Trend Widget.
  *
  */
-const CountWithTrendWidget = (props) => {
+const DesktopCountWithTrendWidget = (props) => {
   const {
     widget: {title, infoText, units, color},
     value,
@@ -115,4 +115,4 @@ const CountWithTrendWidget = (props) => {
   )
 };
 
-export default CountWithTrendWidget;
+export default DesktopCountWithTrendWidget;

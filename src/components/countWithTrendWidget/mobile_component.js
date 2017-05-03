@@ -1,17 +1,68 @@
 
 import React from 'react';
 import classnames from 'classnames';
-import styled from 'styled-components';
 
-import {CountValue, TrendValue} from './countWithTrendWidget';
 import {dateFormats} from './../../utils/displayFormats';
+
+import sheet from './mobile.css';
+
+
+const CountValue = ({value, units}) => {
+  if (!value) {
+    return (
+      <div className={sheet.countContainer}>
+        <span className={sheet.countNodata}>No data</span>
+      </div>
+    )
+  }
+
+  if (units === '$') {
+    return (
+      <div className={sheet.countContainer}>
+        <span className={sheet.countUnits} style={{paddingRight: '4px'}}>{units}</span>
+        <span className={sheet.countValue}>{value}</span>
+      </div>
+    )
+  } else if (units === '%') {
+    return (
+      <div className={sheet.countContainer}>
+        <span className={sheet.countValue}>{value}</span>
+        <span className={sheet.countUnits} style={{paddingLeft: '4px'}}>{units}</span>
+      </div>
+    )
+  } else {
+    return (
+      <div className={sheet.countContainer}>
+        <span className={sheet.countValue}>{value}</span>
+      </div>
+    )
+  }
+};
+
+
+const TrendValue = ({value, date}) => {
+  return (
+    <div className={sheet.trendContainer}>
+      {value ? <div>
+        <strong className={sheet.trendValue}>
+          {Number(value) > 0 ?
+            <span>{value} <i className="fa fa-arrow-up" /></span> :
+            Number(value) < 0 ?
+              <span>{value} <i className="fa fa-arrow-down" /></span> :
+              <span>Unchanged <i className="fa fa-minus" /></span>}
+        </strong>
+        <span className={sheet.trendDate}>since {dateFormats.monthYear(date)}</span>
+      </div> : <span>&nbsp;</span>}
+    </div>
+  )
+};
 
 
 /**
  * Mobile adaption of Count with Trend Widget.
  *
  */
-const CountWithTrendWidget = (props) => {
+const MobileCountWithTrendWidget = (props) => {
   const {
     widget: {title, units},
     value,
@@ -20,128 +71,32 @@ const CountWithTrendWidget = (props) => {
   } = props;
 
   return (
-    <Article_StyledCount role="article">
-      <Div_BorderBottomContainer className={classnames({
-        'yellow': title.toLowerCase() === 'user satisfaction',
-        'green': title.toLowerCase() === 'cost per transaction',
-        'blue': title.toLowerCase() === 'digital take-up',
-        'purple': title.toLowerCase() === 'completion rate',
-      })}>
+    <article className={sheet.root} role="article">
 
-        <Div_StyledLayoutContainer>
+      <div className={classnames(
+        sheet.header, { // todo - make this defined by "color"
+          [sheet.headerYellow]: title.toLowerCase() === 'user satisfaction',
+          [sheet.headerGreen]: title.toLowerCase() === 'cost per transaction',
+          [sheet.headerBlue]: title.toLowerCase() === 'digital take-up',
+          [sheet.headerPurple]: title.toLowerCase() === 'completion rate',
+        }
+      )}>
+        <div className={sheet.layoutContainer}>
 
-          <div>
+          <div className={sheet.layoutLeft}>
             <h1>{title}</h1>
-            <Span_styledTrend>
-              <TrendValue value={trendValue} />
-              <span className="trend-date">since {dateFormats.monthYear(trendDate)}</span>
-            </Span_styledTrend>
+            <TrendValue value={trendValue} date={trendDate} />
           </div>
 
-          <Div_styledCountContainer>
+          <div className={sheet.layoutRight}>
             <CountValue value={value} units={units} />
-          </Div_styledCountContainer>
+          </div>
 
-        </Div_StyledLayoutContainer>
+        </div>
 
-      </Div_BorderBottomContainer>
-    </Article_StyledCount>
+      </div>
+    </article>
   )
 };
 
-
-const Article_StyledCount = styled.article`
-  margin-bottom: 1em;
-  background: white;
-  border-radius: 5px;
-  box-shadow: 
-    0 4px 2px -2px rgba(0,0,0,0.4),
-    4px 0 1px -2px rgba(0,0,0,0.4);
-`;
-
-
-const Div_BorderBottomContainer = styled.div`
-
-  &:after {
-    content: ' ';
-    display: block;
-    background: #ccc;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-    height: 8px;
-  }
-  
-  &.blue {
-    &:after {
-      background: #4892c0;
-    }
-  }
-  &.green {
-    &:after {
-      background: #75a370;
-    }
-  }
-  &.yellow {
-    &:after {
-      background: #f2b038;
-    }
-  }
-  &.purple {
-    &:after {
-      background: #7066a5;
-    }
-  }
-`;
-
-
-const Div_StyledLayoutContainer = styled.div`
-  
-  display: table;
-  width: 100%;
-
-  h1 {
-  	font-size: 18px;
-  	font-weight: 600;
-	  line-height: 1;
-	  color: #000000;
-	  margin-bottom: 6px;
-  }
-  div {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 0 6px;
-  }
-`;
-
-const Span_styledTrend = styled.span`
-  display: block;
-  margin-bottom: 8px;
-  
-  .trend-value {
-    .fa {
-      color: #0075cd;
-    }
-  }
-`;
-
-const Div_styledCountContainer = styled.div`
-  text-align: right; 
-  
-  .count-value {
-    font-size: 36px;
-    font-weight: 300;
-    opacity: 0.9;
-
-    &.no-data {
-      font-size: 22px;
-    }
-  }
-  .count-units {
-    font-size: 20px;
-    font-weight: 600;
-    margin-left: 4px;
-    vertical-align: middle;
-  }
-`;
-
-export default CountWithTrendWidget;
+export default MobileCountWithTrendWidget;
