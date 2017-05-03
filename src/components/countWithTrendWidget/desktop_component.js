@@ -1,130 +1,121 @@
 
 import React from 'react';
 import classnames from 'classnames';
-import styled from 'styled-components';
 
-import Tooltip from './../tooltip';
-import {CountValue, TrendValue} from './countWithTrendWidget';
 import {dateFormats} from './../../utils/displayFormats';
+import Tooltip from './../tooltip';
+
+try {require('./desktop.css');} catch(e) {}
+
+
+
+const CountValue = ({value, units}) => {
+  if (!value) {
+    return (
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutFull">
+          <span className="D_CTW_D_countNodata">No data</span>
+        </div>
+      </div>
+    )
+  }
+
+  if (units === '$') {
+    return (
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutLeftPrefix">
+          <span className="D_CTW_D_countUnits" style={{paddingRight: '4px'}}>{units}</span>
+        </div>
+        <div className="D_CTW_D_layoutRightValue">
+          <span className="D_CTW_D_countValue">{value}</span>
+        </div>
+      </div>
+    )
+  } else if (units === '%') {
+    return (
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutLeftValue">
+          <span className="D_CTW_D_countValue">{value}</span>
+        </div>
+        <div className="D_CTW_D_layoutRightSuffix">
+          <span className="D_CTW_D_countUnits" style={{paddingLeft: '4px'}}>{units}</span>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="D_CTW_D_countContainer">
+        <div className="D_CTW_D_layoutFull">
+          <span className="D_CTW_D_countValue">{value}</span>
+        </div>
+      </div>
+    )
+  }
+};
+
+
+const TrendValue = ({value, date}) => {
+  return (
+    <div className="D_CTW_D_trendContainer">
+      <div className="D_CTW_D_trendContainerInner">
+        {value && <div>
+          <strong className="D_CTW_D_trendValue">
+            {Number(value) > 0 ?
+              <span>{value} <i className="fa fa-arrow-up" /></span> :
+              Number(value) < 0 ?
+                <span>{value} <i className="fa fa-arrow-down" /></span> :
+                <span>Unchanged <i className="fa fa-minus" /></span>}
+          </strong>
+          <span className="D_CTW_D_trendDate">since {dateFormats.monthYear(date)}</span>
+        </div>}
+      </div>
+    </div>
+  )
+};
 
 
 /**
  * Desktop adaption of Count with Trend Widget.
  *
  */
-const CountWithTrendWidget = (props) => {
+const DesktopCountWithTrendWidget = (props) => {
   const {
-    widget: {title, infoText, units},
+    widget: {title, infoText, units, color},
     value,
     trendValue,
     trendDate,
   } = props;
 
   return (
-    <StyledCount className={`chart--count`} role="article">
-      <StyledHeader className={classnames({
-        'yellow': title.toLowerCase() === 'user satisfaction',
-        'green': title.toLowerCase() === 'cost per transaction',
-        'blue': title.toLowerCase() === 'digital take-up',
-        'purple': title.toLowerCase() === 'completion rate',
-      })}>
-        <h1>{title} {infoText && <Tooltip text={infoText} />}</h1>
-      </StyledHeader>
+    <article className="D_CTW_D_root" role="article">
+      <span className="D_CTW_D_tooltipContainer">
+        {infoText ? <Tooltip text={infoText} iconOnly={true} /> : <span>&nbsp;</span>}
+        </span>
+
+      <header className={classnames(
+        "D_CTW_D_header", { // todo - make this defined by "color"
+          "D_CTW_D_headerYellow": title.toLowerCase() === 'user satisfaction',
+          "D_CTW_D_headerGreen": title.toLowerCase() === 'cost per transaction',
+          "D_CTW_D_headerBlue": title.toLowerCase() === 'digital take-up',
+          "D_CTW_D_headerPurple": title.toLowerCase() === 'completion rate',
+        }
+      )}>
+        <div className="D_CTW_D_h1Container">
+          <div className="D_CTW_D_h1ContainerInner">
+            <h1>{title}</h1>
+          </div>
+        </div>
+      </header>
       <section>
-        <StyledCountContainer>
-          <CountValue value={value} units={units} />
-        </StyledCountContainer>
-        {value && <StyledTrendContainer>
-          <TrendValue value={trendValue} />
-          <span className="trend-date">since {dateFormats.monthYear(trendDate)}</span>
-        </StyledTrendContainer>}
+
+        <CountValue value={value} units={units} />
+
+        <TrendValue value={trendValue} date={trendDate} />
+
       </section>
-    </StyledCount>
+
+    </article>
   )
 };
 
-const StyledCount = styled.article`
-  text-align: center;
-`;
-
-const StyledHeader = styled.header`
-  &:after {
-    content: ' ';
-    display: block;
-    background: #ccc;
-    border-radius: 4px;
-    height: 8px;
-  }
-  
-  &.blue {
-    &:after {
-      background: #4892c0;
-    }
-  }
-  &.green {
-    &:after {
-      background: #75a370;
-    }
-  }
-  &.yellow {
-    &:after {
-      background: #f2b038;
-    }
-  }
-  &.purple {
-    &:after {
-      background: #7066a5;
-    }
-  }
-  h1 {
-  	font-size: 20px;
-  	font-weight: 600;
-	  line-height: 1;
-	  margin-bottom: 1rem;
-	  color: #000000;
-  }
-`;
-
-const StyledCountContainer = styled.div`
-  border-bottom: 2px solid #cccccc;
-  min-height: 130px;
-  display: table;
-  width: 100%;
-  
-  .count-value {
-    display:table-cell;
-    vertical-align: middle;
-    font-size: 70px;
-    font-weight: 300;
-    opacity: 0.9;
-    
-    &.no-data {
-      font-size: 40px;
-    }
-  }
-  .count-units {
-    font-size: 32px;
-    font-weight: 600;
-    vertical-align: middle;
-    margin-left: 4px;
-  }
-`;
-
-const StyledTrendContainer = styled.div`
-  padding: 1em 2px;
-
-  .trend-value,
-  .trend-date {
-    display: block;
-  }
-
-  .trend-value {
-    .fa {
-      color: #0075cd;
-    }
-  }
-  .trend-date {
-  }
-`;
-
-export default CountWithTrendWidget;
+export default DesktopCountWithTrendWidget;

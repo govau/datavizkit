@@ -1,0 +1,104 @@
+
+.D_CTW_M_root {
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.D_CTW_M_header {
+  display: table;
+  width: 100%;
+  text-align: left;
+}
+
+/*block color*/
+.D_CTW_M_header:after {
+  content: ' ';
+  display: block;
+  background: #ccc;
+  height: 8px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.D_CTW_M_headerBlue:after {
+  background: #4892c0;
+}
+
+.D_CTW_M_headerGreen:after {
+  background: #75a370;
+}
+
+.D_CTW_M_headerYellow:after {
+  background: #f2b038;
+}
+
+.D_CTW_M_headerPurple:after {
+  background: #7066a5;
+}
+
+.D_CTW_M_header h1 {
+  font-size: 16px;
+  margin: 0 0 2px;
+}
+
+
+.D_CTW_M_layoutContainer {
+  display: table;
+  width: 100%;
+  padding: 3px 12px;
+  min-height: 64px;
+}
+
+.D_CTW_M_layoutLeft,
+.D_CTW_M_layoutRight {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.D_CTW_M_layoutLeft {}
+.D_CTW_M_layoutRight {}
+
+
+.D_CTW_M_countContainer {
+  display: table;
+  text-align: right;
+  width: 100%;
+}
+
+.D_CTW_M_countValue,
+.D_CTW_M_countUnits {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.D_CTW_M_countValue,
+.D_CTW_M_countUnits {
+  display: inline-block;
+}
+
+.D_CTW_M_countValue {
+  font-size: 40px;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.D_CTW_M_countUnits {
+  font-size: 16px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.D_CTW_M_countNodata {
+  font-size: 22px;
+}
+
+.D_CTW_M_trendValue {
+  margin-right: 4px;
+}
+
+.D_CTW_M_trendValue .fa {
+  color: #0075cd;
+}

@@ -99,7 +99,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "prebuild:lib": "yarn clean:lib",
-    "build:lib": "babel src/ -d lib --ignore=index.js --source-maps",
+    "build:lib": "babel src/ -d lib --ignore=index.js --source-maps --copy-files",
     "start:lib": "yarn run build:lib -- --watch",
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "npm run test -- --coverage --runInBand",

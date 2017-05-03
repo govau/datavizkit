@@ -1,0 +1,175 @@
+
+.D_CTW_D_root {
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.D_CTW_D_tooltipContainer {
+  display: block;
+  padding: 4px 8px;
+  text-align: right;
+}
+
+.D_CTW_D_header {
+  display: block;
+  width: 100%;
+}
+
+/*block color*/
+.D_CTW_D_header:after {
+  content: ' ';
+  display: block;
+  background: #ccc;
+  height: 8px;
+}
+
+.D_CTW_D_headerBlue:after {
+  background: #4892c0;
+}
+
+.D_CTW_D_headerGreen:after {
+  background: #75a370;
+}
+
+.D_CTW_D_headerYellow:after {
+  background: #f2b038;
+}
+
+.D_CTW_D_headerPurple:after {
+  background: #7066a5;
+}
+
+.D_CTW_D_h1Container {
+  display: table;
+  width: 100%;
+}
+
+.D_CTW_D_h1ContainerInner {
+  display: table-cell;
+  vertical-align: middle;
+  min-height: 20px;
+  padding: 0 16px;
+}
+
+.D_CTW_D_h1Container h1 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 8px;
+  margin-bottom: 14px;
+  color: #000000;
+}
+
+
+
+.D_CTW_D_countContainer {
+  display: table;
+  width: 100%;
+  min-height: 120px;
+  padding: 0 16px;
+}
+
+.D_CTW_D_layoutLeftValue,
+.D_CTW_D_layoutRightSuffix,
+.D_CTW_D_layoutLeftPrefix,
+.D_CTW_D_layoutRightValue {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.D_CTW_D_layoutLeftValue {
+  width: 60%;
+  text-align: right;
+}
+
+.D_CTW_D_layoutRightSuffix {
+  width: 40%;
+  text-align: left;
+}
+
+.D_CTW_D_layoutLeftPrefix {
+  width: 40%;
+  text-align: right;
+}
+
+.D_CTW_D_layoutRightValue {
+  width: 60%;
+  text-align: left;
+}
+
+/*@media (max-width: 1200px) {  !*$screen-lg*!*/
+  /*.D_CTW_D_layoutLeftValue {*/
+    /*width: 80%;*/
+  /*}*/
+/*}*/
+/*@media (max-width: 1200px) {  !*$screen-lg*!*/
+  /*.D_CTW_D_layoutRightSuffix {*/
+    /*width: 20%;*/
+  /*}*/
+/*}*/
+/*@media (max-width: 1200px) {  !*$screen-lg*!*/
+  /*.D_CTW_D_layoutLeftPrefix {*/
+    /*width: 20%;*/
+  /*}*/
+/*}*/
+/*@media (max-width: 1200px) {  !*$screen-lg*!*/
+  /*.D_CTW_D_layoutRightValue {*/
+    /*width: 80%;*/
+  /*}*/
+/*}*/
+
+
+.D_CTW_D_layoutFull {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.D_CTW_D_countValue {
+  font-size: 62px;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+@media (max-width: 1200px) {  /*$screen-lg*/
+  .D_CTW_D_countValue {
+    font-size: 52px;
+  }
+  .D_CTW_D_countUnits {
+    font-size: 20px;
+  }
+}
+
+.D_CTW_D_countUnits {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.D_CTW_D_countNodata {
+  font-size: 32px;
+}
+
+
+.D_CTW_D_trendContainer {
+  min-height: 80px;
+  padding: 0 2px 0;
+}
+
+.D_CTW_D_trendContainerInner {
+  padding: 1em 2px;
+  margin: 0 1em;
+  border-top: 1px solid #cfcfcf;
+}
+
+.D_CTW_D_trendValue,
+.D_CTW_D_trendDate {
+  display: block;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.D_CTW_D_trendValue .fa {
+  color: #0075cd;
+}
