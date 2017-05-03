@@ -42,8 +42,12 @@ const withHeroChart = (ComposedComponent) => {
           type: 'spline',
         },
         title: {
-          useHTML: true,
-          text: `<span>${title}</span>`,
+          // useHTML: true,
+          text: '', //`<span>${title}</span>`,
+        },
+        subtitle: {
+          // useHTML: true,
+          text: '',//`<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
         },
         legend: {
           enabled: true,
@@ -51,13 +55,9 @@ const withHeroChart = (ComposedComponent) => {
           verticalAlign: 'bottom',
           layout: 'horizontal'
         },
-        subtitle: {
-          useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
-        },
         plotOptions: {
           line: {},
-          series: { // todo 
+          series: { // todo
             lineWidth: 4,
             animation: false,
             marker: {
