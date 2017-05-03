@@ -58,7 +58,7 @@ class App extends Component {
 
 
 
-        {/*<CountWithTrendWidget widget={{"title": "Digital take-up", "infoText": null, "units": "%"}}
+        <CountWithTrendWidget widget={{"title": "Digital take-up", "infoText": null, "units": "%"}}
                               idxInWidgets="2"
                               value="92"
                               trendValue="1.09"
@@ -160,7 +160,7 @@ class App extends Component {
             _singleCategory={true}
             _singleSection={false}
             minimumValue="30"
-            displayHighContrast={hcState} />*/}
+            displayHighContrast={hcState} />
 
 
         <ColumnWidget title='Number of page views'
