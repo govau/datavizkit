@@ -42,7 +42,7 @@ class App extends Component {
             <CountWithTrendWidget title="User satisfaction"
               infoText="Overall satisfaction score includes all ratings weighted from 100% for very satisfied, to 0% for very dissatisfied"
                                   units="%"
-                                  unitsType="percentage"
+                                  _unitsType="percentage"
                                   idxInWidgets="0"
                                   value="8"
                                   trendValue="100"
@@ -53,7 +53,7 @@ class App extends Component {
             <CountWithTrendWidget title="Cost per transaction"
                                   infoText={null}
                                   units="$"
-                                  unitsType="money"
+                                  _unitsType="money"
                                   idxInWidgets="1"
                                   value=""
                                   trendValue=""

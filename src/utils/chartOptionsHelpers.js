@@ -3,12 +3,13 @@ import {valueFormats} from './../utils/displayFormats'
 
 
 const getValueForLegend = (y, units = '') => {
+  debugger
   if (typeof y === 'undefined') {
     return 'No data';
   }
-  if (units.toLowerCase() === 'Money') {
+  if (units === '$') {
     return `${units}${y}`;
-  } else if (units.toLowerCase() === 'percentage') {
+  } else if (units === '%') {
     return `${units}${y}`;
   } else
     return y;
