@@ -9,7 +9,7 @@ try {require('./desktop.css');} catch(e) {}
 
 
 
-const CountValue = ({value, units, unitsType}) => {
+const CountValue = ({value, units}) => {
   if (!value) {
     return (
       <div className="D_CTW_D_countContainer">
@@ -20,7 +20,7 @@ const CountValue = ({value, units, unitsType}) => {
     )
   }
 
-  if (unitsType === 'money') {
+  if (units === '$') {
     return (
       <div className="D_CTW_D_countContainer">
         <div className="D_CTW_D_layoutLeftPrefix">
@@ -31,7 +31,7 @@ const CountValue = ({value, units, unitsType}) => {
         </div>
       </div>
     )
-  } else if (unitsType === 'percentage') {
+  } else if (units === '%') {
     return (
       <div className="D_CTW_D_countContainer">
         <div className="D_CTW_D_layoutLeftValue">
@@ -84,7 +84,6 @@ const DesktopCountWithTrendWidget = (props) => {
     title,
     infoText,
     units,
-    unitsType,
     color,
     value,
     trendValue,
@@ -113,7 +112,7 @@ const DesktopCountWithTrendWidget = (props) => {
       </header>
       <section>
 
-        <CountValue value={value} units={units} unitsType={unitsType} />
+        <CountValue value={value} units={units} />
 
         <TrendValue value={trendValue} date={trendDate} />
 

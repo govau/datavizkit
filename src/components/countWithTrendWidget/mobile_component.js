@@ -7,7 +7,7 @@ import {dateFormats} from './../../utils/displayFormats';
 try {require('./mobile.css');} catch(e) {}
 
 
-const CountValue = ({value, units, unitsType}) => {
+const CountValue = ({value, units}) => {
   if (!value) {
     return (
       <div className="D_CTW_M_countContainer">
@@ -16,7 +16,7 @@ const CountValue = ({value, units, unitsType}) => {
     )
   }
 
-  if (unitsType === 'money') {
+  if (units === '$') {
     return (
       <div className="D_CTW_M_countContainer">
         <span className="D_CTW_M_countValue">
@@ -24,7 +24,7 @@ const CountValue = ({value, units, unitsType}) => {
           {value}</span>
       </div>
     )
-  } else if (unitsType === 'percentage') {
+  } else if (units === '%') {
     return (
       <div className="D_CTW_M_countContainer">
         <span className="D_CTW_M_countValue">{value}
@@ -69,7 +69,6 @@ const MobileCountWithTrendWidget = (props) => {
   const {
     title,
     units,
-    unitsType,
     infoText,
     value,
     trendValue,
@@ -95,7 +94,7 @@ const MobileCountWithTrendWidget = (props) => {
           </div>
 
           <div className="D_CTW_M_layoutRight">
-            <CountValue value={value} units={units} unitsType={unitsType} />
+            <CountValue value={value} units={units} />
           </div>
 
         </div>
