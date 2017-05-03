@@ -13,7 +13,7 @@
 }
 
 .D_CTWD_header {
-  display: table;
+  display: block;
   width: 100%;
 }
 
@@ -41,53 +41,85 @@
   background: #7066a5;
 }
 
-
 .D_CTWD_h1Container {
-  display: block;
+  display: table;
+  width: 100%;
+}
+
+.D_CTWD_h1ContainerInner {
+  display: table-cell;
+  vertical-align: middle;
   min-height: 20px;
+  padding: 0 16px;
 }
 
 .D_CTWD_h1Container h1 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1;
   margin-top: 8px;
-  margin-bottom: 1rem;
+  margin-bottom: 14px;
   color: #000000;
 }
+
 
 
 .D_CTWD_countContainer {
   display: table;
   width: 100%;
   min-height: 120px;
+  padding: 0 16px;
 }
 
 .D_CTWD_layoutLeftValue,
-.D_CTWD_layoutRightSuffix {
+.D_CTWD_layoutRightSuffix,
+.D_CTWD_layoutLeftPrefix,
+.D_CTWD_layoutRightValue {
   display: table-cell;
   vertical-align: middle;
 }
 
 .D_CTWD_layoutLeftValue {
-  width: 54%;
+  width: 60%;
   text-align: right;
 }
 
 .D_CTWD_layoutRightSuffix {
-  width: 46%;
+  width: 40%;
   text-align: left;
 }
 
 .D_CTWD_layoutLeftPrefix {
-  width: 46%;
+  width: 40%;
   text-align: right;
 }
 
 .D_CTWD_layoutRightValue {
-  width: 54%;
+  width: 60%;
   text-align: left;
 }
+
+@media (max-width: 1200px) {  /*$screen-lg*/
+  .D_CTWD_layoutLeftValue {
+    width: 80%;
+  }
+}
+@media (max-width: 1200px) {  /*$screen-lg*/
+  .D_CTWD_layoutRightSuffix {
+    width: 20%;
+  }
+}
+@media (max-width: 1200px) {  /*$screen-lg*/
+  .D_CTWD_layoutLeftPrefix {
+    width: 20%;
+  }
+}
+@media (max-width: 1200px) {  /*$screen-lg*/
+  .D_CTWD_layoutRightValue {
+    width: 80%;
+  }
+}
+
 
 .D_CTWD_layoutFull {
   display: table-cell;
@@ -96,18 +128,27 @@
 }
 
 .D_CTWD_countValue {
-  font-size: 70px;
+  font-size: 62px;
   font-weight: 300;
   opacity: 0.9;
 }
 
+@media (max-width: 1200px) {  /*$screen-lg*/
+  .D_CTWD_countValue {
+    font-size: 52px;
+  }
+  .D_CTWD_countUnits {
+    font-size: 20px;
+  }
+}
+
 .D_CTWD_countUnits {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 600;
 }
 
 .D_CTWD_countNodata {
-  font-size: 40px;
+  font-size: 32px;
 }
 
 

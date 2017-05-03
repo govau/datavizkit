@@ -15,7 +15,7 @@ import DesktopComponent from './desktop_component';
 const CountWithTrendWidget = (props) => {
   const {viewport, ...rest} = props;
 
-  if (typeof viewport === 'undefined' || viewport === 'sm' || viewport === 'md') {
+  if (typeof viewport === 'undefined' || viewport === 'sm') {
     return <MobileComponent {...rest} />
   } else {
     return <DesktopComponent {...rest} />

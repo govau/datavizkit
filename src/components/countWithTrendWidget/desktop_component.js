@@ -89,7 +89,7 @@ const DesktopCountWithTrendWidget = (props) => {
   return (
     <article className="D_CTWD_root" role="article">
       <span className="D_CTWD_tooltipContainer">
-        {infoText ? <Tooltip text={infoText} iconOnly={false} /> : <span>&nbsp;</span>}
+        {infoText ? <Tooltip text={infoText} iconOnly={true} /> : <span>&nbsp;</span>}
         </span>
 
       <header className={classnames(
@@ -101,7 +101,9 @@ const DesktopCountWithTrendWidget = (props) => {
         }
       )}>
         <div className="D_CTWD_h1Container">
-          <h1>{title}</h1>
+          <div className="D_CTWD_h1ContainerInner">
+            <h1>{title}</h1>
+          </div>
         </div>
       </header>
       <section>
