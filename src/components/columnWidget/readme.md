@@ -1,33 +1,32 @@
-### Single Category Single Slice:
+### Single Category Single Section:
 
 `@todo - example`
 
 
-### Single Category Many Slice:
+### Single Category Many Section:
 
-    <ColumnWidget title='Number of page views'
-                units='number'
+`@todo - example`
+
+
+### Many Category Single Section:
+
+    <ColumnWidget title='Number of users'
                 type='column'
                 dateLastUpdated='22 Feb 2016'
-                minimumValue="20000"
+                _singleCategory={false}
+                _singleSection={true}
+                minimumValue="2.73"
                 chartConfig={{
-                  "xAxis":{
-                    "categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]
+                  "xAxis": {
+                    "categories": ["2016-05-01T00:00:00Z", "2016-06-01T00:00:00Z", "2016-07-01T00:00:00Z", "2016-08-01T00:00:00Z", "2016-09-01T00:00:00Z", "2016-10-01T00:00:00Z", "2016-11-01T00:00:00Z", "2016-12-01T00:00:00Z", "2017-01-01T00:00:00Z"]
                   },
-                  "series":[
-                    {"name":"Time to clear","data":[84807,48317,51420,62400,48060,37560,39300]}
+                  "series": [
+                    {"name": "Page Views", "data": [null, null, 2.8, 3.28, 2.94, 3.21, 2.85, 2.79, 2.73]}
                   ]
-                }} 
-                singleCategory={false} 
-                singleSection={true} />
-        
-
-### Many Category Single Slice:
-
-`@todo - example`
+                }} />
 
 
-### Many Category Many Slice:
+### Many Category Many Section:
 
 `@todo - example`
 
