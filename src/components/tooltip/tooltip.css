@@ -1,0 +1,26 @@
+.D_Tool_overlay-trigger {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+  color: #1077b5;
+  display: inline-block;
+}
+
+.D_Tool_overlay-trigger .fa {
+  color: #1077b5;
+  font-size: 20px;
+}
+
+.D_Tool_text-wrap {
+  display: table;
+}
+
+.D_Tool_text-wrap span,
+.D_Tool_text-wrap i {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.D_Tool_text-wrap span {
+  padding-right: 4px;
+}

@@ -2,18 +2,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Tooltip} from 'pui-react-tooltip';
-import 'pui-css-tooltips';
 import {OverlayTrigger} from 'pui-react-overlay-trigger';
 
-import styled from 'styled-components';
+import 'pui-css-tooltips';
+import './tooltip.css';
 
 
 const TooltipComponent = ({placement = 'bottom', text, iconOnly = false}) => {
   return (
-    <OverlayTrigger placement={placement} overlay={<Tooltip delayHide="900000">{text}</Tooltip>}>
-      <Span_styledText className="overlay-trigger" tabIndex="0">
-        <span>{iconOnly ? '' : 'About this chart '}<i className="fa fa-question-circle" style={{fontSize:'20px'}} /></span>
-      </Span_styledText>
+    <OverlayTrigger placement={placement} overlay={<Tooltip>{text}</Tooltip>}>
+      <span className="D_Tool_overlay-trigger overlay-trigger" tabIndex="0">
+        <span className="D_Tool_text-wrap">
+          {iconOnly ? ''  : <span>About this chart</span>}
+          <i className="fa fa-question-circle-o" />
+        </span>
+      </span>
     </OverlayTrigger>
   )
 };
@@ -26,13 +29,4 @@ if (__DEV__) {
   };
 }
 
-const Span_styledText = styled.span`
-	font-size: 12px;
-	font-weight: 600;
-	text-align: right;
-	color: #1362a6;
-`;
-
 export default TooltipComponent;
-
-
