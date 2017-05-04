@@ -95,10 +95,7 @@ const withDonutChart = (ComposedComponent) => {
             showInLegend: true,
             states: {
               hover: {
-                brightness: -.2,
-                halo: {
-                  size: 0,
-                }
+                enabled: false,
               },
               select: { // required because can be selected programmatically
                 enabled: false
@@ -162,7 +159,7 @@ const withDonutChart = (ComposedComponent) => {
       return (
         <ComposedComponent {...this.props}>
           <div ref={el => this._chartEl = el} />
-          {customLegend && customLegend.length && <Legend data={customLegend} />}
+          {customLegend && customLegend.length > 0 && <Legend data={customLegend} />}
         </ComposedComponent>
       )
     }
