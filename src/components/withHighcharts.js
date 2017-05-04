@@ -61,6 +61,13 @@ const BASE_HIGHCHARTS_CONFIG = {
       text: null
     }
   },
+  xAxis: {
+    type: 'datetime',
+    dateTimeLabelFormats: {
+      // day: '%e of %b',
+      // month: '%b \'%y',
+    }
+  },
   legend: {
     enabled: false,
   },

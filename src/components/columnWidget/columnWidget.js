@@ -12,7 +12,7 @@ import Tooltip from './../tooltip';
 // might also have a ColumnWidgetLarge or ColumnWidgetMonochrome
 const ColumnWidget = ({infoText, children}) => {
   return (
-    <article className="chart--column" role="article">
+    <article role="article">
       {infoText && <Div_styledInfoTextContainer><Tooltip text={infoText} /></Div_styledInfoTextContainer>}
       <section>{children}</section>
     </article>
