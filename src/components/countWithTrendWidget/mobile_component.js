@@ -3,6 +3,7 @@ import React from 'react';
 import classnames from 'classnames';
 
 import {dateFormats} from './../../utils/displayFormats';
+import Tooltip from './../tooltip';
 
 try {require('./mobile.css');} catch(e) {}
 
@@ -69,7 +70,7 @@ const MobileCountWithTrendWidget = (props) => {
   const {
     title,
     units,
-    infoText,
+    tooltipAnchorTo,
     value,
     trendValue,
     trendDate,
@@ -89,7 +90,7 @@ const MobileCountWithTrendWidget = (props) => {
         <div className="D_CTW_M_layoutContainer">
 
           <div className="D_CTW_M_layoutLeft">
-            <h1>{title}</h1>
+            <h1>{title} {tooltipAnchorTo && <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} />}</h1>
             <TrendValue value={trendValue} date={trendDate} />
           </div>
 

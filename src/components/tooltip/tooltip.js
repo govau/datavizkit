@@ -8,7 +8,22 @@ import 'pui-css-tooltips';
 import './tooltip.css';
 
 
-const TooltipComponent = ({placement = 'bottom', text, iconOnly = false}) => {
+const TooltipComponent = ({placement = 'bottom', text, iconOnly = false, anchorTo}) => {
+
+  if (typeof anchorTo !== 'undefined') {
+    if (!anchorTo.match(/^#/i)) {
+      throw new Error('anchor to type tooltips must provide an anchor link.')
+    }
+    return (
+      <span className="D_Tool_overlay-trigger" tabIndex="0">
+        <a href={anchorTo} className="D_Tool_text-wrap">
+          {iconOnly ? ''  : <span>About this chart</span>}
+          <i className="fa fa-question-circle-o" />
+        </a>
+      </span>
+    )
+  }
+
   return (
     <OverlayTrigger placement={placement} overlay={<Tooltip>{text}</Tooltip>}>
       <span className="D_Tool_overlay-trigger overlay-trigger" tabIndex="0">

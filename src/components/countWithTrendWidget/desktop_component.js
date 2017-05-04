@@ -82,9 +82,8 @@ const DesktopCountWithTrendWidget = (props) => {
 
   const {
     title,
-    infoText,
+    tooltipAnchorTo,
     units,
-    color,
     value,
     trendValue,
     trendDate,
@@ -93,8 +92,8 @@ const DesktopCountWithTrendWidget = (props) => {
   return (
     <article className="D_CTW_D_root" role="article">
       <span className="D_CTW_D_tooltipContainer">
-        {infoText ? <Tooltip text={infoText} iconOnly={true} /> : <span>&nbsp;</span>}
-        </span>
+        {tooltipAnchorTo ? <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} /> : <span>&nbsp;</span>}
+      </span>
 
       <header className={classnames(
         "D_CTW_D_header", { // todo - make this defined by "color"
