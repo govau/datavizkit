@@ -34,8 +34,7 @@ export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
 
     return {
       key: s.name,
-      // if _i is null, it's coming from a plot band
-      value: seriesDataIndex === null ? 'No data' : getValueForLegend(d.y, units),
+      value: d.isNull ? 'No data' : getValueForLegend(d.y, units),
       color: d.color,
       // hide this if i'm hovering a null data region
       category: seriesDataIndex === null ? null : d.category,
@@ -87,11 +86,9 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
         to: i + .5,   // point after
         color: 'url(#null-data-layer)', // this color represents the null value region
         events: {
-
           mouseover: function() {
-
-
-            broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, null)});
+            broadcastSetState &&
+              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, idx)});
             this.axis.crosshair = false;
             this.axis.series.forEach(s => {
               s.data.map(d => {

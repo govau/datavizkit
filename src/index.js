@@ -137,7 +137,7 @@ class App extends Component {
           chartConfig={{
             "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
             "series":[
-              {"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},
+              {"name":"Public Beta","data":[0,null,2,2,2,2,2,2,2]},
               {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
               {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
               {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
