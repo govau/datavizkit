@@ -6,10 +6,10 @@ const getValueForLegend = (y, units = '') => {
   if (typeof y === 'undefined') {
     return 'No data';
   }
-  if (units === '$') {
-    return `${units}${y}`;
-  } else if (units === '%') {
-    return `${y}${units}`;
+  if (units.toLowerCase() === 'money') {
+    return `$${y}`;
+  } else if (units.toLowerCase() === 'percentage') {
+    return `${y}%`;
   } else
     return y;
 };
