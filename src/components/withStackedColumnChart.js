@@ -198,7 +198,7 @@ const withStackedColumnChart = (ComposedComponent) => {
       return (
         <ComposedComponent {...this.props}>
           <div ref={el => this._chartEl = el} />
-          {customLegend && customLegend.length && <Legend data={customLegend} />}
+          {customLegend && customLegend.length > 0 && <Legend data={customLegend} />}
         </ComposedComponent>
       )
     }

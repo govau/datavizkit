@@ -107,7 +107,7 @@ const withSparklineChart = (ComposedComponent) => {
           line: {
             animation: false,
           },
-          series: { 
+          series: {
             lineWidth: 4,
             animation: false,
             stickyTracking: false,
@@ -156,7 +156,7 @@ const withSparklineChart = (ComposedComponent) => {
       return (
         <ComposedComponent {...this.props}>
           <div ref={el => this._chartEl = el} />
-          {trendLegend && trendLegend.length && <TrendLegend data={trendLegend} />}
+          {trendLegend && trendLegend.length > 0 && <TrendLegend data={trendLegend} />}
         </ComposedComponent>
       )
     }
