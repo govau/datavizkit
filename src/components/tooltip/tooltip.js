@@ -8,7 +8,19 @@ import 'pui-css-tooltips';
 import './tooltip.css';
 
 
-const TooltipComponent = ({placement = 'bottom', text, iconOnly = false, anchorTo}) => {
+const TooltipComponent = ({
+  placement = 'bottom',
+  text,
+  iconOnly = false,
+  anchorTo,
+
+  // todo - derive viewport internally
+  viewport,
+}) => {
+
+  if (typeof viewport !== 'undefined' && viewport !== 'lg') {
+    placement = 'left';
+  }
 
   if (typeof anchorTo !== 'undefined') {
     if (!anchorTo.match(/^#/i)) {
@@ -25,7 +37,7 @@ const TooltipComponent = ({placement = 'bottom', text, iconOnly = false, anchorT
   }
 
   return (
-    <OverlayTrigger placement={placement} overlay={<Tooltip>{text}</Tooltip>}>
+    <OverlayTrigger placement={placement} overlay={<Tooltip size="md">{text}</Tooltip>}>
       <span className="D_Tool_overlay-trigger overlay-trigger" tabIndex="0">
         <span className="D_Tool_text-wrap">
           {iconOnly ? ''  : <span>About this chart</span>}
