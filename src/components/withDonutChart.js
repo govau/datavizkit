@@ -78,12 +78,10 @@ const withDonutChart = (ComposedComponent) => {
           },
         },
         title: {
-          useHTML: true,
-          text: `<span>${title}</span>`,
+          text: ''
         },
         subtitle: {
-          useHTML: true,
-          text: `<span>Last updated <time dateTime="${dateFormats.dateTime(dateLastUpdated)}">${dateFormats.dayMonthYear(dateLastUpdated)}</time></span>`,
+          text: '',
         },
         plotOptions: {
           pie: {
