@@ -167,12 +167,18 @@ const withStackedColumnChart = (ComposedComponent) => {
       };
 
       if (stackingType === 'normal' && minimumValue) {
-        instanceConfig.yAxis.min = minimumValue;
+        instanceConfig.yAxis ?
+          instanceConfig.yAxis.min = minimumValue :
+          instanceConfig.yAxis = {};
+          instanceConfig.yAxis['min'] = minimumValue;
       }
 
-      // if (chartConfig.series[0].units && chartConfig.series[0].units === '%') {
-      //   instanceConfig.yAxis.max = 100;
-      // }
+      if (chartConfig.series[0].units && chartConfig.series[0].units === '%') {
+        instanceConfig.yAxis ?
+          instanceConfig.yAxis.max = 100 :
+          instanceConfig.yAxis = {};
+          instanceConfig.yAxis['max'] = 100;
+      }
 
       const config = merge({}, baseConfig, instanceConfig);
 

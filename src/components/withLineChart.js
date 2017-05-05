@@ -58,8 +58,6 @@ const withLineChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        title,
-        dateLastUpdated,
         minimumValue,
         displayHighContrast,
         chartConfig,
@@ -158,6 +156,13 @@ const withLineChart = (ComposedComponent) => {
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+
+      if (chartConfig.series[0].units && chartConfig.series[0].units === '%') {
+        instanceConfig.yAxis ?
+          instanceConfig.yAxis.max = 100 :
+          instanceConfig.yAxis = {};
+        instanceConfig.yAxis['max'] = 100;
+      }
 
       const config = merge({}, baseConfig, instanceConfig);
 

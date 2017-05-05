@@ -54,8 +54,6 @@ const withDonutChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        title,
-        dateLastUpdated,
         displayHighContrast,
         chartConfig,
       } = this.props;
