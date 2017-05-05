@@ -3,7 +3,7 @@ import React from 'react';
 import classnames from 'classnames';
 
 import {dateFormats} from './../../utils/displayFormats';
-import Tooltip from './../tooltip';
+import Tooltip from './../tooltip/tooltip';
 
 try {require('./mobile.css');} catch(e) {}
 

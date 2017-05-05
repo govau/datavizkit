@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import withHighcharts from './../withHighcharts';
 import withLineChart from './../withLineChart';
-import Tooltip from './../tooltip';
+import Tooltip from './../tooltip/tooltip';
 import {dateFormats} from './../../utils/displayFormats';
 
 
