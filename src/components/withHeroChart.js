@@ -1,10 +1,9 @@
 
 import React, {PureComponent} from 'react';
-import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {symbolChars, valueFormats, dateFormats} from './../utils/displayFormats';
+import {symbolChars, valueFormats} from './../utils/displayFormats';
 
 
 const withHeroChart = (ComposedComponent) => {
@@ -31,8 +30,6 @@ const withHeroChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        title,
-        dateLastUpdated,
         displayHighContrast,
         chartConfig,
       } = this.props;
@@ -126,14 +123,8 @@ const withHeroChart = (ComposedComponent) => {
         chart: {
           renderTo: this._chartEl,
         },
+        xAxis: chartConfig.xAxis,
         yAxis: chartConfig.yAxis,
-        xAxis: {
-          labels: {
-            formatter: function () {
-              return chartConfig.xAxis.categories[this.value];
-            }
-          }
-        },
         series: chartConfig.series
       };
 
