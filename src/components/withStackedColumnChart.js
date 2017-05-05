@@ -56,8 +56,6 @@ const withStackedColumnChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        title,
-        dateLastUpdated,
         stackingType,
         chartConfig,
         minimumValue,
@@ -165,10 +163,16 @@ const withStackedColumnChart = (ComposedComponent) => {
         },
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
+        // yAxis: chartConfig.series[0].units && chartConfig.series[0].units === '%' ? 100 : '',
       };
+
       if (stackingType === 'normal' && minimumValue) {
         instanceConfig.yAxis.min = minimumValue;
       }
+
+      // if (chartConfig.series[0].units && chartConfig.series[0].units === '%') {
+      //   instanceConfig.yAxis.max = 100;
+      // }
 
       const config = merge({}, baseConfig, instanceConfig);
 
