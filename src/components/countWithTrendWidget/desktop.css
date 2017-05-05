@@ -54,7 +54,7 @@
 }
 
 .D_CTW_D_h1Container h1 {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1;
   margin-top: 8px;
@@ -62,6 +62,11 @@
   color: #000000;
 }
 
+@media (max-width: 1200px) {
+  .D_CTW_D_h1Container h1 {
+    font-size: 16px;
+  }
+}
 
 
 .D_CTW_D_countContainer {
@@ -71,61 +76,12 @@
   padding: 0 16px;
 }
 
-.D_CTW_D_layoutLeftValue,
-.D_CTW_D_layoutRightSuffix,
-.D_CTW_D_layoutLeftPrefix,
-.D_CTW_D_layoutRightValue {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.D_CTW_D_layoutLeftValue {
-  width: 60%;
-  text-align: right;
-}
-
-.D_CTW_D_layoutRightSuffix {
-  width: 40%;
-  text-align: left;
-}
-
-.D_CTW_D_layoutLeftPrefix {
-  width: 40%;
-  text-align: right;
-}
-
-.D_CTW_D_layoutRightValue {
-  width: 60%;
-  text-align: left;
-}
-
-/*@media (max-width: 1200px) {  !*$screen-lg*!*/
-  /*.D_CTW_D_layoutLeftValue {*/
-    /*width: 80%;*/
-  /*}*/
-/*}*/
-/*@media (max-width: 1200px) {  !*$screen-lg*!*/
-  /*.D_CTW_D_layoutRightSuffix {*/
-    /*width: 20%;*/
-  /*}*/
-/*}*/
-/*@media (max-width: 1200px) {  !*$screen-lg*!*/
-  /*.D_CTW_D_layoutLeftPrefix {*/
-    /*width: 20%;*/
-  /*}*/
-/*}*/
-/*@media (max-width: 1200px) {  !*$screen-lg*!*/
-  /*.D_CTW_D_layoutRightValue {*/
-    /*width: 80%;*/
-  /*}*/
-/*}*/
-
-
-.D_CTW_D_layoutFull {
+.D_CTW_D_countContainerInner {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
 }
+
 
 .D_CTW_D_countValue {
   font-size: 62px;
@@ -145,6 +101,7 @@
 .D_CTW_D_countUnits {
   font-size: 28px;
   font-weight: 600;
+  vertical-align: middle;
 }
 
 .D_CTW_D_countNodata {

@@ -13,7 +13,7 @@ const CountValue = ({value, units}) => {
   if (!value) {
     return (
       <div className="D_CTW_D_countContainer">
-        <div className="D_CTW_D_layoutFull">
+        <div className="D_CTW_D_countContainerInner">
           <span className="D_CTW_D_countNodata">No data</span>
         </div>
       </div>
@@ -23,29 +23,25 @@ const CountValue = ({value, units}) => {
   if (units === '$') {
     return (
       <div className="D_CTW_D_countContainer">
-        <div className="D_CTW_D_layoutLeftPrefix">
-          <span className="D_CTW_D_countUnits" style={{paddingRight: '4px'}}>{units}</span>
-        </div>
-        <div className="D_CTW_D_layoutRightValue">
-          <span className="D_CTW_D_countValue">{value}</span>
+        <div className="D_CTW_D_countContainerInner">
+          <div className="D_CTW_D_count">
+            <span className="D_CTW_D_countValue"><span className="D_CTW_D_countUnits">{units}</span>{value}</span>
+          </div>
         </div>
       </div>
     )
   } else if (units === '%') {
     return (
       <div className="D_CTW_D_countContainer">
-        <div className="D_CTW_D_layoutLeftValue">
-          <span className="D_CTW_D_countValue">{value}</span>
-        </div>
-        <div className="D_CTW_D_layoutRightSuffix">
-          <span className="D_CTW_D_countUnits" style={{paddingLeft: '4px'}}>{units}</span>
+        <div className="D_CTW_D_countContainerInner">
+          <span className="D_CTW_D_countValue">{value}<span className="D_CTW_D_countUnits">{units}</span></span>
         </div>
       </div>
     )
   } else {
     return (
       <div className="D_CTW_D_countContainer">
-        <div className="D_CTW_D_layoutFull">
+        <div className="D_CTW_D_countContainerInner">
           <span className="D_CTW_D_countValue">{value}</span>
         </div>
       </div>
