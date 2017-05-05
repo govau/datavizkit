@@ -1,0 +1,19 @@
+.highcharts-title {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.25;
+  margin-top: 0;
+  margin-bottom: 6px;
+  width: 100%;
+  display: block;
+}
+
+.highcharts-subtitle {
+  display: block;
+  right: 0;
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 300;
+  color: #596371;
+}

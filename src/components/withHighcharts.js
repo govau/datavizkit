@@ -7,6 +7,8 @@ import merge from 'lodash/merge';
 
 import makeHighcontrastPatterns from './../utils/highcontrastPatterns';
 
+import './highcharts.css';
+
 
 const THEME = {
   /*eslint-disable */
@@ -31,18 +33,23 @@ const THEME = {
     style: {
       fontWeight: 600,
       fontSize: '18px',
-      lineHeight: 1.5,
+      lineHeight: 1.25,
       marginTop: 0,
-      marginBottom: '4px',
+      marginBottom: 0,// todo - dont think this does anything
+      width: '100%',
+      display: 'block',
     }
   },
   subtitle: {
     style: {
-      fontSize: '14px',
+      display: 'block',
+      right: 0,
+      // width: '100%; !important',
+      marginBottom: '20px',
+      fontSize: '12px',
       lineHeight: 1.5,
       fontWeight: 300,
-      marginBottom: 0,
-      color: '#6c7783',
+      color: '#596371',
     }
   }
   /*eslint-enable */
