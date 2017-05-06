@@ -38,6 +38,7 @@ const withHeroChart = (ComposedComponent) => {
       const baseConfig = {
         chart: {
           type: 'spline',
+          height: 360,
         },
         title: {
           text: ''

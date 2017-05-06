@@ -84,6 +84,7 @@ const withColumnChart = (ComposedComponent) => {
       const baseConfig = {
         chart: {
           type: 'column',
+          height: 300,
           events: {
 
             // equivalent to constructor callback

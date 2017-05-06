@@ -63,6 +63,7 @@ const withDonutChart = (ComposedComponent) => {
       const baseConfig = {
         chart: {
           type: 'pie',
+          height: 300,
           events: {
 
             load: function() {  // equivalent to constructor callback
