@@ -79,24 +79,19 @@ const withHeroChart = (ComposedComponent) => {
           shared: true,
           crosshairs: true,
           borderRadius: 8,
+          headerFormat: '<small>{point.key}</small><table>',
           pointFormatter: function() {
-            var color = this.series.color;
-            var symbol = symbolChars[this.series.symbol];
-            var valueFormatter, value;
+            // this refers tp "Point"
+            const {units} = this.series.options;
+            const key = symbolChars[this.series.symbol];
+            const value = `${units === '$' ? '$' : ''}${this.y}${units === '%' ? '%' : ''}`;
 
-            if (valueFormatter = valueFormats[this.series.options.units]) {
-              value = valueFormatter(this.y)
-            }
-            else {
-              value = this.y;
-            }
-
-            var labelHtml = `<span style="color:${color}; font-size: 1.5em; text-decoration: line-through;">&nbsp;&#${symbol};&nbsp;</span>`;
-            var valueHtml = `<span style="float:right;">${value}</span>`;
-
-            return `<div style="width:100px;">${labelHtml}${valueHtml}</span>`;
+            return `<tr>
+                      <td style="color: ${this.series.color}"><span style="font-size:20px;">&#${key}</span></td>
+                      <td style="text-align: right;"><strong>${value}</strong></td>
+                    </tr>`;
           },
-          headerFormat: '',
+          footerFormat: '</table>',
           useHTML: true
         },
         xAxis: {
