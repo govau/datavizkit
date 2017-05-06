@@ -15,7 +15,8 @@ const SparklineWidget = ({
   infoText,
   title,
   dateLastUpdated,
-  children
+  children,
+  viewport,
 }) => {
   return (
     <article role="article">

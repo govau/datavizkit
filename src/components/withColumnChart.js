@@ -74,9 +74,6 @@ const withColumnChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        title,
-        dateLastUpdated,
-        minimumValue,
         displayHighContrast,
         chartConfig,
       } = this.props;
@@ -157,12 +154,11 @@ const withColumnChart = (ComposedComponent) => {
         chart: {
           renderTo: this._chartEl,
         },
-        yAxis: {
-          min: minimumValue || 0,
-        },
+        yAxis: chartConfig.yAxis,
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
+
 
       const config = merge({}, baseConfig, instanceConfig);
 
