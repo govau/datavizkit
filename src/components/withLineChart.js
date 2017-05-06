@@ -105,7 +105,11 @@ const withLineChart = (ComposedComponent) => {
             animation: false,
             point: {
               events: {
-                // mouseOver: function() {}
+
+                mouseOver: function(e) {
+                  broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
+                },
+
               }
             },
             states: {
