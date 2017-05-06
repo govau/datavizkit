@@ -9,7 +9,7 @@ import withHeroChart from './../withHeroChart';
 // render a uniquely marked up and styled custom HeroWidget
 const HeroWidget = (props) => {
   return (
-    <article role="article">
+    <article role="article" className="D_widget">
       <section>{props.children}</section>
     </article>
   )

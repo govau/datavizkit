@@ -19,7 +19,7 @@ const StackedColumnWidget = ({
   viewport,
 }) => {
   return (
-    <article role="article">
+    <article role="article"D_widget>
       <header>
         {infoText && <Div_styledInfoTextContainer><Tooltip text={infoText} viewport={viewport}  /></Div_styledInfoTextContainer>}
         <h1 className="highcharts-title">{title}</h1>
