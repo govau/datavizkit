@@ -1,0 +1,29 @@
+
+.D_CTW_S_count {
+  display: table;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.D_CTW_S_countInner {
+  display: table-cell;
+}
+
+.D_CTW_S_countValue,
+.D_CTW_S_countUnits {
+  line-height: 1;
+}
+
+.D_CTW_S_countValue {
+  font-size: 62px;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.D_CTW_S_countUnits {
+  font-size: 28px;
+  font-weight: 600;
+  vertical-align: super;
+  margin-left: 4px;
+}

@@ -2,10 +2,9 @@
 import React, {PureComponent} from 'react';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
-import get from 'lodash/get';
-import isObject from 'lodash/isObject';
+
+import Count from './count/count.js';
 import TrendLegend from './trendLegend.js';
-import {unitFormats, dateFormats} from './../utils/displayFormats';
 
 
 // render a sparkline chart and manage sparkline chart stuff
@@ -37,8 +36,6 @@ const withSparklineChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        title,
-        dateLastUpdated,
         chartConfig,
       } = this.props;
 
@@ -48,34 +45,15 @@ const withSparklineChart = (ComposedComponent) => {
       const baseConfig = {
         chart: {
           type: 'spline',
-          margin: [150, 0, 0, 0],
+          height: 140,
           events: {
 
             load: function() {  // equivalent to constructor callback
-              var latestValue = last(this.series[0].data).y;
-              var unitFormat = unitFormats[this.series[0].options.units];
-              var unitSymbol = get(unitFormat, 'symbol') || '';
-              var valueSpan = `<span style="font-size:700%;">${latestValue}</span>`;
-              var unitSpan = `<span style="font-size:200%; baseline-shift: super;">${unitSymbol}</span>`;
-              var splineHtml = '';
 
-              if (get(unitFormat, 'prefix')) {
-                splineHtml = `${unitSpan} ${valueSpan}`;
-              }
-              else {
-                splineHtml = `${valueSpan} ${unitSpan}`;
-              }
-
-              this.renderer.text(splineHtml)
-                .attr({
-                  zIndex: 6,
-                  x: '50%',
-                  y: '35%'
-                })
-                .css({
-                  textAnchor: 'middle'
-                })
-                .add();
+              broadcastSetState({'count': {
+                value: last(this.series[0].data).y,
+                units: this.series[0].options.units,
+              }});
 
               if (this.series[0].data.length >= 2) {
                 broadcastSetState({'trendLegend': this.series[0].data});
@@ -96,13 +74,15 @@ const withSparklineChart = (ComposedComponent) => {
           text: '',
         },
         yAxis: {
-          visible: false
+          visible: false,
+          endOnTick: false,
+          startOnTick: false,
         },
         xAxis: {
-          visible: false
+          visible: false,
         },
         plotOptions: {
-          line: {
+          spline: {
             animation: false,
           },
           series: {
@@ -124,9 +104,6 @@ const withSparklineChart = (ComposedComponent) => {
             states: {
               hover: {
                 enabled: false,
-              //   marker: {
-              //     enabled: false,
-              //   }
               },
             },
           },
@@ -145,15 +122,20 @@ const withSparklineChart = (ComposedComponent) => {
         series: chartConfig.series,
       };
 
+      if (instanceConfig.yAxis && instanceConfig.yAxis.min) {
+        delete instanceConfig.yAxis.min;
+      }
+
       const config = merge({}, baseConfig, instanceConfig);
 
       return config;
     }
 
     render() {
-      const {trendLegend} = this.state;
+      const {trendLegend, count} = this.state;
       return (
         <ComposedComponent {...this.props}>
+          {count && <Count value={count.value} units={count.units} />}
           <div ref={el => this._chartEl = el} />
           {trendLegend && trendLegend.length > 0 && <TrendLegend data={trendLegend} />}
         </ComposedComponent>
