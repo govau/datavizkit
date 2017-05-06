@@ -74,7 +74,6 @@ const withColumnChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        minimumValue,
         displayHighContrast,
         chartConfig,
       } = this.props;
@@ -155,19 +154,11 @@ const withColumnChart = (ComposedComponent) => {
         chart: {
           renderTo: this._chartEl,
         },
-        yAxis: {
-          min: minimumValue || 0,
-        },
+        yAxis: chartConfig.yAxis,
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
 
-      if (chartConfig.series[0].units && chartConfig.series[0].units === '%') {
-        instanceConfig.yAxis ?
-          instanceConfig.yAxis.max = 100 :
-          instanceConfig.yAxis = {};
-        instanceConfig.yAxis['max'] = 100;
-      }
 
       const config = merge({}, baseConfig, instanceConfig);
 

@@ -15,13 +15,13 @@
                 dateLastUpdated='22 Feb 2016'
                 _singleCategory={false}
                 _singleSection={true}
-                minimumValue="2.73"
-                chartConfig={{
-                  "xAxis": {
-                    "categories": ["2016-05-01T00:00:00Z", "2016-06-01T00:00:00Z", "2016-07-01T00:00:00Z", "2016-08-01T00:00:00Z", "2016-09-01T00:00:00Z", "2016-10-01T00:00:00Z", "2016-11-01T00:00:00Z", "2016-12-01T00:00:00Z", "2017-01-01T00:00:00Z"]
-                  },
-                  "series": [
-                    {"name": "Page Views", "data": [null, null, 2.8, 3.28, 2.94, 3.21, 2.85, 2.79, 2.73]}
+                config={{
+                  "yAxis": [
+                    {"title":{"text":""},"min":37560}
+                  ],
+                  "xAxis": {"categories":["May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16"]},
+                  "series":[
+                    {"name":"Time to clear","units":"i","data":[84807,48317,51420,62400,48060,37560,39300]}
                   ]
                 }} />
 

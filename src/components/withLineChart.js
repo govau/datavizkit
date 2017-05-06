@@ -5,7 +5,6 @@ import merge from 'lodash/merge';
 
 import Legend from './customLegend.js';
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {dateFormats} from './../utils/displayFormats';
 import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
@@ -58,7 +57,6 @@ const withLineChart = (ComposedComponent) => {
 
     createConfig() {
       const {
-        minimumValue,
         displayHighContrast,
         chartConfig,
       } = this.props;
@@ -150,19 +148,10 @@ const withLineChart = (ComposedComponent) => {
         chart: {
           renderTo: this._chartEl
         },
-        yAxis: {
-          min: minimumValue || 0,
-        },
+        yAxis: chartConfig.yAxis,
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
       };
-
-      if (chartConfig.series[0].units && chartConfig.series[0].units === '%') {
-        instanceConfig.yAxis ?
-          instanceConfig.yAxis.max = 100 :
-          instanceConfig.yAxis = {};
-        instanceConfig.yAxis['max'] = 100;
-      }
 
       const config = merge({}, baseConfig, instanceConfig);
 

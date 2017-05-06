@@ -161,24 +161,10 @@ const withStackedColumnChart = (ComposedComponent) => {
         chart: {
           renderTo: this._chartEl
         },
+        yAxis: chartConfig.yAxis,
         xAxis: chartConfig.xAxis,
         series: chartConfig.series,
-        // yAxis: chartConfig.series[0].units && chartConfig.series[0].units === '%' ? 100 : '',
       };
-
-      if (stackingType === 'normal' && minimumValue) {
-        instanceConfig.yAxis ?
-          instanceConfig.yAxis.min = minimumValue :
-          instanceConfig.yAxis = {};
-          instanceConfig.yAxis['min'] = minimumValue;
-      }
-
-      if (chartConfig.series[0].units && chartConfig.series[0].units === '%') {
-        instanceConfig.yAxis ?
-          instanceConfig.yAxis.max = 100 :
-          instanceConfig.yAxis = {};
-          instanceConfig.yAxis['max'] = 100;
-      }
 
       const config = merge({}, baseConfig, instanceConfig);
 
