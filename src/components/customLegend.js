@@ -10,7 +10,7 @@ const Legend = ({data, className}) => {
   return (
     <div className={className}>
       <div className="DVK-row">
-        {data[0].category}
+        {data[0].category === null ? <span dangerouslySetInnerHTML={{__html: '&nbsp;'}} /> : data[0].category}
       </div>
       {data.map((d, idx) => {
         return (
