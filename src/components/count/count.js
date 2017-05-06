@@ -21,7 +21,7 @@ const formatLargeNumber = (val) => {
   if (isNegative) {
     formatted = `- ${formatted}`;
   }
-  return formatted.replace(/\.0/, '');
+  return String(formatted).replace(/\.0/, '');
 };
 
 const Count = ({value, units}) => {
