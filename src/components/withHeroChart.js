@@ -1,6 +1,7 @@
 
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
+import isObject from 'lodash/isObject';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
 import {symbolChars, valueFormats} from './../utils/displayFormats';
@@ -51,17 +52,13 @@ const withHeroChart = (ComposedComponent) => {
           layout: 'horizontal'
         },
         plotOptions: {
-          line: {},
-          series: { // todo
+          spline: {
+          },
+          series: {
             lineWidth: 4,
             animation: false,
             marker: {
-              enabled: false, // Can't figure out a way to hide markers on lines yet show on legend :(
-              states: {
-                hover: {
-                  enabled: true
-                }
-              }
+              enabled: true,  // must be enabled for display symbols in the legend
             },
             states: {
               hover: {
@@ -79,24 +76,19 @@ const withHeroChart = (ComposedComponent) => {
           shared: true,
           crosshairs: true,
           borderRadius: 8,
+          headerFormat: '<small>{point.key}</small><table>',
           pointFormatter: function() {
-            var color = this.series.color;
-            var symbol = symbolChars[this.series.symbol];
-            var valueFormatter, value;
+            // this refers tp "Point"
+            const {units} = this.series.options;
+            const key = symbolChars[this.series.symbol];
+            const value = `${units === '$' ? '$' : ''}${this.y}${units === '%' ? '%' : ''}`;
 
-            if (valueFormatter = valueFormats[this.series.options.units]) {
-              value = valueFormatter(this.y)
-            }
-            else {
-              value = this.y;
-            }
-
-            var labelHtml = `<span style="color:${color}; font-size: 1.5em; text-decoration: line-through;">&nbsp;&#${symbol};&nbsp;</span>`;
-            var valueHtml = `<span style="float:right;">${value}</span>`;
-
-            return `<div style="width:100px;">${labelHtml}${valueHtml}</span>`;
+            return `<tr>
+                      <td><span style="font-size:20px; color: ${this.series.color}">&#${key}</span></td>
+                      <td style="text-align: right;"><strong>${value}</strong></td>
+                    </tr>`;
           },
-          headerFormat: '',
+          footerFormat: '</table>',
           useHTML: true
         },
         xAxis: {
@@ -125,7 +117,25 @@ const withHeroChart = (ComposedComponent) => {
         },
         xAxis: chartConfig.xAxis,
         yAxis: chartConfig.yAxis,
-        series: chartConfig.series
+        series: chartConfig.series.map(s => {
+          if (isObject(s.data[0])) {
+            s.data = s.data.forEach(d => {
+              d.marker = {
+                enabled: false,
+              }
+            })
+          } else {
+            s.data = s.data.map(y => {
+              return {
+                y,
+                marker: { // disable markers on line chart (by point), but not in legend
+                  enabled: false
+                }
+              }
+            });
+          }
+          return s;
+        }),
       };
 
       const config = merge({}, baseConfig, instanceConfig);

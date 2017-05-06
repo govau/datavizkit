@@ -142,6 +142,12 @@ const withColumnChart = (ComposedComponent) => {
         tooltip: {
           enabled: false,
         },
+        xAxis: {
+          crosshair: {
+            width: 40,
+            color: 'rgba(204,214,235,0.25)'
+          },
+        },
         yAxis: {
           title: {
             text: null
