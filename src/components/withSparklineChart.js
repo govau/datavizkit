@@ -76,9 +76,10 @@ const withSparklineChart = (ComposedComponent) => {
         yAxis: {
           visible: false,
           endOnTick: false,
+          startOnTick: false,
         },
         xAxis: {
-          visible: false
+          visible: false,
         },
         plotOptions: {
           spline: {
@@ -120,6 +121,10 @@ const withSparklineChart = (ComposedComponent) => {
         yAxis: chartConfig.yAxis,
         series: chartConfig.series,
       };
+
+      if (instanceConfig.yAxis && instanceConfig.yAxis.min) {
+        delete instanceConfig.yAxis.min;
+      }
 
       const config = merge({}, baseConfig, instanceConfig);
 
