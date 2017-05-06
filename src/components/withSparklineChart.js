@@ -45,7 +45,7 @@ const withSparklineChart = (ComposedComponent) => {
       const baseConfig = {
         chart: {
           type: 'spline',
-          height: 170,
+          height: 140,
           events: {
 
             load: function() {  // equivalent to constructor callback
@@ -74,13 +74,14 @@ const withSparklineChart = (ComposedComponent) => {
           text: '',
         },
         yAxis: {
-          visible: false
+          visible: false,
+          endOnTick: false,
         },
         xAxis: {
           visible: false
         },
         plotOptions: {
-          line: {
+          spline: {
             animation: false,
           },
           series: {
