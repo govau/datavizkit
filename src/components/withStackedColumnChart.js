@@ -58,7 +58,6 @@ const withStackedColumnChart = (ComposedComponent) => {
       const {
         stackingType,
         chartConfig,
-        minimumValue,
         displayHighContrast,
       } = this.props;
 
@@ -68,6 +67,7 @@ const withStackedColumnChart = (ComposedComponent) => {
       const baseConfig = {
         chart: {
           type: 'column',
+          height: 300,
           events: {
 
             load: function() {  // equivalent to constructor callback

@@ -66,6 +66,7 @@ const withLineChart = (ComposedComponent) => {
       const baseConfig = {
         chart: {
           type: 'line',
+          height: 300,
           events: {
 
             load: function() {  // equivalent to constructor callback
