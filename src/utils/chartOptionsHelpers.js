@@ -29,10 +29,12 @@ export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
 
   return series.map(s => {
     const d = s.data[_i];
+    const units = d.units || s.options.units;
+
     return {
       key: s.name,
       // if _i is null, it's coming from a plot band
-      value: seriesDataIndex === null ? 'No data' : getValueForLegend(d.y, d.units),
+      value: seriesDataIndex === null ? 'No data' : getValueForLegend(d.y, units),
       color: d.color,
       // hide this if i'm hovering a null data region
       category: seriesDataIndex === null ? null : d.category,
