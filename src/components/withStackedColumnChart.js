@@ -8,7 +8,6 @@ import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
 } from './../utils/chartOptionsHelpers';
-import {dateFormats} from './../utils/displayFormats';
 
 
 // render a stackedColumn chart and manage stackedColumn chart stuff
