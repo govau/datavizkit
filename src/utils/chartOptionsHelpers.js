@@ -85,10 +85,21 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
         to: i + .5,   // point after
         color: 'url(#null-data-layer)', // this color represents the null value region
         events: {
-          mouseover: function(e) {
-            broadcastSetState &&
-              broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, null)});
+
+          mouseover: function() {
+
+            broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, null)});
+            this.axis.crosshair = false;
+            this.axis.series.forEach(s => {
+              s.data.map(d => {
+                d.setState('');
+              });
+            });
           },
+
+          mouseout: function() {
+            this.axis.crosshair = true;
+          }
         }
       });
     }
