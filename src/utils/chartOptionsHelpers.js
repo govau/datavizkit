@@ -1,5 +1,6 @@
 
 import {valueFormats} from './../utils/displayFormats'
+import {formatSecondsToHumanised} from './../utils/formatTime';
 
 
 const getValueForLegend = (y, units = '') => {
@@ -10,8 +11,11 @@ const getValueForLegend = (y, units = '') => {
     return `${units}${y}`;
   } else if (units === '%') {
     return `${y}${units}`;
-  } else
+  } else if (units === 's') {
+    return formatSecondsToHumanised(y);
+  } else {
     return y;
+  }
 };
 
 /**
