@@ -11,7 +11,7 @@ const highcontrastPatterns = [
   ({id, color}) => {
     // lines
 
-    const strokeColor = tinycolor(color).lighten(40).toString();
+    const strokeColor = tinycolor(color).lighten(30).toString();
     return (
       <pattern id={id} patternUnits="userSpaceOnUse" width="10" height="10">
         <rect width="10" height="10" fill={color}></rect>
@@ -22,7 +22,7 @@ const highcontrastPatterns = [
   ({id, color}) => {
     // circles
     const stroke = '#343434';
-    const fill = tinycolor(color).lighten(40).toString();
+    const fill = tinycolor(color).lighten(30).toString();
     return (
       <pattern id={id} patternUnits="userSpaceOnUse" width="10" height="10">
         <rect width="10" height="10" fill={fill}></rect>
@@ -32,7 +32,7 @@ const highcontrastPatterns = [
   },
   ({id, color}) => {
     // crosses
-    const strokeColor = tinycolor(color).lighten(40).toString();
+    const strokeColor = tinycolor(color).lighten(30).toString();
     return (
       <pattern id={id} patternUnits="userSpaceOnUse" width="10" height="10">
         <rect width="10" height="10" fill={color}></rect>
@@ -42,7 +42,7 @@ const highcontrastPatterns = [
   },
   ({id, color}) => {
     // waves
-    const strokeColor = tinycolor(color).lighten(40).toString();
+    const strokeColor = tinycolor(color).lighten(30).toString();
     return (
       <pattern id={id} patternUnits="userSpaceOnUse" width="10" height="10">
         <rect width="10" height="10" fill={color}></rect>
@@ -52,7 +52,7 @@ const highcontrastPatterns = [
   },
   ({id, color}) => {
     // lines
-    const strokeColor = tinycolor(color).lighten(40).toString();
+    const strokeColor = tinycolor(color).lighten(30).toString();
     return (
       <pattern id={id} patternUnits="userSpaceOnUse" width="10" height="10">
         <rect width="10" height="10" fill={color}></rect>
@@ -62,7 +62,7 @@ const highcontrastPatterns = [
   },
   ({id, color}) => {
     // circles
-    const strokeColor = tinycolor(color).lighten(40).toString();
+    const strokeColor = tinycolor(color).lighten(30).toString();
     return (
       <pattern id={id} patternUnits="userSpaceOnUse" width="20" height="20">{/* todo - investigate why this width/height is different */}
         <rect width="20" height="20" fill={color}></rect>
