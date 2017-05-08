@@ -95,11 +95,14 @@ const withColumnChart = (ComposedComponent) => {
 
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series)});
 
-              // "hover" over the last column
-              const lastCol = last(this.series[0].data);
-              if (lastCol) {
-                lastCol.onMouseOver && lastCol.onMouseOver();
-              }
+              // todo - extract to setHighchartsSeriesDataState
+              this.series.forEach(s => {
+                s.data.filter((d,idx,arr) => {
+                  return idx == arr.length - 1;
+                }).map(d => {
+                  d.setState('hover');
+                });
+              });
             },
 
             // fired when update is called with redraw
@@ -118,13 +121,32 @@ const withColumnChart = (ComposedComponent) => {
         plotOptions: {
           column: {},
           series: {
+            stickyTracking: false,
             animation: false,
             point: {
               events: {
 
                 mouseOver: function(e) {
                   broadcastSetState({'customLegend': createCartesianCustomLegendData(this.series.chart.series, this.index)});
+
+                  // todo - extract to setHighchartsSeriesDataState
+                  this.series.chart.series.forEach(s => {
+                    s.data.filter((d,idx) => {
+                      return this.index === idx;
+                    }).map(d => {
+                      d.setState && d.setState('hover');
+                    });
+                  });
                 },
+
+                mouseOut: function() {
+                  // todo - extract to setHighchartsSeriesDataState
+                  this.series.chart.series.forEach(s => {
+                    s.data.map(d => {
+                      d.setState && d.setState('');
+                    });
+                  });
+                }
 
               }
             },
@@ -142,12 +164,6 @@ const withColumnChart = (ComposedComponent) => {
         },
         tooltip: {
           enabled: false,
-        },
-        xAxis: {
-          crosshair: {
-            width: 40,
-            color: 'rgba(204,214,235,0.25)'
-          },
         },
         yAxis: {
           title: {

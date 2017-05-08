@@ -124,7 +124,6 @@ const withLineChart = (ComposedComponent) => {
                 },
 
                 mouseOut: function() {
-
                   // todo - extract to setHighchartsSeriesDataState
                   this.series.chart.series.forEach(s => {
                     s.data.map(d => {
@@ -152,7 +151,6 @@ const withLineChart = (ComposedComponent) => {
           crosshairs: true,
         },
         xAxis: {
-          crosshair: true,
           // type: 'datetime', // todo - format x labels to datetime
           // Format 24 hour time to AM/PM
           // dateTimeLabelFormats: {
