@@ -73,7 +73,8 @@ const BASE_HIGHCHARTS_CONFIG = {
     dateTimeLabelFormats: {
       // day: '%e of %b',
       // month: '%b \'%y',
-    }
+    },
+    crosshair: true,
   },
   legend: {
     enabled: false,
