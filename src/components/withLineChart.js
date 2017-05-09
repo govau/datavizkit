@@ -201,10 +201,11 @@ const withLineChart = (ComposedComponent) => {
 
     render() {
       const {customLegend} = this.state;
+      const {displayHighContrast} = this.props;
       return (
         <ComposedComponent {...this.props}>
           <div ref={el => this._chartEl = el} />
-          {customLegend && customLegend.length > 0 && <Legend data={customLegend} />}
+          {customLegend && customLegend.length > 0 && <Legend data={customLegend} displayHighContrast={displayHighContrast} />}
         </ComposedComponent>
       )
     }

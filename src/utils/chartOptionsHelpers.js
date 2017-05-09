@@ -28,6 +28,7 @@ export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
   // supplied index or default to last (latest data)
   const _i = seriesDataIndex || series[0].data.length - 1;
 
+
   return series.map(s => {
     const d = s.data[_i];
     const units = d.units || s.options.units;
@@ -39,6 +40,7 @@ export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
       color: d.color,
       // hide this if i'm hovering a null data region
       category: seriesDataIndex === null ? null : d.category,
+      symbol: s.symbol,
     }
   }).reduce((a, b) => { // flatten
     return [...a, b];
@@ -88,6 +90,7 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
         events: {
 
           mouseover: function() {
+
 
             broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, null)});
             this.axis.crosshair = false;

@@ -73,7 +73,7 @@ const withHeroChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: true,
+          enabled: false,
           shared: true,
           crosshairs: true,
           borderRadius: 8,
@@ -81,11 +81,11 @@ const withHeroChart = (ComposedComponent) => {
           pointFormatter: function() {
             // this refers tp "Point"
             const {units} = this.series.options;
-            const key = symbolChars[this.series.symbol];
+            const symbol = symbolChars[this.series.symbol];
             const value = `${units === '$' ? '$' : ''}${this.y}${units === '%' ? '%' : ''}`;
 
             return `<tr>
-                      <td><span style="font-size:20px; color: ${this.series.color}">&#${key}</span></td>
+                      <td><span style="font-size:20px; color: ${this.series.color}">&#${symbol}</span></td>
                       <td style="text-align: right;"><strong>${value}</strong></td>
                     </tr>`;
           },

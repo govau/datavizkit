@@ -3,11 +3,11 @@ import Highcharts from 'highcharts';
 
 
 export const symbolChars = {
-  'circle': 9679,
-  'diamond': 9670,
-  'triangle': 9652,
-  'square': 9632,
-  'triangle-down': 9660 };
+  'circle': '●',
+  'diamond': '◆',
+  'triangle': '▲',
+  'square': '■',
+  'triangle-down': '▼' };
 
 export const valueFormats = {
   'percentage': val => `${Highcharts.numberFormat(val, 2)}%`,
