@@ -92,7 +92,7 @@ class App extends Component {
           }}
           singleCategory={false}
           singleSection={true}
-          displayHighContrast={hcState} />*/}
+          displayHighContrast={hcState} />
 
         <LineWidget title='Number of page views'
           type='column'
