@@ -149,7 +149,7 @@ const withLineChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: true,
+          enabled: false,
           shared: true,
           crosshairs: true,
         },
