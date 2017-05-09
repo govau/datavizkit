@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import './customLegend.css';
+
 
 const Legend = ({data}) => {
   return (

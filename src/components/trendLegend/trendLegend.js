@@ -3,7 +3,8 @@
 
 
 import React from 'react';
-import styled from 'styled-components';
+
+import './trendLegend.css';
 
 
 const getPreviousDate = (data) => {
@@ -48,7 +49,7 @@ const TrendLegend = ({data, className}) => {
   const trend = getTrend(difference);
   const volume = getVolume(difference);
   return (
-    <div className={className}>
+    <div className="D_TL">
       <span>
         <i className={`metric-trend fa fa-arrow-${trend}`}></i>
         {date && <span className='summary-text'>{trend} {volume} since {date}</span>}
@@ -57,14 +58,4 @@ const TrendLegend = ({data, className}) => {
   )
 };
 
-const StyledTrendLegend = styled(TrendLegend)`
-  width: 100%;
-  text-align:center;
-  
-  .fa {
-    color: #0075cd;
-    margin-right: 4px;
-  }
-`;
-
-export default StyledTrendLegend;
+export default TrendLegend;
