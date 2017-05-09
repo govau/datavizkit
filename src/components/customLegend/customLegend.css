@@ -1,0 +1,33 @@
+
+.D_CL {
+  padding: 0 4px;
+}
+
+.D_CL_row {
+  display: table;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.D_CL_row:last-of-type {
+  margin-bottom: 0;
+}
+
+.D_CL_key,
+.D_CL_value {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.D_CL_key svg {
+  margin-right: 6px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.D_CL_value {
+  text-align: right;
+  font-weight: 600;
+}

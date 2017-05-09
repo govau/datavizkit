@@ -1,9 +1,8 @@
 
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 import merge from 'lodash/merge';
 
-import Legend from './customLegend.js';
+import Legend from './customLegend/customLegend.js';
 import {createHighcontrastFillSeriesIteratee} from './../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
@@ -98,7 +97,7 @@ const withColumnChart = (ComposedComponent) => {
               // todo - extract to setHighchartsSeriesDataState
               this.series.forEach(s => {
                 s.data.filter((d,idx,arr) => {
-                  return idx == arr.length - 1;
+                  return idx === arr.length - 1;
                 }).map(d => {
                   d.setState('hover');
                 });

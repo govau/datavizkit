@@ -4,7 +4,7 @@ import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {symbolChars, valueFormats} from './../utils/displayFormats';
+import {symbolChars} from './../utils/displayFormats';
 
 
 const withHeroChart = (ComposedComponent) => {

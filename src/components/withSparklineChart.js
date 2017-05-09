@@ -4,7 +4,7 @@ import last from 'lodash/last';
 import merge from 'lodash/merge';
 
 import Count from './count/count.js';
-import TrendLegend from './trendLegend.js';
+import TrendLegend from './trendLegend/trendLegend.js';
 
 
 // render a sparkline chart and manage sparkline chart stuff

@@ -1,12 +1,13 @@
 
 import React from 'react';
 import {compose} from 'recompose';
-import styled from 'styled-components';
 
 import withHighcharts from './../withHighcharts';
 import withStackedColumnChart from './../withStackedColumnChart';
 import Tooltip from './../tooltip/tooltip';
 import {dateFormats} from './../../utils/displayFormats';
+
+import './stackedColumnWidget.css';
 
 
 // render a uniquely marked up and styled custom StackedColumnWidget
@@ -21,7 +22,7 @@ const StackedColumnWidget = ({
   return (
     <article role="article"D_widget>
       <header>
-        {infoText && <Div_styledInfoTextContainer><Tooltip text={infoText} viewport={viewport}  /></Div_styledInfoTextContainer>}
+        {infoText && <div className="D_SCW_infoContainer"><Tooltip text={infoText} viewport={viewport}  /></div>}
         <h1 className="highcharts-title">{title}</h1>
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
@@ -29,10 +30,6 @@ const StackedColumnWidget = ({
     </article>
   )
 };
-
-const Div_styledInfoTextContainer = styled.div`
-  text-align: right;
-`;
 
 const enhance = compose(
   withHighcharts,
