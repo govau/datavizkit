@@ -78,7 +78,7 @@ class App extends Component {
                               idxInWidgets="3"
                               value=""
                               trendValue=""
-                              trendDate="2016-10-31T00:00:00Z"/>*/}
+                              trendDate="2016-10-31T00:00:00Z"/>
 
 
 
@@ -92,6 +92,27 @@ class App extends Component {
           }}
           singleCategory={false}
           singleSection={true}
+          displayHighContrast={hcState} />*/}
+
+        <LineWidget title='Number of page views'
+          type='column'
+          dateLastUpdated='22 Feb 2016'
+          minimumValue="20000"
+          _singleCategory={false}
+          _singleSection={false}
+          chartConfig={{
+            "yAxis":[
+              {"title":{"text":"Percentage (%)"},"opposite":false,"floor":0,"ceiling":100,"min":0,"max":100}
+            ],
+            "xAxis":{"categories":["Nov '15","Dec '15","Jan '16","Feb '16","Mar '16","Apr '16","May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16"]},
+            "series":[
+              {"name":"1 service","units":"%","data":[59.56,59.21,58.72,58.24,57.84,57.42,56.98,56.5,55.83,55.33,54.9,54.5,54.1],"yAxis":0},
+              {"name":"2 services","units":"%","data":[24.55,24.7,24.9,25.09,25.23,25.38,25.52,25.64,25.71,25.77,25.8,25.9,26.02],"yAxis":0},
+              {"name":"3 services","units":"%","data":[11.19,11.31,11.48,11.64,11.79,11.94,12.11,12.28,12.58,12.8,13,13.1,13.27],"yAxis":0},
+              {"name":"4 services","units":"%","data":[3.69,3.74,3.81,3.89,3.97,4.05,4.14,4.25,4.46,4.61,4.7,4.8,4.94],"yAxis":0},
+              {"name":"5+ services","units":"%","data":[1.02,1.05,1.09,1.13,1.18,1.22,1.25,1.32,1.43,1.5,1.6,1.6,1.67],"yAxis":0}
+            ]
+          }}
           displayHighContrast={hcState} />
 
         <SparklineWidget chartConfig={{

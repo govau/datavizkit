@@ -5,9 +5,9 @@ import Highcharts from 'highcharts';
 export const symbolChars = {
   'circle': '●',
   'diamond': '◆',
-  'triangle': '▲',
+  'triangle': '▴',
   'square': '■',
-  'triangle-down': '▼' };
+  'triangle-down': '▾' };
 
 export const valueFormats = {
   'percentage': val => `${Highcharts.numberFormat(val, 2)}%`,

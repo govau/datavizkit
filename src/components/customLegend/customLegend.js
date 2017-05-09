@@ -8,7 +8,7 @@ import './customLegend.css';
 
 const Marker = ({renderSymbol = false, symbol, color}) => {
   if (renderSymbol) {
-    return <text x="0" y="12" fill={color} style={{fontSize:'20px'}}>{symbolChars[symbol]}</text>
+    return <text x="0" y="12" fill={color} style={{fontSize: '20px', fontFamily: `'Lucida Sans Unicode', Verdana, Arial, sans-serif`}}>{symbolChars[symbol]}</text>
   }
   return <rect x="0" y="0" width="12" height="12" fill={color} visibility="visible" rx="6" ry="6"></rect>
 };
