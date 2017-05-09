@@ -23,6 +23,21 @@ const withHeroChart = (ComposedComponent) => {
       this.props.renderChart(this._chartConfig);
     }
 
+    componentWillUpdate(nextProps) {
+      let partition = {};
+
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+        partition = {...this._transformPartitionedForHighContrast(true, this._chartConfig)};
+      }
+
+      if (Object.keys(partition).length) {
+        // keep _chartConfig in sync
+        merge(this._chartConfig, partition);
+
+        this.props.updateChart(partition);
+      }
+    }
+
     componentWillUnmount() {
       this.props.destroyChart();
       this._chartEl = null;
@@ -50,7 +65,8 @@ const withHeroChart = (ComposedComponent) => {
           enabled: true,
           align: 'center',
           verticalAlign: 'bottom',
-          layout: 'horizontal'
+          layout: 'horizontal',
+          symbolWidth: 52
         },
         plotOptions: {
           spline: {
