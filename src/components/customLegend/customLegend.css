@@ -24,7 +24,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  display: inline-block;
+  display: inline-block !important;
 }
 
 .D_CL_value {
