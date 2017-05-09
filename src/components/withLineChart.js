@@ -1,9 +1,8 @@
 
 import React, {PureComponent} from 'react';
-import last from 'lodash/last';
 import merge from 'lodash/merge';
 
-import Legend from './customLegend.js';
+import Legend from './customLegend/customLegend.js';
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
@@ -146,7 +145,7 @@ const withLineChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: false,
+          enabled: true,
           shared: true,
           crosshairs: true,
         },
