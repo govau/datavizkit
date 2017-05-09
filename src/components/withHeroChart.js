@@ -101,7 +101,7 @@ const withHeroChart = (ComposedComponent) => {
             const value = `${units === '$' ? '$' : ''}${this.y}${units === '%' ? '%' : ''}`;
 
             return `<tr>
-                      <td><span style="font-size:20px; color: ${this.series.color}">&#${symbol}</span></td>
+                      <td><span style="font-size:20px; color: ${this.series.color}">${symbol}</span></td>
                       <td style="text-align: right;"><strong>${value}</strong></td>
                     </tr>`;
           },
