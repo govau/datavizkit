@@ -17,7 +17,7 @@ Status: [WIP]
 
 A fully featured data visualisation toolset which leverages [Highcharts](http://www.highcharts.com/) and [React](https://facebook.github.io/react/) internally.
 
-For more information please contact the [Performance Dashboards Team](mailto:performance-dashboard@digital.gov.au).
+For more information *or before using*, please contact the [Performance Dashboards Team](mailto:performance-dashboard@digital.gov.au).
 
 
 ## To install 
