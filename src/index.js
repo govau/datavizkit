@@ -19,7 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hcState: false,
+      hcState: true,
     }
   }
   render() {
@@ -78,7 +78,7 @@ class App extends Component {
                               idxInWidgets="3"
                               value=""
                               trendValue=""
-                              trendDate="2016-10-31T00:00:00Z"/>
+                              trendDate="2016-10-31T00:00:00Z"/>*/}
 
 
 
@@ -88,7 +88,7 @@ class App extends Component {
           minimumValue="20000"
           chartConfig={{
             xAxis:{categories:["May","Jun","Jul","Aug","Sep","Oct","Nov"]},
-            series:[{name:"Time to clear",data:[84807,48317,51420,62400,48060,37560,39300]}]
+            series:[{name:"Time to clear",data:[84807,null,51420,62400,48060,37560,39300]}]
           }}
           singleCategory={false}
           singleSection={true}

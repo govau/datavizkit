@@ -20,7 +20,6 @@ const Legend = ({data, displayHighContrast}) => {
         {data[0].category === null ? <span dangerouslySetInnerHTML={{__html: '&nbsp;'}} /> : data[0].category}
       </div>
       {data.map((d, idx) => {
-        console.log(d)
         return (
           <div key={idx} className="D_CL_row">
             <div className="D_CL_key">

@@ -1,6 +1,7 @@
 
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
+import isObject from 'lodash/isObject';
 
 import Legend from './customLegend/customLegend.js';
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
@@ -106,6 +107,9 @@ const withLineChart = (ComposedComponent) => {
             stickyTracking: true,
             lineWidth: 4,
             animation: false,
+            marker: {
+              enabled: true,
+            },
             point: {
               events: {
 
@@ -175,7 +179,25 @@ const withLineChart = (ComposedComponent) => {
         },
         yAxis: chartConfig.yAxis,
         xAxis: chartConfig.xAxis,
-        series: chartConfig.series,
+        series: chartConfig.series.map(s => {
+          if (isObject(s.data[0])) {
+            s.data = s.data.forEach(d => {
+              d.marker = {
+                enabled: false,
+              }
+            })
+          } else {
+            s.data = s.data.map(y => {
+              return {
+                y,
+                marker: { // disable markers on line chart (by point), but not in legend
+                  enabled: false
+                }
+              }
+            });
+          }
+          return s;
+        }),
       };
 
       const config = merge({}, baseConfig, instanceConfig);
