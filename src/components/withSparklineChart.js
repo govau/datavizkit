@@ -118,7 +118,7 @@ const withSparklineChart = (ComposedComponent) => {
           renderTo: this._chartEl
         },
         xAxis: chartConfig.xAxis,
-        yAxis: chartConfig.yAxis,
+        // yAxis: chartConfig.yAxis,
         series: chartConfig.series,
       };
 
