@@ -1,6 +1,7 @@
 
-import {valueFormats} from './../utils/displayFormats'
-import {formatSecondsToHumanised} from './../utils/formatTime';
+import {valueFormats} from './displayFormats'
+import {formatSecondsToHumanised} from './formatTime';
+import {formatCurrency} from './formatCurrency';
 
 
 const getValueForLegend = (y, units = '') => {
@@ -10,7 +11,7 @@ const getValueForLegend = (y, units = '') => {
   if (units === '$') {
     return `${units}${y}`;
   } else if (units === '%') {
-    return `${y}${units}`;
+    return `${y}${formatCurrency(units)}`;
   } else if (units === 's') {
     return formatSecondsToHumanised(y);
   } else {
