@@ -1,5 +1,5 @@
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import tinycolor from 'tinycolor2';
 
 

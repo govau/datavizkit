@@ -28,7 +28,6 @@
     "pui-react-overlay-trigger": "^8.0.5",
     "pui-react-tooltip": "^8.0.5",
     "recompose": "^0.23.1",
-    "styled-components": "^1.4.5",
     "tinycolor2": "^1.4.1"
   },
   "peerDependencies": {
@@ -75,7 +74,6 @@
     "husky": "^0.13.3",
     "jest": "18.1.0",
     "json-loader": "0.5.4",
-    "lodash": "^4.17.4",
     "object-assign": "4.1.1",
     "postcss-loader": "1.2.2",
     "promise": "7.1.1",
@@ -83,15 +81,12 @@
     "react-dev-utils": "^0.5.2",
     "react-dom": "^15.5.4",
     "react-styleguidist": "^5.0.2",
-    "recompose": "^0.23.1",
     "semantic-release": "^6.3.2",
     "style-loader": "0.13.1",
-    "styled-components": "^1.4.5",
     "url-loader": "0.5.7",
     "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2",
-    "webpack-manifest-plugin": "1.1.0",
-    "whatwg-fetch": "2.0.2"
+    "webpack-manifest-plugin": "1.1.0"
   },
   "scripts": {
     "clean:lib": "rm -rf lib",
