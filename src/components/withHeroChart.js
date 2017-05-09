@@ -89,7 +89,7 @@ const withHeroChart = (ComposedComponent) => {
           },
         },
         tooltip: {
-          enabled: false,
+          enabled: true,
           shared: true,
           crosshairs: true,
           borderRadius: 8,
