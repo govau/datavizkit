@@ -9,9 +9,9 @@ const getValueForLegend = (y, units = '') => {
     return 'No data';
   }
   if (units === '$') {
-    return `${units}${y}`;
+    return `${units}${formatCurrency(y)}`;
   } else if (units === '%') {
-    return `${formatCurrency(y)}${units}`;
+    return `${y}${units}`;
   } else if (units === 's') {
     return formatSecondsToHumanised(y);
   } else {
@@ -27,7 +27,6 @@ const getValueForLegend = (y, units = '') => {
 export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
   // supplied index or default to last (latest data)
   const _i = seriesDataIndex || series[0].data.length - 1;
-
 
   return series.map(s => {
     const d = s.data[_i];
