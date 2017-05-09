@@ -11,7 +11,7 @@ const getValueForLegend = (y, units = '') => {
   if (units === '$') {
     return `${units}${y}`;
   } else if (units === '%') {
-    return `${y}${formatCurrency(units)}`;
+    return `${formatCurrency(y)}${units}`;
   } else if (units === 's') {
     return formatSecondsToHumanised(y);
   } else {
