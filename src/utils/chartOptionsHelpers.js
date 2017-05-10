@@ -26,7 +26,7 @@ const getValueForLegend = (y, units = '') => {
  */
 export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
   // supplied index or default to last (latest data)
-  const _i = seriesDataIndex || series[0].data.length - 1;
+  const _i = null == seriesDataIndex ? series[0].data.length - 1 : seriesDataIndex;
 
   return series.map(s => {
     const d = s.data[_i];
