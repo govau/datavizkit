@@ -2,7 +2,7 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import {dateFormats} from './../../utils/displayFormats';
+import {dateFormats, valueWithUnits} from './../../utils/displayFormats';
 import Tooltip from './../tooltip/tooltip';
 
 try {require('./mobile.css');} catch(e) {}
@@ -43,15 +43,17 @@ const CountValue = ({value, units}) => {
 };
 
 
-const TrendValue = ({value, date}) => {
+const TrendValue = ({value, date, units}) => {
+  let valStr = valueWithUnits(value, units);
+
   return (
     <div className="D_CTW_M_trendContainer">
       {value && <div>
         <strong className="D_CTW_M_trendValue">
           {Number(value) > 0 ?
-            <span>{value} <i className="fa fa-arrow-up" /></span> :
+            <span>{valStr} <i className="fa fa-arrow-up" /></span> :
             Number(value) < 0 ?
-              <span>{value} <i className="fa fa-arrow-down" /></span> :
+              <span>{valStr} <i className="fa fa-arrow-down" /></span> :
               <span>Unchanged <i className="fa fa-minus" /></span>}
         </strong>
         <span className="D_CTW_M_trendDate">since {dateFormats.monthYear(date)}</span>
@@ -91,7 +93,7 @@ const MobileCountWithTrendWidget = (props) => {
 
           <div className="D_CTW_M_layoutLeft">
             <h1>{title} {tooltipAnchorTo && <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} />}</h1>
-            <TrendValue value={trendValue} date={trendDate} />
+            <TrendValue value={trendValue} date={trendDate} units={units} />
           </div>
 
           <div className="D_CTW_M_layoutRight">
