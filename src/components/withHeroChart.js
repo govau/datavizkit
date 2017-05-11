@@ -75,6 +75,7 @@ const withHeroChart = (ComposedComponent) => {
             lineWidth: 4,
             animation: false,
             marker: {
+              radius: 8,
               enabled: true,  // must be enabled for display symbols in the legend
             },
             states: {
@@ -138,6 +139,7 @@ const withHeroChart = (ComposedComponent) => {
             s.data = s.data.forEach(d => {
               d.marker = {
                 enabled: false,
+                radius: 4
               }
             })
           } else {
@@ -145,7 +147,8 @@ const withHeroChart = (ComposedComponent) => {
               return {
                 y,
                 marker: { // disable markers on line chart (by point), but not in legend
-                  enabled: false
+                  enabled: false, 
+                  radius: 4
                 }
               }
             });
