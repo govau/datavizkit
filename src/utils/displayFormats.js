@@ -24,3 +24,16 @@ export const dateFormats = {
   dayMonthYear: val => Highcharts.dateFormat('%e %b %Y', new Date(val)),
   monthYear: val => Highcharts.dateFormat('%b %Y', new Date(val)),
 };
+
+export const valueWithUnits = (value, units) => {
+  let op = value < 0 ? '-' : '+';
+
+  switch(units) {
+  case '$':
+    return `${op} $${value}`;
+  case '%':
+    return `${op} ${value}%`;
+  default:
+    return `${op} ${value}`;
+  }
+};

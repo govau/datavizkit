@@ -2,7 +2,7 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import {dateFormats} from './../../utils/displayFormats';
+import {dateFormats, valueWithUnits} from './../../utils/displayFormats';
 import Tooltip from './../tooltip/tooltip';
 
 try {require('./desktop.css');} catch(e) {}
@@ -50,16 +50,18 @@ const CountValue = ({value, units}) => {
 };
 
 
-const TrendValue = ({value, date}) => {
+const TrendValue = ({value, date, units}) => {
+  let valStr = valueWithUnits(value, units);
+
   return (
     <div className="D_CTW_D_trendContainer">
       <div className="D_CTW_D_trendContainerInner">
         {value && <div>
           <strong className="D_CTW_D_trendValue">
             {Number(value) > 0 ?
-              <span>{value} <i className="fa fa-arrow-up" /></span> :
+              <span>{valStr} <i className="fa fa-arrow-up" /></span> :
               Number(value) < 0 ?
-                <span>{value} <i className="fa fa-arrow-down" /></span> :
+                <span>{valStr} <i className="fa fa-arrow-down" /></span> :
                 <span>Unchanged <i className="fa fa-minus" /></span>}
           </strong>
           <span className="D_CTW_D_trendDate">since {dateFormats.monthYear(date)}</span>
@@ -109,7 +111,7 @@ const DesktopCountWithTrendWidget = (props) => {
 
         <CountValue value={value} units={units} />
 
-        <TrendValue value={trendValue} date={trendDate} />
+        <TrendValue value={trendValue} date={trendDate} units={units} />
 
       </section>
 
