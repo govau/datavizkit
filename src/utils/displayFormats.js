@@ -27,13 +27,14 @@ export const dateFormats = {
 
 export const valueWithUnits = (value, units) => {
   let op = value < 0 ? '-' : '+';
+  let val = Math.abs(value);
 
   switch(units) {
   case '$':
-    return `${op} $${value}`;
+    return `${op} $${val}`;
   case '%':
-    return `${op} ${value}%`;
+    return `${op} ${val}%`;
   default:
-    return `${op} ${value}`;
+    return `${op} ${val}`;
   }
 };
