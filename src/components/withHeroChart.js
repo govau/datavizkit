@@ -54,6 +54,21 @@ const withHeroChart = (ComposedComponent) => {
         chart: {
           type: 'spline',
           height: 360,
+          events: {
+            click: function(e) { 
+              if (this.tooltip && this.tooltip.label) {
+                switch(this.tooltip.label.attr('visibility')) {
+                case 'hidden':
+                  this.tooltip.label.show();
+                  break;
+                
+                case 'visible':
+                  this.tooltip.label.hide();
+                  break;
+                }
+              }
+            }
+          }
         },
         title: {
           text: ''
