@@ -9,6 +9,7 @@ import makeHighcontrastPatterns from './../utils/highcontrastPatterns';
 
 import './highcharts.css';
 
+// This fixes the "thin lines at top & bottom of chart" bug
 Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
 	proceed.apply(this, [].slice.call(arguments, 1));
 	this.clipBox.height += 6;
