@@ -4,6 +4,8 @@
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
+import get from 'lodash/get';
+import includes from 'lodash/includes';
 
 import makeHighcontrastPatterns from './../utils/highcontrastPatterns';
 
@@ -12,8 +14,10 @@ import './highcharts.css';
 // This fixes the "thin lines at top & bottom of chart" bug
 Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
 	proceed.apply(this, [].slice.call(arguments, 1));
-	this.clipBox.height += 6;
-  this.clipBox.y -= 3;
+  if (includes(['line','spline'], get(this, 'options.chart.type'))) {
+    this.clipBox.height += 6;
+    this.clipBox.y -= 3;
+  }
 });
 
 
