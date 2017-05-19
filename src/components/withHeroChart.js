@@ -158,9 +158,10 @@ const withHeroChart = (ComposedComponent) => {
               }
             })
           } else {
+            console.log(s);
             s.data = s.data.map(y => {
               return {
-                y,
+                y: s.units == 'percentage' ? Math.min(99.5, Math.max(0.5, y)) : y,
                 marker: { // disable markers on line chart (by point), but not in legend
                   enabled: false, 
                   radius: 4
