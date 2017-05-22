@@ -147,7 +147,13 @@ const withHeroChart = (ComposedComponent) => {
         chart: {
           renderTo: this._chartEl,
         },
-        xAxis: chartConfig.xAxis,
+        xAxis: {
+          labels: {
+            formatter: function () {
+              return chartConfig.xAxis.categories[this.value];
+            }
+          }
+        },
         yAxis: chartConfig.yAxis,
         series: chartConfig.series.map(s => {
           if (isObject(s.data[0])) {
