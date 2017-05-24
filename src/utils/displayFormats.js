@@ -9,6 +9,10 @@ export const symbolChars = {
   'square': '■',
   'triangle-down': '▾' };
 
+export const symbolSvg = function(symbol) { 
+
+};
+
 export const valueFormats = {
   'percentage': val => `${Highcharts.numberFormat(val, 2)}%`,
   'money': function(val) { return `$${val}`; }
