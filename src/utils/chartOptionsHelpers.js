@@ -65,9 +65,7 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
 
   const idxsWithNullValue = series.map(s => {
     return s.data.map((d, idx) => {
-      if (d.y === null) {
-        return idx;
-      }
+      return d.y === null ? idx : undefined; // For the linter's sake
     });
   }).reduce((a,b) => {
     // find an intersection between the arrays - common null vals in a series set
@@ -91,7 +89,7 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
               broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, idx)});
             this.axis.crosshair = false;
             this.axis.series.forEach(s => {
-              s.data.map(d => {
+              s.data.forEach(d => {
                 d.setState('');
               });
             });
