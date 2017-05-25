@@ -4,7 +4,7 @@ import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {symbolChars} from './../utils/displayFormats';
+import {tooltipMarker} from './../utils/displayFormats';
 
 
 const withHeroChart = (ComposedComponent) => {
@@ -56,7 +56,6 @@ const withHeroChart = (ComposedComponent) => {
           height: 360,
           events: {
             click: function(e) { 
-              console.log("Hello");
               if (this.tooltip && this.tooltip.label) {
                 switch(this.tooltip.label.attr('visibility')) {
                 case 'hidden':
@@ -110,35 +109,27 @@ const withHeroChart = (ComposedComponent) => {
           shared: true,
           crosshairs: true,
           borderRadius: 8,
-          headerFormat: '<small>{point.key}</small><table>',
-          pointFormatter: function() {
-            // this refers tp "Point"
-            const {units} = this.series.options;
-            const symbol = symbolChars[this.series.symbol];
-            const value = `${units === '$' ? '$' : ''}${this.y}${units === '%' ? '%' : ''}`;
+          formatter: function() {
+            const label = this.points[0].series.chart.options.xCategories[this.points[0].x]
 
-            return `<tr>
-                      <td>
-                        <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                              <g id="WOG-2015-?4" transform="translate(-596.000000, -1032.000000)" fill="#CF7E33">
-                                  <g id="Group-44" transform="translate(590.000000, 946.000000)">
-                                      <g id="TT_UserSatisfaction" transform="translate(6.000000, 87.000000)">
-                                          <g id="Group-22" transform="translate(0.000000, 4.000000)">
-                                              <rect id="Rectangle-15" x="0" y="0" width="25" height="3" rx="1.5"></rect>
-                                          </g>
-                                          <circle id="Oval-5" stroke="#FFFFFF" cx="12.5" cy="5.5" r="5.5"></circle>
-                                      </g>
-                                  </g>
-                              </g>
-                          </g>
-                      </svg>
-                      <!--<span style="font-size:20px; color: ${this.series.color}">${symbol}</span>-->
-                      </td>
-                      <td style="text-align: right;"><strong>${value}</strong></td>
-                    </tr>`;
+            const rows = this.points.map(function(point) {
+              const {units} = point.series.options;
+              const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
+              const marker = tooltipMarker(point.series.symbol, point.series.color);
+              
+              return `<tr>
+                        <td>
+                          ${marker}
+                        </td>
+                        <td style="text-align: right;"><strong>${value}</strong></td>
+                      </tr>`;
+            });
+
+            return `<small>${label}</small>
+              <table style="width:100%">
+                ${rows.join('')}
+              </table>`;
           },
-          footerFormat: '</table>',
           useHTML: true
         },
         xAxis: {
@@ -169,8 +160,9 @@ const withHeroChart = (ComposedComponent) => {
             formatter: function () {
               return chartConfig.xAxis.categories[this.value];
             }
-          }
+          }          
         },
+        xCategories: chartConfig.xAxis.categories,
         yAxis: chartConfig.yAxis,
         series: chartConfig.series.map(s => {
           if (isObject(s.data[0])) {
