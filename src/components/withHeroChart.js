@@ -65,6 +65,9 @@ const withHeroChart = (ComposedComponent) => {
                 case 'visible':
                   this.tooltip.label.hide();
                   break;
+
+                default:
+                  // Just to shut the linter up
                 }
               }
             }
