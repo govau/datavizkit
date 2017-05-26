@@ -147,23 +147,26 @@ const withSparkline = Composed => {
             broadcastSetState({'trendLegendData': this.series[0].data});
           }
 
-          // "select" the last column
-          const lastCol = last(this.series[0].data);
-          if (lastCol) {
-            // deselect all
 
-            this.series.forEach(s => {
-              s.data.filter((d,idx,arr) => {
-                return idx === arr.length - 1;
-              }).map(d => {
-                d.setState('');
-              });
+          // todo - extract
+          // select nothing then..
+          this.series.forEach(s => {
+            s.data.filter((d,idx,arr) => {
+              return idx === arr.length - 1;
+            }).map(d => {
+              d.setState('');
             });
+          });
 
-            setTimeout(() => {
-              lastCol.setState('select');
-            }, 400);
-          }
+          // in 400ms "select" the last column
+          this.series.forEach(s => {
+            s.data.filter((d,idx,arr) => {
+              return idx === arr.length - 1;
+            }).map(d => {
+              d.setState('hover');
+            });
+          });
+
         },
       };
 
