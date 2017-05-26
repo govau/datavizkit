@@ -134,12 +134,6 @@ const withSparkline = Composed => {
       config.chart.events = {
         load: function() {
           console.log('sparkline load');
-
-          // "select" the last column
-          const lastCol = last(this.series[0].data);
-          if (lastCol) {
-            lastCol.select();
-          }
         },
         render: function() {
           console.log('sparkline render');
@@ -151,6 +145,24 @@ const withSparkline = Composed => {
 
           if (this.series[0].data.length >= 2) {
             broadcastSetState({'trendLegendData': this.series[0].data});
+          }
+
+          // "select" the last column
+          const lastCol = last(this.series[0].data);
+          if (lastCol) {
+            // deselect all
+
+            this.series.forEach(s => {
+              s.data.filter((d,idx,arr) => {
+                return idx === arr.length - 1;
+              }).map(d => {
+                d.setState('');
+              });
+            });
+
+            setTimeout(() => {
+              lastCol.setState('select');
+            }, 400);
           }
         },
       };
