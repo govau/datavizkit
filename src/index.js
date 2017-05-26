@@ -12,10 +12,7 @@ import LineWidget from './components/lineWidget/lineWidget';
 import HeroWidget from './components/heroWidget/heroWidget';
 import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget';
 import DonutWidget from './components/donutWidget/donutWidget';
-
-
-// import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget';
-
+import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget';
 
 
 const series1 =  [
@@ -144,15 +141,8 @@ class App extends Component {
 
 
 
-        {/*<div>*/}
-
-
-
-
-
-
-
-          {/*<div style={{marginBottom: '1em', width: '300px',  display:'inline-block', float:'left'}}>
+        <div>
+          <div style={{marginBottom: '1em', width: '300px',  display:'inline-block', float:'left'}}>
             <CountWithTrendWidget title="User satisfaction"
               infoText="Overall satisfaction score includes all ratings weighted from 100% for very satisfied, to 0% for very dissatisfied"
                                   units="%"
@@ -177,7 +167,6 @@ class App extends Component {
 
 
 
-
         <CountWithTrendWidget title="Digital take-up"
                               infoText={null}
                               units="%"
@@ -193,71 +182,6 @@ class App extends Component {
                               value=""
                               trendValue=""
                               trendDate="2016-10-31T00:00:00Z"/>
-
-
-
-
-
-
-
-
-
-
-
-        <DonutWidget chartConfig={{"series":[{
-          name: "Jan",
-          data: [
-            {"name":"Girls","y":183},
-            {"name":"Guys","y":30},
-          ]
-          }]
-          }} title="People used"
-          type="donut"
-          dateLastUpdated="2017-02-01T01:02:02.240Z"
-          _singleCategory={true}
-          _singleSection={false}
-          minimumValue="30"
-          displayHighContrast={hcState} />
-
-        <DonutWidget chartConfig={{
-              series:[{name:"Jan",data:[{name:"Girls",y:183},{name:"Guys",y:30}]}]
-            }}
-                     title="People used"
-            type="donut"
-            dateLastUpdated="2017-02-01T01:02:02.240Z"
-            _singleCategory={true}
-            _singleSection={false}
-            minimumValue="30"
-            displayHighContrast={hcState} />
-
-
-        <ColumnWidget title='Number of page views'
-                      type='column'
-                      dateLastUpdated='22 Feb 2016'
-                      infoText="Something amazing about this widget."
-                      minimumValue="20000"
-                      chartConfig={{
-                        "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},
-                        "series":[{"name":"Time to clear","data":[84807,null,null,62400,null,37560,39300]}]
-                      }}
-                      _singleCategory={false}
-                      _singleSection={true}
-                      displayHighContrast={hcState} />
-
-        <ColumnWidget title='Boo of page views'
-                      type='column'
-                      dateLastUpdated='22 Feb 2016'
-                      infoText="Something amazing about this widget."
-                      minimumValue="8000"
-                      chartConfig={{
-                        "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]},
-                        "series":[{"name":"Time to clear","data":[84807,62400,null,37560,39300,8000,null]}]
-                      }}
-                      _singleCategory={false}
-                      _singleSection={true}
-                      displayHighContrast={hcState} />
-
-       */}
 
 
       </div>
