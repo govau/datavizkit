@@ -55,9 +55,6 @@ const withHeroChart = (ComposedComponent) => {
           type: 'spline',
           height: 360,
           events: {
-            tooltipRefresh: function(e) {
-              console.log("refresh event");
-            },
             click: function(e) { 
               if (this.tooltip && this.tooltip.label) {
                 switch(this.tooltip.label.attr('visibility')) {
@@ -120,8 +117,6 @@ const withHeroChart = (ComposedComponent) => {
               const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
               const marker = rawMarker(point.series.symbol, point.series.color, true);
               const markerHtml = jsxToString(marker).replace('xlinkHref', 'xlink:href');
-
-              // console.log(markerHtml);
               
               return `<tr>
                         <td>
