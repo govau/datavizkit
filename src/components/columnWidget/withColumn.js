@@ -71,10 +71,6 @@ const withColumn = Composed => {
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
-
-
-
-      // this._baseChartConfig = config;
     }
 
     // update
