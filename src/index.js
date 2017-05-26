@@ -35,7 +35,6 @@ class App extends Component {
     }
   }
   render() {
-    const {hcState} = this.state;
 
     // console.log('hcState: ', hcState)
 

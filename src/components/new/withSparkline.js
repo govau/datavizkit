@@ -1,6 +1,7 @@
 
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
+import last from 'lodash/last';
 
 
 const BASE_SPARKLINE_CHARTCONFIG = {
@@ -77,8 +78,6 @@ const withSparkline = Composed => {
 
       const config = this.makeInstanceConfig(this.createBaseConfig());
 
-      console.log(config)
-
       this.props.create(config);
     }
 
@@ -134,13 +133,25 @@ const withSparkline = Composed => {
       config.chart.events = {
         load: function() {
           console.log('sparkline load');
+
+          // "select" the last column
+          const lastCol = last(this.series[0].data);
+          if (lastCol) {
+            lastCol.select();
+          }
         },
         render: function() {
           console.log('sparkline render');
+
+          broadcastSetState({
+            countValue: last(this.series[0].data).y,
+            countUnits: this.series[0].options.units,
+          });
+
+          if (this.series[0].data.length >= 2) {
+            broadcastSetState({'trendLegendData': this.series[0].data});
+          }
         },
-        redraw: function() {
-          console.log('sparkline redraw');
-        }
       };
 
       this._baseChartConfig = config;
@@ -170,7 +181,8 @@ const withSparkline = Composed => {
         <div style={{border: '1px solid red', padding: '10px'}}>
           <h1>withSparkline</h1>
           <Composed {...this.props}
-                    countValue={countValue} countUnits={countUnits} trendLegendData={trendLegendData}>
+                    countValue={countValue} countUnits={countUnits}
+                    trendLegendData={trendLegendData}>
             <div ref={el => this._chart = el} />
           </Composed>
         </div>
