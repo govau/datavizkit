@@ -10,10 +10,10 @@ import ColumnWidget from './components/columnWidget/columnWidget';
 import SparklineWidget from './components/sparklineWidget/sparklineWidget';
 import LineWidget from './components/lineWidget/lineWidget';
 import HeroWidget from './components/heroWidget/heroWidget';
+import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget';
+import DonutWidget from './components/donutWidget/donutWidget';
 
 
-// import DonutWidget from './components/donutWidget/donutWidget';
-// import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget';
 // import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget';
 
 
@@ -46,6 +46,32 @@ class App extends Component {
           this.setState({hcState: !this.state.hcState})
         }}>Toggle high contrast</button>
 
+
+        <DonutWidget series={[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]}
+                     title="Devices used"
+                     type="donut"
+                     dateLastUpdated="2017-02-01T01:02:02.240Z"
+                     _singleCategory={true}
+                     _singleSection={false}
+                     minimumValue="30"
+                     displayHighContrast={hcState} />
+
+
+        <StackedColumnWidget
+          xAxis={{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}}
+          series={[
+            {"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},
+            {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
+            {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
+            {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
+          ]}
+          title="Types of service"
+          type="stackedColumn"
+          dateLastUpdated="2017-02-01T01:02:02.240Z"
+          _singleCategory={false}
+          _singleSection={false}
+          stackingType="normal"
+          displayHighContrast={hcState} />
 
 
         <HeroWidget
@@ -176,34 +202,7 @@ class App extends Component {
 
 
 
-        <StackedColumnWidget
-          chartConfig={{
-            "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
-            "series":[
-              {"name":"Public Beta","data":[0,null,2,2,2,2,2,2,2]},
-              {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
-              {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
-              {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
-            ]
-          }}
-          title="Types of service"
-          type="stackedColumn"
-          dateLastUpdated="2017-02-01T01:02:02.240Z"
-          _singleCategory={false}
-          _singleSection={false}
-          stackingType="normal"
-          displayHighContrast={hcState}
-        />
 
-        <DonutWidget chartConfig={{
-          series:[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]
-        }} title="Devices used"
-          type="donut"
-          dateLastUpdated="2017-02-01T01:02:02.240Z"
-          _singleCategory={true}
-          _singleSection={false}
-          minimumValue="30"
-          displayHighContrast={hcState} />
 
         <DonutWidget chartConfig={{"series":[{
           name: "Jan",

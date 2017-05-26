@@ -1,40 +1,33 @@
 
 import React from 'react';
-import {compose} from 'recompose';
 
-import withHighcharts from './../withHighcharts';
-import withDonutChart from './../withDonutChart';
+import LineChart from './donutChart';
+
 import Tooltip from './../tooltip/tooltip';
-import {dateFormats} from './../../utils/displayFormats'
+import {dateFormats} from './../../utils/displayFormats';
 
 import './donutWidget.css';
 
 
-// render a uniquely marked up and styled custom DonutWidget
-// might also have a DonutWidgetLarge or DonutWidgetMonochrome
 const DonutWidget = ({
   infoText,
   title,
   dateLastUpdated,
   viewport,
-  children
+  series, xAxis, yAxis,
 }) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_DW_infoContainer"><Tooltip text={infoText} viewport={viewport}  /></div>}
+        {infoText && <div className="D_DW_infoContainer"><Tooltip text={infoText} viewport={viewport} /></div>}
         <h1 className="highcharts-title">{title}</h1>
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
-      <section>{children}</section>
+      <section>
+        <LineChart series={series} xAxis={xAxis} yAxis={yAxis} />
+      </section>
     </article>
   )
 };
 
-const enhance = compose(
-  withHighcharts,
-  withDonutChart
-)(DonutWidget);
-
-export default enhance;
-
+export default DonutWidget;
