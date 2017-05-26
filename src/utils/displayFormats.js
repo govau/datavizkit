@@ -43,8 +43,6 @@ export const tooltipMarker = function(symbolName, color, showLine) {
     'circle': function(color, showLine) {
       return <svg width="25px" height="13px" viewBox="0 0 25 13" version="1.1"
             xmlns="http://www.w3.org/2000/svg">
-          <title>TT_UserSatisfaction</title>
-          <desc>Created with Sketch.</desc>
           <defs></defs>
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="WOG-2015-?4" transform="translate(-596.000000, -1032.000000)" fill={color}>
@@ -63,8 +61,6 @@ export const tooltipMarker = function(symbolName, color, showLine) {
     'diamond': function(color, showLine) {
       return <svg width="25px" height="17px" viewBox="0 0 25 17" version="1.1" 
             xmlns="http://www.w3.org/2000/svg">
-          <title>TT_CostPerTransaction</title>
-          <desc>Created with Sketch.</desc>
           <defs>
               <rect id="path-1" x="7.86396103" y="1.86396103" width="9" height="9"></rect>
           </defs>
@@ -86,8 +82,6 @@ export const tooltipMarker = function(symbolName, color, showLine) {
     'triangle': function(color, showLine) { 
       return <svg width="25px" height="14px" viewBox="0 0 25 14" version="1.1" 
             xmlns="http://www.w3.org/2000/svg">
-          <title>Rectangle-15</title>
-          <desc>Created with Sketch.</desc>
           <defs></defs>
           <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="Rectangle-15">
@@ -109,8 +103,6 @@ export const tooltipMarker = function(symbolName, color, showLine) {
     'square': function(color, showLine) { 
       return <svg width="25px" height="13px" viewBox="0 0 25 13" version="1.1" 
             xmlns="http://www.w3.org/2000/svg">
-          <title>TT_DigitalTakeUp</title>
-          <desc>Created with Sketch.</desc>
           <defs></defs>
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="WOG-2015-?4" transform="translate(-596.000000, -985.000000)" fill={color}>
