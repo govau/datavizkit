@@ -4,7 +4,7 @@ import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {symbolChars} from './../utils/displayFormats';
+import {tooltipMarker} from './../utils/displayFormats';
 
 
 const withHeroChart = (ComposedComponent) => {
@@ -109,19 +109,27 @@ const withHeroChart = (ComposedComponent) => {
           shared: true,
           crosshairs: true,
           borderRadius: 8,
-          headerFormat: '<small>{point.key}</small><table>',
-          pointFormatter: function() {
-            // this refers tp "Point"
-            const {units} = this.series.options;
-            const symbol = symbolChars[this.series.symbol];
-            const value = `${units === '$' ? '$' : ''}${this.y}${units === '%' ? '%' : ''}`;
+          formatter: function() {
+            const label = this.points[0].series.chart.options.xCategories[this.points[0].x]
 
-            return `<tr>
-                      <td><span style="font-size:20px; color: ${this.series.color}">${symbol}</span></td>
-                      <td style="text-align: right;"><strong>${value}</strong></td>
-                    </tr>`;
+            const rows = this.points.map(function(point) {
+              const {units} = point.series.options;
+              const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
+              const marker = tooltipMarker(point.series.symbol, point.series.color);
+              
+              return `<tr>
+                        <td>
+                          ${marker}
+                        </td>
+                        <td style="text-align: right;"><strong>${value}</strong></td>
+                      </tr>`;
+            });
+
+            return `<small>${label}</small>
+              <table style="width:100%">
+                ${rows.join('')}
+              </table>`;
           },
-          footerFormat: '</table>',
           useHTML: true
         },
         xAxis: {
@@ -152,8 +160,9 @@ const withHeroChart = (ComposedComponent) => {
             formatter: function () {
               return chartConfig.xAxis.categories[this.value];
             }
-          }
+          }          
         },
+        xCategories: chartConfig.xAxis.categories,
         yAxis: chartConfig.yAxis,
         series: chartConfig.series.map(s => {
           if (isObject(s.data[0])) {
