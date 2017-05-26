@@ -6,39 +6,65 @@ import {HighcontrastPatterns} from './components/withHighcharts';
 import {NullDataLayerPattern} from './utils/highcontrastPatterns';
 
 
-import ColumnWidget from './components/columnWidget/columnWidget.js';
-import LineWidget from './components/lineWidget/lineWidget.js';
-import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
-import DonutWidget from './components/donutWidget/donutWidget.js';
-import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
-import HeroWidget from './components/heroWidget/heroWidget.js';
-import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget.js';
+// import ColumnWidget from './components/columnWidget/columnWidget.js';
+// import LineWidget from './components/lineWidget/lineWidget.js';
+// import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
+// import DonutWidget from './components/donutWidget/donutWidget.js';
+// import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
+// import HeroWidget from './components/heroWidget/heroWidget.js';
+// import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget.js';
 
+
+import SparklineWidgetNew from './components/new/sparklineWidget';
+
+
+const series1 =  [
+  { "name":"Total opportunities", "units": "percentage", "data":[null,null,13,29,42,58,74, 2500000]}
+];
+const series2 =  [
+  { "name":"Total opportunities", "units": "percentage", "data":[42,58,74, null,null,13,29, 2500000]}
+];
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       hcState: true,
+
+      series: series1,
     }
   }
   render() {
     const {hcState} = this.state;
 
-    console.log('hcState: ', hcState)
+    // console.log('hcState: ', hcState)
 
     return (
       <div>
         <NullDataLayerPattern />
         <HighcontrastPatterns />
 
-        <button onClick={() => {
-          this.setState({hcState: !this.state.hcState})
-        }}>Toggle high contrast</button>
+        {/*<button onClick={() => {*/}
+      {/*this.setState({hcState: !this.state.hcState})*/}
+      {/*}}>Toggle high contrast</button>*/}
 
 
-        <div>
-          <div style={{marginBottom: '1em', width: '300px',  display:'inline-block', float:'left'}}>
+        <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
+        <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
+
+        <SparklineWidgetNew series={this.state.series}
+                            xAxis={{"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}} />
+
+
+        {/*<div>*/}
+
+
+
+
+
+
+
+          {/*<div style={{marginBottom: '1em', width: '300px',  display:'inline-block', float:'left'}}>
             <CountWithTrendWidget title="User satisfaction"
               infoText="Overall satisfaction score includes all ratings weighted from 100% for very satisfied, to 0% for very dissatisfied"
                                   units="%"
@@ -230,7 +256,7 @@ class App extends Component {
                      }}
                      _singleCategory={true}
                      _singleSection={false}
-                   displayHighContrast={hcState} />
+                   displayHighContrast={hcState} />*/}
 
 
       </div>
