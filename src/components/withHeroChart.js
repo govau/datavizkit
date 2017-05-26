@@ -116,7 +116,7 @@ const withHeroChart = (ComposedComponent) => {
             const rows = this.points.map(function(point) {
               const {units} = point.series.options;
               const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
-              const marker = jsxToString(tooltipMarker(point.series.symbol, point.series.color));
+              const marker = jsxToString(tooltipMarker(point.series.symbol, point.series.color, true)).replace('xlinkHref', 'xlink:href');
               
               return `<tr>
                         <td>
