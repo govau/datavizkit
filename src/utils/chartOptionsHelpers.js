@@ -89,8 +89,7 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
         events: {
 
           mouseover: function() {
-
-            broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, null)});
+            broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.axis.series, null)});
             this.axis.crosshair = false;
             this.axis.series.forEach(s => {
               s.data.map(d => {
