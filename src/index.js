@@ -8,18 +8,17 @@ import {NullDataLayerPattern} from './utils/highcontrastPatterns';
 
 // import ColumnWidget from './components/columnWidget/columnWidget.js';
 // import LineWidget from './components/lineWidget/lineWidget.js';
-// import SparklineWidget from './components/sparklineWidget/sparklineWidget.js';
 // import DonutWidget from './components/donutWidget/donutWidget.js';
 // import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
 // import HeroWidget from './components/heroWidget/heroWidget.js';
 // import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget.js';
 
 
-import SparklineWidgetNew from './components/new/sparklineWidget';
+import SparklineWidget from './components/sparklineWidget/sparklineWidget';
 
 
 const series1 =  [
-  { "name":"Total opportunities", "units": "percentage", "data":[null,null,13,29,42,58,74, 2500000]}
+  { "name":"Total opportunities", "units": "percentage", "data":[null,null,13,29,42,58,74, 1]}
 ];
 const series2 =  [
   { "name":"Total opportunities", "units": "percentage", "data":[42,58,74, null,null,13,29, 2500000]}
@@ -51,7 +50,13 @@ class App extends Component {
         <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
         <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
 
-        <SparklineWidgetNew series={this.state.series}
+        <SparklineWidget title="Total opportunities"
+                            type="sparkline"
+                            dateLastUpdated="2017-02-01T23:11:18.675Z"
+                            _singleCategory={false}
+                            _singleSection={true}
+                            minimumValue="13"
+                            series={this.state.series}
                             xAxis={{"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}} />
 
 
@@ -140,22 +145,7 @@ class App extends Component {
           }}
           displayHighContrast={hcState} />
 
-        <SparklineWidget chartConfig={{
-          "xAxis":{
-            "categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]
-          },
-          "series":[
-            { "name":"Total opportunities",
-              "units": "percentage",
-              "data":[null,null,13,29,42,58,74, 2500000]
-            }
-        ]
-        }} title="Total opportunities"
-        type="sparkline"
-        dateLastUpdated="2017-02-01T23:11:18.675Z"
-        _singleCategory={false}
-        _singleSection={true}
-        minimumValue="13" />
+
 
 
         <StackedColumnWidget

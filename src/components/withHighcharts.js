@@ -1,6 +1,4 @@
 
-// https://gist.github.com/mulhoon/63b5d5a98ef0ab8c2b89#file-Highcharts%20Cheat%20Sheet
-
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
@@ -20,6 +18,38 @@ Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
   }
 });
 
+
+const BASE_CHARTCONFIG = {
+  title: {
+    text: null,
+    align: 'left',
+  },
+  subtitle: {
+    align: 'left',
+  },
+  yAxis: {
+    title: {
+      text: null
+    }
+  },
+  xAxis: {
+    type: 'datetime',
+    dateTimeLabelFormats: {
+      // day: '%e of %b',
+      // month: '%b \'%y',
+    },
+    crosshair: true,
+  },
+  legend: {
+    enabled: false,
+  },
+  credits: {
+    enabled: false
+  },
+  tooltip: {
+    // enabled: false,
+  }
+};
 
 const THEME = {
   /*eslint-disable */
@@ -66,70 +96,31 @@ const THEME = {
   /*eslint-enable */
 };
 
-const BASE_HIGHCHARTS_CONFIG = {
-  title: {
-    text: null,
-    align: 'left',
-  },
-  subtitle: {
-    align: 'left',
-  },
-  yAxis: {
-    title: {
-      text: null
-    }
-  },
-  xAxis: {
-    type: 'datetime',
-    dateTimeLabelFormats: {
-      // day: '%e of %b',
-      // month: '%b \'%y',
-    },
-    crosshair: true,
-  },
-  legend: {
-    enabled: false,
-  },
-  credits: {
-    enabled: false
-  },
-  tooltip: {
-    // enabled: false,
-  }
-};
-
 Highcharts.setOptions({
   ...THEME
 });
 
-
-/**
- * Exposes a charting API on top of Highcharts without exposing Highcharts primitives
- *
- * This way we can include different charting libraries or none with the same
- * abstractions
- *
- */
-
-// expose this Component as a public component
 export const HighcontrastPatterns = makeHighcontrastPatterns(Highcharts);
 
 
-// abstract methods from the Highcharts api
-const withHighcharts = (ComposedComponent) => {
-
+const withHighcharts = Composed => {
   return class extends PureComponent {
 
     constructor(props) {
       super(props);
+      this.create = this.create.bind(this);
+      this.update = this.update.bind(this);
+      this.destroy = this.destroy.bind(this);
+
+      this.redraw = false;
       this._instance = null;
-      this.renderChart = this.renderChart.bind(this);
-      this.destroyChart = this.destroyChart.bind(this);
-      this.updateChart = this.updateChart.bind(this);
     }
 
-    renderChart(instanceConfig) {
-      const config = merge({}, BASE_HIGHCHARTS_CONFIG, instanceConfig);
+    // save this._instance
+    create(instanceConfig) {
+      console.log('withHighcharts create');
+
+      const config = merge({}, BASE_CHARTCONFIG, instanceConfig);
       if (!config.chart && !config.chart.renderTo) {
         throw new Error('Must provide chart.renderTo on config.');
       }
@@ -137,27 +128,78 @@ const withHighcharts = (ComposedComponent) => {
       return this._instance;
     }
 
-    destroyChart() {
+    // update this._instance
+    update(config, propNamesChanged) {
+      console.log('withHighcharts update');
+
+      if (!this._instance) {
+        return null;
+      }
+
+      propNamesChanged.map(propName => {
+        if (propName === 'chart') {
+          this._updateChart(config);
+        }
+        if (propName === 'series') {
+          this._updateSeries(config.series);
+        }
+        if (propName === 'xAxis') {
+          this._updateXAxes(config.xAxis);
+        }
+        if (propName === 'yAxis') {
+          this._updateYAxes(config.yAxis);
+        }
+      });
+
+      // DON'T REDRAW!
+      return this._instance;
+    }
+
+    // can update any element of the chart other than xAxis, yAxis or series.
+    _updateChart(config) {
+      return this._instance.update(config, false);
+    }
+
+    _updateSeries(series) {
+      return this._instance.series.map((s, idx) => {
+        return s.setData(series[idx].data);
+      });
+    }
+
+    _updateXAxes(xAxes) {
+      this._instance.xAxis.map((axis, idx) => {
+        return axis.update(xAxes[idx]);
+      });
+    }
+
+    _updateYAxes(yAxes) {
+      this._instance.yAxis.map((axis, idx) => {
+        return axis.update(yAxes[idx]);
+      });
+    }
+
+
+    // delete this._instance
+    destroy() {
+      console.log('withHighcharts destroy');
+
       if (this._instance) {
         this._instance.destroy();
         this._instance = null;
       }
     }
 
-    updateChart(options) {
-      const redraw = true;
-      return this._instance && this._instance.update(options, redraw);
-    }
-
     render() {
-      return <ComposedComponent {...this.props}
-                                renderChart={this.renderChart}
-                                destroyChart={this.destroyChart}
-                                updateChart={this.updateChart}
-                                HighcontrastPatterns={HighcontrastPatterns} />
+      console.log('withHighcharts render');
+      return (
+        <Composed {...this.props}
+                  create={this.create}
+                  update={this.update}
+                  destroy={this.destroy}
+                  HighcontrastPatterns={HighcontrastPatterns} />
+      )
     }
   }
 };
-
 
 export default withHighcharts;
