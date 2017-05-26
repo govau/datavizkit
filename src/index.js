@@ -6,15 +6,16 @@ import {HighcontrastPatterns} from './components/withHighcharts';
 import {NullDataLayerPattern} from './utils/highcontrastPatterns';
 
 
-// import ColumnWidget from './components/columnWidget/columnWidget.js';
+import ColumnWidget from './components/columnWidget/columnWidget.js';
+import SparklineWidget from './components/sparklineWidget/sparklineWidget';
+
+
 // import LineWidget from './components/lineWidget/lineWidget.js';
 // import DonutWidget from './components/donutWidget/donutWidget.js';
 // import StackedColumnWidget from './components/stackedColumnWidget/stackedColumnWidget.js';
 // import HeroWidget from './components/heroWidget/heroWidget.js';
 // import CountWithTrendWidget from './components/countWithTrendWidget/countWithTrendWidget.js';
 
-
-import SparklineWidget from './components/sparklineWidget/sparklineWidget';
 
 
 const series1 =  [
@@ -29,28 +30,42 @@ class App extends Component {
     super(props);
     this.state = {
       hcState: true,
-
       series: series1,
     }
   }
   render() {
 
-    // console.log('hcState: ', hcState)
+    const {hcState} = this.state;
 
     return (
       <div>
         <NullDataLayerPattern />
         <HighcontrastPatterns />
 
-        {/*<button onClick={() => {*/}
-      {/*this.setState({hcState: !this.state.hcState})*/}
-      {/*}}>Toggle high contrast</button>*/}
+        <button onClick={() => {
+          this.setState({hcState: !this.state.hcState})
+        }}>Toggle high contrast</button>
 
 
-        <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
-        <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
 
-        <SparklineWidget title="Total opportunities"
+        <ColumnWidget title='Number of page views'
+                      type='column'
+                      dateLastUpdated='22 Feb 2016'
+                      infoText="Something amazing about this widget."
+                      minimumValue="20000"
+                      xAxis={{categories:["May","Jun","Jul","Aug","Sep","Oct","Nov"]}}
+                      series={[
+                        {name:"Time to clear","data":[84807,null,null,62400,null,37560,39300]}
+                      ]}
+                      _singleCategory={false}
+                      _singleSection={true}
+                      displayHighContrast={hcState} />
+
+
+        <div>
+          <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
+          <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
+          <SparklineWidget title="Total opportunities"
                             type="sparkline"
                             dateLastUpdated="2017-02-01T23:11:18.675Z"
                             _singleCategory={false}
@@ -58,6 +73,7 @@ class App extends Component {
                             minimumValue="13"
                             series={this.state.series}
                             xAxis={{"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}} />
+        </div>
 
 
         {/*<div>*/}
@@ -112,17 +128,7 @@ class App extends Component {
 
 
 
-        <LineWidget title='Number of page views'
-          type='column'
-          dateLastUpdated='22 Feb 2016'
-          minimumValue="20000"
-          chartConfig={{
-            xAxis:{categories:["May","Jun","Jul","Aug","Sep","Oct","Nov"]},
-            series:[{name:"Time to clear",data:[84807,null,51420,62400,48060,37560,39300]}]
-          }}
-          singleCategory={false}
-          singleSection={true}
-          displayHighContrast={hcState} />
+
 
         <LineWidget title='Number of page views'
           type='column'

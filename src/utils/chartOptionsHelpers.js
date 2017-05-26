@@ -61,7 +61,7 @@ export const createPolarCustomLegendData = (series) => {
 
 export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
   if (xAxis.length > 1) {
-    throw new Error('Null data layer can currently only be plotted to a single axis.')
+    console.warn('Null data layer can only be plotted to a single axis.')
   }
 
   const idxsWithNullValue = series.map(s => {
@@ -89,7 +89,6 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
         events: {
 
           mouseover: function() {
-
 
             broadcastSetState({'customLegend': createCartesianCustomLegendData(this.axis.series, null)});
             this.axis.crosshair = false;
