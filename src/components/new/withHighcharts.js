@@ -101,7 +101,7 @@ const withHighcharts = Composed => {
       this.update = this.update.bind(this);
       this.destroy = this.destroy.bind(this);
 
-      this.redraw = true;
+      this.redraw = false;
       this._instance = null;
     }
 
@@ -139,7 +139,9 @@ const withHighcharts = Composed => {
           this._updateYAxes(config.yAxis);
         }
       });
-      this.redraw && this._instance.redraw();
+
+      // DON'T REDRAW!
+      return this._instance;
     }
 
     // can update any element of the chart other than xAxis, yAxis or series.
