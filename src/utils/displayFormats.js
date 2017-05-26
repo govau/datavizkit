@@ -1,4 +1,4 @@
-
+import React from 'react';
 import Highcharts from 'highcharts';
 
 export const symbolChars = {
@@ -41,13 +41,14 @@ export const valueWithUnits = (value, units) => {
 export const tooltipMarker = function(symbolName, color) { 
   let markerFuncs = {
     'circle': function(color) {
-      return `<svg width="25px" height="13px" viewBox="0 0 25 13" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      // Note: can't use JSX because of namespaced attributes
+      return <svg width="25px" height="13px" viewBox="0 0 25 13" version="1.1"
+            xmlns="http://www.w3.org/2000/svg">
           <title>TT_UserSatisfaction</title>
           <desc>Created with Sketch.</desc>
           <defs></defs>
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="WOG-2015-?4" transform="translate(-596.000000, -1032.000000)" fill="${color}">
+              <g id="WOG-2015-?4" transform="translate(-596.000000, -1032.000000)" fill={color}>
                   <g id="Group-44" transform="translate(590.000000, 946.000000)">
                       <g id="TT_UserSatisfaction" transform="translate(6.000000, 87.000000)">
                           <g id="Group-22" transform="translate(0.000000, 4.000000)">
@@ -58,11 +59,11 @@ export const tooltipMarker = function(symbolName, color) {
                   </g>
               </g>
           </g>
-      </svg>`;
+      </svg>;
     },
     'diamond': function(color) {
-      return `<svg width="25px" height="17px" viewBox="0 0 25 17" version="1.1" 
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      return <svg width="25px" height="17px" viewBox="0 0 25 17" version="1.1" 
+            xmlns="http://www.w3.org/2000/svg">
           <title>TT_CostPerTransaction</title>
           <desc>Created with Sketch.</desc>
           <defs>
@@ -72,20 +73,20 @@ export const tooltipMarker = function(symbolName, color) {
               <g id="WOG-2015-?4" transform="translate(-596.000000, -959.000000)">
                   <g id="Group-44" transform="translate(590.000000, 946.000000)">
                       <g id="TT_CostPerTransaction" transform="translate(6.000000, 15.000000)">
-                          <rect id="Rectangle-15" fill="${color}" x="0" y="5" width="25" height="3" rx="1.5"></rect>
+                          <rect id="Rectangle-15" fill={color} x="0" y="5" width="25" height="3" rx="1.5"></rect>
                           <g id="Rectangle-16" transform="translate(12.363961, 6.363961) rotate(45.000000) translate(-12.363961, -6.363961) ">
-                              <use fill="${color}" fill-rule="evenodd" xlink:href="#path-1"></use>
+                              <use fill={color} fill-rule="evenodd" xlinkHref="#path-1"></use>
                               <rect stroke="#FFFFFF" stroke-width="1" x="7.36396103" y="1.36396103" width="10" height="10"></rect>
                           </g>
                       </g>
                   </g>
               </g>
           </g>
-      </svg>`;
+      </svg>;
     },
     'triangle': function(color) { 
-      return `<svg width="25px" height="14px" viewBox="0 0 25 14" version="1.1" 
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      return <svg width="25px" height="14px" viewBox="0 0 25 14" version="1.1" 
+            xmlns="http://www.w3.org/2000/svg">
           <title>Rectangle-15</title>
           <desc>Created with Sketch.</desc>
           <defs></defs>
@@ -104,16 +105,16 @@ export const tooltipMarker = function(symbolName, color) {
                   </g>
               </g>
           </g>
-      </svg>`;
+      </svg>;
     },
     'square': function(color) { 
-      return `<svg width="25px" height="13px" viewBox="0 0 25 13" version="1.1" 
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      return <svg width="25px" height="13px" viewBox="0 0 25 13" version="1.1" 
+            xmlns="http://www.w3.org/2000/svg">
           <title>TT_DigitalTakeUp</title>
           <desc>Created with Sketch.</desc>
           <defs></defs>
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="WOG-2015-?4" transform="translate(-596.000000, -985.000000)" fill="${color}">
+              <g id="WOG-2015-?4" transform="translate(-596.000000, -985.000000)" fill={color}>
                   <g id="Group-44" transform="translate(590.000000, 946.000000)">
                       <g id="TT_DigitalTakeUp" transform="translate(6.000000, 40.000000)">
                           <rect id="Rectangle-15" x="0" y="4" width="25" height="3" rx="1.5"></rect>
@@ -122,7 +123,7 @@ export const tooltipMarker = function(symbolName, color) {
                   </g>
               </g>
           </g>
-      </svg>`;
+      </svg>;
     }
     //TODO: triangle-down
   };

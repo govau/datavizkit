@@ -1,14 +1,15 @@
 
 import React from 'react';
 
-import {symbolChars} from './../../utils/displayFormats';
+import {symbolChars, tooltipMarker} from './../../utils/displayFormats';
 
 import './customLegend.css';
 
 
 const Marker = ({symbol, color}) => {
   if (symbol) {
-    return <text x="0" y="12" fill={color} style={{fontSize: '20px', fontFamily: `'Lucida Sans Unicode', Verdana, Arial, sans-serif`}}>{symbolChars[symbol]}</text>
+    return (tooltipMarker(symbol, color));
+    // return <text x="0" y="12" fill={color} style={{fontSize: '20px', fontFamily: `'Lucida Sans Unicode', Verdana, Arial, sans-serif`}}>{symbolChars[symbol]}</text>
   }
   return <rect x="0" y="0" width="12" height="12" fill={color} visibility="visible" rx="6" ry="6"></rect>
 };

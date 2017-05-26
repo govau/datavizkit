@@ -2,6 +2,7 @@
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
+import jsxToString from 'jsx-to-string';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
 import {tooltipMarker} from './../utils/displayFormats';
@@ -115,7 +116,7 @@ const withHeroChart = (ComposedComponent) => {
             const rows = this.points.map(function(point) {
               const {units} = point.series.options;
               const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
-              const marker = tooltipMarker(point.series.symbol, point.series.color);
+              const marker = jsxToString(tooltipMarker(point.series.symbol, point.series.color));
               
               return `<tr>
                         <td>
