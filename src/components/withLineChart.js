@@ -100,7 +100,7 @@ const withLineChart = (ComposedComponent) => {
         plotOptions: {
           line: {
             marker: {
-              radius: 2,
+              radius: 8,
             }
           },
           series: {
@@ -184,6 +184,7 @@ const withLineChart = (ComposedComponent) => {
             s.data = s.data.forEach(d => {
               d.marker = {
                 enabled: false,
+                radius: 4
               }
             })
           } else {
@@ -191,7 +192,8 @@ const withLineChart = (ComposedComponent) => {
               return {
                 y,
                 marker: { // disable markers on line chart (by point), but not in legend
-                  enabled: false
+                  enabled: false, 
+                  radius: 4
                 }
               }
             });

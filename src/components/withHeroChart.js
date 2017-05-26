@@ -2,10 +2,10 @@
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
+import jsxToString from 'jsx-to-string';
 
 import {createHighcontrastDashSeriesIteratee} from './../utils/highcontrastPatterns';
-import {tooltipMarker} from './../utils/displayFormats';
-
+import {rawMarker} from './marker/marker.js';
 
 const withHeroChart = (ComposedComponent) => {
 
@@ -55,6 +55,9 @@ const withHeroChart = (ComposedComponent) => {
           type: 'spline',
           height: 360,
           events: {
+            tooltipRefresh: function(e) {
+              console.log("refresh event");
+            },
             click: function(e) { 
               if (this.tooltip && this.tooltip.label) {
                 switch(this.tooltip.label.attr('visibility')) {
@@ -115,11 +118,14 @@ const withHeroChart = (ComposedComponent) => {
             const rows = this.points.map(function(point) {
               const {units} = point.series.options;
               const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
-              const marker = tooltipMarker(point.series.symbol, point.series.color);
+              const marker = rawMarker(point.series.symbol, point.series.color, true);
+              const markerHtml = jsxToString(marker).replace('xlinkHref', 'xlink:href');
+
+              // console.log(markerHtml);
               
               return `<tr>
                         <td>
-                          ${marker}
+                          ${markerHtml}
                         </td>
                         <td style="text-align: right;"><strong>${value}</strong></td>
                       </tr>`;
