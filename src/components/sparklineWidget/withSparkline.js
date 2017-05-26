@@ -58,6 +58,7 @@ const BASE_SPARKLINE_CHARTCONFIG = {
   },
 };
 
+
 const withSparkline = Composed => {
   return class extends PureComponent {
 
@@ -178,14 +179,11 @@ const withSparkline = Composed => {
       const {countValue, countUnits, trendLegendData} = this.state;
 
       return (
-        <div style={{border: '1px solid red', padding: '10px'}}>
-          <h1>withSparkline</h1>
-          <Composed {...this.props}
-                    countValue={countValue} countUnits={countUnits}
-                    trendLegendData={trendLegendData}>
-            <div ref={el => this._chart = el} />
-          </Composed>
-        </div>
+        <Composed {...this.props}
+                  countValue={countValue} countUnits={countUnits}
+                  trendLegendData={trendLegendData}>
+          <div ref={el => this._chart = el} />
+        </Composed>
       );
     }
   }
