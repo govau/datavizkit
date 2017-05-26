@@ -1,15 +1,13 @@
 ### Basic Stacked Column Widget: 
 
     <StackedColumnWidget 
-      chartConfig={{
-        "xAxis":{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]},
-        "series":[
-          {"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},
-          {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
-          {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
-          {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
-        ]
-      }}
+      xAxis={{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}}
+      series={[
+        {"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},
+        {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
+        {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
+        {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
+      ]}
       title="Types of service"
       units="number"
       type="stackedColumn"
@@ -29,15 +27,13 @@
       units="percentage"
       dateLastUpdated="2016-11-09T01:01:01.111Z"
       title="Devices used by users"
-      chartConfig={{
-        xAxis:{
-          "categories":["Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
-        },
-        series:[
-          {"name":"Mobile","data":[43,48,47,49,50,51,54,55]},
-          {"name":"Tablet","data":[6,6,6,2,3,5,5,5]},
-          {"name":"Desktop","data":[51,46,47,49,47,44,41,40]}
-        ]
+      xAxis={{
+        "categories":["Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]
       }}
+      series={[
+        {"name":"Mobile","data":[43,48,47,49,50,51,54,55]},
+        {"name":"Tablet","data":[6,6,6,2,3,5,5,5]},
+        {"name":"Desktop","data":[51,46,47,49,47,44,41,40]}
+      ]}
       stackingType="percentage"
      />
