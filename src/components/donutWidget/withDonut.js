@@ -1,7 +1,6 @@
 
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
-import isObject from 'lodash/isObject';
 
 import {createHighcontrastFillSeriesIteratee} from './../../utils/highcontrastPatterns';
 import {createPolarCustomLegendData} from './../../utils/chartOptionsHelpers';
