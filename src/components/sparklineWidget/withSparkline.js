@@ -77,7 +77,7 @@ const withSparkline = Composed => {
     componentDidMount() {
       console.log('withSparkline componentDidMount');
 
-      const config = this.makeInstanceConfig(this.createBaseConfig());
+      const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
     }
@@ -86,7 +86,7 @@ const withSparkline = Composed => {
     componentWillUpdate(nextProps, nextState) {
       console.log('withSparkline componentWillUpdate');
 
-      const config = this.makeInstanceConfig(this._baseChartConfig);
+      const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
       // diff nextProps, nextState - intersection or decide what I should pass to update
 
@@ -112,15 +112,15 @@ const withSparkline = Composed => {
 
       this.props.destroy();
       this._chart = null;
-      this._chartConfig = null;
+      this._baseChartConfig = null;
     }
 
 
     createBaseConfig() {
 
       // only create it once
-      if (this._chartConfig) {
-        return this._chartConfig;
+      if (this._baseChartConfig) {
+        return this._baseChartConfig;
       }
 
 
@@ -172,8 +172,8 @@ const withSparkline = Composed => {
       return config;
     }
 
-    makeInstanceConfig(config) {
-      const {series, xAxis} = this.props;
+    makeInstanceConfig(config, passedProps) {
+      const {series, xAxis} = passedProps;
       const instanceConfig = merge({}, config, {
         xAxis,
         series,
