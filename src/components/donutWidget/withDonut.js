@@ -71,7 +71,16 @@ const withDonut = Composed => {
 
       // map highcontrast to series
       if (this.props.displayHighContrast) {
-        this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
+
+        // todo - this is a hack! scary canary!
+        const colorsMap = this._getHighcontrastPropsMap(config, this.props.displayHighContrast);
+        config.series.forEach(s => {
+          s.data.forEach((point, idx) => {
+            point.color = colorsMap[idx];
+          });
+        });
+        // todo - should be
+        // this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
       }
 
       this.props.create(config);
@@ -99,8 +108,18 @@ const withDonut = Composed => {
       }
 
       // map highcontrast to series
+      // todo - this is a hack! scary canary!
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'color');
+
+        const colorsMap = this._getHighcontrastPropsMap(config, this.props.displayHighContrast);
+        config.series.forEach(s => {
+          s.data.forEach((point, idx) => {
+            point.color = colorsMap[idx];
+          });
+        });
+        propNamesChanged = [...propNamesChanged, 'chart'];
+        // todo - should be
+        // this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
       }
 
       // update by type
