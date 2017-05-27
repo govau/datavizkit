@@ -92,7 +92,7 @@ const withLine = Composed => {
 
     // create
     componentDidMount() {
-      console.log('withLine componentDidMount');
+      // console.log('withLine componentDidMount');
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
@@ -101,7 +101,7 @@ const withLine = Composed => {
 
     // update
     componentWillUpdate(nextProps, nextState) {
-      console.log('withLine componentWillUpdate');
+      // console.log('withLine componentWillUpdate');
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
@@ -135,7 +135,7 @@ const withLine = Composed => {
 
     // destroy
     componentWillUnmount() {
-      console.log('withLine componentWillUnmount');
+      // console.log('withLine componentWillUnmount');
 
       this.props.destroy();
       this._chart = null;
@@ -159,12 +159,9 @@ const withLine = Composed => {
 
       // bind events to config
       config.chart.events = {
-        load: function() {
-          console.log('line load');
-        },
+        // load: function() {
+        // },
         render: function() {
-          console.log('line render');
-
           config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
 
           broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series)});
@@ -266,7 +263,7 @@ const withLine = Composed => {
     }
 
     render() {
-      console.log('withLine render');
+      // console.log('withLine render');
 
       const {customLegendData} = this.state;
       const {displayHighContrast} = this.props;

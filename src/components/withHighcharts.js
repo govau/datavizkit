@@ -118,7 +118,7 @@ const withHighcharts = Composed => {
 
     // save this._instance
     create(instanceConfig) {
-      console.log('withHighcharts create');
+      // console.log('withHighcharts create');
 
       const config = merge({}, BASE_CHARTCONFIG, instanceConfig);
       if (!config.chart && !config.chart.renderTo) {
@@ -130,7 +130,7 @@ const withHighcharts = Composed => {
 
     // update this._instance
     update(config, propNamesChanged) {
-      console.log('withHighcharts update');
+      // console.log('withHighcharts update');
 
       if (!this._instance) {
         return null;
@@ -181,7 +181,7 @@ const withHighcharts = Composed => {
 
     // delete this._instance
     destroy() {
-      console.log('withHighcharts destroy');
+      // console.log('withHighcharts destroy');
 
       if (this._instance) {
         this._instance.destroy();
@@ -190,7 +190,7 @@ const withHighcharts = Composed => {
     }
 
     render() {
-      console.log('withHighcharts render');
+      // console.log('withHighcharts render');
       return (
         <Composed {...this.props}
                   create={this.create}

@@ -101,7 +101,7 @@ const withHero = Composed => {
 
     // create
     componentDidMount() {
-      console.log('withHero componentDidMount');
+      // console.log('withHero componentDidMount');
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
@@ -110,7 +110,7 @@ const withHero = Composed => {
 
     // update
     componentWillUpdate(nextProps, nextState) {
-      console.log('withHero componentWillUpdate');
+      // console.log('withHero componentWillUpdate');
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
@@ -144,7 +144,7 @@ const withHero = Composed => {
 
     // destroy
     componentWillUnmount() {
-      console.log('withHero componentWillUnmount');
+      // console.log('withHero componentWillUnmount');
 
       this.props.destroy();
       this._chart = null;
@@ -168,12 +168,10 @@ const withHero = Composed => {
 
       // bind events to config
       config.chart.events = {
-        load: function() {
-          console.log('hero load');
-        },
-        render: function() {
-          console.log('hero render');
-        },
+        // load: function() {
+        // },
+        // render: function() {
+        // },
       };
 
       this._baseChartConfig = config;
@@ -224,7 +222,7 @@ const withHero = Composed => {
     }
 
     render() {
-      console.log('withHero render');
+      // console.log('withHero render');
 
       return (
         <Composed {...this.props}>
