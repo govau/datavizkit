@@ -66,7 +66,7 @@ const withColumn = Composed => {
 
     // create
     componentDidMount() {
-      console.log('withColumn componentDidMount');
+      // console.log('withColumn componentDidMount');
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
@@ -75,7 +75,7 @@ const withColumn = Composed => {
 
     // update
     componentWillUpdate(nextProps, nextState) {
-      console.log('withColumn componentWillUpdate');
+      // console.log('withColumn componentWillUpdate');
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
@@ -103,7 +103,7 @@ const withColumn = Composed => {
 
     // destroy
     componentWillUnmount() {
-      console.log('withColumn componentWillUnmount');
+      // console.log('withColumn componentWillUnmount');
 
       this.props.destroy();
       this._chart = null;
@@ -128,11 +128,8 @@ const withColumn = Composed => {
       // bind events to config
       config.chart.events = {
         load: function() {
-          console.log('column load');
         },
         render: function() {
-          console.log('column render');
-
           config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
 
           broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series)});
@@ -217,7 +214,7 @@ const withColumn = Composed => {
     }
 
     render() {
-      console.log('withColumn render');
+      // console.log('withColumn render');
 
       const {customLegendData} = this.state;
       const {displayHighContrast} = this.props;

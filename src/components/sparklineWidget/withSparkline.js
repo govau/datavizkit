@@ -75,7 +75,7 @@ const withSparkline = Composed => {
 
     // create
     componentDidMount() {
-      console.log('withSparkline componentDidMount');
+      // console.log('withSparkline componentDidMount');
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
@@ -84,7 +84,7 @@ const withSparkline = Composed => {
 
     // update
     componentWillUpdate(nextProps, nextState) {
-      console.log('withSparkline componentWillUpdate');
+      // console.log('withSparkline componentWillUpdate');
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
@@ -108,7 +108,7 @@ const withSparkline = Composed => {
 
     // destroy
     componentWillUnmount() {
-      console.log('withSparkline componentWillUnmount');
+      // console.log('withSparkline componentWillUnmount');
 
       this.props.destroy();
       this._chart = null;
@@ -132,12 +132,9 @@ const withSparkline = Composed => {
 
       // bind events to config
       config.chart.events = {
-        load: function() {
-          console.log('sparkline load');
-        },
+        // load: function() {
+        // },
         render: function() {
-          console.log('sparkline render');
-
           broadcastSetState({
             countValue: last(this.series[0].data).y,
             countUnits: this.series[0].options.units,
@@ -189,7 +186,7 @@ const withSparkline = Composed => {
     }
 
     render() {
-      console.log('withSparkline render');
+      // console.log('withSparkline render');
 
       const {countValue, countUnits, trendLegendData} = this.state;
 

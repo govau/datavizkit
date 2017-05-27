@@ -70,7 +70,7 @@ const withStackedColumn = Composed => {
 
     // create
     componentDidMount() {
-      console.log('withStackedColumn componentDidMount');
+      // console.log('withStackedColumn componentDidMount');
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
@@ -79,7 +79,7 @@ const withStackedColumn = Composed => {
 
     // update
     componentWillUpdate(nextProps, nextState) {
-      console.log('withStackedColumn componentWillUpdate');
+      // console.log('withStackedColumn componentWillUpdate');
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
@@ -113,7 +113,7 @@ const withStackedColumn = Composed => {
 
     // destroy
     componentWillUnmount() {
-      console.log('withStackedColumn componentWillUnmount');
+      // console.log('withStackedColumn componentWillUnmount');
 
       this.props.destroy();
       this._chart = null;
@@ -140,12 +140,9 @@ const withStackedColumn = Composed => {
 
       // bind events to config
       config.chart.events = {
-        load: function() {
-          console.log('stackedColumn load');
-        },
+        // load: function() {
+        // },
         render: function() {
-          console.log('stackedColumn render');
-
           config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
 
           broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series)});
@@ -226,7 +223,7 @@ const withStackedColumn = Composed => {
     }
 
     render() {
-      console.log('stackedColumn render');
+      // console.log('stackedColumn render');
 
       const {customLegendData} = this.state;
       const {displayHighContrast} = this.props;
