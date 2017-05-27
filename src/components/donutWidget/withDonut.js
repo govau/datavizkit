@@ -2,7 +2,7 @@
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 
-import {createHighcontrastFillSeriesIteratee} from './../../utils/highcontrastPatterns';
+import {createHighcontrastFillColorsSetSeriesIteratee} from './../../utils/highcontrastPatterns';
 import {createPolarCustomLegendData} from './../../utils/chartOptionsHelpers';
 
 
@@ -54,7 +54,9 @@ const withDonut = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-      this._highcontrastSeriesIteratee = createHighcontrastFillSeriesIteratee();
+
+      this._highcontrastOnSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(true);
+      this._highcontrastOffSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(false);
 
       this.state = {
         customLegendData: null,
@@ -68,6 +70,20 @@ const withDonut = Composed => {
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
+
+      // map highcontrast to series
+      if (this.props.displayHighContrast) {
+        // todo - this is a hack! scary canary!
+        const colorsMap = this._getHighcontrastPropsMap(config, this.props.displayHighContrast);
+        config.series.forEach(s => {
+          s.data.forEach((point, idx) => {
+            point.color = colorsMap[idx];
+          });
+        });
+        this.props.updateData(config, ['chart']);
+        // todo - should be
+        // this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
+      }
     }
 
     // update
@@ -76,17 +92,8 @@ const withDonut = Composed => {
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
-      // diff nextProps, nextState - intersection or decide what I should pass to update? currently update all
 
       let propNamesChanged = [];
-
-      // todo check for change on chart as well
-
-
-      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        this.props.update(this._transformForHighContrast(config), ['series']);
-        return;
-      }
 
       if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
         propNamesChanged = [...propNamesChanged, 'series'];
@@ -100,8 +107,23 @@ const withDonut = Composed => {
         propNamesChanged = [...propNamesChanged, 'xAxis'];
       }
 
+      // map highcontrast to series
+      // todo - this is a hack! scary canary!
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+
+        const colorsMap = this._getHighcontrastPropsMap(config, nextProps.displayHighContrast);
+        config.series.forEach(s => {
+          s.data.forEach((point, idx) => {
+            point.color = colorsMap[idx];
+          });
+        });
+        propNamesChanged = [...propNamesChanged, 'chart'];
+        // todo - should be
+        // this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
+      }
+
       // update by type
-      this.props.update(config, propNamesChanged);
+      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -130,8 +152,6 @@ const withDonut = Composed => {
 
       // bind events to config
       config.chart.events = {
-        load: function() {
-        },
         render: function() {
           broadcastSetState({'customLegendData': createPolarCustomLegendData(this.series)});
         },
@@ -143,7 +163,7 @@ const withDonut = Composed => {
     }
 
     makeInstanceConfig(config, passedProps) {
-      const {series, xAxis, yAxis, displayHighContrast} = passedProps;
+      const {series} = passedProps;
 
       let instanceConfig = merge({}, config, {
         series,
@@ -157,16 +177,11 @@ const withDonut = Composed => {
         }
       });
 
-      instanceConfig = this._transformForHighContrast(displayHighContrast, instanceConfig);
-
       return instanceConfig;
     }
 
-    _transformForHighContrast(should, config) {
-      if (should) {
-        config.series = config.series.map(this._highcontrastSeriesIteratee);
-      }
-      return config;
+    _getHighcontrastPropsMap(config, condition) {
+      return config.series[0].data.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
     }
 
     render() {

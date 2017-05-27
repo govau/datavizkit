@@ -88,11 +88,8 @@ const withSparkline = Composed => {
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
-      // diff nextProps, nextState - intersection or decide what I should pass to update
 
       let propNamesChanged = [];
-
-      // todo check for change on chart as well
 
       if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
         propNamesChanged = [...propNamesChanged, 'series'];
@@ -103,7 +100,7 @@ const withSparkline = Composed => {
       }
 
       // update by type
-      this.props.update(config, propNamesChanged);
+      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy

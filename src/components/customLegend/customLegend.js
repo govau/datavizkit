@@ -25,7 +25,7 @@ const Legend = ({data, displayHighContrast}) => {
             <div className="D_CL_key">
               <svg width="12" height="12">
                 <g>
-                  <Marker symbol={d.symbol} color={d.color} />
+                  <Marker renderSymbol={displayHighContrast} symbol={d.symbol} color={d.color} />
                 </g>
               </svg>{d.key}
             </div>

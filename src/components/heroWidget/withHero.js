@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 
-import {createHighcontrastFillSeriesIteratee} from './../../utils/highcontrastPatterns';
+import {createHighcontrastDashStyleSetSeriesIteratee} from './../../utils/highcontrastPatterns';
 import {tooltipMarker} from './../../utils/displayFormats';
 
 
@@ -100,7 +100,8 @@ const withHero = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-      this._highcontrastSeriesIteratee = createHighcontrastFillSeriesIteratee();
+      this._highcontrastOnSeriesIteratee = createHighcontrastDashStyleSetSeriesIteratee(true);
+      this._highcontrastOffSeriesIteratee = createHighcontrastDashStyleSetSeriesIteratee(false);
 
       this.state = {
         customLegendData: null,
@@ -114,6 +115,11 @@ const withHero = Composed => {
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
+
+      // map highcontrast to series
+      if (this.props.displayHighContrast) {
+        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'dashStyle');
+      }
     }
 
     // update
@@ -122,17 +128,8 @@ const withHero = Composed => {
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
-      // diff nextProps, nextState - intersection or decide what I should pass to update? currently update all
 
       let propNamesChanged = [];
-
-      // todo check for change on chart as well
-
-
-      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        this.props.update(this._transformForHighContrast(config), ['series']);
-        return;
-      }
 
       if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
         propNamesChanged = [...propNamesChanged, 'series'];
@@ -146,8 +143,13 @@ const withHero = Composed => {
         propNamesChanged = [...propNamesChanged, 'xAxis'];
       }
 
+      // map highcontrast to series
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'dashStyle');
+      }
+
       // update by type
-      this.props.update(config, propNamesChanged);
+      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -201,7 +203,7 @@ const withHero = Composed => {
     }
 
     makeInstanceConfig(config, passedProps) {
-      const {series, xAxis, yAxis, displayHighContrast} = passedProps;
+      const {series, xAxis, yAxis} = passedProps;
 
       let instanceConfig = merge({}, config, {
         xAxis,
@@ -239,16 +241,11 @@ const withHero = Composed => {
         return s;
       });
 
-      instanceConfig = this._transformForHighContrast(displayHighContrast, instanceConfig);
-
       return instanceConfig;
     }
 
-    _transformForHighContrast(should, config) {
-      if (should) {
-        config.series = config.series.map(this._highcontrastSeriesIteratee);
-      }
-      return config;
+    _getHighcontrastPropsMap(config, condition) {
+      return config.series.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
     }
 
     render() {

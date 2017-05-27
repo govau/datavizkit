@@ -2,12 +2,11 @@
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 
-import {createHighcontrastFillSeriesIteratee} from './../../utils/highcontrastPatterns';
+import {createHighcontrastFillColorsSetSeriesIteratee} from './../../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
 } from './../../utils/chartOptionsHelpers';
-
 
 
 const BASE_COLUMN_CHARTCONFIG = {
@@ -57,7 +56,9 @@ const withColumn = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-      this._highcontrastSeriesIteratee = createHighcontrastFillSeriesIteratee();
+
+      this._highcontrastOnSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(true);
+      this._highcontrastOffSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(false);
 
       this.state = {
         customLegendData: null,
@@ -71,6 +72,11 @@ const withColumn = Composed => {
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
+
+      // map highcontrast to series
+      if (this.props.displayHighContrast) {
+        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
+      }
     }
 
     // update
@@ -79,11 +85,8 @@ const withColumn = Composed => {
 
       const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
 
-      // diff nextProps, nextState - intersection or decide what I should pass to update? currently update all
 
       let propNamesChanged = [];
-
-      // todo check for change on chart as well
 
       if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
         propNamesChanged = [...propNamesChanged, 'series'];
@@ -97,8 +100,13 @@ const withColumn = Composed => {
         propNamesChanged = [...propNamesChanged, 'xAxis'];
       }
 
+      // map highcontrast to series
+      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'color');
+      }
+
       // update by type
-      this.props.update(config, propNamesChanged);
+      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -185,7 +193,7 @@ const withColumn = Composed => {
     }
 
     makeInstanceConfig(config, passedProps) {
-      const {series, xAxis, yAxis, displayHighContrast} = passedProps;
+      const {series, xAxis, yAxis} = passedProps;
 
       let instanceConfig = merge({}, config, {
         xAxis,
@@ -193,24 +201,11 @@ const withColumn = Composed => {
         yAxis,
       });
 
-      instanceConfig = this._transformForHighContrast(displayHighContrast, instanceConfig);
-
       return instanceConfig;
     }
 
-    _transformForHighContrast(should, config) {
-      if (should) {
-        config.series = config.series.map(this._highcontrastSeriesIteratee);
-      }
-      return config;
-    }
-
-    _transformPartitionedForHighContrast(should, config) {
-      if (should) {
-        const series = config.series.map(this._highcontrastSeriesIteratee);
-        return {series};
-      }
-      return {};
+    _getHighcontrastPropsMap(config, condition) {
+      return config.series.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
     }
 
     render() {

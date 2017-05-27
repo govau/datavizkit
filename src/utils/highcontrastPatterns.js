@@ -119,7 +119,7 @@ const makeHighcontrastPatterns = (Highcharts) => {
 // todo - move this elsewhere
 export const NullDataLayerPattern = () => {
   return (
-    <div aria-hidden="true" className="patterns">
+    <div aria-hidden="true" style={{position: 'absolute', left: '-1000px'}}>
       <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
         <defs>
           <pattern id="null-data-layer" patternUnits="userSpaceOnUse" width="10" height="10">
@@ -132,33 +132,23 @@ export const NullDataLayerPattern = () => {
 };
 
 
-export const createHighcontrastFillSeriesIteratee = (
-  count = HIGHCONTRAST_PATTERN_COUNT,
-  namespace = HIGHCONTRAST_PATTERN_NAMESPACE
-) => {
 
+export const createHighcontrastFillColorsSetSeriesIteratee = (condition) => {
   const getHighcontrastPatternIds = () => {
-    const arrayOfCount = Array(count).fill();
+    const arrayOfCount = Array(HIGHCONTRAST_PATTERN_COUNT).fill();
     return arrayOfCount.map((c, idx) => {
-      return `url(#${namespace}-${idx})`;
+      return `url(#${HIGHCONTRAST_PATTERN_NAMESPACE}-${idx})`;
     });
   };
-
   const patternIds = getHighcontrastPatternIds();
-
   return (item, idx) => {
     const patternIdx = getItemIdxByIncrementor(patternIds, idx);
-    if (!item.color) {
-      item.color = patternIds[patternIdx];
-    } else {
-      item.color = void 0;
-    }
-    return item;
+    return condition ? patternIds[patternIdx] : void 0;
   };
 };
 
 
-export const createHighcontrastDashSeriesIteratee = () => {
+export const createHighcontrastDashStyleSetSeriesIteratee = (condition) => {
 
   const dashTypes = [
     // 'Solid',   // reserved
@@ -176,13 +166,7 @@ export const createHighcontrastDashSeriesIteratee = () => {
 
   return (item, idx) => {
     const dashIdx = getItemIdxByIncrementor(dashTypes, idx);
-
-    if (typeof item.dashStyle === 'undefined' || item.dashStyle === 'Solid') {
-      item.dashStyle = dashTypes[dashIdx];
-    } else {
-      item.dashStyle = 'Solid';
-    }
-    return item;
+    return condition ? dashTypes[dashIdx] : 'Solid';
   };
 };
 
