@@ -13,8 +13,6 @@
 
 todo - show evidence of how this sets us up to enable change 
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
 ![Diagram]('./chart-architecture-composition.png').
 
 ```
