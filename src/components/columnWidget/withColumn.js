@@ -13,7 +13,7 @@ import {
 const BASE_COLUMN_CHARTCONFIG = {
   chart: {
     type: 'column',
-    height: 300,
+    height: 280,
   },
   title: {
     text: ''

@@ -9,7 +9,7 @@ import {createPolarCustomLegendData} from './../../utils/chartOptionsHelpers';
 const BASE_DONUT_CHARTCONFIG = {
   chart: {
     type: 'pie',
-    height: 300,
+    height: 280,
     events: {},
   },
   title: {

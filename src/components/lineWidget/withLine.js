@@ -14,7 +14,7 @@ import {
 const BASE_LINE_CHARTCONFIG = {
   chart: {
     type: 'line',
-    height: 300,
+    height: 280,
     events: {},
   },
   title: {

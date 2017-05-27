@@ -52,8 +52,7 @@ const BASE_HERO_CHARTCONFIG = {
     crosshairs: true,
     borderRadius: 8,
     formatter: function() {
-      const label = this.points[0].series.chart.options.xCategories[this.points[0].x]
-
+      const label = this.x;
       const rows = this.points.map(function(point) {
         const {units} = point.series.options;
         const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
@@ -209,9 +208,6 @@ const withHero = Composed => {
         series,
         yAxis,
       });
-
-      // todo - @micapalm - not sure why we need this.
-      instanceConfig.xCategories = xAxis.categories;
 
       // Hero chart, remove left & right padding - https://github.com/govau/datavizkit/pull/153/files
       instanceConfig.xAxis.labels = {
