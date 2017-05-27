@@ -176,6 +176,19 @@ const withHero = Composed => {
 
       // bind events to config
       config.chart.events = {
+        click: function(e) {
+          // Hide tooltip on click (for mobile)
+          if (this.tooltip && this.tooltip.label) {
+            switch(this.tooltip.label.attr('visibility')) {
+              case 'hidden':
+                this.tooltip.label.show();
+                break;
+              case 'visible':
+                this.tooltip.label.hide();
+                break;
+            }
+          }
+        }
         // load: function() {
         // },
         // render: function() {
