@@ -26,7 +26,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hcState: true,
+      hcState: false,
       series: series1,
     }
   }
@@ -39,12 +39,15 @@ class App extends Component {
         <NullDataLayerPattern />
         <HighcontrastPatterns />
 
-        <button onClick={() => {
-          this.setState({hcState: !this.state.hcState})
-        }}>Toggle high contrast</button>
+        <button onClick={() => {this.setState({hcState: !this.state.hcState})}}>Toggle high contrast</button>
 
 
-        <DonutWidget series={[{name:"Jan",data:[{name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}]}]}
+        <DonutWidget series={[
+                        {name:"Jan",
+                          data:[
+                            {name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}
+                          ]}
+                      ]}
                      title="Devices used"
                      type="donut"
                      dateLastUpdated="2017-02-01T01:02:02.240Z"
@@ -57,8 +60,10 @@ class App extends Component {
         <StackedColumnWidget
           xAxis={{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}}
           series={[
-            {"name":"Public Beta","data":[0,0,2,2,2,2,2,2,2]},
-            {"name":"Pre Beta","data":[0,0,1,3,3,3,3,3,3]},
+            //{"name":"Public Beta", color:'red', "data":[0,0,2,2,2,2,2,2,2]},
+            //{"name":"Pre Beta", color: 'url(#highcontrast-pattern-0)', "data":[0,0,1,3,3,3,3,3,3]},
+            {"name":"Public Beta", "data":[0,0,2,2,2,2,2,2,2]},
+            {"name":"Pre Beta", "data":[0,0,1,3,3,3,3,3,3]},
             {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
             {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
           ]}
@@ -121,8 +126,7 @@ class App extends Component {
                       _singleSection={true}
                       displayHighContrast={hcState} />
 
-
-        <div>
+        {/*<div>
           <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
           <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
           <SparklineWidget title="Total opportunities"
@@ -181,7 +185,7 @@ class App extends Component {
                               idxInWidgets="3"
                               value=""
                               trendValue=""
-                              trendDate="2016-10-31T00:00:00Z" />
+                              trendDate="2016-10-31T00:00:00Z" />*/}
 
 
       </div>

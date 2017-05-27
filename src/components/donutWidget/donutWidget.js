@@ -15,6 +15,7 @@ const DonutWidget = ({
   dateLastUpdated,
   viewport,
   series, xAxis, yAxis,
+  displayHighContrast,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -24,7 +25,7 @@ const DonutWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <LineChart series={series} xAxis={xAxis} yAxis={yAxis} />
+        <LineChart series={series} xAxis={xAxis} yAxis={yAxis} displayHighContrast={displayHighContrast} />
       </section>
     </article>
   )
