@@ -97,12 +97,12 @@ const withLine = Composed => {
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
+      this.props.create(config);
+
       // map highcontrast to series
       if (this.props.displayHighContrast) {
         this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'dashStyle');
       }
-
-      this.props.create(config);
     }
 
     // update

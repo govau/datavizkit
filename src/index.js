@@ -26,7 +26,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hcState: false,
+      hcState: true,
       series: series1,
     }
   }
@@ -126,7 +126,7 @@ class App extends Component {
                       _singleSection={true}
                       displayHighContrast={hcState} />
 
-        {/*<div>
+        <div>
           <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
           <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
           <SparklineWidget title="Total opportunities"
@@ -185,7 +185,7 @@ class App extends Component {
                               idxInWidgets="3"
                               value=""
                               trendValue=""
-                              trendDate="2016-10-31T00:00:00Z" />*/}
+                              trendDate="2016-10-31T00:00:00Z" />
 
 
       </div>

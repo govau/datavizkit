@@ -71,12 +71,12 @@ const withColumn = Composed => {
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
+      this.props.create(config);
+
       // map highcontrast to series
       if (this.props.displayHighContrast) {
         this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
       }
-
-      this.props.create(config);
     }
 
     // update

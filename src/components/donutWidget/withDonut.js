@@ -69,9 +69,10 @@ const withDonut = Composed => {
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
+      this.props.create(config);
+
       // map highcontrast to series
       if (this.props.displayHighContrast) {
-
         // todo - this is a hack! scary canary!
         const colorsMap = this._getHighcontrastPropsMap(config, this.props.displayHighContrast);
         config.series.forEach(s => {
@@ -79,11 +80,10 @@ const withDonut = Composed => {
             point.color = colorsMap[idx];
           });
         });
+        this.props.updateData(config, ['chart']);
         // todo - should be
         // this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
       }
-
-      this.props.create(config);
     }
 
     // update
@@ -111,7 +111,7 @@ const withDonut = Composed => {
       // todo - this is a hack! scary canary!
       if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
 
-        const colorsMap = this._getHighcontrastPropsMap(config, this.props.displayHighContrast);
+        const colorsMap = this._getHighcontrastPropsMap(config, nextProps.displayHighContrast);
         config.series.forEach(s => {
           s.data.forEach((point, idx) => {
             point.color = colorsMap[idx];
