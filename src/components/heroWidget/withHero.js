@@ -4,7 +4,7 @@ import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 
 import {createHighcontrastFillSeriesIteratee} from './../../utils/highcontrastPatterns';
-import {symbolChars} from './../../utils/displayFormats';
+import {tooltipMarker} from './../../utils/displayFormats';
 
 
 const BASE_HERO_CHARTCONFIG = {
@@ -50,19 +50,27 @@ const BASE_HERO_CHARTCONFIG = {
     shared: true,
     crosshairs: true,
     borderRadius: 8,
-    headerFormat: '<small>{point.key}</small><table>',
-    pointFormatter: function() {
-      // this refers tp "Point"
-      const {units} = this.series.options;
-      const symbol = symbolChars[this.series.symbol];
-      const value = `${units === '$' ? '$' : ''}${this.y}${units === '%' ? '%' : ''}`;
+    formatter: function() {
+      const label = this.points[0].series.chart.options.xCategories[this.points[0].x]
 
-      return `<tr>
-                <td><span style="font-size:20px; color: ${this.series.color}">${symbol}</span></td>
-                <td style="text-align: right;"><strong>${value}</strong></td>
-              </tr>`;
+      const rows = this.points.map(function(point) {
+        const {units} = point.series.options;
+        const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
+        const marker = tooltipMarker(point.series.symbol, point.series.color);
+
+        return `<tr>
+                  <td>
+                    ${marker}
+                  </td>
+                  <td style="text-align: right;"><strong>${value}</strong></td>
+                </tr>`;
+      });
+
+      return `<small>${label}</small>
+              <table style="width:100%">
+                ${rows.join('')}
+              </table>`;
     },
-    footerFormat: '</table>',
     useHTML: true
   },
   xAxis: {
@@ -162,7 +170,7 @@ const withHero = Composed => {
 
       const config = merge({}, BASE_HERO_CHARTCONFIG);
 
-      const broadcastSetState = this.setState.bind(this);
+      // const broadcastSetState = this.setState.bind(this);
 
       config.chart.renderTo = this._chart;
 
@@ -187,6 +195,9 @@ const withHero = Composed => {
         series,
         yAxis,
       });
+
+      // todo - @micapalm - not sure why we need this.
+      instanceConfig.xCategories = xAxis.categories;
 
       // markers
       instanceConfig.series = instanceConfig.series.map(s => {
