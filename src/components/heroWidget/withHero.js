@@ -199,6 +199,13 @@ const withHero = Composed => {
       // todo - @micapalm - not sure why we need this.
       instanceConfig.xCategories = xAxis.categories;
 
+      // Hero chart, remove left & right padding - https://github.com/govau/datavizkit/pull/153/files
+      instanceConfig.xAxis.labels = {
+        formatter: function() {
+          return xAxis.categories[this.value]
+        }
+      };
+
       // markers
       instanceConfig.series = instanceConfig.series.map(s => {
         if (isObject(s.data[0])) {
