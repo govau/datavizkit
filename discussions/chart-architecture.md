@@ -11,9 +11,11 @@
 [insert discussion]
 
 
+todo - show evidence of how this sets us up to enable change 
 
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
-
+![Diagram]('./chart-architecture-composition.png').
 
 ```
 import React, {PureComponent} from 'react';
@@ -35,7 +37,11 @@ const withHighcharts = Composed => {
 const withSparkline = Composed => {
   return class extends PureComponent {
     render() {
-      return <Composed {...this.props} /> 
+      return (
+        <Composed {...this.props}>
+          <div ref={el => this.el = el} />
+        </Composed>
+      );
     }
   }
 };
@@ -44,12 +50,12 @@ const withSparkline = Composed => {
 // This composition should be standard, although many widgets can 
 // render charts in different layouts
 // owns things like legends
-const SparklineChart = () => {
+const SparklineChart = ({children}) => {
   return (
     <div>
-      <div ref={el => this.el = el} />
+      <span className="chart">{children}</span>
       <span>Legend</span>
-    </div>    
+    </div>
   )
 };
 
@@ -89,7 +95,3 @@ render withHighcharts
 constructor withSparkline
 render withSparkline
 render SparklineChart
-
-
-
-show evidence of how things could change
