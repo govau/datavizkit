@@ -100,13 +100,13 @@
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",
     "docs-build": "styleguidist build",
-    "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDir -d https://datavizkit.surge.sh",
+    "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDest -d https://datavizkit.surge.sh",
     "commit": "git-cz",
     "hard-release": "yarn run build:lib && npm publish",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "config": {
-    "styleguideDir": "docs/.out"
+    "styleguideDest": "docs/.out"
   },
   "jest": {
     "collectCoverageFrom": [

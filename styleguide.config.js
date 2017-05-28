@@ -7,10 +7,12 @@ module.exports = {
   sections: [
     {
       name: 'Widgets',
-      components: './src/components/**/*.js',
+      components: 'src/components/**/*.js',
     },
   ],
-  styleguideDir: config.styleguideDir,
+  showCode: true,
+  skipComponentsWithoutExample: true,
+  styleguideDir: config.styleguideDest,
   defaultExample: true,
   serverPort: 4000,
   webpackConfig: require('./config/webpack.config.styleguide.js')
