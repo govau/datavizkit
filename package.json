@@ -1,6 +1,6 @@
 {
   "name": "@gov.au/datavizkit",
-  "version": "1.0.5-development",
+  "version": "1.0.6-development",
   "description": "A fully featured data visualisation toolset built on top of Highcharts and React.",
   "keywords": [
     "highcharts",
@@ -28,7 +28,8 @@
     "pui-react-overlay-trigger": "^8.0.5",
     "pui-react-tooltip": "^8.0.5",
     "recompose": "^0.23.1",
-    "tinycolor2": "^1.4.1"
+    "tinycolor2": "^1.4.1",
+    "jsx-to-string": "1.0.2"
   },
   "peerDependencies": {
     "react": "^15.5.4",
@@ -74,7 +75,6 @@
     "husky": "^0.13.3",
     "jest": "18.1.0",
     "json-loader": "0.5.4",
-    "jsx-to-string": "1.0.2",
     "object-assign": "4.1.1",
     "postcss-loader": "1.2.2",
     "promise": "7.1.1",
