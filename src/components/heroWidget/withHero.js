@@ -51,33 +51,6 @@ const BASE_HERO_CHARTCONFIG = {
     shared: true,
     crosshairs: true,
     borderRadius: 8,
-    formatter: function() {
-
-      if (!this.points[0]) {
-        return null;
-      }
-
-      // Look up category name (workaround for padding issue)
-      const label = this.points[0].series.chart.options.xCategories[this.points[0].x];
-      const rows = this.points.map(function(point) {
-        const {units} = point.series.options;
-        const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
-        const marker = rawMarker(point.series.symbol, point.series.color, true);
-        const markerHtml = jsxToString(marker).replace('xlinkHref', 'xlink:href');
-
-        return `<tr>
-                  <td>
-                    ${markerHtml}
-                  </td>
-                  <td style="text-align: right;"><strong>${value}</strong></td>
-                </tr>`;
-      });
-
-      return `<small>${label}</small>
-              <table style="width:100%">
-                ${rows.join('')}
-              </table>`;
-    },
     useHTML: true
   },
   xAxis: {
@@ -251,6 +224,34 @@ const withHero = Composed => {
         }
         return s;
       });
+
+      instanceConfig.tooltip.formatter = function() {
+
+        if (!this.points[0]) {
+          return null;
+        }
+
+        // Look up category name (workaround for padding issue)
+        const label = this.points[0].series.chart.options.xCategories[this.points[0].x];
+        const rows = this.points.map(function(point) {
+          const {units} = point.series.options;
+          const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
+          const marker = rawMarker(point.series.symbol, point.series.color, true);
+          const markerHtml = jsxToString(marker).replace('xlinkHref', 'xlink:href');
+
+          return `<tr>
+                  <td>
+                    ${markerHtml}
+                  </td>
+                  <td style="text-align: right;"><strong>${value}</strong></td>
+                </tr>`;
+        });
+
+        return `<small>${label}</small>
+              <table style="width:100%">
+                ${rows.join('')}
+              </table>`;
+      };
 
       return instanceConfig;
     }
