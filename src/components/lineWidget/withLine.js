@@ -26,7 +26,7 @@ const BASE_LINE_CHARTCONFIG = {
   plotOptions: {
     line: {
       marker: {
-        radius: 8,
+        radius: 4,
       }
     },
     series: {
@@ -51,7 +51,7 @@ const BASE_LINE_CHARTCONFIG = {
     },
   },
   tooltip: {
-    enabled: true,
+    enabled: false,
     shared: true,
     crosshairs: true,
   },
