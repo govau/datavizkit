@@ -170,9 +170,8 @@ const withSparkline = Composed => {
     }
 
     makeInstanceConfig(config, passedProps) {
-      const {series, xAxis} = passedProps;
+      const {series} = passedProps;
       const instanceConfig = merge({}, config, {
-        xAxis,
         series,
       });
 
