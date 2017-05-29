@@ -3,10 +3,6 @@ import React from 'react';
 // For use in contexts where rendering a React component isn't possible,
 // e.g. the content of a tooltip.
 export const rawMarker = function(symbol, color, showLine) { 
-  if (!symbol) { 
-    return <rect x="0" y="0" width="12" height="12" fill={color} visibility="visible" rx="6" ry="6"></rect>
-  }
-
   let shapes = {
     'circle': 
       <g transform="translate(0, 1)">
@@ -39,16 +35,14 @@ export const rawMarker = function(symbol, color, showLine) {
       </g>
   };
 
-  let shape = shapes[symbol] || <rect x="0" y="0" width="12" height="12" fill={color} visibility="visible" rx="6" ry="6"></rect>;
-
   return <svg width="25px" height="17px" viewBox="0 0 25 17" version="1.1" 
             xmlns="http://www.w3.org/2000/svg">
           <defs>
               <rect id="path-1" x="7.86396103" y="1.86396103" width="9" height="9"></rect>
           </defs>
-          <g stroke="none" stroke-width="1" fill={color} fill-rule="evenodd">
-            { showLine && <rect x="0" y="5" width="25" height="3" rx="1.5" fill={color}></rect> }
-            { shape }
+          <g stroke="none" strokeWidth="1" fill={color} fill-rule="evenodd">
+            { showLine && <rect x="0" y="5" width="25" height="3" rx="1.5"></rect> }
+            { shapes[symbol] || <rect x="0" y="0" width="12" height="12" visibility="visible" rx="6" ry="6"></rect> }
           </g>
         </svg>;
 }
