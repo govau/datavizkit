@@ -207,19 +207,19 @@ const withHero = Composed => {
     makeInstanceConfig(config, passedProps) {
       const {series, xAxis, yAxis} = passedProps;
 
-      let instanceConfig = merge({}, config, {
+      let instanceConfig = merge({
+        xAxis: { 
+          labels: {
+            formatter: function() {
+              return this.chart.options.xCategories[this.value]
+            }
+          }
+        }
+      }, config, {
         series,
         yAxis,
         // Don't include xAxis or left & right padding will be huge
       });
-
-      instanceConfig.xAxis = { 
-        labels: {
-          formatter: function() {
-            return xAxis.categories[this.value]
-          }
-        }
-      };
 
       // Workaround for padding issue (tooltip needs to look up category names)
       instanceConfig.xCategories = xAxis.categories;
