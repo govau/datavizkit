@@ -53,7 +53,7 @@ const BASE_HERO_CHARTCONFIG = {
     borderRadius: 8,
     formatter: function() {
       // Look up category name (workaround for padding issue)
-      const label = this.points[0].series.chart.options.xCategories[this.points[0].x]
+      const label = this.points[0].x;
       const rows = this.points.map(function(point) {
         const {units} = point.series.options;
         const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
@@ -207,22 +207,11 @@ const withHero = Composed => {
     makeInstanceConfig(config, passedProps) {
       const {series, xAxis, yAxis} = passedProps;
 
-      let instanceConfig = merge({
-        xAxis: { 
-          labels: {
-            formatter: function() {
-              return this.chart.options.xCategories[this.value]
-            }
-          }
-        }
-      }, config, {
+      let instanceConfig = merge({}, config, {
         series,
         yAxis,
-        // Don't include xAxis or left & right padding will be huge
+        xAxis
       });
-
-      // Workaround for padding issue (tooltip needs to look up category names)
-      instanceConfig.xCategories = xAxis.categories;
 
       // markers
       instanceConfig.series = instanceConfig.series.map(s => {
