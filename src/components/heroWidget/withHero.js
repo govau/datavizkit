@@ -52,6 +52,7 @@ const BASE_HERO_CHARTCONFIG = {
     crosshairs: true,
     borderRadius: 8,
     formatter: function() {
+      // Look up category name (workaround for padding issue)
       const label = this.points[0].series.chart.options.xCategories[this.points[0].x]
       const rows = this.points.map(function(point) {
         const {units} = point.series.options;
@@ -209,9 +210,9 @@ const withHero = Composed => {
       let instanceConfig = merge({}, config, {
         series,
         yAxis,
+        // Don't include xAxis or left & right padding will be huge
       });
 
-      // Hero chart, remove left & right padding - https://github.com/govau/datavizkit/pull/153/files
       instanceConfig.xAxis = { 
         labels: {
           formatter: function() {
@@ -220,6 +221,7 @@ const withHero = Composed => {
         }
       };
 
+      // Workaround for padding issue (tooltip needs to look up category names)
       instanceConfig.xCategories = xAxis.categories;
 
       // markers
