@@ -1,15 +1,20 @@
 Basic Sparkline Widget:
 
-    <SparklineWidget title="Total opportunities"
-                      type="sparkline"
-                      dateLastUpdated="2017-02-01T23:11:18.675Z"
-                      _singleCategory={false}
-                      _singleSection={true}
-                      minimumValue="13"
-                      series={[
-                        {"name":"Total opportunities", "units": "percentage", "data":[null,null,13,29,42,58,74,1]}
-                      ]}
-                      xAxis={{"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}} />
+    <SparklineWidget type="sparkline"
+                       title="Total opportunities"
+                       dateLastUpdated="2017-02-01T23:11:18.675Z"
+                       infoText="This is the total number of requests for digital services or specialists published by government buyers in the Digital Marketplace."
+                       _singleCategory={false}
+                       _singleSection={true}
+                       yAxis={
+                         [{"title": {"text": ""}, "min": 13}]
+                       }
+                       xAxis={
+                         [{"categories": ["Jul '16", "Aug '16", "Sep '16", "Oct '16", "Nov '16", "Dec '16", "Jan '17"]}]
+                       }
+                       series={
+                         [{"name": "Total opportunities", "units": "i", "data": [null, null, 13, 29, 42, 58, 74]}]
+                       } />
 
 Sparkline Widget for a percentage:
 
