@@ -2,10 +2,10 @@
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
+import jsxToString from 'jsx-to-string';
 
 import {createHighcontrastDashStyleSetSeriesIteratee} from './../../utils/highcontrastPatterns';
-import {tooltipMarker} from './../../utils/displayFormats';
-
+import {rawMarker} from '../marker/marker.js';
 
 const BASE_HERO_CHARTCONFIG = {
   chart: {
@@ -52,15 +52,16 @@ const BASE_HERO_CHARTCONFIG = {
     crosshairs: true,
     borderRadius: 8,
     formatter: function() {
-      const label = this.x;
+      const label = this.points[0].series.chart.options.xCategories[this.points[0].x]
       const rows = this.points.map(function(point) {
         const {units} = point.series.options;
         const value = `${units === '$' ? '$' : ''}${point.y}${units === '%' ? '%' : ''}`;
-        const marker = tooltipMarker(point.series.symbol, point.series.color);
+        const marker = rawMarker(point.series.symbol, point.series.color, true);
+        const markerHtml = jsxToString(marker).replace('xlinkHref', 'xlink:href');
 
         return `<tr>
                   <td>
-                    ${marker}
+                    ${markerHtml}
                   </td>
                   <td style="text-align: right;"><strong>${value}</strong></td>
                 </tr>`;
@@ -206,17 +207,20 @@ const withHero = Composed => {
       const {series, xAxis, yAxis} = passedProps;
 
       let instanceConfig = merge({}, config, {
-        xAxis,
         series,
         yAxis,
       });
 
       // Hero chart, remove left & right padding - https://github.com/govau/datavizkit/pull/153/files
-      instanceConfig.xAxis.labels = {
-        formatter: function() {
-          return xAxis.categories[this.value]
+      instanceConfig.xAxis = { 
+        labels: {
+          formatter: function() {
+            return xAxis.categories[this.value]
+          }
         }
       };
+
+      instanceConfig.xCategories = xAxis.categories;
 
       // markers
       instanceConfig.series = instanceConfig.series.map(s => {

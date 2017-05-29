@@ -26,7 +26,7 @@ const BASE_LINE_CHARTCONFIG = {
   plotOptions: {
     line: {
       marker: {
-        radius: 2,
+        radius: 8,
       }
     },
     series: {
