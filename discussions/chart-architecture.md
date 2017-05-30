@@ -3,17 +3,35 @@
 
 ## Requirements
 
-* composable
-* modular
-* clean separation of concerns, should not invoke Highcharts more than once as Highcharts is not modular
-* ability to swap out Highcharts at any point
+* Composable and modular
 
-[insert discussion]
+Maintain the ability to swap out any _component_ including Highcharts at any point. 
+The library should be able to support a Highcharts ecosystem to coexist with another 
+charting framework provider including another version of Highcharts, allowing ease 
+in future migration.
 
 
-todo - show evidence of how this sets us up to enable change 
+* Cleanly separated concerns
+
+Components should implement simple and sensible interfaces, encapsulating primitives 
+and underlying implementation details.
+
+Specifically with regards to the Highcharts library, as it's not modular in nature, 
+ensure that we maintain a singular reference to use of Highcharts globals.
+
+
+
+# High level structure
+
+## Widget composition
+
+1. Highcharts as charting mechanism - withHighcharts 
+2. Highcharts.chart rendering - withSparkline
+3. Datavizkit Chart rendering (include other requirements not provided by Highcharts) - SparklineChart
+3. Datavizkit Widget - SparklineWidget
 
 ![Diagram]('./chart-architecture-composition.png').
+
 
 ```
 import React, {PureComponent} from 'react';
@@ -37,7 +55,7 @@ const withSparkline = Composed => {
     render() {
       return (
         <Composed {...this.props}>
-          <div ref={el => this.el = el} />
+          <div ref={el => this.el = el} />  // will become "Chart"
         </Composed>
       );
     }
@@ -51,7 +69,7 @@ const withSparkline = Composed => {
 const SparklineChart = ({children}) => {
   return (
     <div>
-      <span className="chart">{children}</span>
+      <span className="chart">{children}</span>   // transclude "Chart"
       <span>Legend</span>
     </div>
   )
@@ -78,18 +96,3 @@ const SparklineWidget = () => {
   )
 };
 ```
-
-
-will render in this order:
-render SparklineWidget
-render withHighcharts
-render withSparkline
-render SparklineChart
-
-
-render SparklineWidget
-constructor withHighcharts
-render withHighcharts
-constructor withSparkline
-render withSparkline
-render SparklineChart
