@@ -26,13 +26,16 @@
 
 ### Many Category Many Section:
 
-`@todo - example`
-
-
-### Grouped - Single Category Single Section:
-### Grouped - Single Category Many Section:
-### Grouped - Many Category Single Section:
-### Grouped - Many Category Many Section:
+same as Grouped
 
 `@todo - example`
 
+
+### Categorical (Apples/Oranges) - Single Category Single Section:
+### Categorical (Apples/Oranges) - Single Category Many Section:
+### Categorical (Apples/Oranges) - Many Category Single Section:
+### Categorical (Apples/Oranges) - Many Category Many Section:
+
+category in place of time series
+
+`@todo - example`
