@@ -65,7 +65,7 @@ export const createPolarCustomLegendData = (series) => {
 };
 
 
-export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
+export const plotNullDataLayerToAxis = (xAxis, series, setStatic) => {
   if (xAxis.length > 1) {
     console.warn('Null data layer can only be plotted to a single axis.')
   }
@@ -94,7 +94,7 @@ export const plotNullDataLayerToAxis = (xAxis, series, broadcastSetState) => {
         color: 'url(#null-data-layer)', // this color represents the null value region
         events: {
           mouseover: function() {
-            broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.axis.series, null)});
+            setStatic({'customLegendData': createCartesianCustomLegendData(this.axis.series, null)});
             this.axis.crosshair = false;
             this.axis.series.forEach(s => {
               s.data.map(d => {

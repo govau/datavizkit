@@ -60,9 +60,20 @@ const withColumn = Composed => {
       this._highcontrastOnSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(true);
       this._highcontrastOffSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(false);
 
-      this.state = {
-        customLegendData: null,
+      this.static = new Map();
+
+      this.setStatic = this.setStatic.bind(this);
+      this.setCustomLegendData = this.setCustomLegendData.bind(this);
+    }
+
+    setStatic(keyValues) {
+      for (const key in keyValues) {
+        this.static.set(key, keyValues[key]);
       }
+    }
+
+    getStatic(key) {
+      return this.static.get(key);
     }
 
     // create
@@ -77,36 +88,27 @@ const withColumn = Composed => {
       if (this.props.displayHighContrast) {
         this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
       }
+
+      // hydrate static props
+      this.forceUpdate();
     }
 
     // update
-    componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps) {
       // console.log('withColumn componentWillUpdate');
 
-      const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+      if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
+        const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+        this.props.redraw(config);
 
+        // map highcontrast to series
+        if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
+          this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'color');
+        }
 
-      let propNamesChanged = [];
-
-      if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
-        propNamesChanged = [...propNamesChanged, 'series'];
+        // hydrate static props
+        this.forceUpdate();
       }
-
-      if (JSON.stringify(nextProps.yAxis) !== JSON.stringify(this.props.yAxis)) {
-        propNamesChanged = [...propNamesChanged, 'yAxis'];
-      }
-
-      if (JSON.stringify(nextProps.xAxis) !== JSON.stringify(this.props.xAxis)) {
-        propNamesChanged = [...propNamesChanged, 'xAxis'];
-      }
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'color');
-      }
-
-      // update by type
-      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -116,20 +118,23 @@ const withColumn = Composed => {
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
+      this.customLegendData = null;
     }
 
+    setCustomLegendData(data) {
+      this.customLegendData = data;
+    }
 
     createBaseConfig() {
+
+      const setStatic = this.setStatic;
 
       // only create it once
       if (this._baseChartConfig) {
         return this._baseChartConfig;
       }
 
-
       const config = merge({}, BASE_COLUMN_CHARTCONFIG);
-
-      const broadcastSetState = this.setState.bind(this);
 
       config.chart.renderTo = this._chart;
 
@@ -138,9 +143,9 @@ const withColumn = Composed => {
         load: function() {
         },
         render: function() {
-          config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
+          config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, setStatic);
 
-          broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series)});
+          setStatic({'customLegendData': createCartesianCustomLegendData(this.series)});
 
           // todo - extract
           // select nothing then..
@@ -166,7 +171,7 @@ const withColumn = Composed => {
 
       config.plotOptions.series.point.events = {
         mouseOver: function(e) {
-          broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series.chart.series, this.index)});
+          setStatic(createCartesianCustomLegendData(this.series.chart.series, this.index));
 
           // todo - extract
           this.series.chart.series.forEach(s => {
@@ -211,7 +216,7 @@ const withColumn = Composed => {
     render() {
       // console.log('withColumn render');
 
-      const {customLegendData} = this.state;
+      const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (
