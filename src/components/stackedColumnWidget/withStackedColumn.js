@@ -2,7 +2,8 @@
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 
-import {createHighcontrastFillColorsSetSeriesIteratee} from './../../utils/highcontrastPatterns';
+import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
+import {mapHighcontrastFill} from './../../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
@@ -55,19 +56,13 @@ const BASE_STACKEDCOLUMN_CHARTCONFIG = {
 
 
 const withStackedColumn = Composed => {
-  return class extends PureComponent {
+
+  return class extends PureComponentWithStaticProps {
 
     constructor(props) {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-
-      this._highcontrastOnSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(true);
-      this._highcontrastOffSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(false);
-
-      this.state = {
-        customLegendData: null,
-      }
     }
 
     // create
@@ -77,41 +72,18 @@ const withStackedColumn = Composed => {
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
-      }
     }
 
     // update
     componentWillUpdate(nextProps, nextState) {
       // console.log('withStackedColumn componentWillUpdate');
 
-      const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+      if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
-
-      let propNamesChanged = [];
-
-      if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
-        propNamesChanged = [...propNamesChanged, 'series'];
+        const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+        // redraw chart
+        this.props.redraw(config);
       }
-
-      if (JSON.stringify(nextProps.yAxis) !== JSON.stringify(this.props.yAxis)) {
-        propNamesChanged = [...propNamesChanged, 'yAxis'];
-      }
-
-      if (JSON.stringify(nextProps.xAxis) !== JSON.stringify(this.props.xAxis)) {
-        propNamesChanged = [...propNamesChanged, 'xAxis'];
-      }
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'color');
-      }
-
-      // update by type
-      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -121,10 +93,12 @@ const withStackedColumn = Composed => {
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
+      this.static = null;
     }
 
     createBaseConfig() {
 
+      const setStatic = this.setStatic;
       const {stackingType} = this.props;
 
       // only create it once
@@ -135,8 +109,6 @@ const withStackedColumn = Composed => {
 
       const config = merge({}, BASE_STACKEDCOLUMN_CHARTCONFIG);
 
-      const broadcastSetState = this.setState.bind(this);
-
       config.chart.renderTo = this._chart;
 
 
@@ -145,9 +117,9 @@ const withStackedColumn = Composed => {
         // load: function() {
         // },
         render: function() {
-          config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
+          config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, setStatic);
 
-          broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series)});
+          setStatic({'customLegendData': createCartesianCustomLegendData(this.series)});
 
           // todo - extract
           // select nothing then..
@@ -175,7 +147,7 @@ const withStackedColumn = Composed => {
 
       config.plotOptions.series.point.events = {
         mouseOver: function(e) {
-          broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series.chart.series, this.index)});
+          setStatic({'customLegendData': createCartesianCustomLegendData(this.series.chart.series, this.index)});
 
           // todo - extract
           this.series.chart.series.forEach(s => {
@@ -212,17 +184,15 @@ const withStackedColumn = Composed => {
         yAxis,
       });
 
-      return instanceConfig;
-    }
+      instanceConfig = mapHighcontrastFill(instanceConfig, passedProps.displayHighContrast);
 
-    _getHighcontrastPropsMap(config, condition) {
-      return config.series.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
+      return instanceConfig;
     }
 
     render() {
       // console.log('stackedColumn render');
 
-      const {customLegendData} = this.state;
+      const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (
