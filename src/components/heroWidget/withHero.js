@@ -1,11 +1,13 @@
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 import jsxToString from 'jsx-to-string';
 
-import {createHighcontrastDashStyleSetSeriesIteratee} from './../../utils/highcontrastPatterns';
+import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
+import {mapHighcontrastDashstyle} from './../../utils/highcontrastPatterns';
 import {rawMarker} from '../marker/marker.js';
+
 
 const BASE_HERO_CHARTCONFIG = {
   chart: {
@@ -96,18 +98,13 @@ const BASE_HERO_CHARTCONFIG = {
 
 
 const withHero = Composed => {
-  return class extends PureComponent {
+
+  return class extends PureComponentWithStaticProps {
 
     constructor(props) {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-      this._highcontrastOnSeriesIteratee = createHighcontrastDashStyleSetSeriesIteratee(true);
-      this._highcontrastOffSeriesIteratee = createHighcontrastDashStyleSetSeriesIteratee(false);
-
-      this.state = {
-        customLegendData: null,
-      }
     }
 
     // create
@@ -117,41 +114,18 @@ const withHero = Composed => {
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'dashStyle');
-      }
     }
 
     // update
-    componentWillUpdate(nextProps, nextState) {
-      // console.log('withHero componentWillUpdate');
+    componentWillUpdate(nextProps) {
+      // console.log('withColumn componentWillUpdate');
 
-      const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+      if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
-
-      let propNamesChanged = [];
-
-      if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
-        propNamesChanged = [...propNamesChanged, 'series'];
+        const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+        // redraw chart
+        this.props.redraw(config);
       }
-
-      if (JSON.stringify(nextProps.yAxis) !== JSON.stringify(this.props.yAxis)) {
-        propNamesChanged = [...propNamesChanged, 'yAxis'];
-      }
-
-      if (JSON.stringify(nextProps.xAxis) !== JSON.stringify(this.props.xAxis)) {
-        propNamesChanged = [...propNamesChanged, 'xAxis'];
-      }
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'dashStyle');
-      }
-
-      // update by type
-      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -166,6 +140,8 @@ const withHero = Composed => {
 
     createBaseConfig() {
 
+      const setStatic = this.setStatic;
+
       // only create it once
       if (this._baseChartConfig) {
         return this._baseChartConfig;
@@ -173,8 +149,6 @@ const withHero = Composed => {
 
 
       const config = merge({}, BASE_HERO_CHARTCONFIG);
-
-      // const broadcastSetState = this.setState.bind(this);
 
       config.chart.renderTo = this._chart;
 
@@ -193,10 +167,6 @@ const withHero = Composed => {
             }
           }
         }
-        // load: function() {
-        // },
-        // render: function() {
-        // },
       };
 
       this._baseChartConfig = config;
@@ -236,15 +206,14 @@ const withHero = Composed => {
         return s;
       });
 
-      return instanceConfig;
-    }
+      instanceConfig = mapHighcontrastDashstyle(instanceConfig, passedProps.displayHighContrast);
 
-    _getHighcontrastPropsMap(config, condition) {
-      return config.series.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
+      return instanceConfig;
     }
 
     render() {
       // console.log('withHero render');
+      const {displayHighContrast} = this.props;
 
       return (
         <Composed {...this.props}>

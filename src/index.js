@@ -42,7 +42,7 @@ class App extends Component {
         <button onClick={() => {this.setState({hcState: !this.state.hcState})}}>Toggle high contrast</button>
 
 
-        {/*<DonutWidget series={[
+        <DonutWidget series={[
                         {name:"Jan",
                           data:[
                             {name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}
@@ -129,7 +129,7 @@ class App extends Component {
 
 
 
-        {/*<div>
+        <div>
 
           <SparklineWidget title="Total opportunities"
                             type="sparkline"
@@ -189,7 +189,6 @@ class App extends Component {
                               trendValue=""
                               trendDate="2016-10-31T00:00:00Z" />
 
-*/}
       </div>
     )
   }
