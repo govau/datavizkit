@@ -132,8 +132,7 @@ export const NullDataLayerPattern = () => {
 };
 
 
-
-export const createHighcontrastFillColorsSetSeriesIteratee = (condition) => {
+export const createHighconstrastFillSeriesIteratee = condition => {
   const getHighcontrastPatternIds = () => {
     const arrayOfCount = Array(HIGHCONTRAST_PATTERN_COUNT).fill();
     return arrayOfCount.map((c, idx) => {
@@ -141,15 +140,26 @@ export const createHighcontrastFillColorsSetSeriesIteratee = (condition) => {
     });
   };
   const patternIds = getHighcontrastPatternIds();
+
   return (item, idx) => {
     const patternIdx = getItemIdxByIncrementor(patternIds, idx);
-    return condition ? patternIds[patternIdx] : void 0;
+
+    item.color = condition ? patternIds[patternIdx] : void 0;
+    return item;
   };
 };
 
 
-export const createHighcontrastDashStyleSetSeriesIteratee = (condition) => {
+export const mapHighcontrastFill = (config, condition) => {
+  const onFunc = createHighconstrastFillSeriesIteratee(true);
+  const offFunc = createHighconstrastFillSeriesIteratee(false);
 
+  config.series = config.series.map(condition ? onFunc : offFunc);
+  return config;
+};
+
+
+export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
   const dashTypes = [
     // 'Solid',   // reserved
     'ShortDash',
@@ -163,11 +173,20 @@ export const createHighcontrastDashStyleSetSeriesIteratee = (condition) => {
     'LongDashDot',
     'LongDashDotDot',
   ];
-
   return (item, idx) => {
     const dashIdx = getItemIdxByIncrementor(dashTypes, idx);
-    return condition ? dashTypes[dashIdx] : 'Solid';
+    item.dashStyle = condition ? dashTypes[dashIdx] : 'Solid';
+    return item;
   };
 };
+
+export const mapHighcontrastDashstyle = (config, condition) => {
+  const onFunc = createHighcontrastDashstyleSeriesIteratee(true);
+  const offFunc = createHighcontrastDashstyleSeriesIteratee(false);
+
+  config.series = config.series.map(condition ? onFunc : offFunc);
+  return config;
+};
+
 
 export default makeHighcontrastPatterns;

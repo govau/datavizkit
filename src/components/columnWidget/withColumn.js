@@ -2,7 +2,7 @@
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 
-import {createHighcontrastFillColorsSetSeriesIteratee} from './../../utils/highcontrastPatterns';
+import {mapHighcontrastFill} from './../../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
@@ -57,13 +57,9 @@ const withColumn = Composed => {
       this._chart = null;
       this._baseChartConfig = null;
 
-      this._highcontrastOnSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(true);
-      this._highcontrastOffSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(false);
-
       this.static = new Map();
 
       this.setStatic = this.setStatic.bind(this);
-      this.setCustomLegendData = this.setCustomLegendData.bind(this);
     }
 
     setStatic(keyValues) {
@@ -82,14 +78,9 @@ const withColumn = Composed => {
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
+      // draw chart for first time
       this.props.create(config);
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
-      }
-
-      // hydrate static props
+      // hydrate static state
       this.forceUpdate();
     }
 
@@ -98,15 +89,12 @@ const withColumn = Composed => {
       // console.log('withColumn componentWillUpdate');
 
       if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
+
         const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+
+        // redraw chart
         this.props.redraw(config);
-
-        // map highcontrast to series
-        if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-          this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'color');
-        }
-
-        // hydrate static props
+        // hydrate static state
         this.forceUpdate();
       }
     }
@@ -119,10 +107,6 @@ const withColumn = Composed => {
       this._chart = null;
       this._baseChartConfig = null;
       this.customLegendData = null;
-    }
-
-    setCustomLegendData(data) {
-      this.customLegendData = data;
     }
 
     createBaseConfig() {
@@ -140,8 +124,6 @@ const withColumn = Composed => {
 
       // bind events to config
       config.chart.events = {
-        load: function() {
-        },
         render: function() {
           config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, setStatic);
 
@@ -206,11 +188,9 @@ const withColumn = Composed => {
         yAxis,
       });
 
-      return instanceConfig;
-    }
+      instanceConfig = mapHighcontrastFill(instanceConfig, passedProps.displayHighContrast);
 
-    _getHighcontrastPropsMap(config, condition) {
-      return config.series.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
+      return instanceConfig;
     }
 
     render() {
