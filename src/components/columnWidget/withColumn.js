@@ -1,8 +1,8 @@
 
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
-import _isObject from 'lodash/isObject';
 
+import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
 import {mapHighcontrastFill} from './../../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
@@ -51,38 +51,13 @@ const BASE_COLUMN_CHARTCONFIG = {
 
 
 const withColumn = Composed => {
-  return class extends PureComponent {
+
+  return class extends PureComponentWithStaticProps {
 
     constructor(props) {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-
-      this.static = new Map();
-
-      this.setStatic = this.setStatic.bind(this);
-    }
-
-    /**
-     * Sets static props object on constructor.
-     * Highcharts will re-render React when it needs to.
-     * @param keyValues
-     */
-    setStatic(keyValues) {
-      if (__DEV__) {
-        if (!_isObject(keyValues)) {
-          throw new Error('keyValues supplied to setStatic must be an object');
-        }
-      }
-      for (const key in keyValues) {
-        this.static.set(key, keyValues[key]);
-      }
-      // hydrate static state
-      this.forceUpdate();
-    }
-
-    getStatic(key) {
-      return this.static.get(key);
     }
 
     // create
@@ -215,6 +190,7 @@ const withColumn = Composed => {
       );
     }
   }
+
 };
 
 export default withColumn;
