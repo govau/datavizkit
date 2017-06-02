@@ -1,9 +1,10 @@
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 
-import {createHighcontrastDashStyleSetSeriesIteratee} from './../../utils/highcontrastPatterns';
+import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
+import {mapHighcontrastDashstyle} from './../../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
   plotNullDataLayerToAxis
@@ -77,18 +78,13 @@ const BASE_LINE_CHARTCONFIG = {
 
 
 const withLine = Composed => {
-  return class extends PureComponent {
+
+  return class extends PureComponentWithStaticProps {
 
     constructor(props) {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-      this._highcontrastOnSeriesIteratee = createHighcontrastDashStyleSetSeriesIteratee(true);
-      this._highcontrastOffSeriesIteratee = createHighcontrastDashStyleSetSeriesIteratee(false);
-
-      this.state = {
-        customLegendData: null,
-      }
     }
 
     // create
@@ -96,43 +92,20 @@ const withLine = Composed => {
       // console.log('withLine componentDidMount');
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
-
+      // draw chart for first time
       this.props.create(config);
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'dashStyle');
-      }
     }
 
     // update
-    componentWillUpdate(nextProps, nextState) {
-      // console.log('withLine componentWillUpdate');
+    componentWillUpdate(nextProps) {
+      // console.log('withColumn componentWillUpdate');
 
-      const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+      if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
-
-      let propNamesChanged = [];
-
-      if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
-        propNamesChanged = [...propNamesChanged, 'series'];
+        const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+        // redraw chart
+        this.props.redraw(config);
       }
-
-      if (JSON.stringify(nextProps.yAxis) !== JSON.stringify(this.props.yAxis)) {
-        propNamesChanged = [...propNamesChanged, 'yAxis'];
-      }
-
-      if (JSON.stringify(nextProps.xAxis) !== JSON.stringify(this.props.xAxis)) {
-        propNamesChanged = [...propNamesChanged, 'xAxis'];
-      }
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-        this.props.updateSeriesByProp(this._getHighcontrastPropsMap(config, nextProps.displayHighContrast), 'dashStyle');
-      }
-
-      // update by type
-      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -142,10 +115,13 @@ const withLine = Composed => {
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
+      this.static = null;
     }
 
 
     createBaseConfig() {
+
+      const setStatic = this.setStatic;
 
       // only create it once
       if (this._baseChartConfig) {
@@ -155,8 +131,6 @@ const withLine = Composed => {
 
       const config = merge({}, BASE_LINE_CHARTCONFIG);
 
-      const broadcastSetState = this.setState.bind(this);
-
       config.chart.renderTo = this._chart;
 
       // bind events to config
@@ -164,9 +138,9 @@ const withLine = Composed => {
         // load: function() {
         // },
         render: function() {
-          config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, broadcastSetState);
+          config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, setStatic);
 
-          broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series)});
+          setStatic({'customLegendData': createCartesianCustomLegendData(this.series)});
 
           // todo - extract
           // select nothing then..
@@ -194,7 +168,7 @@ const withLine = Composed => {
 
       config.plotOptions.series.point.events = {
         mouseOver: function(e) {
-          broadcastSetState({'customLegendData': createCartesianCustomLegendData(this.series.chart.series, this.index)});
+          setStatic({'customLegendData': createCartesianCustomLegendData(this.series.chart.series, this.index)});
 
           // todo - extract
           this.series.chart.series.forEach(s => {
@@ -223,7 +197,7 @@ const withLine = Composed => {
     }
 
     makeInstanceConfig(config, passedProps) {
-      const {series, xAxis, yAxis, displayHighContrast} = passedProps;
+      const {series, xAxis, yAxis} = passedProps;
 
       let instanceConfig = merge({}, config, {
         xAxis,
@@ -252,17 +226,15 @@ const withLine = Composed => {
         return s;
       });
 
-      return instanceConfig;
-    }
+      instanceConfig = mapHighcontrastDashstyle(instanceConfig, passedProps.displayHighContrast);
 
-    _getHighcontrastPropsMap(config, condition) {
-      return config.series.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
+      return instanceConfig;
     }
 
     render() {
       // console.log('withLine render');
 
-      const {customLegendData} = this.state;
+      const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (

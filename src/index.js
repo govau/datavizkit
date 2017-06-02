@@ -113,22 +113,24 @@ class App extends Component {
 
 
 
+        <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
+        <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
+
         <ColumnWidget title='Number of page views'
                       type='column'
                       dateLastUpdated='22 Feb 2016'
                       infoText="Something amazing about this widget."
                       minimumValue="20000"
                       xAxis={{categories:["May","Jun","Jul","Aug","Sep","Oct","Nov"]}}
-                      series={[
-                        {name:"Time to clear","data":[84807,null,null,62400,null,37560,39300]}
-                      ]}
+                      series={this.state.series}
                       _singleCategory={false}
                       _singleSection={true}
                       displayHighContrast={hcState} />
 
+
+
         <div>
-          <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
-          <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
+
           <SparklineWidget title="Total opportunities"
                             type="sparkline"
                             dateLastUpdated="2017-02-01T23:11:18.675Z"
@@ -138,9 +140,6 @@ class App extends Component {
                             series={this.state.series}
                             xAxis={{"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}} />
         </div>
-
-
-
 
 
 
@@ -186,7 +185,6 @@ class App extends Component {
                               value=""
                               trendValue=""
                               trendDate="2016-10-31T00:00:00Z" />
-
 
       </div>
     )

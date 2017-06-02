@@ -1,7 +1,9 @@
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import merge from 'lodash/merge';
 import last from 'lodash/last';
+
+import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
 
 
 const BASE_SPARKLINE_CHARTCONFIG = {
@@ -60,17 +62,13 @@ const BASE_SPARKLINE_CHARTCONFIG = {
 
 
 const withSparkline = Composed => {
-  return class extends PureComponent {
+
+  return class extends PureComponentWithStaticProps {
 
     constructor(props) {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-      this.state = {
-        countValue: null,
-        countUnits: null,
-        trendLegendData: null,
-      }
     }
 
     // create
@@ -83,24 +81,15 @@ const withSparkline = Composed => {
     }
 
     // update
-    componentWillUpdate(nextProps, nextState) {
-      // console.log('withSparkline componentWillUpdate');
+    componentWillUpdate(nextProps) {
+      // console.log('withColumn componentWillUpdate');
 
-      const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+      if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
-
-      let propNamesChanged = [];
-
-      if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
-        propNamesChanged = [...propNamesChanged, 'series'];
+        const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+        // redraw chart
+        this.props.redraw(config);
       }
-
-      if (JSON.stringify(nextProps.xAxis) !== JSON.stringify(this.props.xAxis)) {
-        propNamesChanged = [...propNamesChanged, 'xAxis'];
-      }
-
-      // update by type
-      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -110,10 +99,13 @@ const withSparkline = Composed => {
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
+      this.static = null;
     }
 
 
     createBaseConfig() {
+
+      const setStatic = this.setStatic;
 
       // only create it once
       if (this._baseChartConfig) {
@@ -123,31 +115,26 @@ const withSparkline = Composed => {
 
       const config = merge({}, BASE_SPARKLINE_CHARTCONFIG);
 
-      const broadcastSetState = this.setState.bind(this);
-
       config.chart.renderTo = this._chart;
 
       // bind events to config
       config.chart.events = {
-        // load: function() {
-        // },
         render: function() {
-          broadcastSetState({
+          setStatic({
             countValue: last(this.series[0].data).y,
             countUnits: this.series[0].options.units,
           });
 
           if (this.series[0].data.length >= 2) {
-            broadcastSetState({'trendLegendData': this.series[0].data});
+            setStatic({'trendLegendData': this.series[0].data});
           }
-
 
           // todo - extract
           // select nothing then..
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('');
             });
           });
@@ -156,11 +143,10 @@ const withSparkline = Composed => {
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('hover');
             });
           });
-
         },
       };
 
@@ -184,7 +170,9 @@ const withSparkline = Composed => {
     render() {
       // console.log('withSparkline render');
 
-      const {countValue, countUnits, trendLegendData} = this.state;
+      const countValue = this.getStatic('countValue');
+      const countUnits = this.getStatic('countUnits');
+      const trendLegendData = this.getStatic('trendLegendData');
 
       return (
         <Composed {...this.props}

@@ -1,8 +1,9 @@
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import merge from 'lodash/merge';
 
-import {createHighcontrastFillColorsSetSeriesIteratee} from './../../utils/highcontrastPatterns';
+import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
+import {mapHighcontrastFillByPoint} from './../../utils/highcontrastPatterns';
 import {createPolarCustomLegendData} from './../../utils/chartOptionsHelpers';
 
 
@@ -48,19 +49,13 @@ const BASE_DONUT_CHARTCONFIG = {
 
 
 const withDonut = Composed => {
-  return class extends PureComponent {
+
+  return class extends PureComponentWithStaticProps {
 
     constructor(props) {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-
-      this._highcontrastOnSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(true);
-      this._highcontrastOffSeriesIteratee = createHighcontrastFillColorsSetSeriesIteratee(false);
-
-      this.state = {
-        customLegendData: null,
-      }
     }
 
     // create
@@ -70,60 +65,18 @@ const withDonut = Composed => {
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
-
-      // map highcontrast to series
-      if (this.props.displayHighContrast) {
-        // todo - this is a hack! scary canary!
-        const colorsMap = this._getHighcontrastPropsMap(config, this.props.displayHighContrast);
-        config.series.forEach(s => {
-          s.data.forEach((point, idx) => {
-            point.color = colorsMap[idx];
-          });
-        });
-        this.props.updateData(config, ['chart']);
-        // todo - should be
-        // this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
-      }
     }
 
     // update
-    componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps) {
       // console.log('withDonut componentWillUpdate');
 
-      const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+      if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
-
-      let propNamesChanged = [];
-
-      if (JSON.stringify(nextProps.series) !== JSON.stringify(this.props.series)) {
-        propNamesChanged = [...propNamesChanged, 'series'];
+        const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
+        // redraw chart
+        this.props.redraw(config);
       }
-
-      if (JSON.stringify(nextProps.yAxis) !== JSON.stringify(this.props.yAxis)) {
-        propNamesChanged = [...propNamesChanged, 'yAxis'];
-      }
-
-      if (JSON.stringify(nextProps.xAxis) !== JSON.stringify(this.props.xAxis)) {
-        propNamesChanged = [...propNamesChanged, 'xAxis'];
-      }
-
-      // map highcontrast to series
-      // todo - this is a hack! scary canary!
-      if (this.props.displayHighContrast !== nextProps.displayHighContrast) {
-
-        const colorsMap = this._getHighcontrastPropsMap(config, nextProps.displayHighContrast);
-        config.series.forEach(s => {
-          s.data.forEach((point, idx) => {
-            point.color = colorsMap[idx];
-          });
-        });
-        propNamesChanged = [...propNamesChanged, 'chart'];
-        // todo - should be
-        // this.props.updateSeriesPointsByProp(this._getHighcontrastPropsMap(config, this.props.displayHighContrast), 'color');
-      }
-
-      // update by type
-      this.props.updateData(config, propNamesChanged);
     }
 
     // destroy
@@ -138,6 +91,8 @@ const withDonut = Composed => {
 
     createBaseConfig() {
 
+      const setStatic = this.setStatic;
+
       // only create it once
       if (this._baseChartConfig) {
         return this._baseChartConfig;
@@ -146,14 +101,12 @@ const withDonut = Composed => {
 
       const config = merge({}, BASE_DONUT_CHARTCONFIG);
 
-      const broadcastSetState = this.setState.bind(this);
-
       config.chart.renderTo = this._chart;
 
       // bind events to config
       config.chart.events = {
         render: function() {
-          broadcastSetState({'customLegendData': createPolarCustomLegendData(this.series)});
+          setStatic({'customLegendData': createPolarCustomLegendData(this.series)});
         },
       };
 
@@ -177,17 +130,15 @@ const withDonut = Composed => {
         }
       });
 
-      return instanceConfig;
-    }
+      instanceConfig = mapHighcontrastFillByPoint(instanceConfig, passedProps.displayHighContrast);
 
-    _getHighcontrastPropsMap(config, condition) {
-      return config.series[0].data.map(condition ? this._highcontrastOnSeriesIteratee : this._highcontrastOffSeriesIteratee);
+      return instanceConfig;
     }
 
     render() {
       // console.log('donut render');
 
-      const {customLegendData} = this.state;
+      const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (

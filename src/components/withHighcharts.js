@@ -109,12 +109,19 @@ const withHighcharts = Composed => {
     constructor(props) {
       super(props);
       this.create = this.create.bind(this);
-      this.updateData = this.updateData.bind(this);
+      this.redraw = this.redraw.bind(this);
       this.destroy = this.destroy.bind(this);
-      this.updateSeriesByProp = this.updateSeriesByProp.bind(this);
 
-      this.redraw = false;
       this._instance = null;
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+      if (__DEV__) {
+        if (JSON.stringify(nextState) !== JSON.stringify(this.state)) {
+          throw new Error('Highcharts components are not allowed to use state, use static instead.')
+        }
+      }
+      return true;
     }
 
     // save this._instance
@@ -129,96 +136,14 @@ const withHighcharts = Composed => {
       return this._instance;
     }
 
-    updateSeriesByProp(propBySeries, propname) {
-      if (!this._instance) {
-        return null;
-      }
-      this._instance.series.forEach((s, idx) => {
-        if (propBySeries[idx] === s[propname]) {
-          return;
-        }
-        return s.update({
-          [propname]: propBySeries[idx] || null,
-        })
-      });
-    }
+    // "update" by destroying then recreating the chart instance
+    redraw(instanceConfig) {
+      // console.log('withHighcharts redraw');
 
-    // // todo - bugs in Highcharts prevents us from doing this! :(
-    // updateSeriesPointsByProp(propBySeriesPoint, propname) {
-    //   if (!this._instance) {
-    //     return null;
-    //   }
-    //   this._instance.series.forEach(s => {
-    //     s.data.forEach((point, idx) => {
-    //       point.update({
-    //         [propname]: propBySeriesPoint[idx] || null,
-    //       });
-    //
-    //       // todo - this is a dirty dirty hack for donuts and needs fix
-    //       // if (typeof propBySeriesPoint[idx] === 'undefined') {
-    //       //   point.update({
-    //       //     [propname]: point.color || null,
-    //       //   });
-    //       // } else {
-    //       //   point.graphic.attr("fill", propBySeriesPoint[idx]);
-    //       // }
-    //     });
-    //   });
-    // }
-
-    // update supplied data props on this._instance
-    updateData(config, propNamesChanged) {
-      // console.log('withHighcharts update');
-
-      if (!this._instance) {
-        return null;
-      }
-
-      propNamesChanged.map(propName => {
-        if (propName === 'chart') {
-          this._updateChart(config);
-        }
-        if (propName === 'series') {
-          this._updateSeries(config.series);
-        }
-        if (propName === 'xAxis') {
-          this._updateXAxes(config.xAxis);
-        }
-        if (propName === 'yAxis') {
-          this._updateYAxes(config.yAxis);
-        }
-      });
-
-      // DON'T REDRAW!
+      this.destroy();
+      this.create(instanceConfig);
       return this._instance;
     }
-
-    // caution! use this at your peril!
-    // It will redraw the whole chart! and is super expensive but we need it
-    // to support highcontrast mode for donuts.
-    // prefer updating by partition instead
-    _updateChart(config) {
-      return this._instance.update(config, true); // must be true so it redraws - behaves different to other updates
-    }
-
-    _updateSeries(series) {
-      return this._instance.series.map((s, idx) => {
-        return s.setData(series[idx].data);
-      });
-    }
-
-    _updateXAxes(xAxes) {
-      this._instance.xAxis.map((axis, idx) => {
-        return axis.update(xAxes[idx]);
-      });
-    }
-
-    _updateYAxes(yAxes) {
-      this._instance.yAxis.map((axis, idx) => {
-        return axis.update(yAxes[idx]);
-      });
-    }
-
 
     // delete this._instance
     destroy() {
@@ -235,8 +160,7 @@ const withHighcharts = Composed => {
       return (
         <Composed {...this.props}
                   create={this.create}
-                  updateSeriesByProp={this.updateSeriesByProp}
-                  updateData={this.updateData}
+                  redraw={this.redraw}
                   destroy={this.destroy}
                   HighcontrastPatterns={HighcontrastPatterns} />
       )
