@@ -159,6 +159,18 @@ export const mapHighcontrastFill = (config, condition) => {
 };
 
 
+export const mapHighcontrastFillByPoint = (config, condition) => {
+  const onFunc = createHighconstrastFillSeriesIteratee(true);
+  const offFunc = createHighconstrastFillSeriesIteratee(false);
+
+  config.series = config.series.map(s => {
+    s.data.map(condition ? onFunc : offFunc);
+    return s;
+  });
+  return config;
+};
+
+
 export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
   const dashTypes = [
     // 'Solid',   // reserved
