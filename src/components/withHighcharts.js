@@ -2,6 +2,7 @@
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
+import get from 'lodash/get';
 import includes from 'lodash/includes';
 
 import makeHighcontrastPatterns from './../utils/highcontrastPatterns';
@@ -116,10 +117,11 @@ const withHighcharts = Composed => {
 
     shouldComponentUpdate(nextProps, nextState) {
       if (__DEV__) {
-        if (JSON.stringify(nextState) !== this.state) {
+        if (JSON.stringify(nextState) !== JSON.stringify(this.state)) {
           throw new Error('Highcharts components are not allowed to use state, use static instead.')
         }
       }
+      return true;
     }
 
     // save this._instance
@@ -131,17 +133,10 @@ const withHighcharts = Composed => {
         throw new Error('Must provide chart.renderTo on config.');
       }
       this._instance = new Highcharts.chart(config);
-
-      // ====================================================
-      // make Highcharts opinionated about re-rendering React
-      // ====================================================
-      this.forceUpdate();
-
-
       return this._instance;
     }
 
-    // "update" by recreating the chart instance
+    // "update" by destroying then recreating the chart instance
     redraw(instanceConfig) {
       // console.log('withHighcharts redraw');
 
