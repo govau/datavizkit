@@ -88,7 +88,7 @@ const withColumn = Composed => {
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
-      this.customLegendData = null;
+      this.static = null;
     }
 
     createBaseConfig() {
