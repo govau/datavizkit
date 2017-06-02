@@ -1,6 +1,7 @@
 
 import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
+import _isObject from 'lodash/isObject';
 
 import {mapHighcontrastFill} from './../../utils/highcontrastPatterns';
 import {
@@ -62,10 +63,22 @@ const withColumn = Composed => {
       this.setStatic = this.setStatic.bind(this);
     }
 
+    /**
+     * Sets static props object on constructor.
+     * Highcharts will re-render React when it needs to.
+     * @param keyValues
+     */
     setStatic(keyValues) {
+      if (__DEV__) {
+        if (!_isObject(keyValues)) {
+          throw new Error('keyValues supplied to setStatic must be an object');
+        }
+      }
       for (const key in keyValues) {
         this.static.set(key, keyValues[key]);
       }
+      // hydrate static state
+      this.forceUpdate();
     }
 
     getStatic(key) {
@@ -77,11 +90,8 @@ const withColumn = Composed => {
       // console.log('withColumn componentDidMount');
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
-
       // draw chart for first time
       this.props.create(config);
-      // hydrate static state
-      this.forceUpdate();
     }
 
     // update
@@ -91,11 +101,8 @@ const withColumn = Composed => {
       if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
         const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
-
         // redraw chart
         this.props.redraw(config);
-        // hydrate static state
-        this.forceUpdate();
       }
     }
 
@@ -153,9 +160,10 @@ const withColumn = Composed => {
 
       config.plotOptions.series.point.events = {
         mouseOver: function(e) {
-          setStatic(createCartesianCustomLegendData(this.series.chart.series, this.index));
+          setStatic({'customLegendData': createCartesianCustomLegendData(this.series.chart.series, this.index)});
 
           // todo - extract
+          // todo - make this data.selected = true rather than using Highcharts state
           this.series.chart.series.forEach(s => {
             s.data.filter((d,idx) => {
               return this.index === idx;

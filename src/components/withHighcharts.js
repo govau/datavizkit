@@ -124,6 +124,8 @@ const withHighcharts = Composed => {
         throw new Error('Must provide chart.renderTo on config.');
       }
       this._instance = new Highcharts.chart(config);
+      // make Highcharts opinionated about re-rendering React
+      this.forceUpdate();
       return this._instance;
     }
 
