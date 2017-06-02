@@ -116,7 +116,7 @@ const withColumn = Composed => {
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('');
             });
           });
@@ -125,7 +125,7 @@ const withColumn = Composed => {
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('hover');
             });
           });
@@ -142,7 +142,7 @@ const withColumn = Composed => {
           this.series.chart.series.forEach(s => {
             s.data.filter((d,idx) => {
               return this.index === idx;
-            }).map(d => {
+            }).forEach(d => {
               d.setState && d.setState('hover');
             });
           });
@@ -150,7 +150,7 @@ const withColumn = Composed => {
         mouseOut: function() {
           // todo - extract
           this.series.chart.series.forEach(s => {
-            s.data.map(d => {
+            s.data.forEach(d => {
               d.setState && d.setState('');
             });
           });

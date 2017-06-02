@@ -65,6 +65,7 @@ export const createPolarCustomLegendData = (series) => {
 };
 
 
+// todo - refactor
 export const plotNullDataLayerToAxis = (xAxis, series, setStatic) => {
   if (xAxis.length > 1) {
     console.warn('Null data layer can only be plotted to a single axis.')

@@ -125,7 +125,7 @@ const withStackedColumn = Composed => {
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('');
             });
           });
@@ -134,7 +134,7 @@ const withStackedColumn = Composed => {
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('hover');
             });
           });
@@ -152,7 +152,7 @@ const withStackedColumn = Composed => {
           this.series.chart.series.forEach(s => {
             s.data.filter((d,idx) => {
               return this.index === idx;
-            }).map(d => {
+            }).forEach(d => {
               d.setState && d.setState('hover');
               return d;
             });

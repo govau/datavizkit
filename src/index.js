@@ -109,7 +109,7 @@ class App extends Component {
                       {"name":"4 services","units":"%","data":[3.69,3.74,3.81,3.89,3.97,4.05,4.14,4.25,4.46,4.61,4.7,4.8,4.94],"yAxis":0},
                       {"name":"5+ services","units":"%","data":[1.02,1.05,1.09,1.13,1.18,1.22,1.25,1.32,1.43,1.5,1.6,1.6,1.67],"yAxis":0}
                     ]}
-                    displayHighContrast={hcState} />*/}
+                    displayHighContrast={hcState} />
 
 
 
@@ -140,9 +140,6 @@ class App extends Component {
                             series={this.state.series}
                             xAxis={{"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}} />
         </div>
-
-
-
 
 
 

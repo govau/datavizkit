@@ -1,5 +1,5 @@
 
-import React, {PureComponent} from 'react';
+import {PureComponent} from 'react';
 import isObject from 'lodash/isObject';
 
 

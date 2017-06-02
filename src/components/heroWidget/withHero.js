@@ -1,10 +1,9 @@
 
-import React from 'react';
+import React, {PureComponent} from 'react';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 import jsxToString from 'jsx-to-string';
 
-import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
 import {mapHighcontrastDashstyle} from './../../utils/highcontrastPatterns';
 import {rawMarker} from '../marker/marker.js';
 
@@ -99,7 +98,7 @@ const BASE_HERO_CHARTCONFIG = {
 
 const withHero = Composed => {
 
-  return class extends PureComponentWithStaticProps {
+  return class extends PureComponent {
 
     constructor(props) {
       super(props);
@@ -140,13 +139,10 @@ const withHero = Composed => {
 
     createBaseConfig() {
 
-      const setStatic = this.setStatic;
-
       // only create it once
       if (this._baseChartConfig) {
         return this._baseChartConfig;
       }
-
 
       const config = merge({}, BASE_HERO_CHARTCONFIG);
 
@@ -164,6 +160,8 @@ const withHero = Composed => {
               case 'visible':
                 this.tooltip.label.hide();
                 break;
+              default:
+                return;
             }
           }
         }
@@ -213,8 +211,6 @@ const withHero = Composed => {
 
     render() {
       // console.log('withHero render');
-      const {displayHighContrast} = this.props;
-
       return (
         <Composed {...this.props}>
           <div ref={el => this._chart = el} />

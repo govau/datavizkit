@@ -134,7 +134,7 @@ const withSparkline = Composed => {
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('');
             });
           });
@@ -143,7 +143,7 @@ const withSparkline = Composed => {
           this.series.forEach(s => {
             s.data.filter((d,idx,arr) => {
               return idx === arr.length - 1;
-            }).map(d => {
+            }).forEach(d => {
               d.setState('hover');
             });
           });
