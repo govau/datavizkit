@@ -42,7 +42,7 @@ class App extends Component {
         <button onClick={() => {this.setState({hcState: !this.state.hcState})}}>Toggle high contrast</button>
 
 
-        <DonutWidget series={[
+        {/*<DonutWidget series={[
                         {name:"Jan",
                           data:[
                             {name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}
@@ -109,9 +109,12 @@ class App extends Component {
                       {"name":"4 services","units":"%","data":[3.69,3.74,3.81,3.89,3.97,4.05,4.14,4.25,4.46,4.61,4.7,4.8,4.94],"yAxis":0},
                       {"name":"5+ services","units":"%","data":[1.02,1.05,1.09,1.13,1.18,1.22,1.25,1.32,1.43,1.5,1.6,1.6,1.67],"yAxis":0}
                     ]}
-                    displayHighContrast={hcState} />
+                    displayHighContrast={hcState} />*/}
 
 
+
+        <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
+        <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
 
         <ColumnWidget title='Number of page views'
                       type='column'
@@ -119,16 +122,15 @@ class App extends Component {
                       infoText="Something amazing about this widget."
                       minimumValue="20000"
                       xAxis={{categories:["May","Jun","Jul","Aug","Sep","Oct","Nov"]}}
-                      series={[
-                        {name:"Time to clear","data":[84807,null,null,62400,null,37560,39300]}
-                      ]}
+                      series={this.state.series}
                       _singleCategory={false}
                       _singleSection={true}
                       displayHighContrast={hcState} />
 
-        <div>
-          <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
-          <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
+
+
+        {/*<div>
+
           <SparklineWidget title="Total opportunities"
                             type="sparkline"
                             dateLastUpdated="2017-02-01T23:11:18.675Z"
@@ -187,7 +189,7 @@ class App extends Component {
                               trendValue=""
                               trendDate="2016-10-31T00:00:00Z" />
 
-
+*/}
       </div>
     )
   }

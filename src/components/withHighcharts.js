@@ -115,6 +115,14 @@ const withHighcharts = Composed => {
       this._instance = null;
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+      if (__DEV__) {
+        if (JSON.stringify(nextState) !== this.state) {
+          throw new Error('Highcharts components are not allowed to use state, use static instead.')
+        }
+      }
+    }
+
     // save this._instance
     create(instanceConfig) {
       // console.log('withHighcharts create');
@@ -124,14 +132,19 @@ const withHighcharts = Composed => {
         throw new Error('Must provide chart.renderTo on config.');
       }
       this._instance = new Highcharts.chart(config);
+
+      // ====================================================
       // make Highcharts opinionated about re-rendering React
+      // ====================================================
       this.forceUpdate();
+
+
       return this._instance;
     }
 
     // "update" by recreating the chart instance
     redraw(instanceConfig) {
-      // console.log('withHighcharts recreate');
+      // console.log('withHighcharts redraw');
 
       this.destroy();
       this.create(instanceConfig);
