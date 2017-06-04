@@ -1,9 +1,22 @@
 
+const win = typeof window !== 'undefined' ? window : global;
+
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import includes from 'lodash/includes';
+
+
+if (typeof win.DATAVIZKIT_CONFIG === 'undefined') {
+  const configureDatavizkit = require('./../configure');
+  configureDatavizkit();
+}
+
+if (win.DATAVIZKIT_CONFIG.ACCESSIBILITY_MODULE === true) {
+  require('highcharts/modules/accessibility')(Highcharts);
+}
+
 
 import makeHighcontrastPatterns from './../utils/highcontrastPatterns';
 

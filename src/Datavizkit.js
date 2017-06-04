@@ -6,6 +6,8 @@ Exports the library
 
  */
 
+export {default as configureDatavizkit} from './configure';
+
 export {default as ColumnWidget} from './components/columnWidget/columnWidget.js';
 
 export {default as LineWidget} from './components/lineWidget/lineWidget.js';
