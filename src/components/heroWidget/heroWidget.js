@@ -16,6 +16,7 @@ const HeroWidget = ({
   viewport,
   series, xAxis, yAxis,
   displayHighContrast,
+  chartDescription,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -25,7 +26,11 @@ const HeroWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <HeroChart series={series} xAxis={xAxis} yAxis={yAxis} displayHighContrast={displayHighContrast} />
+        <HeroChart series={series}
+                     xAxis={xAxis}
+                     yAxis={yAxis}
+                     displayHighContrast={displayHighContrast}
+                     chartDescription={infoText || chartDescription} />
       </section>
     </article>
   )

@@ -14,7 +14,8 @@ const SparklineWidget = ({
   title,
   dateLastUpdated,
   viewport,
-  series, xAxis
+  series, xAxis,
+  chartDescription,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -24,7 +25,9 @@ const SparklineWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <SparklineChart series={series} xAxis={xAxis} />
+        <SparklineChart series={series}
+                        xAxis={xAxis}
+                        chartDescription={infoText || chartDescription} />
       </section>
     </article>
   )
