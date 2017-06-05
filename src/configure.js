@@ -2,7 +2,7 @@
 const win = typeof window !== 'undefined' ? window : global;
 
 const CONFIG = {
-  ACCESSIBILITY_MODULE: true,
+  ACCESSIBILITY_MODULE: false,
 };
 
 const makeDatavizkitConfig = (instanceConfig = {}) => {
