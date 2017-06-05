@@ -14,7 +14,8 @@ Basic Sparkline Widget:
                      }
                      series={
                        [{"name": "Total opportunities", "units": "i", "data": [null, null, 13, 29, 42, 58, 74]}]
-                     } />
+                     } 
+                     chartDescription="" />
 
 Sparkline Widget for a percentage:
 
