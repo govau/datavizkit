@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import LineChart from './lineChart';
 
@@ -16,6 +17,7 @@ const LineWidget = ({
   viewport,
   series, xAxis, yAxis,
   displayHighContrast,
+  chartDescription,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -25,10 +27,21 @@ const LineWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <LineChart series={series} xAxis={xAxis} yAxis={yAxis} displayHighContrast={displayHighContrast} />
+        <LineChart series={series}
+                     xAxis={xAxis}
+                     yAxis={yAxis}
+                     displayHighContrast={displayHighContrast}
+                     chartDescription={infoText || chartDescription} />
       </section>
     </article>
   )
 };
+
+if (__DEV__) {
+  LineWidget.propTypes = {
+    infoText: PropTypes.string,
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default LineWidget;

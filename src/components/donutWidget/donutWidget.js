@@ -1,7 +1,8 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import LineChart from './donutChart';
+import DonutChart from './donutChart';
 
 import Tooltip from './../tooltip/tooltip';
 import {dateFormats} from './../../utils/displayFormats';
@@ -16,6 +17,7 @@ const DonutWidget = ({
   viewport,
   series, xAxis, yAxis,
   displayHighContrast,
+  chartDescription,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -25,10 +27,21 @@ const DonutWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <LineChart series={series} xAxis={xAxis} yAxis={yAxis} displayHighContrast={displayHighContrast} />
+        <DonutChart series={series}
+                     xAxis={xAxis}
+                     yAxis={yAxis}
+                     displayHighContrast={displayHighContrast}
+                     chartDescription={infoText || chartDescription} />
       </section>
     </article>
   )
 };
+
+if (__DEV__) {
+  DonutWidget.propTypes = {
+    infoText: PropTypes.string,
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default DonutWidget;

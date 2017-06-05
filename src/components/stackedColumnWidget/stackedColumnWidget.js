@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import StackedColumnChart from './stackedColumnChart';
 
@@ -16,6 +17,7 @@ const StackedColumnWidget = ({
   viewport,
   series, xAxis, yAxis,
   displayHighContrast,
+  chartDescription,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -25,10 +27,21 @@ const StackedColumnWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <StackedColumnChart series={series} xAxis={xAxis} yAxis={yAxis} displayHighContrast={displayHighContrast} />
+        <StackedColumnChart series={series}
+                            xAxis={xAxis}
+                            yAxis={yAxis}
+                            displayHighContrast={displayHighContrast}
+                            chartDescription={infoText || chartDescription} />
       </section>
     </article>
   )
 };
+
+if (__DEV__) {
+  StackedColumnChart.propTypes = {
+    infoText: PropTypes.string,
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default StackedColumnWidget;

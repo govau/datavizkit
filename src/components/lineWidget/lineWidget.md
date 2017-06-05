@@ -41,5 +41,6 @@
                   {"name":"Time to fish","data":[48060,null,39300,84807,null,51420,62400]}
                 ]}
                 singleCategory={false} 
-                singleSection={true} />
+                singleSection={true} 
+                chartDescription="" />
 

@@ -16,7 +16,8 @@ Renders slice data to each of its sectors.
              dateLastUpdated="2017-02-01T01:02:02.240Z"
              _singleCategory={true}
              _singleSection={false}
-             minimumValue="30" />
+             minimumValue="30"
+             chartDescription="" />
 
 
 ### Multiple Category Multiple Slices (shown as aggregate over time (many slices)):

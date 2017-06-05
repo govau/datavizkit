@@ -21,7 +21,8 @@
                 xAxis={{"categories":["May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16"]}}
                 series={[
                     {"name":"Time to clear","units":"i","data":[84807,48317,51420,62400,48060,37560,39300]}
-                ]} />
+                ]} 
+                chartDescription="" />
 
 
 ### Many Category Many Section:

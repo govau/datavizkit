@@ -40,5 +40,6 @@
          {"name": "Mobile", "units": "%", "data": [43, 48, 47, 49, 50, 51, 54, 55], "yAxis": 0}, 
          {"name": "Tablet", "units": "%", "data": [6, 6, 6, 2, 3, 5, 5, 5], "yAxis": 0},
          {"name": "Desktop", "units": "%", "data": [51, 46, 47, 49, 47, 44, 41, 40], "yAxis": 0}
-       ]}
+       ]} 
+       chartDescription=""
      />
