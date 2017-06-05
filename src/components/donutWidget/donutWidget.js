@@ -39,6 +39,7 @@ const DonutWidget = ({
 
 if (__DEV__) {
   DonutWidget.propTypes = {
+    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }

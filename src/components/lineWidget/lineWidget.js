@@ -39,6 +39,7 @@ const LineWidget = ({
 
 if (__DEV__) {
   LineWidget.propTypes = {
+    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }

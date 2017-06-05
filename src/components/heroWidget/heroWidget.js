@@ -39,6 +39,7 @@ const HeroWidget = ({
 
 if (__DEV__) {
   HeroWidget.propTypes = {
+    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }

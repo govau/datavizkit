@@ -36,6 +36,7 @@ const SparklineWidget = ({
 
 if (__DEV__) {
   SparklineWidget.propTypes = {
+    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }

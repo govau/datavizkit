@@ -39,6 +39,7 @@ const StackedColumnWidget = ({
 
 if (__DEV__) {
   StackedColumnChart.propTypes = {
+    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }

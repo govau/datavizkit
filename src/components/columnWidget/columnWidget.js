@@ -39,6 +39,7 @@ const ColumnWidget = ({
 
 if (__DEV__) {
   ColumnWidget.propTypes = {
+    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }
