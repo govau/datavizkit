@@ -148,6 +148,10 @@ const withHero = Composed => {
 
       config.chart.renderTo = this._chart;
 
+      if (this.props.chartDescription) {
+        config.chart.description = this.props.chartDescription;
+      }
+
       // bind events to config
       config.chart.events = {
         click: function(e) {
