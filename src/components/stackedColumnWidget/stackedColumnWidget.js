@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import StackedColumnChart from './stackedColumnChart';
 
@@ -35,5 +36,11 @@ const StackedColumnWidget = ({
     </article>
   )
 };
+
+if (__DEV__) {
+  StackedColumnChart.propTypes = {
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default StackedColumnWidget;

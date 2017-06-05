@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import LineChart from './lineChart';
 
@@ -35,5 +36,11 @@ const LineWidget = ({
     </article>
   )
 };
+
+if (__DEV__) {
+  LineWidget.propTypes = {
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default LineWidget;

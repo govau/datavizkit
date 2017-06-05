@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ColumnChart from './columnChart';
 
@@ -35,5 +36,11 @@ const ColumnWidget = ({
     </article>
   )
 };
+
+if (__DEV__) {
+  ColumnWidget.propTypes = {
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default ColumnWidget;

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import DonutChart from './donutChart';
 
@@ -35,5 +36,11 @@ const DonutWidget = ({
     </article>
   )
 };
+
+if (__DEV__) {
+  DonutWidget.propTypes = {
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default DonutWidget;

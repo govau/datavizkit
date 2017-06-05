@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SparklineChart from './sparklineChart';
 
@@ -32,5 +33,11 @@ const SparklineWidget = ({
     </article>
   )
 };
+
+if (__DEV__) {
+  SparklineWidget.propTypes = {
+    chartDescription: PropTypes.string,
+  }
+}
 
 export default SparklineWidget;

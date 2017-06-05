@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import HeroChart from './heroChart';
 
@@ -36,4 +37,9 @@ const HeroWidget = ({
   )
 };
 
+if (__DEV__) {
+  HeroWidget.propTypes = {
+    chartDescription: PropTypes.string,
+  }
+}
 export default HeroWidget;
