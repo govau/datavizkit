@@ -2,6 +2,9 @@
 
 Renders slice data to each of its sectors.
 
+Shows last point in time data. Charts with time series data longer than a single slice should use another chart type. 
+
+
     <DonutWidget series={[{
                   name: "Jan",
                   data: [
@@ -17,13 +20,3 @@ Renders slice data to each of its sectors.
              _singleCategory={true}
              _singleSection={false}
              minimumValue="30" />
-
-
-### Multiple Category Multiple Slices (shown as aggregate over time (many slices)):
-
-`@todo - new feature`
-
-
-### Multiple Category Multiple Slices (multiple pies)
-
-`@todo - new feature - as example: http://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/pie-donut/`
