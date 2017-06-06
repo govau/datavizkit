@@ -66,17 +66,7 @@ const BASE_CHARTCONFIG = {
 
 const THEME = {
   /*eslint-disable */
-  colors: [
-    '#4892C0',  /* light blue */
-    '#75A370',  /* dark green */
-    '#F5D900',  /* yellow */
-    '#7066A5',  /* light purple */
-    '#F8BBD0',  /* pink */
-    '#47BCAC',  /* turquoise */
-    '#5345AD',  /* purple */
-    '#AFA545',  /* olive */
-    '#CB6935',  /* orange */
-  ],
+  colors: win.DATAVIZKIT_CONFIG.BTL_COLOR_PALETTE,
   chart: {
     style: {
       fontFamily: 'Open Sans,sans-serif',
@@ -175,7 +165,8 @@ const withHighcharts = Composed => {
                   create={this.create}
                   redraw={this.redraw}
                   destroy={this.destroy}
-                  HighcontrastPatterns={HighcontrastPatterns} />
+                  HighcontrastPatterns={HighcontrastPatterns}
+                  config={win.DATAVIZKIT_CONFIG} />
       )
     }
   }

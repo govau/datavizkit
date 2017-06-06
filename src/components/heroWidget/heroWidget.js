@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import HeroChart from './heroChart';
-
 import Tooltip from './../tooltip/tooltip';
 import {dateFormats} from './../../utils/displayFormats';
 
@@ -18,7 +17,13 @@ const HeroWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
+  widgetColors,
 }) => {
+
+  const seriesWithColors = series.map((s, idx) => {
+    return widgetColors[idx] || config.KPI_COLOR_PALETTE[idx];
+  });
+
   return (
     <article role="article" className="D_widget">
       <header>
@@ -27,7 +32,7 @@ const HeroWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <HeroChart series={series}
+        <HeroChart series={seriesWithColors}
                      xAxis={xAxis}
                      yAxis={yAxis}
                      displayHighContrast={displayHighContrast}

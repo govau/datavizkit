@@ -1,6 +1,5 @@
 
 import React from 'react';
-import classnames from 'classnames';
 
 import {dateFormats, valueWithUnits} from './../../utils/displayFormats';
 import Tooltip from './../tooltip/tooltip';
@@ -85,6 +84,7 @@ const DesktopCountWithTrendWidget = (props) => {
     value,
     trendValue,
     trendDate,
+    color,
   } = props;
 
   return (
@@ -93,26 +93,17 @@ const DesktopCountWithTrendWidget = (props) => {
         {tooltipAnchorTo ? <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} /> : <span>&nbsp;</span>}
       </span>
 
-      <header className={classnames(
-        "D_CTW_D_header", { // todo - make this defined by "color"
-          "D_CTW_D_headerYellow": title.toLowerCase() === 'user satisfaction',
-          "D_CTW_D_headerGreen": title.toLowerCase() === 'cost per transaction',
-          "D_CTW_D_headerBlue": title.toLowerCase() === 'digital take-up',
-          "D_CTW_D_headerPurple": title.toLowerCase() === 'completion rate',
-        }
-      )}>
+      <header style={{background: color}}>
         <div className="D_CTW_D_h1Container">
           <div className="D_CTW_D_h1ContainerInner">
             <h1>{title}</h1>
           </div>
         </div>
       </header>
+
       <section>
-
         <CountValue value={value} units={units} />
-
         <TrendValue value={trendValue} date={trendDate} units={units} />
-
       </section>
 
     </article>

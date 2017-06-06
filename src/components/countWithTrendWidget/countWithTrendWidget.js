@@ -2,9 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import getItemOfListFromIncrement from './../../utils/getItemOfListFromIncrement';
 import MobileComponent from './mobile_component';
 import DesktopComponent from './desktop_component';
-
 
 
 /**
@@ -13,12 +13,20 @@ import DesktopComponent from './desktop_component';
  *
  */
 const CountWithTrendWidget = (props) => {
-  const {viewport, ...rest} = props;
+  const {
+    viewport,
+    widgetColor,
+    widgetPos,
+    config,
+    ...rest
+  } = props;
+
+  const color = widgetColor || getItemOfListFromIncrement(config.KPI_COLOR_PALETTE, widgetPos);
 
   if (typeof viewport === 'undefined' || viewport === 'sm') {
-    return <MobileComponent {...rest} />
+    return <MobileComponent {...rest} color={color} />
   } else {
-    return <DesktopComponent {...rest} />
+    return <DesktopComponent {...rest} color={color} />
   }
 };
 

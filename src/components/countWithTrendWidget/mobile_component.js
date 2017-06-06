@@ -1,6 +1,5 @@
 
 import React from 'react';
-import classnames from 'classnames';
 
 import {dateFormats, valueWithUnits} from './../../utils/displayFormats';
 import Tooltip from './../tooltip/tooltip';
@@ -76,19 +75,13 @@ const MobileCountWithTrendWidget = (props) => {
     value,
     trendValue,
     trendDate,
+    color,
   } = props;
 
   return (
     <article className="D_CTW_M_root" role="article">
 
-      <div className={classnames(
-        "D_CTW_M_header", { // todo - make this defined by "color"
-          "D_CTW_M_headerYellow": title.toLowerCase() === 'user satisfaction',
-          "D_CTW_M_headerGreen": title.toLowerCase() === 'cost per transaction',
-          "D_CTW_M_headerBlue": title.toLowerCase() === 'digital take-up',
-          "D_CTW_M_headerPurple": title.toLowerCase() === 'completion rate',
-        }
-      )}>
+      <div style={{background: color}}>
         <div className="D_CTW_M_layoutContainer">
 
           <div className="D_CTW_M_layoutLeft">

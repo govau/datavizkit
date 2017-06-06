@@ -2,10 +2,11 @@
 import React from 'react';
 import tinycolor from 'tinycolor2';
 
+import getItemOfListFromIncrement from './getItemOfListFromIncrement';
+
 
 const HIGHCONTRAST_PATTERN_COUNT = 6;
 const HIGHCONTRAST_PATTERN_NAMESPACE = 'highcontrast-pattern';
-
 
 const highcontrastPatterns = [
   ({id, color}) => {
@@ -73,18 +74,6 @@ const highcontrastPatterns = [
 ];
 
 
-const getItemIdxByIncrementor = (group, increment) => {
-  let itemIdx;
-  if (increment < group.length) {
-    itemIdx = increment;
-  } else {
-    itemIdx = increment % group.length;
-  }
-  return itemIdx;
-};
-
-
-
 const makeHighcontrastPatterns = (Highcharts) => {
 
   return ({
@@ -100,10 +89,10 @@ const makeHighcontrastPatterns = (Highcharts) => {
         <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <defs>
             {arrayOfCount.map((i, idx) => {
-              const patternIdx = getItemIdxByIncrementor(highcontrastPatterns, idx);
+              const patternIdx = getItemOfListFromIncrement(highcontrastPatterns, idx);
               const Pattern = highcontrastPatterns[patternIdx];
 
-              const colorIdx = getItemIdxByIncrementor(colors, idx);
+              const colorIdx = getItemOfListFromIncrement(colors, idx);
               const color = colors[colorIdx];
 
               return <Pattern key={idx} color={color} id={`${namespace}-${idx}`} />
@@ -142,7 +131,7 @@ export const createHighconstrastFillSeriesIteratee = condition => {
   const patternIds = getHighcontrastPatternIds();
 
   return (item, idx) => {
-    const patternIdx = getItemIdxByIncrementor(patternIds, idx);
+    const patternIdx = getItemOfListFromIncrement(patternIds, idx);
 
     item.color = condition ? patternIds[patternIdx] : void 0;
     return item;
@@ -186,7 +175,7 @@ export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
     'LongDashDotDot',
   ];
   return (item, idx) => {
-    const dashIdx = getItemIdxByIncrementor(dashTypes, idx);
+    const dashIdx = getItemOfListFromIncrement(dashTypes, idx);
     item.dashStyle = condition ? dashTypes[dashIdx] : 'Solid';
     return item;
   };
