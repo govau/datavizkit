@@ -2,8 +2,23 @@
 import React from 'react';
 import tinycolor from 'tinycolor2';
 
-import getItemOfListFromIncrement from './getItemOfListFromIncrement';
+import getPointerInLoop from './getPointerInLoop';
 
+
+// todo - move this elsewhere
+export const NullDataLayerPattern = () => {
+  return (
+    <div aria-hidden="true" style={{position: 'absolute', left: '-1000px'}}>
+      <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+          <pattern id="null-data-layer" patternUnits="userSpaceOnUse" width="10" height="10">
+            <path d="M 0 10 L 10 0 M -1 1 L 1 -1 M 9 11 L 11 9" stroke="#ddd" strokeWidth="2"></path>
+          </pattern>
+        </defs>
+      </svg>
+    </div>
+  )
+};
 
 
 
@@ -81,10 +96,10 @@ export const makeHighcontrastPatterns = (colorset, patternIds) => {
           <defs>
             {patternIds.map((patternId, idx) => {
 
-              const patternIdx = getItemOfListFromIncrement(highcontrastPatterns, idx);
+              const patternIdx = getPointerInLoop(highcontrastPatterns.length, idx);
               const Pattern = highcontrastPatterns[patternIdx];
 
-              const colorIdx = getItemOfListFromIncrement(colorset, idx);
+              const colorIdx = getPointerInLoop(colorset.length, idx);
               const color = colorset[colorIdx];
 
               return <Pattern key={idx} color={color} id={patternId} />
@@ -101,7 +116,7 @@ export const makeGetColorProps = palettes => {
 
     widgetId = Number(widgetId);
 
-    const colorsetIndex = getItemOfListFromIncrement(palettes, widgetIndex);
+    const colorsetIndex = getPointerInLoop(palettes.length, widgetIndex);
     const colorset = palettes[colorsetIndex];
 
     const highcontrastPatternIds = colorset.map((c, idx) => {
@@ -119,30 +134,10 @@ export const makeGetColorProps = palettes => {
 };
 
 
-
-
-// todo - move this elsewhere
-export const NullDataLayerPattern = () => {
-  return (
-    <div aria-hidden="true" style={{position: 'absolute', left: '-1000px'}}>
-      <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
-        <defs>
-          <pattern id="null-data-layer" patternUnits="userSpaceOnUse" width="10" height="10">
-            <path d="M 0 10 L 10 0 M -1 1 L 1 -1 M 9 11 L 11 9" stroke="#ddd" strokeWidth="2"></path>
-          </pattern>
-        </defs>
-      </svg>
-    </div>
-  )
-};
-
-
-
-
 export const mapHighcontrastFill = (config, condition, patternIds) => {
 
   const iterateeOn = (item, idx) => {
-    const patternIdx = getItemOfListFromIncrement(patternIds, idx);
+    const patternIdx = getPointerInLoop(patternIds.length, idx);
     const patternSrc = `url(#${patternIds[patternIdx]})`;
     item.color = patternSrc;
     return item;
@@ -156,8 +151,6 @@ export const mapHighcontrastFill = (config, condition, patternIds) => {
   config.series = config.series.map(condition ? iterateeOn : iterateeOff);
   return config;
 };
-
-
 
 
 export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
@@ -175,12 +168,11 @@ export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
     'LongDashDotDot',
   ];
   return (item, idx) => {
-    const dashIdx = getItemOfListFromIncrement(dashTypes, idx);
+    const dashIdx = getPointerInLoop(dashTypes.length, idx);
     item.dashStyle = condition ? dashTypes[dashIdx] : 'Solid';
     return item;
   };
 };
-
 
 export const mapHighcontrastDashstyle = (config, condition) => {
   const onFunc = createHighcontrastDashstyleSeriesIteratee(true);

@@ -19,7 +19,7 @@ const StackedColumnWidget = ({
   displayHighContrast,
   chartDescription,
 
-  groupIndex, // todo - rename to widgetIndex
+  widgetIndex
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -33,7 +33,7 @@ const StackedColumnWidget = ({
                             xAxis={xAxis}
                             yAxis={yAxis}
                             chartDescription={infoText || chartDescription}
-                            widgetIndex={groupIndex}
+                            widgetIndex={widgetIndex}
                             displayHighContrast={displayHighContrast} />
       </section>
     </article>
