@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 
-import {HighcontrastPatterns} from './components/withHighcharts';
 import {NullDataLayerPattern} from './utils/highcontrastPatterns';
 
 
@@ -37,7 +36,6 @@ class App extends Component {
     return (
       <div>
         <NullDataLayerPattern />
-        <HighcontrastPatterns />
 
         <button onClick={() => {this.setState({hcState: !this.state.hcState})}}>Toggle high contrast</button>
 
@@ -57,7 +55,7 @@ class App extends Component {
                      displayHighContrast={hcState} />
 
 
-        <StackedColumnWidget
+        <StackedColumnWidget widgetIndex={3}
           xAxis={{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}}
           series={[
             //{"name":"Public Beta", color:'red', "data":[0,0,2,2,2,2,2,2,2]},
@@ -75,6 +73,29 @@ class App extends Component {
           stackingType="normal"
           displayHighContrast={hcState} />
 
+
+        <StackedColumnWidget type="stackedColumn"
+           coordinateType="cartesian"
+           title="Devices used by users"
+           dateLastUpdated="2016-11-09T01:01:01.111Z"
+           infoText="This shows the types of devices used by users to access the appointment booking service."
+           stackingType="percent"
+           viewport="md"
+           displayHighContrast={hcState}
+           _singleCategory={false}
+           _singleSection={false}
+           yAxis={[
+             {"title": {"text": "Percentage (%)"}, "opposite": false, "floor": 0, "ceiling": 100, "min": 0, "max": 100}
+           ]}
+           xAxis={[
+             {"categories": ["Mar '16", "Apr '16", "May '16", "Jun '16", "Jul '16", "Aug '16", "Sep '16", "Oct '16"]}
+           ]}
+           series={[
+             {"name": "Mobile", "units": "%", "data": [43, 48, 47, 49, 50, 51, 54, 55], "yAxis": 0},
+             {"name": "Tablet", "units": "%", "data": [6, 6, 6, 2, 3, 5, 5, 5], "yAxis": 0},
+             {"name": "Desktop", "units": "%", "data": [51, 46, 47, 49, 47, 44, 41, 40], "yAxis": 0}
+           ]}
+           chartDescription="" />
 
         <HeroWidget
           title=""
@@ -116,7 +137,7 @@ class App extends Component {
         <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
         <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
 
-        <ColumnWidget title='Number of page views'
+        <ColumnWidget widgetIndex={9} title='Number of page views'
                       type='column'
                       dateLastUpdated='22 Feb 2016'
                       infoText="Something amazing about this widget."
@@ -130,7 +151,6 @@ class App extends Component {
 
 
         <div>
-
           <SparklineWidget title="Total opportunities"
                             type="sparkline"
                             dateLastUpdated="2017-02-01T23:11:18.675Z"
@@ -170,7 +190,7 @@ class App extends Component {
 
 
 
-        <CountWithTrendWidget title="Digital take-up"
+        <CountWithTrendWidget widgetIndex={3} title="Digital take-up"
                               infoText={null}
                               units="%"
                               idxInWidgets="2"
@@ -178,7 +198,7 @@ class App extends Component {
                               trendValue="1.09"
                               trendDate="2016-10-31T00:00:00Z" />
 
-        <CountWithTrendWidget title="Completion rate"
+        <CountWithTrendWidget widgetIndex={1} title="Completion rate"
                               infoText="Percentage of transactions made using the digital service."
                               units="%"
                               idxInWidgets="3"

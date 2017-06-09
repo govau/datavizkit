@@ -62,6 +62,11 @@ const withStackedColumn = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
+
+      const colorProps = props.getColorProps(props.widgetIndex, props.cid);
+      this.colorset = colorProps.colorset;
+      this.highcontrastPatternIds = colorProps.highcontrastPatternIds;
+      this.HighcontrastPatterns = colorProps.HighcontrastPatterns
     }
 
     // create
@@ -108,12 +113,12 @@ const withStackedColumn = Composed => {
 
       const config = merge({}, BASE_STACKEDCOLUMN_CHARTCONFIG);
 
+      config.colors  = this.colorset;
       config.chart.renderTo = this._chart;
 
       if (this.props.chartDescription) {
         config.chart.description = this.props.chartDescription;
       }
-
 
       // bind events to config
       config.chart.events = {
@@ -187,7 +192,7 @@ const withStackedColumn = Composed => {
         yAxis,
       });
 
-      instanceConfig = mapHighcontrastFill(instanceConfig, passedProps.displayHighContrast);
+      instanceConfig = mapHighcontrastFill(instanceConfig, passedProps.displayHighContrast, this.highcontrastPatternIds);
 
       return instanceConfig;
     }
@@ -195,14 +200,19 @@ const withStackedColumn = Composed => {
     render() {
       // console.log('stackedColumn render');
 
+      const {HighcontrastPatterns} = this;  // todo - getEl method
+
       const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (
-        <Composed {...this.props}
-                  customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
-          <div ref={el => this._chart = el} />
-        </Composed>
+        <div>
+          <HighcontrastPatterns />
+          <Composed {...this.props}
+                    customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
+            <div ref={el => this._chart = el} />
+          </Composed>
+        </div>
       );
     }
   }

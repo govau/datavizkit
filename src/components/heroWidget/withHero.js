@@ -104,6 +104,9 @@ const withHero = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
+
+      const colorProps = props.getKpiColorProps();
+      this.colorset = colorProps.colorset;
     }
 
     // create
@@ -146,6 +149,7 @@ const withHero = Composed => {
 
       const config = merge({}, BASE_HERO_CHARTCONFIG);
 
+      config.colors = this.colorset;
       config.chart.renderTo = this._chart;
 
       if (this.props.chartDescription) {
@@ -205,6 +209,11 @@ const withHero = Composed => {
             }
           });
         }
+        return s;
+      });
+
+      instanceConfig.series = instanceConfig.series.map((s, idx) => {
+        s.color = this.colorset[idx];
         return s;
       });
 

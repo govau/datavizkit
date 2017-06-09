@@ -26,8 +26,7 @@ const BASE_COLUMN_CHARTCONFIG = {
     series: {
       stickyTracking: false,
       animation: false,
-      point: {
-      },
+      point: {},
       states: {
         hover: {
           brightness: -.2,
@@ -58,6 +57,12 @@ const withColumn = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
+
+      const colorProps = props.getColorProps(props.widgetIndex, props.cid);
+
+      this.colorset = colorProps.colorset;
+      this.highcontrastPatternIds = colorProps.highcontrastPatternIds;
+      this.HighcontrastPatterns = colorProps.HighcontrastPatterns;
     }
 
     // create
@@ -102,6 +107,7 @@ const withColumn = Composed => {
 
       const config = merge({}, BASE_COLUMN_CHARTCONFIG);
 
+      config.colors  = this.colorset;
       config.chart.renderTo = this._chart;
 
       if (this.props.chartDescription) {
@@ -175,7 +181,7 @@ const withColumn = Composed => {
         yAxis,
       });
 
-      instanceConfig = mapHighcontrastFill(instanceConfig, passedProps.displayHighContrast);
+      instanceConfig = mapHighcontrastFill(instanceConfig, passedProps.displayHighContrast, this.highcontrastPatternIds);
 
       return instanceConfig;
     }
@@ -183,14 +189,19 @@ const withColumn = Composed => {
     render() {
       // console.log('withColumn render');
 
+      const {HighcontrastPatterns} = this;
+
       const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (
-        <Composed {...this.props}
-                  customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
-          <div ref={el => this._chart = el} />
-        </Composed>
+        <div>
+          <HighcontrastPatterns />
+          <Composed {...this.props}
+                    customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
+            <div ref={el => this._chart = el} />
+          </Composed>
+        </div>
       );
     }
   }

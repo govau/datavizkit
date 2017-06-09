@@ -18,20 +18,22 @@ const DonutWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
+  widgetIndex = 0,
 }) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_DW_infoContainer"><Tooltip text={infoText} viewport={viewport} /></div>}
+        {infoText && <div className="D_DW_infoContainer">{infoText && <Tooltip text={infoText} viewport={viewport} />}</div>}
         <h1 className="highcharts-title">{title}</h1>
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
         <DonutChart series={series}
-                     xAxis={xAxis}
-                     yAxis={yAxis}
-                     displayHighContrast={displayHighContrast}
-                     chartDescription={infoText || chartDescription} />
+										xAxis={xAxis}
+										yAxis={yAxis}
+										chartDescription={infoText || chartDescription}
+										widgetIndex={widgetIndex}
+										displayHighContrast={displayHighContrast} />
       </section>
     </article>
   )
@@ -39,6 +41,7 @@ const DonutWidget = ({
 
 if (__DEV__) {
   DonutWidget.propTypes = {
+    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

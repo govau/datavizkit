@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import HeroChart from './heroChart';
-
 import Tooltip from './../tooltip/tooltip';
 import {dateFormats} from './../../utils/displayFormats';
 
@@ -19,6 +18,7 @@ const HeroWidget = ({
   displayHighContrast,
   chartDescription,
 }) => {
+
   return (
     <article role="article" className="D_widget">
       <header>
@@ -30,8 +30,8 @@ const HeroWidget = ({
         <HeroChart series={series}
                      xAxis={xAxis}
                      yAxis={yAxis}
-                     displayHighContrast={displayHighContrast}
-                     chartDescription={infoText || chartDescription} />
+	                   chartDescription={infoText || chartDescription}
+	                   displayHighContrast={displayHighContrast} />
       </section>
     </article>
   )
@@ -39,6 +39,7 @@ const HeroWidget = ({
 
 if (__DEV__) {
   HeroWidget.propTypes = {
+    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

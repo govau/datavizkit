@@ -15,35 +15,13 @@
 .D_CTW_D_header {
   display: block;
   width: 100%;
-}
-
-/*block color*/
-.D_CTW_D_header:after {
-  content: ' ';
-  display: block;
-  background: #ccc;
-  height: 8px;
-}
-
-.D_CTW_D_headerBlue:after {
-  background: #4892c0;
-}
-
-.D_CTW_D_headerGreen:after {
-  background: #75a370;
-}
-
-.D_CTW_D_headerYellow:after {
-  background: #f2b038;
-}
-
-.D_CTW_D_headerPurple:after {
-  background: #7066a5;
+  background: #ccc; /* default */
 }
 
 .D_CTW_D_h1Container {
   display: table;
   width: 100%;
+  background: white;
 }
 
 .D_CTW_D_h1ContainerInner {
@@ -66,6 +44,10 @@
   .D_CTW_D_h1Container h1 {
     font-size: 16px;
   }
+}
+
+.D_CTW_D_colored-banner {
+  height: 8px;
 }
 
 

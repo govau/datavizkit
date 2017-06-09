@@ -56,6 +56,12 @@ const withDonut = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
+
+      const colorProps = props.getColorProps(props.widgetIndex, props.cid);
+
+      this.colorset = colorProps.colorset;
+      this.highcontrastPatternIds = colorProps.highcontrastPatternIds;
+      this.HighcontrastPatterns = colorProps.HighcontrastPatterns;
     }
 
     // create
@@ -101,6 +107,7 @@ const withDonut = Composed => {
 
       const config = merge({}, BASE_DONUT_CHARTCONFIG);
 
+      config.colors  = this.colorset;
       config.chart.renderTo = this._chart;
 
       if (this.props.chartDescription) {
@@ -134,7 +141,7 @@ const withDonut = Composed => {
         }
       });
 
-      instanceConfig = mapHighcontrastFillByPoint(instanceConfig, passedProps.displayHighContrast);
+      instanceConfig = mapHighcontrastFillByPoint(instanceConfig, passedProps.displayHighContrast, this.highcontrastPatternIds);
 
       return instanceConfig;
     }
@@ -142,14 +149,19 @@ const withDonut = Composed => {
     render() {
       // console.log('donut render');
 
+      const {HighcontrastPatterns} = this;
+
       const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (
-        <Composed {...this.props}
-                  customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
-          <div ref={el => this._chart = el} />
-        </Composed>
+        <div>
+          <HighcontrastPatterns />
+          <Composed {...this.props}
+                    customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
+            <div ref={el => this._chart = el} />
+          </Composed>
+        </div>
       );
     }
   }

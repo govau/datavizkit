@@ -17,18 +17,20 @@ const SparklineWidget = ({
   viewport,
   series, xAxis,
   chartDescription,
+  widgetIndex = 0,
 }) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_SW_infoContainer"><Tooltip text={infoText} viewport={viewport} /></div>}
+        {infoText && <div className="D_SW_infoContainer">{infoText && <Tooltip text={infoText} viewport={viewport} />}</div>}
         <h1 className="highcharts-title">{title}</h1>
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
         <SparklineChart series={series}
                         xAxis={xAxis}
-                        chartDescription={infoText || chartDescription} />
+                        chartDescription={infoText || chartDescription}
+                        widgetIndex={widgetIndex} />
       </section>
     </article>
   )
@@ -36,6 +38,7 @@ const SparklineWidget = ({
 
 if (__DEV__) {
   SparklineWidget.propTypes = {
+    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

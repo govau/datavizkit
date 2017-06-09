@@ -1,12 +1,12 @@
 
-const win = typeof window !== 'undefined' ? window : global;
-
 import React, {PureComponent} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import includes from 'lodash/includes';
 
+
+const win = typeof window !== 'undefined' ? window : global;
 
 if (typeof win.DATAVIZKIT_CONFIG === 'undefined') {
   const configureDatavizkit = require('./../configure');
@@ -18,18 +18,28 @@ if (win.DATAVIZKIT_CONFIG.ACCESSIBILITY_MODULE === true) {
 }
 
 
-import makeHighcontrastPatterns from './../utils/highcontrastPatterns';
+import {makeGetColorProps, makeGetKpiColorProps} from './../utils/highcontrastPatterns';
 
-import './highcharts.css';
+const getColorProps = makeGetColorProps(win.DATAVIZKIT_CONFIG.BTL_COLOR_PALETTES);
+const getKpiColorProps = makeGetKpiColorProps(win.DATAVIZKIT_CONFIG.KPI_COLOR_PALETTE);
+
 
 // This fixes the "thin lines at top & bottom of chart" bug
 Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
-	proceed.apply(this, [].slice.call(arguments, 1));
+  proceed.apply(this, [].slice.call(arguments, 1));
   if (includes(['line','spline'], get(this, 'options.chart.type'))) {
     this.clipBox.height += 6;
     this.clipBox.y -= 3;
   }
 });
+
+let widgetId = 0;
+const getId = () => {
+  return widgetId++;
+};
+
+
+import './highcharts.css';
 
 
 const BASE_CHARTCONFIG = {
@@ -66,22 +76,12 @@ const BASE_CHARTCONFIG = {
 
 const THEME = {
   /*eslint-disable */
-  colors: [
-    '#4892C0',  /* light blue */
-    '#75A370',  /* dark green */
-    '#F5D900',  /* yellow */
-    '#7066A5',  /* light purple */
-    '#F8BBD0',  /* pink */
-    '#47BCAC',  /* turquoise */
-    '#5345AD',  /* purple */
-    '#AFA545',  /* olive */
-    '#CB6935',  /* orange */
-  ],
+  colors: win.DATAVIZKIT_CONFIG.BTL_COLOR_PALETTES[0],
   chart: {
     style: {
       fontFamily: 'Open Sans,sans-serif',
       marginBottom: '8px'
-    }
+    },
   },
   title: {
     style: {
@@ -92,7 +92,7 @@ const THEME = {
       marginBottom: 0,// todo - dont think this does anything
       width: '100%',
       display: 'block',
-    }
+    },
   },
   subtitle: {
     style: {
@@ -104,7 +104,7 @@ const THEME = {
       lineHeight: 1.5,
       fontWeight: 300,
       color: '#596371',
-    }
+    },
   }
   /*eslint-enable */
 };
@@ -112,8 +112,6 @@ const THEME = {
 Highcharts.setOptions({
   ...THEME
 });
-
-export const HighcontrastPatterns = makeHighcontrastPatterns(Highcharts);
 
 
 const withHighcharts = Composed => {
@@ -124,6 +122,8 @@ const withHighcharts = Composed => {
       this.create = this.create.bind(this);
       this.redraw = this.redraw.bind(this);
       this.destroy = this.destroy.bind(this);
+      this.getColorProps = getColorProps.bind(this);
+      this.getKpiColorProps = getKpiColorProps.bind(this);
 
       this._instance = null;
     }
@@ -168,14 +168,17 @@ const withHighcharts = Composed => {
       }
     }
 
+
     render() {
       // console.log('withHighcharts render');
       return (
-        <Composed {...this.props}
+        <Composed cid={getId()}
+                  {...this.props}
                   create={this.create}
                   redraw={this.redraw}
                   destroy={this.destroy}
-                  HighcontrastPatterns={HighcontrastPatterns} />
+                  getColorProps={this.getColorProps}
+                  getKpiColorProps={this.getKpiColorProps} />
       )
     }
   }

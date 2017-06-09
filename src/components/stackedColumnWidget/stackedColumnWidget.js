@@ -18,11 +18,12 @@ const StackedColumnWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
+  widgetIndex = 0,
 }) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_SCW_infoContainer"><Tooltip text={infoText} viewport={viewport} /></div>}
+        {infoText && <div className="D_SCW_infoContainer">{infoText && <Tooltip text={infoText} viewport={viewport} />}</div>}
         <h1 className="highcharts-title">{title}</h1>
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
@@ -30,8 +31,9 @@ const StackedColumnWidget = ({
         <StackedColumnChart series={series}
                             xAxis={xAxis}
                             yAxis={yAxis}
-                            displayHighContrast={displayHighContrast}
-                            chartDescription={infoText || chartDescription} />
+                            chartDescription={infoText || chartDescription}
+                            widgetIndex={widgetIndex}
+                            displayHighContrast={displayHighContrast} />
       </section>
     </article>
   )
@@ -39,6 +41,7 @@ const StackedColumnWidget = ({
 
 if (__DEV__) {
   StackedColumnChart.propTypes = {
+    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

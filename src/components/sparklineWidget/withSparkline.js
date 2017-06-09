@@ -42,7 +42,7 @@ const BASE_SPARKLINE_CHARTCONFIG = {
           },
           select: {
             // enabled: false
-          }
+          },
         }
       },
       states: {
@@ -50,9 +50,7 @@ const BASE_SPARKLINE_CHARTCONFIG = {
           enabled: false,
         },
       },
-      events: {
-
-      }
+      events: {},
     },
   },
   tooltip: {
@@ -69,6 +67,9 @@ const withSparkline = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
+
+      const colorProps = props.getColorProps(props.widgetIndex, props.cid);
+      this.colorset = colorProps.colorset;
     }
 
     // create
@@ -115,6 +116,7 @@ const withSparkline = Composed => {
 
       const config = merge({}, BASE_SPARKLINE_CHARTCONFIG);
 
+      config.colors  = this.colorset;
       config.chart.renderTo = this._chart;
 
       if (this.props.chartDescription) {
