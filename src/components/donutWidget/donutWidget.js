@@ -22,7 +22,7 @@ const DonutWidget = ({
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_DW_infoContainer"><Tooltip text={infoText} viewport={viewport} /></div>}
+        {infoText && <div className="D_DW_infoContainer">{infoText && <Tooltip text={infoText} viewport={viewport} />}</div>}
         <h1 className="highcharts-title">{title}</h1>
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>

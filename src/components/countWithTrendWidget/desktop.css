@@ -15,35 +15,23 @@
 .D_CTW_D_header {
   display: block;
   width: 100%;
+  background: #ccc; /* default */
 }
 
 /*block color*/
 .D_CTW_D_header:after {
   content: ' ';
   display: block;
-  background: #ccc;
   height: 8px;
+  background-color: inherit;  /* don't delete */
 }
 
-.D_CTW_D_headerBlue:after {
-  background: #4892c0;
-}
-
-.D_CTW_D_headerGreen:after {
-  background: #75a370;
-}
-
-.D_CTW_D_headerYellow:after {
-  background: #f2b038;
-}
-
-.D_CTW_D_headerPurple:after {
-  background: #7066a5;
-}
+/* https://stackoverflow.com/questions/14436155/how-to-create-inline-style-with-before-and-after */
 
 .D_CTW_D_h1Container {
   display: table;
   width: 100%;
+  background: white;
 }
 
 .D_CTW_D_h1ContainerInner {
