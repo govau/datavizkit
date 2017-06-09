@@ -17,12 +17,7 @@ const HeroWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
-  widgetColors,
 }) => {
-
-  const seriesWithColors = series.map((s, idx) => {
-    return widgetColors[idx] || config.KPI_COLOR_PALETTE[idx];
-  });
 
   return (
     <article role="article" className="D_widget">
@@ -32,7 +27,7 @@ const HeroWidget = ({
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
       </header>
       <section>
-        <HeroChart series={seriesWithColors}
+        <HeroChart series={series}
                      xAxis={xAxis}
                      yAxis={yAxis}
                      displayHighContrast={displayHighContrast}

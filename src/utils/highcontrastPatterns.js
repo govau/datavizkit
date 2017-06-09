@@ -114,8 +114,6 @@ export const makeHighcontrastPatterns = (colorset, patternIds) => {
 export const makeGetColorProps = palettes => {
   return (widgetIndex = 0, widgetId = 10000) => {
 
-    widgetId = Number(widgetId);
-
     const colorsetIndex = getPointerInLoop(palettes.length, widgetIndex);
     const colorset = palettes[colorsetIndex];
 

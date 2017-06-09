@@ -18,11 +18,19 @@ if (win.DATAVIZKIT_CONFIG.ACCESSIBILITY_MODULE === true) {
 }
 
 
-
 import {makeGetColorProps} from './../utils/highcontrastPatterns';
 
 const getColorProps = makeGetColorProps(win.DATAVIZKIT_CONFIG.BTL_COLOR_PALETTES);
 
+
+// This fixes the "thin lines at top & bottom of chart" bug
+Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
+  proceed.apply(this, [].slice.call(arguments, 1));
+  if (includes(['line','spline'], get(this, 'options.chart.type'))) {
+    this.clipBox.height += 6;
+    this.clipBox.y -= 3;
+  }
+});
 
 let widgetId = 0;
 const getId = () => {
@@ -31,16 +39,6 @@ const getId = () => {
 
 
 import './highcharts.css';
-
-// This fixes the "thin lines at top & bottom of chart" bug
-Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
-	proceed.apply(this, [].slice.call(arguments, 1));
-  if (includes(['line','spline'], get(this, 'options.chart.type'))) {
-    this.clipBox.height += 6;
-    this.clipBox.y -= 3;
-  }
-});
-
 
 
 const BASE_CHARTCONFIG = {
@@ -113,7 +111,6 @@ const THEME = {
 Highcharts.setOptions({
   ...THEME
 });
-
 
 
 const withHighcharts = Composed => {
