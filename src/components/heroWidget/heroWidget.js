@@ -17,7 +17,6 @@ const HeroWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
-  widgetIndex = 0,
 }) => {
 
   return (
@@ -32,7 +31,6 @@ const HeroWidget = ({
                      xAxis={xAxis}
                      yAxis={yAxis}
 	                   chartDescription={infoText || chartDescription}
-	                   widgetIndex={widgetIndex}
 	                   displayHighContrast={displayHighContrast} />
       </section>
     </article>
