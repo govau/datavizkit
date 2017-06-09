@@ -18,8 +18,7 @@ const StackedColumnWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
-
-  widgetIndex
+  widgetIndex,
 }) => {
   return (
     <article role="article" className="D_widget">
