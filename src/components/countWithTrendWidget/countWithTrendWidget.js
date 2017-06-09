@@ -1,10 +1,14 @@
 
+const win = typeof window !== 'undefined' ? window : global;
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import getPointerInLoop from './../../utils/getPointerInLoop';
 import MobileComponent from './mobile_component';
 import DesktopComponent from './desktop_component';
+import {makeGetKpiColorProps} from './../../utils/highcontrastPatterns';
+
+const getKpiColorProps = makeGetKpiColorProps(win.DATAVIZKIT_CONFIG.KPI_COLOR_PALETTE);
 
 
 /**
@@ -16,12 +20,14 @@ const CountWithTrendWidget = (props) => {
   const {
     viewport,
     widgetColor,
-    widgetPos,
-    config,
+    widgetIndex = 0,
     ...rest
   } = props;
 
-  const color = widgetColor || getPointerInLoop(config.KPI_COLOR_PALETTE.length, widgetPos);
+  const {colorset} = getKpiColorProps();
+
+  const color = widgetColor || colorset[widgetIndex];
+
 
   if (typeof viewport === 'undefined' || viewport === 'sm') {
     return <MobileComponent {...rest} color={color} />

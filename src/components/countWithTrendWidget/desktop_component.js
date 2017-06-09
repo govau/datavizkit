@@ -93,12 +93,13 @@ const DesktopCountWithTrendWidget = (props) => {
         {tooltipAnchorTo ? <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} /> : <span>&nbsp;</span>}
       </span>
 
-      <header style={{background: color}}>
+      <header>
         <div className="D_CTW_D_h1Container">
           <div className="D_CTW_D_h1ContainerInner">
             <h1>{title}</h1>
           </div>
         </div>
+        <div className="D_CTW_D_colored-banner" style={{background: color}}></div>
       </header>
 
       <section>

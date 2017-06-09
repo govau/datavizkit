@@ -17,7 +17,7 @@ const SparklineWidget = ({
   viewport,
   series, xAxis,
   chartDescription,
-  widgetIndex,
+  widgetIndex = 0,
 }) => {
   return (
     <article role="article" className="D_widget">

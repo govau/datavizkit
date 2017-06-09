@@ -80,8 +80,7 @@ const MobileCountWithTrendWidget = (props) => {
 
   return (
     <article className="D_CTW_M_root" role="article">
-
-      <div style={{background: color}}>
+      <div>
         <div className="D_CTW_M_layoutContainer">
 
           <div className="D_CTW_M_layoutLeft">
@@ -94,7 +93,7 @@ const MobileCountWithTrendWidget = (props) => {
           </div>
 
         </div>
-
+        <div className="D_CTW_M_colored-banner" style={{background: color}}></div>
       </div>
     </article>
   )

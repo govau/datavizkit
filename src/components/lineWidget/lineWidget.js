@@ -18,7 +18,7 @@ const LineWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
-  widgetIndex,
+  widgetIndex = 0,
 }) => {
   return (
     <article role="article" className="D_widget">

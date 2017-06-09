@@ -18,16 +18,6 @@
   background: #ccc; /* default */
 }
 
-/*block color*/
-.D_CTW_D_header:after {
-  content: ' ';
-  display: block;
-  height: 8px;
-  background-color: inherit;  /* don't delete */
-}
-
-/* https://stackoverflow.com/questions/14436155/how-to-create-inline-style-with-before-and-after */
-
 .D_CTW_D_h1Container {
   display: table;
   width: 100%;
@@ -54,6 +44,10 @@
   .D_CTW_D_h1Container h1 {
     font-size: 16px;
   }
+}
+
+.D_CTW_D_colored-banner {
+  height: 8px;
 }
 
 
