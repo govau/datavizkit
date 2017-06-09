@@ -105,7 +105,7 @@ const withHero = Composed => {
       this._chart = null;
       this._baseChartConfig = null;
 
-      const colorProps = props.getColorProps(props.widgetIndex, props.cid);
+      const colorProps = props.getKpiColorProps();
       this.colorset = colorProps.colorset;
     }
 

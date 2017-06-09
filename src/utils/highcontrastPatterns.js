@@ -131,6 +131,14 @@ export const makeGetColorProps = palettes => {
   };
 };
 
+export const makeGetKpiColorProps = palette => {
+  return () => {
+    return {
+      colorset: palette,
+    }
+  };
+};
+
 
 const makeIterateOnAndOff = patternIds => {
   const iterateeOn = (item, idx) => {
