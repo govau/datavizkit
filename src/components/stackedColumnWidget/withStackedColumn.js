@@ -65,6 +65,8 @@ const withStackedColumn = Composed => {
 
       const colorProps = props.getColorProps(props.widgetIndex, props.cid);
       this.colorset = colorProps.colorset;
+      this.highcontrastPatternIds = colorProps.highcontrastPatternIds;
+      this.HighcontrastPatterns = colorProps.HighcontrastPatterns
     }
 
     // create
@@ -198,7 +200,7 @@ const withStackedColumn = Composed => {
     render() {
       // console.log('stackedColumn render');
 
-      const {HighcontrastPatterns} = this;
+      const {HighcontrastPatterns} = this;  // todo - getEl method
 
       const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
