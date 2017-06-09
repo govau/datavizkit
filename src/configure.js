@@ -53,7 +53,8 @@ const BTL_COLOR_PALETTES = [
 
 const CONFIG = {
   ACCESSIBILITY_MODULE: true,
-  KPI_COLOR_PALETTE: KPI_COLOR_PALETTE,
+  ENABLE_HIGHCONTRAST: true,  // todo
+  KPI_COLOR_PALETTE: KPI_COLOR_PALETTE,   // todo - should not use "KPI" or "BTL" inside datavizkit // kpi colors should come from the application instead
   BTL_COLOR_PALETTES: BTL_COLOR_PALETTES,
 };
 

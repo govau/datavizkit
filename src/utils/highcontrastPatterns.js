@@ -5,8 +5,7 @@ import tinycolor from 'tinycolor2';
 import getItemOfListFromIncrement from './getItemOfListFromIncrement';
 
 
-const HIGHCONTRAST_PATTERN_COUNT = 6;
-const HIGHCONTRAST_PATTERN_NAMESPACE = 'highcontrast-pattern';
+
 
 const highcontrastPatterns = [
   ({id, color}) => {
@@ -74,35 +73,52 @@ const highcontrastPatterns = [
 ];
 
 
-const makeHighcontrastPatterns = (Highcharts) => {
-
-  return ({
-    count = HIGHCONTRAST_PATTERN_COUNT,
-    colors = Highcharts.getOptions().colors,
-    namespace = HIGHCONTRAST_PATTERN_NAMESPACE,
-  }) => {
-
-    const arrayOfCount = Array(count).fill();
-
+export const makeHighcontrastPatterns = (colorset, patternIds) => {
+  return () => {
     return (
       <div aria-hidden="true" className="patterns">
         <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <defs>
-            {arrayOfCount.map((i, idx) => {
+            {patternIds.map((patternId, idx) => {
+
               const patternIdx = getItemOfListFromIncrement(highcontrastPatterns, idx);
               const Pattern = highcontrastPatterns[patternIdx];
 
-              const colorIdx = getItemOfListFromIncrement(colors, idx);
-              const color = colors[colorIdx];
+              const colorIdx = getItemOfListFromIncrement(colorset, idx);
+              const color = colorset[colorIdx];
 
-              return <Pattern key={idx} color={color} id={`${namespace}-${idx}`} />
+              return <Pattern key={idx} color={color} id={patternId} />
             })}
           </defs>
         </svg>
       </div>
     );
+  }
+};
+
+export const makeGetColorProps = palettes => {
+  return (widgetIndex = 0, widgetId = 10000) => {
+
+    widgetId = Number(widgetId);
+
+    const colorsetIndex = getItemOfListFromIncrement(palettes, widgetIndex);
+    const colorset = palettes[colorsetIndex];
+
+    const highcontrastPatternIds = colorset.map((c, idx) => {
+      return `hc-p-${widgetId}-${idx}`;
+    });
+
+    const HighcontrastPatterns = makeHighcontrastPatterns(colorset, highcontrastPatternIds);
+
+    return {
+      colorset,
+      highcontrastPatternIds,
+      HighcontrastPatterns
+    }
   };
 };
+
+
 
 
 // todo - move this elsewhere
@@ -121,43 +137,27 @@ export const NullDataLayerPattern = () => {
 };
 
 
-export const createHighconstrastFillSeriesIteratee = condition => {
-  const getHighcontrastPatternIds = () => {
-    const arrayOfCount = Array(HIGHCONTRAST_PATTERN_COUNT).fill();
-    return arrayOfCount.map((c, idx) => {
-      return `url(#${HIGHCONTRAST_PATTERN_NAMESPACE}-${idx})`;
-    });
-  };
-  const patternIds = getHighcontrastPatternIds();
 
-  return (item, idx) => {
+
+export const mapHighcontrastFill = (config, condition, patternIds) => {
+
+  const iterateeOn = (item, idx) => {
     const patternIdx = getItemOfListFromIncrement(patternIds, idx);
-
-    item.color = condition ? patternIds[patternIdx] : void 0;
+    const patternSrc = `url(#${patternIds[patternIdx]})`;
+    item.color = patternSrc;
     return item;
   };
-};
 
+  const iterateeOff = (item, index) => {
+    item.color = void 0;
+    return item;
+  };
 
-export const mapHighcontrastFill = (config, condition) => {
-  const onFunc = createHighconstrastFillSeriesIteratee(true);
-  const offFunc = createHighconstrastFillSeriesIteratee(false);
-
-  config.series = config.series.map(condition ? onFunc : offFunc);
+  config.series = config.series.map(condition ? iterateeOn : iterateeOff);
   return config;
 };
 
 
-export const mapHighcontrastFillByPoint = (config, condition) => {
-  const onFunc = createHighconstrastFillSeriesIteratee(true);
-  const offFunc = createHighconstrastFillSeriesIteratee(false);
-
-  config.series = config.series.map(s => {
-    s.data.map(condition ? onFunc : offFunc);
-    return s;
-  });
-  return config;
-};
 
 
 export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
@@ -181,6 +181,7 @@ export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
   };
 };
 
+
 export const mapHighcontrastDashstyle = (config, condition) => {
   const onFunc = createHighcontrastDashstyleSeriesIteratee(true);
   const offFunc = createHighcontrastDashstyleSeriesIteratee(false);
@@ -188,6 +189,3 @@ export const mapHighcontrastDashstyle = (config, condition) => {
   config.series = config.series.map(condition ? onFunc : offFunc);
   return config;
 };
-
-
-export default makeHighcontrastPatterns;

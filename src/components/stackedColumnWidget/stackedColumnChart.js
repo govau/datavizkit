@@ -8,7 +8,11 @@ import withStackedColumn from './withStackedColumn';
 import CustomLegend from './../customLegend/customLegend';
 
 
-const ColumnChart = ({children, customLegendData, displayHighContrast}) => {
+const ColumnChart = ({
+  children,
+  customLegendData,
+  displayHighContrast,
+}) => {
   return (
     <div>
       <span className="chart">{children}</span>

@@ -1,12 +1,23 @@
 
-const getItemOfListFromIncrement = (list = [], increment) => {
+const getItemOfListFromIncrement = (list = [], increment) => {// todo - rename to getModulusIndex
   let index;
   if (increment < list.length) {
     index = increment;
   } else {
-    index = increment % group.length;
+    index = increment % list.length;
   }
-  return list[index];
+  return index;
 };
+
+
+export const getPointerInLoop = (groupLength, increment) => {
+  if (increment < groupLength) {
+    return increment;
+  } else {
+    return increment % groupLength;
+  }
+};
+
+
 
 export default getItemOfListFromIncrement;
