@@ -17,6 +17,7 @@ const SparklineWidget = ({
   viewport,
   series, xAxis,
   chartDescription,
+  widgetIndex,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -28,7 +29,8 @@ const SparklineWidget = ({
       <section>
         <SparklineChart series={series}
                         xAxis={xAxis}
-                        chartDescription={infoText || chartDescription} />
+                        chartDescription={infoText || chartDescription}
+                        widgetIndex={widgetIndex} />
       </section>
     </article>
   )
@@ -36,6 +38,7 @@ const SparklineWidget = ({
 
 if (__DEV__) {
   SparklineWidget.propTypes = {
+    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

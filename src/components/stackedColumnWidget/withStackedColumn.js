@@ -64,10 +64,7 @@ const withStackedColumn = Composed => {
       this._baseChartConfig = null;
 
       const colorProps = props.getColorProps(props.widgetIndex, props.cid);
-
       this.colorset = colorProps.colorset;
-      this.highcontrastPatternIds = colorProps.highcontrastPatternIds;
-      this.HighcontrastPatterns = colorProps.HighcontrastPatterns;
     }
 
     // create

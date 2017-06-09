@@ -18,6 +18,7 @@ const LineWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
+  widgetIndex,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -30,8 +31,9 @@ const LineWidget = ({
         <LineChart series={series}
                      xAxis={xAxis}
                      yAxis={yAxis}
-                     displayHighContrast={displayHighContrast}
-                     chartDescription={infoText || chartDescription} />
+	                   chartDescription={infoText || chartDescription}
+	                   widgetIndex={widgetIndex}
+	                   displayHighContrast={displayHighContrast} />
       </section>
     </article>
   )
@@ -39,6 +41,7 @@ const LineWidget = ({
 
 if (__DEV__) {
   LineWidget.propTypes = {
+    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

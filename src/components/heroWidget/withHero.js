@@ -104,6 +104,9 @@ const withHero = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
+
+      const colorProps = props.getColorProps(props.widgetIndex, props.cid);
+      this.colorset = colorProps.colorset;
     }
 
     // create
@@ -146,6 +149,7 @@ const withHero = Composed => {
 
       const config = merge({}, BASE_HERO_CHARTCONFIG);
 
+      config.colors  = this.colorset;
       config.chart.renderTo = this._chart;
 
       if (this.props.chartDescription) {

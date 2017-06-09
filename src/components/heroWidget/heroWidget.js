@@ -17,6 +17,7 @@ const HeroWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
+  widgetIndex,
 }) => {
 
   return (
@@ -30,8 +31,9 @@ const HeroWidget = ({
         <HeroChart series={series}
                      xAxis={xAxis}
                      yAxis={yAxis}
-                     displayHighContrast={displayHighContrast}
-                     chartDescription={infoText || chartDescription} />
+	                   chartDescription={infoText || chartDescription}
+	                   widgetIndex={widgetIndex}
+	                   displayHighContrast={displayHighContrast} />
       </section>
     </article>
   )
@@ -39,6 +41,7 @@ const HeroWidget = ({
 
 if (__DEV__) {
   HeroWidget.propTypes = {
+    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
