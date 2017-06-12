@@ -66,8 +66,6 @@ const withDonut = Composed => {
 
     // create
     componentDidMount() {
-      // console.log('withDonut componentDidMount');
-
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
@@ -75,8 +73,6 @@ const withDonut = Composed => {
 
     // update
     componentWillUpdate(nextProps) {
-      // console.log('withDonut componentWillUpdate');
-
       if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
         const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
@@ -87,8 +83,6 @@ const withDonut = Composed => {
 
     // destroy
     componentWillUnmount() {
-      // console.log('withDonut componentWillUnmount');
-
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
@@ -147,8 +141,6 @@ const withDonut = Composed => {
     }
 
     render() {
-      // console.log('donut render');
-
       const {HighcontrastPatterns} = this;
 
       const customLegendData = this.getStatic('customLegendData');

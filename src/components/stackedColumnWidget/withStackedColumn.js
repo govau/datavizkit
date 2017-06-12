@@ -50,6 +50,9 @@ const BASE_STACKEDCOLUMN_CHARTCONFIG = {
     title: {
       text: null
     },
+  },
+  xAxis: {
+    crosshair: true,
   }
 };
 
@@ -71,8 +74,6 @@ const withStackedColumn = Composed => {
 
     // create
     componentDidMount() {
-      // console.log('withStackedColumn componentDidMount');
-
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
 
       this.props.create(config);
@@ -80,8 +81,6 @@ const withStackedColumn = Composed => {
 
     // update
     componentWillUpdate(nextProps, nextState) {
-      // console.log('withStackedColumn componentWillUpdate');
-
       if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
         const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
@@ -92,8 +91,6 @@ const withStackedColumn = Composed => {
 
     // destroy
     componentWillUnmount() {
-      // console.log('withStackedColumn componentWillUnmount');
-
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
@@ -197,8 +194,6 @@ const withStackedColumn = Composed => {
     }
 
     render() {
-      // console.log('stackedColumn render');
-
       const {HighcontrastPatterns} = this;  // todo - getEl method
 
       const customLegendData = this.getStatic('customLegendData');
