@@ -57,6 +57,8 @@ const BASE_LINE_CHARTCONFIG = {
     crosshairs: true,
   },
   xAxis: {
+    crosshair: true,
+
     // type: 'datetime', // todo - format x labels to datetime
     // Format 24 hour time to AM/PM
     // dateTimeLabelFormats: {

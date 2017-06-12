@@ -46,6 +46,9 @@ const BASE_COLUMN_CHARTCONFIG = {
       text: null
     },
   },
+  xAxis: {
+    crosshair: true,
+  }
 };
 
 

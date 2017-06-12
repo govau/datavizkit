@@ -50,6 +50,9 @@ const BASE_STACKEDCOLUMN_CHARTCONFIG = {
     title: {
       text: null
     },
+  },
+  xAxis: {
+    crosshair: true,
   }
 };
 
