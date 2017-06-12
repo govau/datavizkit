@@ -94,8 +94,6 @@ const withLine = Composed => {
 
     // create
     componentDidMount() {
-      // console.log('withLine componentDidMount');
-
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props);
       // draw chart for first time
       this.props.create(config);
@@ -103,8 +101,6 @@ const withLine = Composed => {
 
     // update
     componentWillUpdate(nextProps) {
-      // console.log('withColumn componentWillUpdate');
-
       if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
 
         const config = this.makeInstanceConfig(this._baseChartConfig, nextProps);
@@ -115,8 +111,6 @@ const withLine = Composed => {
 
     // destroy
     componentWillUnmount() {
-      // console.log('withLine componentWillUnmount');
-
       this.props.destroy();
       this._chart = null;
       this._baseChartConfig = null;
@@ -242,8 +236,6 @@ const withLine = Composed => {
     }
 
     render() {
-      // console.log('withLine render');
-
       const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
