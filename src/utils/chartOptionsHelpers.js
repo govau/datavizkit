@@ -30,9 +30,10 @@ export const createCartesianCustomLegendData = (series, seriesDataIndex) => {
   const _i = null == seriesDataIndex ? series[0].data.length - 1 : seriesDataIndex;
 
   return series.map(s => {
+
     const d = s.data[_i];
 
-    if (typeof d === 'undefined') { // a series may be being created in the background and doesnt exist yet
+    if (typeof d === 'undefined') { // a series may be being created in the background and doesn't exist yet
       return {};
     }
 
@@ -64,53 +65,54 @@ export const createPolarCustomLegendData = (series) => {
   });
 };
 
-
 // todo - refactor
-export const plotNullDataLayerToAxis = (xAxis, series, setStatic) => {
+export const mapNullDataLayerToX = (xAxis, series, setStatic) => {
   if (xAxis.length > 1) {
-    console.warn('Null data layer can only be plotted to a single axis.')
+    throw new Error('A null data layer can only be plotted to a single axis.');
   }
 
-  const idxsWithNullValue = series.map(s => {
-    return s.data.map((d, idx) => {
-      if (d.y === null) {
-        return idx;
-      }
-    });
-  }).reduce((a,b) => {
-    // find an intersection between the arrays - common null vals in a series set
-    if (a.length) {
-      return [...a].filter(x => {
-        return b.includes(x);
-      });
-    }
-    return b;
-  }, []);
-
-  idxsWithNullValue.forEach((i, idx) => {
-    if (typeof i !== 'undefined') {
-      xAxis[0].addPlotBand({
-        from: i -.5,  // point back
-        to: i + .5,   // point after
-        color: 'url(#null-data-layer)', // this color represents the null value region
-        events: {
-          mouseover: function() {
-            setStatic({'customLegendData': createCartesianCustomLegendData(this.axis.series, null)});
-            this.axis.crosshair = false;
-            this.axis.series.forEach(s => {
-              s.data.map(d => {
-                d.setState('');
-              });
-            });
-          },
-
-          mouseout: function() {
-            this.axis.crosshair = true;
-          }
+  try {
+    const idxsWithNullValue = series.map(s => {
+      return s.data.map((d, idx) => {
+        if (d.y === null) {
+          return idx;
         }
       });
-    }
-  });
+    }).reduce((a,b) => {
+      // find an intersection between the arrays - common null vals in a series set
+      if (a.length) {
+        return [...a].filter(x => {
+          return b.includes(x);
+        });
+      }
+      return b;
+    }, []);
+
+    idxsWithNullValue.forEach((i, idx) => {
+      if (typeof i !== 'undefined') {
+        xAxis[0].addPlotBand({
+          from: i -.5,  // point back
+          to: i + .5,   // point after
+          color: 'url(#null-data-layer)', // this color represents the null value region
+          events: {
+            mouseover: function() {
+              setStatic({'customLegendData': createCartesianCustomLegendData(this.axis.series, null)});
+              this.axis.crosshair = false;
+              this.axis.series.forEach(s => {
+                s.data.map(d => {
+                  d.setState('');
+                });
+              });
+            },
+
+            mouseout: function() {
+              this.axis.crosshair = true;
+            }
+          }
+        });
+      }
+    });
+  } catch (e) {}
 
   return xAxis;
 };

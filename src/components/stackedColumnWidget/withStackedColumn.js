@@ -6,7 +6,7 @@ import PureComponentWithStaticProps from './../../classes/pureComponentWithStati
 import {mapHighcontrastFill} from './../../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
-  plotNullDataLayerToAxis
+  mapNullDataLayerToX,
 } from './../../utils/chartOptionsHelpers';
 
 
@@ -122,10 +122,9 @@ const withStackedColumn = Composed => {
 
       // bind events to config
       config.chart.events = {
-        // load: function() {
-        // },
         render: function() {
-          config.xAxis = plotNullDataLayerToAxis(this.xAxis, this.series, setStatic);
+
+          this.xAxis = mapNullDataLayerToX(this.xAxis, this.series, setStatic);
 
           setStatic({'customLegendData': createCartesianCustomLegendData(this.series)});
 
