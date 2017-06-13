@@ -18,12 +18,6 @@ if (win.DATAVIZKIT_CONFIG.ACCESSIBILITY_MODULE === true) {
 }
 
 
-import {makeGetColorProps, makeGetKpiColorProps} from './../utils/highcontrastPatterns';
-
-const getColorProps = makeGetColorProps(win.DATAVIZKIT_CONFIG.BTL_COLOR_PALETTES);
-const getKpiColorProps = makeGetKpiColorProps(win.DATAVIZKIT_CONFIG.KPI_COLOR_PALETTE);
-
-
 // This fixes the "thin lines at top & bottom of chart" bug
 Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
   proceed.apply(this, [].slice.call(arguments, 1));
@@ -76,7 +70,6 @@ const BASE_CHARTCONFIG = {
 
 const THEME = {
   /*eslint-disable */
-  colors: win.DATAVIZKIT_CONFIG.BTL_COLOR_PALETTES[0],
   chart: {
     style: {
       fontFamily: 'Open Sans,sans-serif',
@@ -122,8 +115,6 @@ const withHighcharts = Composed => {
       this.create = this.create.bind(this);
       this.redraw = this.redraw.bind(this);
       this.destroy = this.destroy.bind(this);
-      this.getColorProps = getColorProps.bind(this);
-      this.getKpiColorProps = getKpiColorProps.bind(this);
 
       this._instance = null;
     }
@@ -176,9 +167,7 @@ const withHighcharts = Composed => {
                   {...this.props}
                   create={this.create}
                   redraw={this.redraw}
-                  destroy={this.destroy}
-                  getColorProps={this.getColorProps}
-                  getKpiColorProps={this.getKpiColorProps} />
+                  destroy={this.destroy} />
       )
     }
   }

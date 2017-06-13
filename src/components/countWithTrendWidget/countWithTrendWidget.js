@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 
 import MobileComponent from './mobile_component';
 import DesktopComponent from './desktop_component';
-import {makeGetKpiColorProps} from './../../utils/highcontrastPatterns';
+// import {makeGetKpiColorProps} from './../../utils/highcontrastPatterns';
 
-const getKpiColorProps = makeGetKpiColorProps(win.DATAVIZKIT_CONFIG.KPI_COLOR_PALETTE);
-
+// const getKpiColorProps = makeGetKpiColorProps(win.DATAVIZKIT_CONFIG.KPI_COLOR_PALETTE);
+//
 
 /**
  * A sparkline-esque chart for displaying a Count of latest data and
@@ -24,9 +24,9 @@ const CountWithTrendWidget = (props) => {
     ...rest
   } = props;
 
-  const {colorset} = getKpiColorProps();
+  // const {colorset} = getKpiColorProps();
 
-  const color = widgetColor || colorset[widgetIndex];
+  const color = '' || widgetColor || colorset[widgetIndex];
 
 
   if (typeof viewport === 'undefined' || viewport === 'sm') {

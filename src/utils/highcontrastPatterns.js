@@ -111,33 +111,6 @@ export const makeHighcontrastPatterns = (colorset, patternIds) => {
   }
 };
 
-export const makeGetColorProps = palettes => {
-  return (widgetIndex = 0, widgetId = 10000) => {
-
-    const colorsetIndex = getPointerInLoop(palettes.length, widgetIndex);
-    const colorset = palettes[colorsetIndex];
-
-    const highcontrastPatternIds = colorset.map((c, idx) => {
-      return `hc-p-${widgetId}-${idx}`;
-    });
-
-    const HighcontrastPatterns = makeHighcontrastPatterns(colorset, highcontrastPatternIds);
-
-    return {
-      colorset,
-      highcontrastPatternIds,
-      HighcontrastPatterns
-    }
-  };
-};
-
-export const makeGetKpiColorProps = palette => {
-  return () => {
-    return {
-      colorset: palette,
-    }
-  };
-};
 
 
 const makeIterateOnAndOff = patternIds => {
@@ -176,7 +149,6 @@ export const mapHighcontrastFillByPoint = (config, condition, patternIds) => {
 };
 
 
-
 export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
   const dashTypes = [
     // 'Solid',   // reserved
@@ -197,6 +169,7 @@ export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
     return item;
   };
 };
+
 
 export const mapHighcontrastDashstyle = (config, condition) => {
   const onFunc = createHighcontrastDashstyleSeriesIteratee(true);

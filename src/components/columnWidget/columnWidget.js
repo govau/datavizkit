@@ -15,10 +15,24 @@ const ColumnWidget = ({
   title,
   dateLastUpdated,
   viewport,
-  series, xAxis, yAxis,
+
   displayHighContrast,
   chartDescription,
-  widgetIndex = 0,
+
+  series,
+  xAxis,
+  yAxis,
+
+
+  // appViewport,
+  // appDisplayHighcontrast
+
+  // chartTitle,
+  // chartDescription,
+  // chartTooltipText,
+  // chartDateUpdated,
+
+
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -32,7 +46,6 @@ const ColumnWidget = ({
                      xAxis={xAxis}
                      yAxis={yAxis}
                      chartDescription={infoText || chartDescription}
-                     widgetIndex={widgetIndex}
                      displayHighContrast={displayHighContrast} />
       </section>
     </article>
