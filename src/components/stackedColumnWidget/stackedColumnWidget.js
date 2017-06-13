@@ -18,7 +18,6 @@ const StackedColumnWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
-  widgetIndex = 0,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -32,7 +31,6 @@ const StackedColumnWidget = ({
                             xAxis={xAxis}
                             yAxis={yAxis}
                             chartDescription={infoText || chartDescription}
-                            widgetIndex={widgetIndex}
                             displayHighContrast={displayHighContrast} />
       </section>
     </article>
@@ -41,7 +39,6 @@ const StackedColumnWidget = ({
 
 if (__DEV__) {
   StackedColumnChart.propTypes = {
-    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

@@ -18,7 +18,6 @@ const DonutWidget = ({
   series, xAxis, yAxis,
   displayHighContrast,
   chartDescription,
-  widgetIndex = 0,
 }) => {
   return (
     <article role="article" className="D_widget">
@@ -32,7 +31,6 @@ const DonutWidget = ({
 										xAxis={xAxis}
 										yAxis={yAxis}
 										chartDescription={infoText || chartDescription}
-										widgetIndex={widgetIndex}
 										displayHighContrast={displayHighContrast} />
       </section>
     </article>
@@ -41,7 +39,6 @@ const DonutWidget = ({
 
 if (__DEV__) {
   DonutWidget.propTypes = {
-    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

@@ -1,15 +1,21 @@
 
-const win = typeof window !== 'undefined' ? window : global;
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import MobileComponent from './mobile_component';
 import DesktopComponent from './desktop_component';
-// import {makeGetKpiColorProps} from './../../utils/highcontrastPatterns';
 
-// const getKpiColorProps = makeGetKpiColorProps(win.DATAVIZKIT_CONFIG.KPI_COLOR_PALETTE);
-//
+
+const getPercentageDifference = (a = null, b = null) => {
+  if (!a) {
+    if (!b) {
+      return null;
+    }
+    return 100;
+  }
+
+  return (a - b).toFixed(2);
+};
 
 /**
  * A sparkline-esque chart for displaying a Count of latest data and
@@ -19,20 +25,51 @@ import DesktopComponent from './desktop_component';
 const CountWithTrendWidget = (props) => {
   const {
     viewport,
-    widgetColor,
-    widgetIndex = 0,
-    ...rest
+
+    title,
+    tooltipAnchorTo,
+
+    series,
   } = props;
 
-  // const {colorset} = getKpiColorProps();
+  const s = series[0];
+  let recentValue,
+    nextRecentValue,
+    percentageDifferenceDate = null;
 
-  const color = '' || widgetColor || colorset[widgetIndex];
+  if (s.data.length > 1) {
+    recentValue = series[0].data[1];
+    nextRecentValue = series[0].data[0];
+
+    if (nextRecentValue === null) {
+      percentageDifferenceDate = null;
+    } else {
+      percentageDifferenceDate = nextRecentValue.period_end;
+    }
+  } else {
+    recentValue = series[0].data[0];
+    nextRecentValue = '';
+  }
+
+  const percentageDifference = getPercentageDifference(recentValue, nextRecentValue);
 
 
   if (typeof viewport === 'undefined' || viewport === 'sm') {
-    return <MobileComponent {...rest} color={color} />
+    return <MobileComponent title={title}
+                            tooltipAnchorTo={tooltipAnchorTo}
+                            units={series[0].units}
+                            value={recentValue}
+                            trendValue={percentageDifference}
+                            trendDate={percentageDifferenceDate}
+                            color={series[0].color} />
   } else {
-    return <DesktopComponent {...rest} color={color} />
+    return <DesktopComponent title={title}
+                             tooltipAnchorTo={tooltipAnchorTo}
+                             units={series[0].units}
+                             value={recentValue}
+                             trendValue={percentageDifference}
+                             trendDate={percentageDifferenceDate}
+                             color={series[0].color} />
   }
 };
 

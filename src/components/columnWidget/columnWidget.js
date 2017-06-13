@@ -24,7 +24,7 @@ const ColumnWidget = ({
   yAxis,
 
 
-  // appViewport,
+  // appViewport, // todo
   // appDisplayHighcontrast
 
   // chartTitle,
@@ -54,7 +54,6 @@ const ColumnWidget = ({
 
 if (__DEV__) {
   ColumnWidget.propTypes = {
-    widgetIndex: PropTypes.number,
     infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }

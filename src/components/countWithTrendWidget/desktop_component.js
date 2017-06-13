@@ -90,7 +90,7 @@ const DesktopCountWithTrendWidget = (props) => {
   return (
     <article className="D_CTW_D_root" role="article">
       <span className="D_CTW_D_tooltipContainer">
-        {tooltipAnchorTo ? <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} /> : <span>&nbsp;</span>}
+        {tooltipAnchorTo ? <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} infoText="" /> : <span>&nbsp;</span>}
       </span>
 
       <header>
