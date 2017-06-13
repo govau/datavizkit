@@ -25,6 +25,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   display: inline-block !important;
+  vertical-align: middle;
 }
 
 .D_CL_value {
