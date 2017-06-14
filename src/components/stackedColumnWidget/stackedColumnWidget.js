@@ -11,26 +11,28 @@ import './stackedColumnWidget.css';
 
 
 const StackedColumnWidget = ({
-  infoText,
-  title,
-  dateLastUpdated,
-  viewport,
-  series, xAxis, yAxis,
-  displayHighContrast,
+  chartTitle,
   chartDescription,
+  chartUpdatedDate,
+  series,
+  xAxis,
+  yAxis,
+
+  viewport,
+  displayHighContrast,
 }) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_SCW_infoContainer">{infoText && <Tooltip text={infoText} viewport={viewport} />}</div>}
-        <h1 className="highcharts-title">{title}</h1>
-        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
+        {chartDescription && <div className="D_DW_infoContainer"><Tooltip text={chartDescription} viewport={viewport} /></div>}
+        <h1 className="highcharts-title">{chartTitle}</h1>
+        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(chartUpdatedDate)}>{dateFormats.dayMonthYear(chartUpdatedDate)}</time></span>
       </header>
       <section>
         <StackedColumnChart series={series}
                             xAxis={xAxis}
                             yAxis={yAxis}
-                            chartDescription={infoText || chartDescription}
+                            chartDescription={chartDescription}
                             displayHighContrast={displayHighContrast} />
       </section>
     </article>
@@ -39,7 +41,6 @@ const StackedColumnWidget = ({
 
 if (__DEV__) {
   StackedColumnChart.propTypes = {
-    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }

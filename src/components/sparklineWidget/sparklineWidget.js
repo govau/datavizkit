@@ -11,24 +11,25 @@ import './sparklineWidget.css';
 
 
 const SparklineWidget = ({
-  infoText,
-  title,
-  dateLastUpdated,
-  viewport,
-  series, xAxis,
+  chartTitle,
   chartDescription,
+  chartUpdatedDate,
+  series,
+  xAxis,
+
+  viewport,
 }) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_SW_infoContainer">{infoText && <Tooltip text={infoText} viewport={viewport} />}</div>}
-        <h1 className="highcharts-title">{title}</h1>
-        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
+        {chartDescription && <div className="D_DW_infoContainer"><Tooltip text={chartDescription} viewport={viewport} /></div>}
+        <h1 className="highcharts-title">{chartTitle}</h1>
+        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(chartUpdatedDate)}>{dateFormats.dayMonthYear(chartUpdatedDate)}</time></span>
       </header>
       <section>
         <SparklineChart series={series}
                         xAxis={xAxis}
-                        chartDescription={infoText || chartDescription} />
+                        chartDescription={chartDescription} />
       </section>
     </article>
   )

@@ -11,41 +11,28 @@ import './columnWidget.css';
 
 
 const ColumnWidget = ({
-  infoText,
-  title,
-  dateLastUpdated,
-  viewport,
-
-  displayHighContrast,
+  chartTitle,
   chartDescription,
-
+  chartUpdatedDate,
   series,
   xAxis,
   yAxis,
 
-
-  // appViewport, // todo
-  // appDisplayHighcontrast
-
-  // chartTitle,
-  // chartDescription,
-  // chartTooltipText,
-  // chartDateUpdated,
-
-
+  viewport,
+  displayHighContrast,
 }) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_SW_infoContainer">{infoText && <Tooltip text={infoText} viewport={viewport} />}</div>}
-        <h1 className="highcharts-title">{title}</h1>
-        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
+        {chartDescription && <div className="D_DW_infoContainer"><Tooltip text={chartDescription} viewport={viewport} /></div>}
+        <h1 className="highcharts-title">{chartTitle}</h1>
+        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(chartUpdatedDate)}>{dateFormats.dayMonthYear(chartUpdatedDate)}</time></span>
       </header>
       <section>
         <ColumnChart series={series}
                      xAxis={xAxis}
                      yAxis={yAxis}
-                     chartDescription={infoText || chartDescription}
+                     chartDescription={chartDescription}
                      displayHighContrast={displayHighContrast} />
       </section>
     </article>
@@ -54,7 +41,6 @@ const ColumnWidget = ({
 
 if (__DEV__) {
   ColumnWidget.propTypes = {
-    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }
