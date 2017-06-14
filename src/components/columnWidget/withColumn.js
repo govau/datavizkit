@@ -3,7 +3,7 @@ import React from 'react';
 import merge from 'lodash/merge';
 
 import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
-import {mapHighcontrastFill} from './../../utils/highcontrastPatterns';
+import {makeHighcontrastPatterns} from './../../utils/highcontrastPatterns';
 import {
   createCartesianCustomLegendData,
   mapNullDataLayerToX,
@@ -61,11 +61,11 @@ const withColumn = Composed => {
       this._chart = null;
       this._baseChartConfig = null;
 
-      // const colorProps = props.getColorProps(props.widgetIndex, props.cid);
+      this.colorset = props.series.map(s => s.color);
+      this.patternIds = props.series.map((s,idx) => `hc-p-${props.cid}-${idx}`);
+      this.hcColorset = this.patternIds.map((id) => `url(#${id})`);
 
-      // this.colorset = colorProps.colorset;
-      // this.highcontrastPatternIds = colorProps.highcontrastPatternIds;
-      // this.HighcontrastPatterns = colorProps.HighcontrastPatterns;
+      this.Patterns = makeHighcontrastPatterns(this.colorset, this.patternIds);
     }
 
     // create
@@ -179,20 +179,29 @@ const withColumn = Composed => {
         yAxis,
       });
 
-      // instanceConfig = mapHighcontrastFill(instanceConfig, passedProps.displayHighContrast, this.highcontrastPatternIds);
+      if (passedProps.displayHighContrast) { // todo - synthesize
+        instanceConfig.series = series.map((s,idx) => {
+          s.color = this.hcColorset[idx];
+          return s;
+        });
+      } else {
+        instanceConfig.series = series.map((s,idx) => {
+          s.color = this.colorset[idx];
+          return s;
+        });
+      }
 
       return instanceConfig;
     }
 
     render() {
-      // const {HighcontrastPatterns} = this;
-
+      const {Patterns} = this;
       const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (
         <div>
-          {/*<HighcontrastPatterns />*/}
+          {displayHighContrast && <Patterns />}
           <Composed {...this.props}
                     customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
             <div ref={el => this._chart = el} />

@@ -57,7 +57,7 @@ class App extends Component {
                      ]}
                      xAxis={null}
                      yAxis={null}
-                     displayHighContrast={false}
+                     displayHighContrast={hcState}
                      viewport="sm" />
 
         <HeroWidget displayHighContrast={false}
@@ -99,7 +99,7 @@ class App extends Component {
                       yAxis={[
                         {"title":{"text":""},"min":[]}
                       ]}
-                      displayHighContrast={false}
+                      displayHighContrast={hcState}
                       viewport="sm" />
 
         <LineWidget _type="line"
@@ -142,7 +142,7 @@ class App extends Component {
                              yAxis={[
                                {"title":{"text":""},"opposite":false}
                              ]}
-                             displayHighContrast={false}
+                             displayHighContrast={hcState}
                              viewport="sm" />
 
         <SparklineWidget _type="sparkline"
@@ -162,7 +162,7 @@ class App extends Component {
                         yAxis={[
                           {"title":{"text":""},"min":[]}
                          ]}
-                         displayHighContrast={false}
+                         displayHighContrast={hcState}
                          viewport="sm" />
 
         <CountWithTrendWidget tooltipAnchorTo="#dashboard-notes"

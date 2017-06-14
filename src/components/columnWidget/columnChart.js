@@ -8,7 +8,11 @@ import withColumn from './withColumn';
 import CustomLegend from './../customLegend/customLegend';
 
 
-const ColumnChart = ({children, customLegendData, displayHighContrast}) => {
+const ColumnChart = ({
+  children,
+  customLegendData,
+  displayHighContrast
+}) => {
   return (
     <div>
       <span className="chart">{children}</span>
@@ -23,3 +27,4 @@ const HighchartifiedColumnChart = compose(
 )(ColumnChart);
 
 export default HighchartifiedColumnChart;
+
