@@ -43,3 +43,4 @@ if (__DEV__) {
 }
 
 export default SparklineWidget;
+

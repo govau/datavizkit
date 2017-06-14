@@ -40,186 +40,151 @@ class App extends Component {
         <button onClick={() => {this.setState({hcState: !this.state.hcState})}}>Toggle high contrast</button>
 
 
-        <DonutWidget series={[
-                        {name:"Jan",
-                          data:[
-                            {name:"Mobile",y:183},{name:"Tablet",y:30},{name:"Desktop",y:200}
-                          ]}
-                      ]}
-                     title="Devices used"
-                     type="donut"
-                     dateLastUpdated="2017-02-01T01:02:02.240Z"
+        <DonutWidget _type="donut"
+                     _coordinatesType="polar"
+                     _isKpi={false}
+                     chartTitle="Devices used"
+                     chartDescription="This shows which devices are used to view the Performance Dashboard."
+                     chartUpdatedDate="2017-02-01T01:02:02.240Z"
                      _singleCategory={true}
                      _singleSection={false}
-                     minimumValue="30"
-                     displayHighContrast={hcState} />
+                     series={[
+                       {"name": "Jan '17", "data": [
+                         {"name": "Mobile", "units": "n", "y": 183, "color": "#b6988f"},
+                         {"name": "Tablet", "units": "n", "y": 30, "color": "#46b4ba"},
+                         {"name": "Desktop", "units": "n", "y": 1009, "color": "#f17465"}
+                       ]}
+                     ]}
+                     xAxis={null}
+                     yAxis={null}
+                     displayHighContrast={false}
+                     viewport="sm" />
 
-
-        <StackedColumnWidget widgetIndex={3}
-          xAxis={{"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}}
-          series={[
-            //{"name":"Public Beta", color:'red', "data":[0,0,2,2,2,2,2,2,2]},
-            //{"name":"Pre Beta", color: 'url(#highcontrast-pattern-0)', "data":[0,0,1,3,3,3,3,3,3]},
-            {"name":"Public Beta", "data":[0,0,2,2,2,2,2,2,2]},
-            {"name":"Pre Beta", "data":[0,0,1,3,3,3,3,3,3]},
-            {"name":"Non-transformational","data":[1,1,1,1,1,1,1,1,1]},
-            {"name":"Other","data":[0,0,0,0,0,0,0,0,0]}
-          ]}
-          title="Types of service"
-          type="stackedColumn"
-          dateLastUpdated="2017-02-01T01:02:02.240Z"
-          _singleCategory={false}
-          _singleSection={false}
-          stackingType="normal"
-          displayHighContrast={hcState} />
-
-
-        <StackedColumnWidget type="stackedColumn"
-           coordinateType="cartesian"
-           title="Devices used by users"
-           dateLastUpdated="2016-11-09T01:01:01.111Z"
-           infoText="This shows the types of devices used by users to access the appointment booking service."
-           stackingType="percent"
-           viewport="md"
-           displayHighContrast={hcState}
-           _singleCategory={false}
-           _singleSection={false}
-           yAxis={[
-             {"title": {"text": "Percentage (%)"}, "opposite": false, "floor": 0, "ceiling": 100, "min": 0, "max": 100}
-           ]}
-           xAxis={[
-             {"categories": ["Mar '16", "Apr '16", "May '16", "Jun '16", "Jul '16", "Aug '16", "Sep '16", "Oct '16"]}
-           ]}
-           series={[
-             {"name": "Mobile", "units": "%", "data": [43, 48, 47, 49, 50, 51, 54, 55], "yAxis": 0},
-             {"name": "Tablet", "units": "%", "data": [6, 6, 6, 2, 3, 5, 5, 5], "yAxis": 0},
-             {"name": "Desktop", "units": "%", "data": [51, 46, 47, 49, 47, 44, 41, 40], "yAxis": 0}
-           ]}
-           chartDescription="" />
-
-        <HeroWidget
-          title=""
-          dateLastUpdated='23 Mar 2017'
-          xAxis={{categories:["Aug","Sep","Oct","Nov","Dec","Jan","Feb"]}}
-          yAxis={[{title:{text:"Percentage"}, max:100},{title:{text:"AUSD"},opposite:!0}]}
-          series={[
-            {name:"User satisfaction",units:"percentage",data:[null,null,45,22,18,12,38]},
-            {name:"Cost per transaction",units:"money",yAxis:1,data:[null,578,442,80,27,25,24]},
-            {name:"Digital take-up",units:"percentage",data:[0,0,10,12,22,27,38]},
-            {name:"Completion rate",units:"percentage",data:[38,39,40,41,null,47,45]}
-          ]}
-          _singleCategory={true}
-          _singleSection={false}
-          displayHighContrast={hcState} />
-
-
-        <LineWidget title='Number of page views'
-                    type='column'
-                    dateLastUpdated='22 Feb 2016'
-                    minimumValue="20000"
+        <HeroWidget displayHighContrast={false}
+                    _type="hero"
+                    _coordinatesType="cartesian"
+                    _isKpi={true}
+                    chartTitle="Kpis"
+                    chartDescription={null}
+                    chartUpdatedDate="2017-02-01T01:02:02.240Z"
                     _singleCategory={false}
                     _singleSection={false}
-                    yAxis={[
-                      {"title":{"text":"Percentage (%)"},"opposite":false,"floor":0,"ceiling":100,"min":0,"max":100}
-                    ]}
-                    xAxis={{"categories":["Nov '15","Dec '15","Jan '16","Feb '16","Mar '16","Apr '16","May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16"]}}
                     series={[
-                      {"name":"1 service","units":"%","data":[59.56,59.21,58.72,58.24,57.84,57.42,56.98,56.5,55.83,55.33,54.9,54.5,54.1],"yAxis":0},
-                      {"name":"2 services","units":"%","data":[24.55,24.7,24.9,25.09,25.23,25.38,25.52,25.64,25.71,25.77,25.8,25.9,26.02],"yAxis":0},
-                      {"name":"3 services","units":"%","data":[11.19,11.31,11.48,11.64,11.79,11.94,12.11,12.28,12.58,12.8,13,13.1,13.27],"yAxis":0},
-                      {"name":"4 services","units":"%","data":[3.69,3.74,3.81,3.89,3.97,4.05,4.14,4.25,4.46,4.61,4.7,4.8,4.94],"yAxis":0},
-                      {"name":"5+ services","units":"%","data":[1.02,1.05,1.09,1.13,1.18,1.22,1.25,1.32,1.43,1.5,1.6,1.6,1.67],"yAxis":0}
+                      {"name":"User satisfaction","units":"%","data":[null,null,null,null,null,null,null,null,null],"color":"#cf7e33","yAxis":0},
+                      {"name":"Cost per transaction","units":"$","data":[null,null,null,29.44,27.23,15.02,12.3,7.28,5.82],"color":"#7e985c","yAxis":1},
+                      {"name":"Digital take-up","units":"%","data":[0,0,67,100,100,100,100,100,100],"color":"#007cc3","yAxis":0},
+                      {"name":"Completion rate","units":"%","data":[null,null,73.39,90.27,84.28,60.82,63.1,63.43,66.87],"color":"#6e63a7","yAxis":0}
                     ]}
-                    displayHighContrast={hcState} />
+                    xAxis={[
+                      {"categories":["May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16","Dec '16","Jan '17"]}
+                    ]}
+                    yAxis={[
+                      {"title":{"text":"Percentage (%)"},"opposite":false,"floor":0,"ceiling":100,"min":0,"max":100},{"title":{"text":"AUD ($)"},"opposite":true}
+                    ]} />
 
-
-
-        <button onClick={() => {this.setState({series: series1})}}>Select series 1</button>
-        <button onClick={() => {this.setState({series: series2})}}>Select series 2</button>
-
-        <ColumnWidget widgetIndex={9} title='Number of page views'
-                      type='column'
-                      dateLastUpdated='22 Feb 2016'
-                      infoText="Something amazing about this widget."
-                      minimumValue="20000"
-                      xAxis={{categories:["May","Jun","Jul","Aug","Sep","Oct","Nov"]}}
-                      series={this.state.series}
+        <ColumnWidget _type="column"
+                      _coordinatesType="cartesian"
+                      _isKpi={false}
+                      chartTitle="Number of users"
+                      chartDescription="This shows the number of people visiting the Performance Dashboard each month."
+                      chartUpdatedDate="2017-02-01T01:02:02.240Z"
                       _singleCategory={false}
                       _singleSection={true}
-                      displayHighContrast={hcState} />
+                      series={[
+                        {"name":"Users","units":"n","data":[null,null,121,833,825,922,930,1038,873],"color":"#742a69"}
+                      ]}
+                      xAxis={[
+                        {"categories":["May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16","Dec '16","Jan '17"]}
+                      ]}
+                      yAxis={[
+                        {"title":{"text":""},"min":[]}
+                      ]}
+                      displayHighContrast={false}
+                      viewport="sm" />
 
-
-
-        <div>
-          <SparklineWidget title="Total opportunities"
-                            type="sparkline"
-                            dateLastUpdated="2017-02-01T23:11:18.675Z"
-                            _singleCategory={false}
-                            _singleSection={true}
-                            minimumValue="13"
-                            series={this.state.series}
-                            xAxis={{"categories":["Jul","Aug","Sep","Oct","Nov","Dec","Jan"]}} />
-        </div>
-
-
-
-
-        <div>
-          <div style={{marginBottom: '1em', width: '300px',  display:'inline-block', float:'left'}}>
-            <CountWithTrendWidget title="User satisfaction"
-              infoText="Overall satisfaction score includes all ratings weighted from 100% for very satisfied, to 0% for very dissatisfied"
-                                  units="%"
-                                  _unitsType="percentage"
-                                  idxInWidgets="0"
-                                  value="8"
-                                  trendValue="100"
-                                  trendDate="2016-10-31T00:00:00Z" />
-          </div>
-
-          <div style={{marginBottom: '1em', width: '300px', display:'inline-block'}}>
-            <CountWithTrendWidget title="Cost per transaction"
-                                  infoText={null}
-                                  units="$"
-                                  _unitsType="money"
-                                  idxInWidgets="1"
-                                  value=""
-                                  trendValue=""
-                                  trendDate="2016-10-31T00:00:00Z" />
-          </div>
-        </div>
-
-
-
-        <CountWithTrendWidget widgetIndex={3} title="Digital take-up"
-                              infoText={null}
-                              units="%"
-                              idxInWidgets="2"
-                              value="92"
-                              trendValue="1.09"
-                              trendDate="2016-10-31T00:00:00Z" />
-
-        <CountWithTrendWidget widgetIndex={1} title="Completion rate"
-                              infoText="Percentage of transactions made using the digital service."
-                              units="%"
-                              idxInWidgets="3"
-                              value=""
-                              trendValue=""
-                              trendDate="2016-10-31T00:00:00Z" />
-
-        <LineWidget title='Number of page views'
-                    units='number'
-                    type='column'
-                    dateLastUpdated='22 Feb 2016'
-                    minimumValue="20000"
-                    xAxis={[
-                      {"categories":["May","Jun","Jul","Aug","Sep","Oct","Nov"]}
-                    ]}
+        <LineWidget _type="line"
+                    _coordinatesType="cartesian"
+                    _isKpi={false}
+                    chartTitle="Dashboards viewed"
+                    chartDescription="This shows the average number of service dashboards viewed each time a user visits the Performance Dashboard."
+                    chartUpdatedDate="2017-02-01T01:02:02.240Z"
+                    _singleCategory={false}
+                    _singleSection={true}
                     series={[
-                      {"name":"Time to clear","data":[84807,48317,51420,62400,48060,37560,39300]}
+                      {"name":"Page Views","units":"n","data":[null,null,2.8,3.28,2.94,3.21,2.85,2.79,2.73],"color":"#b6988f"}
                     ]}
-                    singleCategory={false}
-                    singleSection={true}
-                    displayHighContrast={hcState} />
+                    xAxis={[
+                      {"categories":["May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16","Dec '16","Jan '17"]}
+                    ]}
+                    yAxis={[
+                      {"title":{"text":""},"min":[]}
+                    ]}
+                    displayHighContrast={false}
+                    viewport="sm" />
+
+        <StackedColumnWidget _type="stackedColumn"
+                             _coordinatesType="cartesian"
+                             _isKpi={false}
+                             chartTitle="Types of service"
+                             chartDescription="This shows which the development phase the services that have published on the Performance Dashboard are in. It also shows services that are not going through a digital transformation and other types of projects such as information websites"
+                             chartUpdatedDate="2017-02-01T01:02:02.240Z"
+                             _singleCategory={false}
+                             _singleSection={false}
+                             series={[
+                               {"name":"Public Beta","units":"n","data":[0,0,2,2,2,2,2,2,2],"color":"#b6988f"},
+                               {"name":"Pre Beta","units":"n","data":[0,0,1,3,3,3,3,3,3],"color":"#46b4ba"},
+                               {"name":"Non-transformational","units":"n","data":[1,1,1,1,1,1,1,1,1],"color":"#f17465"},
+                               {"name":"Other","units":"n","data":[0,0,0,0,0,0,0,0,0],"color":"#4e9774"}
+                             ]}
+                             xAxis={[
+                               {"categories":["May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16","Dec '16","Jan '17"]}
+                             ]}
+                             yAxis={[
+                               {"title":{"text":""},"opposite":false}
+                             ]}
+                             displayHighContrast={false}
+                             viewport="sm" />
+
+        <SparklineWidget _type="sparkline"
+                         _coordinatesType="cartesian"
+                         _isKpi={false}
+                         chartTitle="Total opportunities"
+                         chartDescription="This is the total number of requests for digital services or specialists published by government buyers in the Digital Marketplace."
+                         chartUpdatedDate="2017-02-01T23:11:18.675Z"
+                         _singleCategory={false}
+                         _singleSection={true}
+                         series={[
+                           {"name":"Total opportunities","units":"i","data":[null,null,13,29,42,58,74],"color":"#4e9774"}
+                         ]}
+                         xAxis={[
+                           {"categories":["Jul '16","Aug '16","Sep '16","Oct '16","Nov '16","Dec '16","Jan '17"]}
+                         ]}
+                        yAxis={[
+                          {"title":{"text":""},"min":[]}
+                         ]}
+                         displayHighContrast={false}
+                         viewport="sm" />
+
+        <CountWithTrendWidget tooltipAnchorTo="#dashboard-notes"
+                              units="%"
+                              viewport="sm"
+                              _type="kpi-count"
+                              _coordinatesType="cartesian"
+                              _isKpi={true}
+                              chartTitle="User satisfaction"
+                              chartDescription="Overall satisfaction score includes all ratings weighted from 100% for very satisfied to 0% for very dissatisfied"
+                              chartUpdatedDate="2016-11-09T01:01:01.111Z"
+                              _singleCategory={false}
+                              _singleSection={true}
+                              series={[
+                                {"name":"User satisfaction","units":"%","data":[94,97],"color":"#cf7e33"}
+                              ]}
+                              xAxis={[
+                                {"categories":["Sep '16","Oct '16"]}
+                              ]}
+                              yAxis={[
+                                {"title":{"text":""},"floor":0,"ceiling":100,"min":0,"max":100}
+                              ]} />
 
       </div>
     )

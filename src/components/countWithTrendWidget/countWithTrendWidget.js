@@ -24,12 +24,10 @@ const getPercentageDifference = (a = null, b = null) => {
  */
 const CountWithTrendWidget = (props) => {
   const {
-    viewport,
-
-    title,
-    tooltipAnchorTo,
-
+    chartTitle,
     series,
+    viewport,
+    tooltipAnchorTo,
   } = props;
 
   const s = series[0];
@@ -55,7 +53,7 @@ const CountWithTrendWidget = (props) => {
 
 
   if (typeof viewport === 'undefined' || viewport === 'sm') {
-    return <MobileComponent title={title}
+    return <MobileComponent title={chartTitle}
                             tooltipAnchorTo={tooltipAnchorTo}
                             units={series[0].units}
                             value={recentValue}
@@ -63,7 +61,7 @@ const CountWithTrendWidget = (props) => {
                             trendDate={percentageDifferenceDate}
                             color={series[0].color} />
   } else {
-    return <DesktopComponent title={title}
+    return <DesktopComponent title={chartTitle}
                              tooltipAnchorTo={tooltipAnchorTo}
                              units={series[0].units}
                              value={recentValue}
@@ -81,3 +79,4 @@ if (__DEV__) {
 
 
 export default CountWithTrendWidget;
+

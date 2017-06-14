@@ -20,7 +20,6 @@ const HeroWidget = ({
   viewport,
   displayHighContrast,
 }) => {
-
   return (
     <article role="article" className="D_widget">
       <header>

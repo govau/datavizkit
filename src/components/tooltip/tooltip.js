@@ -51,7 +51,7 @@ const TooltipComponent = ({
 if (__DEV__) {
   TooltipComponent.propTypes = {
     placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
-    text: PropTypes.string.isRequired,
+    text: PropTypes.string,
     iconOnly: PropTypes.bool,
   };
 }
