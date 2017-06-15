@@ -100,7 +100,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",
-    "docs-build": "NODE_ENV-development styleguidist build",
+    "docs-build": "styleguidist build",
     "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDest -d https://datavizkit.surge.sh",
     "commit": "git-cz",
     "hard-release": "yarn run build:lib && npm publish",

@@ -41,8 +41,24 @@ const ColumnWidget = ({
 
 if (__DEV__) {
   ColumnWidget.propTypes = {
+    chartTitle: PropTypes.string,
     chartDescription: PropTypes.string,
-  }
+    chartUpdatedDate: PropTypes.string,
+    series: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      units: PropTypes.string,
+      color: PropTypes.string,
+      data: PropTypes.array.isRequired,
+    })).isRequired,
+    xAxis: PropTypes.arrayOf(PropTypes.shape({
+      categories: PropTypes.array,
+    })),
+    yAxis: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.object,
+    })),
+    viewport: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+    displayHighContrast: PropTypes.bool,
+  };
 }
 
 export default ColumnWidget;

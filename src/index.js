@@ -79,7 +79,8 @@ class App extends Component {
                       {"categories":["May '16","Jun '16","Jul '16","Aug '16","Sep '16","Oct '16","Nov '16","Dec '16","Jan '17"]}
                     ]}
                     yAxis={[
-                      {"title":{"text":"Percentage (%)"},"opposite":false,"floor":0,"ceiling":100,"min":0,"max":100},{"title":{"text":"AUD ($)"},"opposite":true}
+                      {"title":{"text":"Percentage (%)"},"opposite":false,"floor":0,"ceiling":100,"min":0,"max":100},
+                      {"title":{"text":"AUD ($)"},"opposite":true}
                     ]} />
 
         <ColumnWidget _type="column"

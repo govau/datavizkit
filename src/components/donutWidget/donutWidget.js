@@ -15,9 +15,6 @@ const DonutWidget = ({
   chartDescription,
   chartUpdatedDate,
   series,
-  xAxis,
-  yAxis,
-
   viewport,
   displayHighContrast,
 }) => {
@@ -30,8 +27,6 @@ const DonutWidget = ({
       </header>
       <section>
         <DonutChart series={series}
-										xAxis={xAxis}
-										yAxis={yAxis}
 										chartDescription={chartDescription}
 										displayHighContrast={displayHighContrast} />
       </section>
@@ -41,8 +36,18 @@ const DonutWidget = ({
 
 if (__DEV__) {
   DonutWidget.propTypes = {
+    chartTitle: PropTypes.string,
     chartDescription: PropTypes.string,
-  }
+    chartUpdatedDate: PropTypes.string,
+    series: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      units: PropTypes.string,
+      color: PropTypes.string,
+      data: PropTypes.array.isRequired,
+    })).isRequired,
+    viewport: PropTypes.oneOf(['sm','md','lg','xl']),
+    displayHighContrast: PropTypes.bool,
+  };
 }
 
 export default DonutWidget;
