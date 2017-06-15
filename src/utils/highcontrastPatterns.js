@@ -113,40 +113,6 @@ export const makeHighcontrastPatterns = (colorset, patternIds) => {
 
 
 
-const makeIterateOnAndOff = patternIds => {
-  const iterateeOn = (item, idx) => {
-    const patternIdx = getPointerInLoop(patternIds.length, idx);
-    const patternSrc = `url(#${patternIds[patternIdx]})`;
-    item.color = patternSrc;
-    return item;
-  };
-  const iterateeOff = (item) => {
-    item.color = void 0;
-    return item;
-  };
-  return {iterateeOn, iterateeOff};
-};
-
-
-export const mapHighcontrastFill = (config, condition, patternIds) => {
-
-  const {iterateeOn, iterateeOff} = makeIterateOnAndOff(patternIds);
-
-  config.series = config.series.map(condition ? iterateeOn : iterateeOff);
-  return config;
-};
-
-
-export const mapHighcontrastFillByPoint = (config, condition, patternIds) => {
-
-  const {iterateeOn, iterateeOff} = makeIterateOnAndOff(patternIds);
-
-  config.series = config.series.map(s => {
-    s.data.map(condition ? iterateeOn : iterateeOff);
-    return s;
-  });
-  return config;
-};
 
 
 export const createHighcontrastDashstyleSeriesIteratee = (condition) => {

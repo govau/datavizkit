@@ -63,8 +63,7 @@ const withColumn = Composed => {
 
       this.colorset = props.series.map(s => s.color);
       this.patternIds = props.series.map((s,idx) => `hc-p-${props.cid}-${idx}`);
-      this.hcColorset = this.patternIds.map((id) => `url(#${id})`);
-
+      this.hcColorset = this.patternIds.map((patternId) => `url(#${patternId})`);
       this.Patterns = makeHighcontrastPatterns(this.colorset, this.patternIds);
     }
 
@@ -179,17 +178,10 @@ const withColumn = Composed => {
         yAxis,
       });
 
-      if (passedProps.displayHighContrast) { // todo - synthesize
-        instanceConfig.series = series.map((s,idx) => {
-          s.color = this.hcColorset[idx];
-          return s;
-        });
-      } else {
-        instanceConfig.series = series.map((s,idx) => {
-          s.color = this.colorset[idx];
-          return s;
-        });
-      }
+      instanceConfig.series = series.map((s,idx) => { // todo - extract
+        s.color = passedProps.displayHighContrast ? this.hcColorset[idx] : this.colorset[idx];
+        return s;
+      });
 
       return instanceConfig;
     }

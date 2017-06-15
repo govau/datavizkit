@@ -3,7 +3,7 @@ import React from 'react';
 import merge from 'lodash/merge';
 
 import PureComponentWithStaticProps from './../../classes/pureComponentWithStaticProps';
-import {mapHighcontrastFillByPoint} from './../../utils/highcontrastPatterns';
+import {makeHighcontrastPatterns} from './../../utils/highcontrastPatterns';
 import {createPolarCustomLegendData} from './../../utils/chartOptionsHelpers';
 
 
@@ -57,11 +57,18 @@ const withDonut = Composed => {
       this._chart = null;
       this._baseChartConfig = null;
 
-      // const colorProps = props.getColorProps(props.widgetIndex, props.cid);
-      //
-      // this.colorset = colorProps.colorset;
-      // this.highcontrastPatternIds = colorProps.highcontrastPatternIds;
-      // this.HighcontrastPatterns = colorProps.HighcontrastPatterns;
+      this.colorset = props.series.map(s => {
+        return s.data.map(d => d.color);
+      }).reduce(function(prev, curr) { // flatten
+        return prev.concat(curr);
+      });
+      this.patternIds = props.series.map(s => {
+        return s.data.map((d, idx) => `hc-p-${props.cid}-${idx}`)
+      }).reduce(function(prev, curr) { // flatten
+        return prev.concat(curr);
+      });
+      this.hcColorset = this.patternIds.map((patternId) => `url(#${patternId})`);
+      this.Patterns = makeHighcontrastPatterns(this.colorset, this.patternIds);
     }
 
     // create
@@ -135,20 +142,25 @@ const withDonut = Composed => {
         }
       });
 
-      // instanceConfig = mapHighcontrastFillByPoint(instanceConfig, passedProps.displayHighContrast, this.highcontrastPatternIds);
+      instanceConfig.series = series.map(s => { // todo - extract
+        s.data = s.data.map((d, idx) => {
+          d.color = passedProps.displayHighContrast ? this.hcColorset[idx] : this.colorset[idx];
+          return d;
+        });
+        return s;
+      });
 
       return instanceConfig;
     }
 
     render() {
-      // const {HighcontrastPatterns} = this;
-
+      const {Patterns} = this;
       const customLegendData = this.getStatic('customLegendData');
       const {displayHighContrast} = this.props;
 
       return (
         <div>
-          {/*<HighcontrastPatterns />*/}
+          {displayHighContrast && <Patterns />}
           <Composed {...this.props}
                     customLegendData={customLegendData} displayHighContrast={displayHighContrast}>
             <div ref={el => this._chart = el} />
