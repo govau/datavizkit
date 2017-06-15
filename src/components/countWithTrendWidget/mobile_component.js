@@ -85,7 +85,7 @@ const MobileCountWithTrendWidget = (props) => {
 
           <div className="D_CTW_M_layoutLeft">
             <div className="D_CTW_M_header">
-              <h1>{title} {tooltipAnchorTo && <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} infoText="" />}</h1>
+              <h1>{title} {tooltipAnchorTo && <Tooltip anchorTo={tooltipAnchorTo} iconOnly={true} text="" />}</h1>
               <TrendValue value={trendValue} date={trendDate} units={units} />
             </div>
           </div>
