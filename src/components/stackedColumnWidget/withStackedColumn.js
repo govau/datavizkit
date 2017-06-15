@@ -43,8 +43,9 @@ const BASE_STACKEDCOLUMN_CHARTCONFIG = {
     },
   },
   tooltip: {
-    // shared: true,
     enabled: false,
+    shared: true,
+    crosshairs: true,
   },
   yAxis: {
     title: {

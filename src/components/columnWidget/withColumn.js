@@ -40,6 +40,8 @@ const BASE_COLUMN_CHARTCONFIG = {
   },
   tooltip: {
     enabled: false,
+    shared: true,
+    crosshairs: true,
   },
   yAxis: {
     title: {
