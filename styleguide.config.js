@@ -10,6 +10,7 @@ module.exports = {
       components: 'src/components/**/*.js',
     },
   ],
+  showUsage: true,
   showCode: true,
   skipComponentsWithoutExample: true,
   styleguideDir: config.styleguideDest,

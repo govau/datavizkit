@@ -37,9 +37,21 @@ const SparklineWidget = ({
 
 if (__DEV__) {
   SparklineWidget.propTypes = {
-    infoText: PropTypes.string,
+    chartTitle: PropTypes.string,
     chartDescription: PropTypes.string,
-  }
+    chartUpdatedDate: PropTypes.string,
+    series: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      units: PropTypes.string,
+      color: PropTypes.string,
+      data: PropTypes.array.isRequired,
+    })).isRequired,
+    xAxis: PropTypes.arrayOf(PropTypes.shape({
+      categories: PropTypes.array,
+    })),
+    viewport: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+    displayHighContrast: PropTypes.bool,
+  };
 }
 
 export default SparklineWidget;

@@ -73,7 +73,15 @@ const CountWithTrendWidget = (props) => {
 
 if (__DEV__) {
   CountWithTrendWidget.propTypes = {
-    viewport: PropTypes.string,
+    chartTitle: PropTypes.string,
+    series: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      units: PropTypes.string,
+      color: PropTypes.string,
+      data: PropTypes.array.isRequired,
+    })).isRequired,
+    viewport: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
+    tooltipAnchorTo: PropTypes.string,
   };
 }
 
