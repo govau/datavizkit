@@ -10,27 +10,28 @@ import './heroWidget.css';
 
 
 const HeroWidget = ({
-  infoText,
-  title,
-  dateLastUpdated,
-  viewport,
-  series, xAxis, yAxis,
-  displayHighContrast,
+  chartTitle,
   chartDescription,
-}) => {
+  chartUpdatedDate,
+  series,
+  xAxis,
+  yAxis,
 
+  viewport,
+  displayHighContrast,
+}) => {
   return (
     <article role="article" className="D_widget">
       <header>
-        {infoText && <div className="D_SW_infoContainer"><Tooltip text={infoText} viewport={viewport} /></div>}
-        <h1 className="highcharts-title">{title}</h1>
-        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(dateLastUpdated)}>{dateFormats.dayMonthYear(dateLastUpdated)}</time></span>
+        {chartDescription && <div className="D_SW_infoContainer"><Tooltip text={chartDescription} viewport={viewport} /></div>}
+        <h1 className="highcharts-title">{chartTitle}</h1>
+        <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(chartUpdatedDate)}>{dateFormats.dayMonthYear(chartUpdatedDate)}</time></span>
       </header>
       <section>
         <HeroChart series={series}
                      xAxis={xAxis}
                      yAxis={yAxis}
-	                   chartDescription={infoText || chartDescription}
+	                   chartDescription={chartDescription}
 	                   displayHighContrast={displayHighContrast} />
       </section>
     </article>
@@ -39,8 +40,6 @@ const HeroWidget = ({
 
 if (__DEV__) {
   HeroWidget.propTypes = {
-    widgetIndex: PropTypes.number,
-    infoText: PropTypes.string,
     chartDescription: PropTypes.string,
   }
 }

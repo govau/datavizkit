@@ -1,6 +1,6 @@
 {
   "name": "@gov.au/datavizkit",
-  "version": "1.0.17-development",
+  "version": "1.0.19-development",
   "description": "A fully featured data visualisation toolset built on top of Highcharts and React.",
   "keywords": [
     "highcharts",
@@ -23,13 +23,13 @@
   "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
     "highcharts": "^5.0.9",
+    "jsx-to-string": "1.0.2",
     "lodash": "^4.17.4",
     "pui-css-tooltips": "^8.0.5",
     "pui-react-overlay-trigger": "^8.0.5",
     "pui-react-tooltip": "^8.0.5",
     "recompose": "^0.23.1",
-    "tinycolor2": "^1.4.1",
-    "jsx-to-string": "1.0.2"
+    "tinycolor2": "^1.4.1"
   },
   "peerDependencies": {
     "react": "^15.5.4",
@@ -81,7 +81,7 @@
     "react": "^15.5.4",
     "react-dev-utils": "^0.5.2",
     "react-dom": "^15.5.4",
-    "react-styleguidist": "^5.0.2",
+    "react-styleguidist": "^5.4.4",
     "semantic-release": "^6.3.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
@@ -100,7 +100,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "test:ci": "npm run test -- --coverage --runInBand",
     "docs-server": "styleguidist server",
-    "docs-build": "styleguidist build",
+    "docs-build": "NODE_ENV-development styleguidist build",
     "docs-deploy": "npm run docs-build && surge -p $npm_package_config_styleguideDest -d https://datavizkit.surge.sh",
     "commit": "git-cz",
     "hard-release": "yarn run build:lib && npm publish",

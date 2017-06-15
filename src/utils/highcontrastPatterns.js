@@ -91,7 +91,7 @@ const highcontrastPatterns = [
 export const makeHighcontrastPatterns = (colorset, patternIds) => {
   return () => {
     return (
-      <div aria-hidden="true" className="patterns">
+      <div aria-hidden="true" className="patterns" style={{position:'absolute', left:'-100%', top: 0, zIndex:-1}}>
         <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <defs>
             {patternIds.map((patternId, idx) => {
@@ -110,71 +110,6 @@ export const makeHighcontrastPatterns = (colorset, patternIds) => {
     );
   }
 };
-
-export const makeGetColorProps = palettes => {
-  return (widgetIndex = 0, widgetId = 10000) => {
-
-    const colorsetIndex = getPointerInLoop(palettes.length, widgetIndex);
-    const colorset = palettes[colorsetIndex];
-
-    const highcontrastPatternIds = colorset.map((c, idx) => {
-      return `hc-p-${widgetId}-${idx}`;
-    });
-
-    const HighcontrastPatterns = makeHighcontrastPatterns(colorset, highcontrastPatternIds);
-
-    return {
-      colorset,
-      highcontrastPatternIds,
-      HighcontrastPatterns
-    }
-  };
-};
-
-export const makeGetKpiColorProps = palette => {
-  return () => {
-    return {
-      colorset: palette,
-    }
-  };
-};
-
-
-const makeIterateOnAndOff = patternIds => {
-  const iterateeOn = (item, idx) => {
-    const patternIdx = getPointerInLoop(patternIds.length, idx);
-    const patternSrc = `url(#${patternIds[patternIdx]})`;
-    item.color = patternSrc;
-    return item;
-  };
-  const iterateeOff = (item) => {
-    item.color = void 0;
-    return item;
-  };
-  return {iterateeOn, iterateeOff};
-};
-
-
-export const mapHighcontrastFill = (config, condition, patternIds) => {
-
-  const {iterateeOn, iterateeOff} = makeIterateOnAndOff(patternIds);
-
-  config.series = config.series.map(condition ? iterateeOn : iterateeOff);
-  return config;
-};
-
-
-export const mapHighcontrastFillByPoint = (config, condition, patternIds) => {
-
-  const {iterateeOn, iterateeOff} = makeIterateOnAndOff(patternIds);
-
-  config.series = config.series.map(s => {
-    s.data.map(condition ? iterateeOn : iterateeOff);
-    return s;
-  });
-  return config;
-};
-
 
 
 export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
@@ -197,6 +132,7 @@ export const createHighcontrastDashstyleSeriesIteratee = (condition) => {
     return item;
   };
 };
+
 
 export const mapHighcontrastDashstyle = (config, condition) => {
   const onFunc = createHighcontrastDashstyleSeriesIteratee(true);
