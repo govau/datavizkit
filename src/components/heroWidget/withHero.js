@@ -104,9 +104,6 @@ const withHero = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-
-      // const colorProps = props.getKpiColorProps();
-      // this.colorset = colorProps.colorset;
     }
 
     // create
@@ -206,12 +203,7 @@ const withHero = Composed => {
         return s;
       });
 
-      // instanceConfig.series = instanceConfig.series.map((s, idx) => {
-      //   s.color = this.colorset[idx];
-      //   return s;
-      // });
-
-      // instanceConfig = mapHighcontrastDashstyle(instanceConfig, passedProps.displayHighContrast);
+      instanceConfig = mapHighcontrastDashstyle(instanceConfig, passedProps.displayHighContrast);
 
       return instanceConfig;
     }

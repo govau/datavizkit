@@ -91,7 +91,7 @@ const highcontrastPatterns = [
 export const makeHighcontrastPatterns = (colorset, patternIds) => {
   return () => {
     return (
-      <div aria-hidden="true" className="patterns">
+      <div aria-hidden="true" className="patterns" style={{position:'absolute', left:'-100%', top: 0, zIndex:-1}}>
         <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <defs>
             {patternIds.map((patternId, idx) => {
@@ -110,9 +110,6 @@ export const makeHighcontrastPatterns = (colorset, patternIds) => {
     );
   }
 };
-
-
-
 
 
 export const createHighcontrastDashstyleSeriesIteratee = (condition) => {

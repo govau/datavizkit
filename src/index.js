@@ -60,7 +60,7 @@ class App extends Component {
                      displayHighContrast={hcState}
                      viewport="sm" />
 
-        <HeroWidget displayHighContrast={false}
+        <HeroWidget displayHighContrast={hcState}
                     _type="hero"
                     _coordinatesType="cartesian"
                     _isKpi={true}
@@ -119,7 +119,7 @@ class App extends Component {
                     yAxis={[
                       {"title":{"text":""},"min":[]}
                     ]}
-                    displayHighContrast={false}
+                    displayHighContrast={hcState}
                     viewport="sm" />
 
         <StackedColumnWidget _type="stackedColumn"

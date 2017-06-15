@@ -87,9 +87,6 @@ const withLine = Composed => {
       super(props);
       this._chart = null;
       this._baseChartConfig = null;
-
-      // const colorProps = props.getColorProps(props.widgetIndex, props.cid);
-      // this.colorset = colorProps.colorset;
     }
 
     // create
