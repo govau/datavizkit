@@ -6,7 +6,7 @@ import withHighcharts from './../withHighcharts';
 import withAbstract from './withAbstract';
 
 
-const BubbleChart = ({children}) => {
+const AbstractChart = ({children}) => {
   return (
     <div>
       <div className="chart">{children}</div>
@@ -17,7 +17,7 @@ const BubbleChart = ({children}) => {
 const HighchartifiedAbstractChart = compose(
   withHighcharts,
   withAbstract,
-)(BubbleChart);
+)(AbstractChart);
 
 export default HighchartifiedAbstractChart;
 
