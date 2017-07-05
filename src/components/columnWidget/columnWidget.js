@@ -24,7 +24,7 @@ const ColumnWidget = ({
   return (
     <article role="article" className="D_widget">
       <header>
-        {chartDescription && <div className="D_DW_infoContainer"><Tooltip text={chartDescription} viewport={viewport} /></div>}
+        {chartDescription && <div className="D_CW_infoContainer"><Tooltip text={chartDescription} viewport={viewport} /></div>}
         <h1 className="highcharts-title">{chartTitle}</h1>
         <span className="highcharts-subtitle">Last updated at <time dateTime={dateFormats.dateTime(chartUpdatedDate)}>{dateFormats.dayMonthYear(chartUpdatedDate)}</time></span>
       </header>

@@ -5,13 +5,23 @@ const win = typeof window !== 'undefined' ? window : global;
 const CONFIG = {
   ACCESSIBILITY_MODULE: true,
   // ENABLE_HIGHCONTRAST: true,  // todo
+
+  HAS_BUBBLE_CHART: false,  // requires loading highcharts-more.js
 };
 
-const makeDatavizkitConfig = (instanceConfig = {}) => {
-  win.DATAVIZKIT_CONFIG = {
+const configure = () => {
+  win.__DATAVIZKIT_CONFIG__ = {
     ...CONFIG,
-    ...instanceConfig
+    ...win.__DATAVIZKIT_CONFIG__
   };
+  return win.__DATAVIZKIT_CONFIG__;
 };
 
-export default makeDatavizkitConfig;
+export default configure;
+
+
+/** todo - deprecate **/
+const makeDatavizkitConfig = (instanceConfig = {}) => {
+  throw new Error('configure::makeDatavizkitConfig is deprecated.');
+};
+

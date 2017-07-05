@@ -5,18 +5,19 @@ import merge from 'lodash/merge';
 import get from 'lodash/get';
 import includes from 'lodash/includes';
 
+import configure from './../configure';
+configure();
+
 
 const win = typeof window !== 'undefined' ? window : global;
 
-if (typeof win.DATAVIZKIT_CONFIG === 'undefined') {
-  const configureDatavizkit = require('./../configure');
-  configureDatavizkit();
-}
-
-if (win.DATAVIZKIT_CONFIG.ACCESSIBILITY_MODULE === true) {
+if (win.__DATAVIZKIT_CONFIG__.ACCESSIBILITY_MODULE === true) {
   require('highcharts/modules/accessibility')(Highcharts);
 }
 
+if (win.__DATAVIZKIT_CONFIG__.HAS_BUBBLE_CHART === true) {
+  require('highcharts/highcharts-more');
+}
 
 // This fixes the "thin lines at top & bottom of chart" bug
 Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
