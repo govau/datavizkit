@@ -22,6 +22,9 @@ const withAbstract = Composed => {
 
     // create
     componentDidMount() {
+
+      // todo prop called customConfig
+
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props.config);
       // draw chart for first time
       this.props.create(config);

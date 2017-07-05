@@ -11,12 +11,12 @@ configure();
 
 const win = typeof window !== 'undefined' ? window : global;
 
-if (win.__DATAVIZKIT_CONFIG__.ACCESSIBILITY_MODULE === true) {
+if (win.__DATAVIZKIT_CONFIG__.accessibility_module === true) {
   require('highcharts/modules/accessibility')(Highcharts);
 }
 
-if (win.__DATAVIZKIT_CONFIG__.HAS_BUBBLE_CHART === true) {
-  require('highcharts/highcharts-more');
+if (win.__DATAVIZKIT_CONFIG__.has_bubble_chart === true) {
+  require('highcharts/highcharts-more')(Highcharts);
 }
 
 // This fixes the "thin lines at top & bottom of chart" bug
@@ -51,11 +51,11 @@ const BASE_CHARTCONFIG = {
     }
   },
   xAxis: {
-    type: 'datetime',
-    dateTimeLabelFormats: {
-      // day: '%e of %b',
-      // month: '%b \'%y',
-    },
+    // type: 'datetime', // todo
+    // dateTimeLabelFormats: {
+    //   // day: '%e of %b',
+    //   // month: '%b \'%y',
+    // },
     crosshair: true,
   },
   legend: {
