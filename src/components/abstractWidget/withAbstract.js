@@ -4,10 +4,7 @@ import merge from 'lodash/merge';
 
 
 const BASE_ABSTRACT_CHARTCONFIG = {
-  chart: {
-    height: 500,
-    width: 500,
-  },
+  chart: {},
 };
 
 const withAbstract = Composed => {
@@ -22,7 +19,6 @@ const withAbstract = Composed => {
 
     // create
     componentDidMount() {
-
       // todo prop called customConfig
 
       const config = this.makeInstanceConfig(this.createBaseConfig(), this.props.config);
