@@ -5,7 +5,7 @@ import get from 'lodash/get';
 
 import AbstractChart from './abstractChart';
 import {validAxisType, validChartType} from './../../helpers/propsValidators';
-// import {validSeriesData} from './../../helpers/customValidators';
+// import {validSeriesData} from './../../helpers/customValidators'; // todo 
 
 
 const AbstractWidget = ({config}) => {
