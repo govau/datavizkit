@@ -55,7 +55,7 @@ const TrendValue = ({value, date, units}) => {
               <span>{valStr} <i className="fa fa-arrow-down" /></span> :
               <span>Unchanged <i className="fa fa-minus" /></span>}
         </strong>
-        <span className="D_CTW_M_trendDate">since {dateFormats.monthYear(date)}</span>
+        {date && <span className="D_CTW_M_trendDate">since {dateFormats.monthYear(date)}</span>}
       </div>}
     </div>
   )

@@ -7,12 +7,16 @@ import DesktopComponent from './desktop_component';
 
 
 const getPercentageDifference = (a = null, b = null) => {
-  if (!a) {
-    if (!b) {
-      return null;
-    }
-    return 100;
+  if (a == null || b == null) { 
+    return null;
   }
+  
+  // if (!a) {
+  //   if (!b) {
+  //     return null;
+  //   }
+  //   return 100;
+  // }
 
   return (a - b).toFixed(2);
 };
@@ -46,7 +50,7 @@ const CountWithTrendWidget = (props) => {
     }
   } else {
     recentValue = series[0].data[0];
-    nextRecentValue = '';
+    nextRecentValue = null;
   }
 
   const percentageDifference = getPercentageDifference(recentValue, nextRecentValue);
