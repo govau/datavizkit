@@ -1,6 +1,6 @@
 {
   "name": "@gov.au/datavizkit",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "A fully featured data visualisation toolset built on top of Highcharts and React.",
   "keywords": [
     "highcharts",
