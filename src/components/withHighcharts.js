@@ -1,5 +1,5 @@
 
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
@@ -109,7 +109,7 @@ Highcharts.setOptions({
 
 
 const withHighcharts = Composed => {
-  return class extends PureComponent {
+  return class extends Component {
 
     constructor(props) {
       super(props);
