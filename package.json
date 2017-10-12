@@ -32,8 +32,8 @@
     "tinycolor2": "^1.4.1"
   },
   "peerDependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react": ">=15.5.4",
+    "react-dom": ">=15.5.4"
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",
