@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
@@ -7,19 +7,25 @@ import AbstractChart from './abstractChart';
 import {validAxisType, validChartType} from './../../helpers/propsValidators';
 // import {validSeriesData} from './../../helpers/customValidators'; // todo 
 
-
-const AbstractWidget = ({config}) => {
-
-  if (get(config, 'chart.renderTo')) {
-    delete config.chart.renderTo;
+class AbstractWidget extends Component {
+  getChart() {
+    return this.abstractChart._instance;
   }
 
-  return (
-    <div>
-      <AbstractChart config={config} />
-    </div>
-  )
-};
+  render() {
+    const config = Object.assign({}, this.props.config);
+
+    if (get(config, 'chart.renderTo')) {
+      delete config.chart.renderTo;
+    }
+  
+    return (
+      <div>
+        <AbstractChart ref={(c) => { this.abstractChart = c; }} config={config} />
+      </div>
+    )
+  }
+}
 
 if (__DEV__) {
   AbstractWidget.propTypes = {
