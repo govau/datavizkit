@@ -22,7 +22,7 @@
   },
   "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
-    "highcharts": "^5.0.9",
+    "highcharts": "^6.0.5",
     "jsx-to-string": "1.0.2",
     "lodash": "^4.17.4",
     "pui-css-tooltips": "^8.0.5",
