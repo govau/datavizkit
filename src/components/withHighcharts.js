@@ -1,13 +1,12 @@
-
 import React, {Component} from 'react';
 import Highcharts from 'highcharts';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
 import includes from 'lodash/includes';
-
 import configure from './../configure';
-configure();
+import './highcharts.css';
 
+configure();
 
 const win = typeof window !== 'undefined' ? window : global;
 
@@ -18,6 +17,9 @@ if (win.__DATAVIZKIT_CONFIG__.accessibility_module === true) {
 if (win.__DATAVIZKIT_CONFIG__.has_bubble_chart === true) {
   require('highcharts/highcharts-more')(Highcharts);
 }
+
+// Needs to be loaded last
+require('highcharts/modules/solid-gauge')(Highcharts);
 
 // This fixes the "thin lines at top & bottom of chart" bug
 Highcharts.wrap(Highcharts.Chart.prototype, 'setChartSize', function (proceed) {
@@ -33,10 +35,6 @@ const getId = () => {
   return widgetId++;
 };
 
-
-import './highcharts.css';
-
-
 const BASE_CHARTCONFIG = {
   title: {
     text: null,
@@ -51,11 +49,6 @@ const BASE_CHARTCONFIG = {
     }
   },
   xAxis: {
-    // type: 'datetime', // todo
-    // dateTimeLabelFormats: {
-    //   // day: '%e of %b',
-    //   // month: '%b \'%y',
-    // },
     crosshair: true,
   },
   legend: {
@@ -70,7 +63,6 @@ const BASE_CHARTCONFIG = {
 };
 
 const THEME = {
-  /*eslint-disable */
   chart: {
     style: {
       fontFamily: 'Open Sans,sans-serif',
@@ -92,7 +84,6 @@ const THEME = {
     style: {
       display: 'block',
       right: 0,
-      // width: '100%; !important',
       marginBottom: '20px',
       fontSize: '12px',
       lineHeight: 1.5,
@@ -100,13 +91,11 @@ const THEME = {
       color: '#596371',
     },
   }
-  /*eslint-enable */
 };
 
 Highcharts.setOptions({
   ...THEME
 });
-
 
 const withHighcharts = Composed => {
   return class extends Component {

@@ -1,6 +1,6 @@
 {
   "name": "@gov.au/datavizkit",
-  "version": "1.0.38",
+  "version": "1.1.0",
   "description": "A fully featured data visualisation toolset built on top of Highcharts and React.",
   "keywords": [
     "highcharts",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://datavizkit.surge.sh/",
   "dependencies": {
-    "highcharts": "^5.0.9",
+    "highcharts": "^6.0.5",
     "jsx-to-string": "1.0.2",
     "lodash": "^4.17.4",
     "pui-css-tooltips": "^8.0.5",
@@ -74,6 +74,7 @@
     "http-proxy-middleware": "0.17.3",
     "husky": "^0.13.3",
     "jest": "18.1.0",
+    "jest-cli": "^22.1.4",
     "json-loader": "0.5.4",
     "object-assign": "4.1.1",
     "postcss-loader": "1.2.2",
