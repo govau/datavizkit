@@ -74,6 +74,7 @@
     "http-proxy-middleware": "0.17.3",
     "husky": "^0.13.3",
     "jest": "18.1.0",
+    "jest-cli": "^22.1.4",
     "json-loader": "0.5.4",
     "object-assign": "4.1.1",
     "postcss-loader": "1.2.2",
